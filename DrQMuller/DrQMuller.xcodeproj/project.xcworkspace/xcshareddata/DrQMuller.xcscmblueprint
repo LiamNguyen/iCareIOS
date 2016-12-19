@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E1D429FC838D6BC351EE2A44E21835E8F2FF3487",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E1D429FC838D6BC351EE2A44E21835E8F2FF3487" : 9223372036854775807,
+    "41F28B1CF8D0C729D964D06CCA1217F8805FC1FB" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A9B59671-B2F4-4662-87E3-E6CE11AA4E0A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E1D429FC838D6BC351EE2A44E21835E8F2FF3487" : "iCareIOS\/",
+    "41F28B1CF8D0C729D964D06CCA1217F8805FC1FB" : ".."
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DrQMuller",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DrQMuller\/DrQMuller.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/LiamNguyen\/Gasoline_Consumption_Android_Final.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "41F28B1CF8D0C729D964D06CCA1217F8805FC1FB"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/LiamNguyen\/iCareIOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E1D429FC838D6BC351EE2A44E21835E8F2FF3487"
+    }
+  ]
+}
