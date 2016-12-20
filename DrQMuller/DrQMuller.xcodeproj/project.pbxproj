@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
+		ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */; };
+		ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */; };
 		ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40875C1E03DCAF00950D4C /* CustomTxtField.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
@@ -16,6 +19,9 @@
 		EDB338A01DE9D86300DE940B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB3389E1DE9D86300DE940B /* LaunchScreen.storyboard */; };
 		EDB338AB1DE9D86300DE940B /* DrQMullerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338AA1DE9D86300DE940B /* DrQMullerTests.swift */; };
 		EDB338B61DE9D86300DE940B /* DrQMullerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338B51DE9D86300DE940B /* DrQMullerUITests.swift */; };
+		EDE41FDA1E08CE66006CCE99 /* CustomStyleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */; };
+		EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */; };
+		EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +42,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
+		ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
+		ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED40875C1E03DCAF00950D4C /* CustomTxtField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTxtField.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +60,9 @@
 		EDB338B11DE9D86300DE940B /* DrQMullerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrQMullerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338B51DE9D86300DE940B /* DrQMullerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrQMullerUITests.swift; sourceTree = "<group>"; };
 		EDB338B71DE9D86300DE940B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStyleCustomerInformation.swift; sourceTree = "<group>"; };
+		EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineDrawer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +90,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		ED3BEBD31E0845AA00CAA173 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				EDB338971DE9D86300DE940B /* LoginViewController.swift */,
+				ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */,
+				ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */,
+				ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */,
+				ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		ED3BEBD41E0845B500CAA173 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		ED3BEBD51E0845BC00CAA173 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = API;
+			sourceTree = "<group>";
+		};
+		ED3BEBD61E08460700CAA173 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				ED40875C1E03DCAF00950D4C /* CustomTxtField.swift */,
+				EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */,
+				EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */,
+				EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		EDB338891DE9D86300DE940B = {
 			isa = PBXGroup;
 			children = (
@@ -101,14 +150,15 @@
 		EDB338941DE9D86300DE940B /* DrQMuller */ = {
 			isa = PBXGroup;
 			children = (
+				ED3BEBD61E08460700CAA173 /* View */,
+				ED3BEBD51E0845BC00CAA173 /* API */,
+				ED3BEBD41E0845B500CAA173 /* Model */,
+				ED3BEBD31E0845AA00CAA173 /* Controllers */,
 				EDB338951DE9D86300DE940B /* AppDelegate.swift */,
-				EDB338971DE9D86300DE940B /* LoginViewController.swift */,
 				EDB338991DE9D86300DE940B /* Main.storyboard */,
-				ED40875C1E03DCAF00950D4C /* CustomTxtField.swift */,
 				EDB3389C1DE9D86300DE940B /* Assets.xcassets */,
 				EDB3389E1DE9D86300DE940B /* LaunchScreen.storyboard */,
 				EDB338A11DE9D86300DE940B /* Info.plist */,
-				ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */,
 			);
 			path = DrQMuller;
 			sourceTree = "<group>";
@@ -268,10 +318,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,
+				ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */,
 				EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */,
+				ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */,
 				ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */,
 				EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */,
+				ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */,
+				EDE41FDA1E08CE66006CCE99 /* CustomStyleCustomerInformation.swift in Sources */,
+				EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
