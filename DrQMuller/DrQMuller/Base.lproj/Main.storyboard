@@ -193,11 +193,14 @@
                         <outlet property="txtView" destination="E94-vc-DIs" id="OFN-3C-xwR"/>
                         <outlet property="txt_Password" destination="hUP-wI-J2T" id="hcw-B3-l8B"/>
                         <outlet property="txt_Username" destination="2FU-pK-ntI" id="CgE-aM-25o"/>
+                        <segue destination="uw5-Ou-aKy" kind="show" identifier="segue_LoginToCustomerInformationFirstTab" id="d88-TN-lRm"/>
+                        <segue destination="os0-hg-hVA" kind="show" identifier="segue_LoginToCustomerInformationSecondTab" id="Hn6-nH-Q49"/>
+                        <segue destination="ioB-WT-TZj" kind="show" identifier="segue_LoginToCustomerInformationThirdTab" id="25N-BX-oeo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1071" y="-321"/>
+            <point key="canvasLocation" x="1884" y="-321"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="q1Q-aY-q5j">
@@ -494,6 +497,8 @@
                         <outlet property="view_SecondTabContainer" destination="NfH-Pv-VHc" id="Qaw-oj-B6h"/>
                         <outlet property="view_ThirdTabContainer" destination="V50-6c-qf0" id="Fgd-Dt-eBw"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="segue_CustomerInformationToLogin" id="D5g-Gz-UT4"/>
+                        <segue destination="os0-hg-hVA" kind="show" identifier="segue_CustomerInformationFirstTabToSecondTab" id="5Jd-1u-Qxt"/>
+                        <segue destination="ioB-WT-TZj" kind="show" identifier="segue_CustomerInformationFirstTabToThirdTab" id="bED-hu-lQ7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wRg-bO-d0A" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -615,11 +620,14 @@
                         <outlet property="view_FirstTabContainer" destination="ESA-uF-ON5" id="e0V-Oo-l3a"/>
                         <outlet property="view_SecondTabContainer" destination="V7c-IS-ZCr" id="Ebo-40-avC"/>
                         <outlet property="view_ThirdTabContainer" destination="HLE-ur-WAK" id="ceQ-xq-rAB"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="segue_CustomerInformationSecondTabToLogin" id="LG0-4y-V3J"/>
+                        <segue destination="ioB-WT-TZj" kind="show" identifier="segue_CustomerInformationSecondTabToThirdTab" id="hCt-e9-enO"/>
+                        <segue destination="uw5-Ou-aKy" kind="show" identifier="segue_CustomerInformationSecondTabToFirstTab" id="4cF-cs-Qr8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iae-Tp-9BY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1946" y="460"/>
+            <point key="canvasLocation" x="1980" y="460"/>
         </scene>
         <!--Third Tab Customer Information View Controller-->
         <scene sceneID="nkE-xt-DUA">
@@ -736,11 +744,14 @@
                         <outlet property="view_FirstTabContainer" destination="INr-Ik-r4u" id="qgy-v0-4vz"/>
                         <outlet property="view_SecondTabContainer" destination="Syk-7U-9YX" id="T4Y-bG-W8x"/>
                         <outlet property="view_ThirdTabContainer" destination="3js-UJ-rK3" id="hhA-Ig-uRl"/>
+                        <segue destination="os0-hg-hVA" kind="show" identifier="segue_CustomerInformationThirdTabToSecondTab" id="sE2-L0-Rza"/>
+                        <segue destination="uw5-Ou-aKy" kind="show" identifier="segue_CustomerInformationThirdTabToFirstTab" id="G0p-To-aUJ"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="segue_CustomerInformationThirdTabToLogin" id="mIe-MO-60a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M05-Dn-3p8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2861" y="460"/>
+            <point key="canvasLocation" x="2858" y="460"/>
         </scene>
     </scenes>
     <resources>
@@ -751,6 +762,9 @@
         <image name="userIcon" width="512" height="512"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="D5g-Gz-UT4"/>
+        <segue reference="LG0-4y-V3J"/>
+        <segue reference="Hn6-nH-Q49"/>
+        <segue reference="4cF-cs-Qr8"/>
+        <segue reference="hCt-e9-enO"/>
     </inferredMetricsTieBreakers>
 </document>
