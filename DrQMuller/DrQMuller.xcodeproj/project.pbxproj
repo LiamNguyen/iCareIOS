@@ -7,10 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED040F491E0C7808003166FD /* NiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED040F481E0C7808003166FD /* NiceButton.swift */; };
+		ED045B421E0AC31000ABA93D /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED045B411E0AC31000ABA93D /* MMSlidingButton.swift */; };
 		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
 		ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */; };
 		ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */; };
 		ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED40875C1E03DCAF00950D4C /* CustomTxtField.swift */; };
+		ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */; };
+		ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
 		EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338971DE9D86300DE940B /* LoginViewController.swift */; };
@@ -41,11 +45,28 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		ED040F471E0C7633003166FD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		ED040F481E0C7808003166FD /* NiceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceButton.swift; sourceTree = "<group>"; };
+		ED045B411E0AC31000ABA93D /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MMSlidingButton.swift; path = "../../../../../../Downloads/MMSlidingButton-master/MMSlidingButton/MMSlidingButton.swift"; sourceTree = "<group>"; };
 		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED40875C1E03DCAF00950D4C /* CustomTxtField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTxtField.swift; sourceTree = "<group>"; };
+		ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingDetailViewController.swift; sourceTree = "<group>"; };
+		ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingGeneralViewController.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338951DE9D86300DE940B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +119,8 @@
 				ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */,
 				ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */,
 				ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */,
+				ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */,
+				ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -119,6 +142,8 @@
 		ED3BEBD61E08460700CAA173 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ED040F481E0C7808003166FD /* NiceButton.swift */,
+				ED045B411E0AC31000ABA93D /* MMSlidingButton.swift */,
 				ED40875C1E03DCAF00950D4C /* CustomTxtField.swift */,
 				EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */,
 				EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */,
@@ -191,6 +216,7 @@
 				EDB3388E1DE9D86300DE940B /* Sources */,
 				EDB3388F1DE9D86300DE940B /* Frameworks */,
 				EDB338901DE9D86300DE940B /* Resources */,
+				ED040F471E0C7633003166FD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -319,11 +345,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */,
+				ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */,
+				ED040F491E0C7808003166FD /* NiceButton.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,
 				ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */,
+				ED045B421E0AC31000ABA93D /* MMSlidingButton.swift in Sources */,
 				EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */,
 				ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */,
 				ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */,
+				ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */,
 				EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */,
 				ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */,
 				EDE41FDA1E08CE66006CCE99 /* CustomStyleCustomerInformation.swift in Sources */,
@@ -425,6 +455,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -469,6 +500,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				NEW_SETTING = "";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
@@ -478,6 +510,7 @@
 		EDB338BB1DE9D86300DE940B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 86M37DGEMQ;
 				INFOPLIST_FILE = DrQMuller/Info.plist;
@@ -491,6 +524,7 @@
 		EDB338BC1DE9D86300DE940B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 86M37DGEMQ;
 				INFOPLIST_FILE = DrQMuller/Info.plist;

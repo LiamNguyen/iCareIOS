@@ -29,45 +29,45 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //=========TXTFIELD DELEGATE=========
+//=========TXTFIELD DELEGATE=========
         
         self.txt_Username.delegate = self
         self.txt_Password.delegate = self
         
-        //=========STYLE FOR RESET PASSWORD LINK=========
+//=========STYLE FOR RESET PASSWORD LINK=========
         
         let attrString = NSAttributedString(string: "Quên mật khẩu hoặc tên đăng nhập?", attributes: [NSForegroundColorAttributeName:UIColor.white, NSUnderlineStyleAttributeName: 1])
         
         btn_ResetPassword.setAttributedTitle(attrString, for: .normal)
         
-        //=========STYLE BUTTONS=========
+//=========STYLE BUTTONS=========
         
         btn_Login.layer.cornerRadius = 10
         btn_Register.layer.cornerRadius = 10
         
-        //=========ASSIGN ORIGIN X SUBVIEW=========
+//=========ASSIGN ORIGIN X SUBVIEW=========
         
         initialViewOrigin = loginView.frame.origin.y
         
-        //=========ASSIGN ORIGIN X VIEW CONTAINS TEXT FIELDS=========
+//=========ASSIGN ORIGIN X VIEW CONTAINS TEXT FIELDS=========
         
         initialTxtOrigin = txtView.frame.origin.y
         
-        //=========ASSIGN CONSTANT CONSTRAINTS BTN_LOGIN_TXT_CONFIRM=========
+//=========ASSIGN CONSTANT CONSTRAINTS BTN_LOGIN_TXT_CONFIRM=========
 
         initialConstraintConstant = constraint_BtnLogin_TxtConfirm.constant
         
-        //=========GET SCREEN SIZE=========
+//=========GET SCREEN SIZE=========
         
         screenHeight = UIScreen.main.bounds.height
         
-        //=========ASSIGN BOOLEAN VARIABLE FOR ISIPHONE4=========
+//=========ASSIGN BOOLEAN VARIABLE FOR ISIPHONE4=========
         
         if screenHeight == 480 {
             isIphone4 = true
         }
         
-        //=========UPDATE FOR IPHONE 4S SCREEN ON LOAD=========
+//=========UPDATE FOR IPHONE 4S SCREEN ON LOAD=========
         
         updateLoadStyleForIphone4()
         
@@ -89,7 +89,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
     }
     
-    //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========
+//=========TEXT FIELD FOCUS CALL BACK FUNCTION=========
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if !isIphone4 {
@@ -99,7 +99,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         updateTxtFieldFocusStyleForIphone4()
     }
     
-    //=========OUTSIDE TOUCH CLOSE KEYBOARD=========
+//=========OUTSIDE TOUCH CLOSE KEYBOARD=========
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -110,7 +110,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         updateTxtFieldLoseFocusStyleForIphone4()
     }
     
-    //=========PRESS RETURN CLOSE KEYBOARD=========
+//=========PRESS RETURN CLOSE KEYBOARD=========
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -123,7 +123,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
-    //=========ADJUST VIEW ORIGIN Y=========
+//=========ADJUST VIEW ORIGIN Y=========
     
     private func adjustViewOrigin(y: CGFloat) {
         loginView.translatesAutoresizingMaskIntoConstraints = true
@@ -132,7 +132,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //=========ADJUST VIEW CONTAIN TEXT FIELDS ORIGIN Y=========
+//=========ADJUST VIEW CONTAIN TEXT FIELDS ORIGIN Y=========
     
     private func adjustTxtOrigin(y: CGFloat) {
         txtView.translatesAutoresizingMaskIntoConstraints = true
@@ -141,7 +141,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
-    //=========ADJUST LOGIN BUTTON ORIGIN Y=========
+//=========ADJUST LOGIN BUTTON ORIGIN Y=========
     
     private func adjustBtnOrigin(y: CGFloat) {
         btn_Login.translatesAutoresizingMaskIntoConstraints = true
@@ -150,17 +150,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    //=========LOCK ROTATION=========
-    
-    override var shouldAutorotate: Bool {
-        return false
-    }
-    
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return UIInterfaceOrientationMask.portrait
-    }
-    
-    //=========UPDATE UI FOR IPHONE 4S ON LOAD=========
+//=========UPDATE UI FOR IPHONE 4S ON LOAD=========
 
     private func updateLoadStyleForIphone4() {
         if !isIphone4 {
@@ -169,7 +159,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         adjustViewOrigin(y: 30)
     }
     
-    //=========UPDATE UI FOR IPHONE 4 WHEN ON TXTFIELD FOCUS=========
+//=========UPDATE UI FOR IPHONE 4 WHEN ON TXTFIELD FOCUS=========
     
     private func updateTxtFieldFocusStyleForIphone4() {
         adjustViewOrigin(y: 10)
@@ -178,7 +168,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         btn_ResetPassword.isHidden = true
     }
     
-    //=========REVERT UPDATE UI FOR IPHONE 4 ON TXTFIELD LOSE FOCUS=========
+//=========REVERT UPDATE UI FOR IPHONE 4 ON TXTFIELD LOSE FOCUS=========
 
     private func updateTxtFieldLoseFocusStyleForIphone4() {
         adjustViewOrigin(y: 30)

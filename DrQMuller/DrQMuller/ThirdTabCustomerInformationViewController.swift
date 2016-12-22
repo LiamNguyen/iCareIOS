@@ -8,28 +8,106 @@
 
 import UIKit
 
-class ThirdTabCustomerInformationViewController: UIViewController {
+class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet private weak var constraint_FirstTabWidth: NSLayoutConstraint!
+    @IBOutlet private weak var constraint_SecondTabWidth: NSLayoutConstraint!
+    @IBOutlet private weak var constraint_ThirdTabWidth: NSLayoutConstraint!
+    @IBOutlet private weak var btn_FirstTab: UIButton!
+    @IBOutlet private weak var btn_SecondTab: UIButton!
+    @IBOutlet private weak var btn_ThirdTab: UIButton!
+    @IBOutlet private weak var view_FirstTabContainer: UIView!
+    @IBOutlet private weak var view_SecondTabContainer: UIView!
+    @IBOutlet private weak var view_ThirdTabContainer: UIView!
+    @IBOutlet weak var txt_Email: UITextField!
+    @IBOutlet weak var txt_Phone: UITextField!
+    
+    private var customerInformationController = CustomStyleCustomerInformation()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+//=========ENABLE TAB HEADERS=========
+        
+        self.txt_Email.delegate = self
+        self.txt_Phone.delegate = self
+        
+//=========ENABLE TAB HEADERS=========
+        
+        customerInformationController.enableTab(firstTab: btn_FirstTab, secondTab: btn_SecondTab, thirdTab: btn_ThirdTab)
+        
+//=========UPDATE STYLE OF TAB HEADERS FOR DIFFERENT PHONE SIZE=========
+        
+        customerInformationController.tabHeadersStyleUpdate(FirstTabConstraint: constraint_FirstTabWidth,SecondTabConstraint: constraint_SecondTabWidth, ThirdTabConstraint: constraint_ThirdTabWidth)
+        
+//=========UPDATE ORIGIN OF TAB HEADERS FOR DIFFERENT PHONE SIZE=========
+        
+        customerInformationController.tabHeadersOriginUpdate(view_FirstTabContainer: view_FirstTabContainer,view_SecondTabContainer: view_SecondTabContainer, view_ThirdTabContainer: view_ThirdTabContainer)
+        
+//=========APPLY TAB HEADERS UNDERLINE=========
+        
+        customerInformationController.translateTabHeaderUnderline(view: self.view, view_TabContainer: view_ThirdTabContainer)
+        
+//=========TEXTFIELD ONLOAD AUTOFOCUS=========
+        
+        txt_Email.becomeFirstResponder()
+        
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func btn_Back_OnClick(_ sender: Any) {
+        
+//=========POP UP CONFIRM DIALOG=========
+        
+        confirmDialog()
+        
     }
-    */
-
+    
+//=========CREATE POP UP CONFIRM DIALOG=========
+    
+    private func confirmDialog() {
+        let confirmDialog = UIAlertController(title: "Quý khách sẽ đăng thoát?", message: "Những thông tin chưa được xác nhận sẽ không được lưu trữ.", preferredStyle: UIAlertControllerStyle.alert)
+        confirmDialog.addAction(UIAlertAction(title: "Đăng thoát", style: .default, handler: { (action: UIAlertAction!) in
+            self.performSegue(withIdentifier: "segue_CustomerInformationThirdTabToLogin", sender: self)
+        }))
+        confirmDialog.addAction(UIAlertAction(title: "Huỷ", style: .cancel, handler: { (action: UIAlertAction!) in
+            
+        }))
+        present(confirmDialog, animated: true, completion: nil)
+    }
+    
+//=========TRANSITION TO FIRST INFO PAGE=========
+    
+    @IBAction func btn_FirstTab_OnClick(_ sender: Any) {
+        self.performSegue(withIdentifier: "segue_CustomerInformationThirdTabToFirstTab", sender: self)
+    }
+    
+//=========TRANSITION TO SECOND INFO PAGE=========
+    
+    @IBAction func btn_SecondTab_OnClick(_ sender: Any) {
+        self.performSegue(withIdentifier: "segue_CustomerInformationThirdTabToSecondTab", sender: self)
+    }
+    
+//=========TOUCH OUTSIDE CLOSE KEYBOARD=========
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+//=========PRESS RETURN CLOSE KEYBOARD=========
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if textField == txt_Email {
+            txt_Phone.becomeFirstResponder()
+        }
+        return true
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
