@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D9C9F96E3FA0149EBF20A8A4 /* Pods_DrQMuller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F58401B7A7C57AC9EFB8729C /* Pods_DrQMuller.framework */; };
 		ED040F491E0C7808003166FD /* NiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED040F481E0C7808003166FD /* NiceButton.swift */; };
 		ED045B421E0AC31000ABA93D /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED045B411E0AC31000ABA93D /* MMSlidingButton.swift */; };
 		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		D24D7C745172B076A94BEB0C /* Pods-DrQMuller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrQMuller.release.xcconfig"; path = "Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller.release.xcconfig"; sourceTree = "<group>"; };
 		ED040F481E0C7808003166FD /* NiceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceButton.swift; sourceTree = "<group>"; };
 		ED045B411E0AC31000ABA93D /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MMSlidingButton.swift; path = "../../../../../../Downloads/MMSlidingButton-master/MMSlidingButton/MMSlidingButton.swift"; sourceTree = "<group>"; };
 		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +86,8 @@
 		EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStyleCustomerInformation.swift; sourceTree = "<group>"; };
 		EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineDrawer.swift; sourceTree = "<group>"; };
+		F4CDD90B0CF1F864033543A5 /* Pods-DrQMuller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrQMuller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller.debug.xcconfig"; sourceTree = "<group>"; };
+		F58401B7A7C57AC9EFB8729C /* Pods_DrQMuller.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DrQMuller.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9C9F96E3FA0149EBF20A8A4 /* Pods_DrQMuller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -111,6 +116,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47C83464A28FCDC3E346CBCE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F4CDD90B0CF1F864033543A5 /* Pods-DrQMuller.debug.xcconfig */,
+				D24D7C745172B076A94BEB0C /* Pods-DrQMuller.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		51D49C68B278EC27D46BE802 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F58401B7A7C57AC9EFB8729C /* Pods_DrQMuller.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		ED3BEBD31E0845AA00CAA173 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +181,8 @@
 				EDB338A91DE9D86300DE940B /* DrQMullerTests */,
 				EDB338B41DE9D86300DE940B /* DrQMullerUITests */,
 				EDB338931DE9D86300DE940B /* Products */,
+				47C83464A28FCDC3E346CBCE /* Pods */,
+				51D49C68B278EC27D46BE802 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -213,10 +237,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EDB338BA1DE9D86300DE940B /* Build configuration list for PBXNativeTarget "DrQMuller" */;
 			buildPhases = (
+				CB75A6C1D279694EC816FDEC /* [CP] Check Pods Manifest.lock */,
 				EDB3388E1DE9D86300DE940B /* Sources */,
 				EDB3388F1DE9D86300DE940B /* Frameworks */,
 				EDB338901DE9D86300DE940B /* Resources */,
 				ED040F471E0C7633003166FD /* Embed Frameworks */,
+				FFBAC8A689BEF35EC8C826A9 /* [CP] Embed Pods Frameworks */,
+				EC8AF07438CBC33CA6DFAD08 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -338,6 +365,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CB75A6C1D279694EC816FDEC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		EC8AF07438CBC33CA6DFAD08 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FFBAC8A689BEF35EC8C826A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		EDB3388E1DE9D86300DE940B /* Sources */ = {
@@ -509,6 +584,7 @@
 		};
 		EDB338BB1DE9D86300DE940B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4CDD90B0CF1F864033543A5 /* Pods-DrQMuller.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -523,6 +599,7 @@
 		};
 		EDB338BC1DE9D86300DE940B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D24D7C745172B076A94BEB0C /* Pods-DrQMuller.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

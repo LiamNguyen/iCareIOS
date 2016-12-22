@@ -1,0 +1,6 @@
+framework module Pods_DrQMuller {
+  umbrella header "Pods-DrQMuller-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -976,7 +976,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yp1-wo-AcN" customClass="NiceButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="90" width="294" height="38"/>
+                                <rect key="frame" x="16" y="90" width="288" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="11E-xt-qan"/>
                                 </constraints>
@@ -984,7 +984,7 @@
                                     <color key="titleColor" red="0.6129767340857013" green="0.060420009692819465" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="rI9-M0-Ata" kind="presentation" modalTransitionStyle="crossDissolve" id="8G7-eq-axn"/>
+                                    <action selector="btn_CountriesDropDown_OnClick:" destination="zGE-cu-f7j" eventType="touchUpInside" id="Rhr-DF-tMq"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thông tin lịch hẹn" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpw-vQ-DGf">
@@ -1016,7 +1016,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AgT-2G-ZMB" customClass="NiceButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="136" width="294" height="38"/>
+                                <rect key="frame" x="16" y="136" width="288" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="wRd-ng-kSU"/>
                                 </constraints>
@@ -1031,7 +1031,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ioj-Mo-ODf" customClass="NiceButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="182" width="294" height="38"/>
+                                <rect key="frame" x="16" y="182" width="288" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="Tac-XX-nfF"/>
                                 </constraints>
@@ -1046,7 +1046,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6CG-sc-rGc" customClass="NiceButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="228" width="294" height="38"/>
+                                <rect key="frame" x="16" y="228" width="288" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="mUp-P9-OA7"/>
                                 </constraints>
@@ -1061,7 +1061,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGx-F8-eki" customClass="NiceButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="274" width="294" height="38"/>
+                                <rect key="frame" x="16" y="274" width="288" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="IHR-9R-HaL"/>
                                 </constraints>
@@ -1076,7 +1076,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Jf-Yq-mUQ" customClass="NiceButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="320" width="294" height="38"/>
+                                <rect key="frame" x="16" y="320" width="288" height="38"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="JCE-yZ-TwU"/>
                                 </constraints>
@@ -1105,15 +1105,15 @@
                             <constraint firstItem="6zK-bh-mdS" firstAttribute="top" secondItem="AgT-2G-ZMB" secondAttribute="bottom" constant="17" id="3CI-yz-UIz"/>
                             <constraint firstItem="uGx-F8-eki" firstAttribute="leading" secondItem="q0g-dY-fZg" secondAttribute="leading" constant="16" id="94y-Z4-4Cr"/>
                             <constraint firstItem="kpw-vQ-DGf" firstAttribute="leading" secondItem="q0g-dY-fZg" secondAttribute="leading" id="A2E-sj-ejm"/>
-                            <constraint firstAttribute="trailing" secondItem="6CG-sc-rGc" secondAttribute="trailing" constant="10" id="Ajv-wB-ILb"/>
-                            <constraint firstAttribute="trailing" secondItem="Ioj-Mo-ODf" secondAttribute="trailing" constant="10" id="Cxu-HM-rAc"/>
+                            <constraint firstAttribute="trailing" secondItem="6CG-sc-rGc" secondAttribute="trailing" constant="16" id="Ajv-wB-ILb"/>
+                            <constraint firstAttribute="trailing" secondItem="Ioj-Mo-ODf" secondAttribute="trailing" constant="16" id="Cxu-HM-rAc"/>
                             <constraint firstItem="Ioj-Mo-ODf" firstAttribute="top" secondItem="f7y-7k-2CO" secondAttribute="bottom" constant="17" id="Dm5-8v-F2t"/>
                             <constraint firstItem="AgT-2G-ZMB" firstAttribute="top" secondItem="yp1-wo-AcN" secondAttribute="bottom" constant="8" id="F9h-LH-4nq"/>
                             <constraint firstItem="f7y-7k-2CO" firstAttribute="top" secondItem="yp1-wo-AcN" secondAttribute="bottom" constant="17" id="IBw-ek-k9F"/>
-                            <constraint firstAttribute="trailing" secondItem="uGx-F8-eki" secondAttribute="trailing" constant="10" id="Ibi-Ym-e8b"/>
+                            <constraint firstAttribute="trailing" secondItem="uGx-F8-eki" secondAttribute="trailing" constant="16" id="Ibi-Ym-e8b"/>
                             <constraint firstItem="Ioj-Mo-ODf" firstAttribute="leading" secondItem="q0g-dY-fZg" secondAttribute="leading" constant="16" id="JU8-nl-k7i"/>
-                            <constraint firstAttribute="trailing" secondItem="yp1-wo-AcN" secondAttribute="trailing" constant="10" id="L4s-6X-glJ"/>
-                            <constraint firstAttribute="trailing" secondItem="8Jf-Yq-mUQ" secondAttribute="trailing" constant="10" id="MGU-N1-Upd"/>
+                            <constraint firstAttribute="trailing" secondItem="yp1-wo-AcN" secondAttribute="trailing" constant="16" id="L4s-6X-glJ"/>
+                            <constraint firstAttribute="trailing" secondItem="8Jf-Yq-mUQ" secondAttribute="trailing" constant="16" id="MGU-N1-Upd"/>
                             <constraint firstItem="qdk-tu-34c" firstAttribute="top" secondItem="MWh-rN-OLE" secondAttribute="bottom" constant="2" id="O2E-ev-5d9"/>
                             <constraint firstItem="Cno-3C-ok4" firstAttribute="top" secondItem="kpw-vQ-DGf" secondAttribute="bottom" constant="-47" id="OeT-WN-doK"/>
                             <constraint firstItem="8Jf-Yq-mUQ" firstAttribute="top" secondItem="uGx-F8-eki" secondAttribute="bottom" constant="8" id="P3J-QK-HlG"/>
@@ -1130,7 +1130,7 @@
                             <constraint firstAttribute="trailing" secondItem="kpw-vQ-DGf" secondAttribute="trailing" id="Y7f-gi-hI7"/>
                             <constraint firstAttribute="trailing" secondItem="qdk-tu-34c" secondAttribute="trailing" constant="10" id="ZR3-AW-X8C"/>
                             <constraint firstItem="8Jf-Yq-mUQ" firstAttribute="top" secondItem="qUQ-tW-CTN" secondAttribute="bottom" constant="17" id="aJg-MY-I68"/>
-                            <constraint firstAttribute="trailing" secondItem="AgT-2G-ZMB" secondAttribute="trailing" constant="10" id="aPA-QK-BYf"/>
+                            <constraint firstAttribute="trailing" secondItem="AgT-2G-ZMB" secondAttribute="trailing" constant="16" id="aPA-QK-BYf"/>
                             <constraint firstItem="8Jf-Yq-mUQ" firstAttribute="leading" secondItem="q0g-dY-fZg" secondAttribute="leading" constant="16" id="bUr-7a-lZI"/>
                             <constraint firstItem="qUQ-tW-CTN" firstAttribute="trailing" secondItem="q0g-dY-fZg" secondAttribute="trailingMargin" id="f3M-W9-8Ru"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Cno-3C-ok4" secondAttribute="trailing" constant="21" id="fHV-Rm-BLG"/>
@@ -1147,6 +1147,12 @@
                     <tabBarItem key="tabBarItem" title="Đặt lịch" image="bookIcon" id="vhL-qn-dVT"/>
                     <navigationItem key="navigationItem" title="Thông tin lịch hẹn" id="tpL-h3-Yoz"/>
                     <connections>
+                        <outlet property="btn_CitiesDropDown" destination="AgT-2G-ZMB" id="ZV9-Nf-F3Z"/>
+                        <outlet property="btn_CountriesDropDown" destination="yp1-wo-AcN" id="O9w-LJ-gN9"/>
+                        <outlet property="btn_DistrictsDropDown" destination="Ioj-Mo-ODf" id="eJt-CO-D5a"/>
+                        <outlet property="btn_LocationsDropDown" destination="6CG-sc-rGc" id="GqM-kC-NkQ"/>
+                        <outlet property="btn_TypesDropDown" destination="8Jf-Yq-mUQ" id="BmK-St-yeK"/>
+                        <outlet property="btn_VouchersDropDown" destination="uGx-F8-eki" id="Gl7-TG-MPI"/>
                         <outlet property="lbl_Notification" destination="Cno-3C-ok4" id="fE4-Yj-xIG"/>
                     </connections>
                 </viewController>
