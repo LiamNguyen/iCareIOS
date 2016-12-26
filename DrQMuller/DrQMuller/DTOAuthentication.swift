@@ -31,7 +31,14 @@ public class DTOAuthentication {
         }
     }
     
-    func returnHttpBody() -> String {
-        return "username\(_username)&password\(_password)"
+    func returnHttpBody() -> String! {
+//        if _username.isEmpty || _username == nil || _password.isEmpty || _password == nil {
+//            return ""
+//        }
+        if let username = _username, let password = _password {
+            return "username=\(username)&password=\(password)"
+        } else {
+            return nil
+        }
     }
 }

@@ -22,6 +22,8 @@
 		ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9558951E10F5B8004893DA /* ServiceURL.swift */; };
 		ED9558981E10FFF7004893DA /* NetworkConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9558971E10FFF7004893DA /* NetworkConnectivity.swift */; };
 		ED95589B1E1172F1004893DA /* DTOAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589A1E1172F1004893DA /* DTOAuthentication.swift */; };
+		ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589C1E118529004893DA /* PMHandleLogin.swift */; };
+		ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589E1E11867A004893DA /* APIHandleLogin.swift */; };
 		ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
 		EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338971DE9D86300DE940B /* LoginViewController.swift */; };
@@ -81,6 +83,8 @@
 		ED9558951E10F5B8004893DA /* ServiceURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceURL.swift; sourceTree = "<group>"; };
 		ED9558971E10FFF7004893DA /* NetworkConnectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConnectivity.swift; sourceTree = "<group>"; };
 		ED95589A1E1172F1004893DA /* DTOAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOAuthentication.swift; sourceTree = "<group>"; };
+		ED95589C1E118529004893DA /* PMHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleLogin.swift; sourceTree = "<group>"; };
+		ED95589E1E11867A004893DA /* APIHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleLogin.swift; sourceTree = "<group>"; };
 		ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMSlidingButton.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338951DE9D86300DE940B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -194,6 +198,7 @@
 		ED9558931E10F525004893DA /* LibraryAPI */ = {
 			isa = PBXGroup;
 			children = (
+				ED95589E1E11867A004893DA /* APIHandleLogin.swift */,
 			);
 			name = LibraryAPI;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 				ED9558911E10F4DC004893DA /* HTTPClient.swift */,
 				ED9558951E10F5B8004893DA /* ServiceURL.swift */,
 				ED9558971E10FFF7004893DA /* NetworkConnectivity.swift */,
+				ED95589C1E118529004893DA /* PMHandleLogin.swift */,
 			);
 			name = PersistencyManager;
 			sourceTree = "<group>";
@@ -462,6 +468,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */,
+				ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */,
 				ED95589B1E1172F1004893DA /* DTOAuthentication.swift in Sources */,
 				EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */,
 				ED9558921E10F4DC004893DA /* HTTPClient.swift in Sources */,
@@ -472,6 +479,7 @@
 				ED9558981E10FFF7004893DA /* NetworkConnectivity.swift in Sources */,
 				ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */,
 				ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */,
+				ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */,
 				EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */,
 				ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */,
 				ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */,

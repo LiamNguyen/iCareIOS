@@ -13,7 +13,7 @@ public class HTTPClient {
     private var serviceURL = ServiceURL(isPRD: true)
     private var returnArray = [AnyObject]()
     
-    func get(url: String) {
+    func getRequest(url: String) {
         if !network.isConnected() {
             return
         }
@@ -25,10 +25,10 @@ public class HTTPClient {
         returnArray = (JSONResponse[url] as? [AnyObject])!
     }
     
-    func post(url: String) {
+    func postRequest(url: String, body: String) {
         var request = URLRequest(url: URL(string: serviceURL.getServiceURL(serviceURL: url))!)
         request.httpMethod = "POST"
-        let postString = "username=pnguyen10"
+        let postString = body
         request.httpBody = postString.data(using: .utf8)
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
@@ -41,14 +41,15 @@ public class HTTPClient {
                 print("response = \(response)")
             }
             
-            let responseString = String(data: data, encoding: .utf8)
-            print("responseString = \(responseString)")
+            if let responseString = String(data: data, encoding: .utf8) {
+                print("responseString = \(responseString)")
+            }
         }
         task.resume()
     }
     
     func returnDataFromGetRequest(url: String) -> [AnyObject] {
-        get(url: url)
+        getRequest(url: url)
         return returnArray
     }
 }

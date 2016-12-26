@@ -26,13 +26,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var initialConstraintConstant: CGFloat!
     private var lineDrawer = LineDrawer()
     var testReturnArr = HTTPClient()
+    var dtoAuth = DTOAuthentication()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let array = testReturnArr.returnDataFromGetRequest(url: "Select_EcoTime")
         print(array)
-        testReturnArr.post(url: "Select_CheckUserExistence")
+        
+        dtoAuth.username = "pnguyen10"
+        dtoAuth.password = "pnguyen10"
+        
+        if let postStr = dtoAuth.returnHttpBody() {
+            testReturnArr.postRequest(url: "Select_ToAuthenticate", body: postStr)
+            print("return str: \(dtoAuth.returnHttpBody())")
+        } else {
+            print("Missing DTO")
+        }
         
 //=========TXTFIELD DELEGATE=========
         
