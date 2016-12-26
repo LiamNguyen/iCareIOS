@@ -20,13 +20,19 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     @IBOutlet private weak var view_SecondTabContainer: UIView!
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
     @IBOutlet weak var picker_Gender: UIPickerView!
+    @IBOutlet weak var picker_Date: UIDatePicker!
     @IBOutlet weak var slideBtn_Next: MMSlidingButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
     var picker_GenderDataSource = [String]()
+    let datePickerRange = DatePickerRange()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//=========DATE PICKER SET MAX=========
+
+        datePickerRange.datePickerConstraintMax(MaxRangeFromCurrentDate: -13, DatePicker: self.picker_Date)
         
 //=========ENABLE TAB HEADERS=========
         
@@ -53,7 +59,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
 
         picker_GenderDataSource = ["Nam", "Nữ"]
         
-//=========DELEGATING VIEW PICKER=========
+//=========DELEGATING slideBtn_Next=========
         
         self.slideBtn_Next.delegate  = self
         self.slideBtn_Next.reset()
@@ -104,6 +110,8 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         return picker_GenderDataSource[row]
     }
     
+//=========TRANSITION TO THIRD INFO PAGE WITH slideBtn_Next=========
+    
     func buttonStatus(_ status:String, sender:MMSlidingButton) {
         self.performSegue(withIdentifier: "segue_CustomerInformationSecondTabToThirdTab", sender: self)
     }
@@ -121,8 +129,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         return true
     }
 
-    
-    
+
     
     
     

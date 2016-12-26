@@ -27,7 +27,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var initialConstraintConstant: CGFloat!
     private var screenWidth: CGFloat!
     private var screenHeight: CGFloat!
-    private var isIphone4 = false
+    private var isIphone4 = true
     private var lineDrawer = LineDrawer()
     
     override func viewDidLoad() {
@@ -75,17 +75,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(swipeRight)
         
-//        //=========DRAW LINE=========
-//        
-//        let firstPoint = CGPoint(x: 0, y: 480)
-//        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
-//        
-//        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-//        
-//        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
-//        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
-//        
-//        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+        //=========DRAW LINE=========
+        
+        let firstPoint = CGPoint(x: 0, y: 480)
+        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+        
+        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+        
+        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+        
+        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
         
 
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
@@ -141,21 +141,31 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        btn_Back.isHidden = false
 
 //=========IPHONE 6 AND HIGHER=========
         
         if screenHeight >= 667 {
             return true
         }
-
-        if !isIphone4 {
-            adjustViewOrigin(y: initialViewOrigin)
-            adjustTxtOrigin(y: initialTxtOrigin)
+        
+        switch textField {
+        case txt_Username:
+            txt_Password.becomeFirstResponder()
+        case txt_Password:
+            txt_ConfirmPassword.becomeFirstResponder()
+        default:
+            btn_Back.isHidden = false
+            if !isIphone4 && textField == txt_ConfirmPassword {
+                adjustViewOrigin(y: initialViewOrigin)
+                adjustTxtOrigin(y: initialTxtOrigin)
+                return true
+            }
+        }
+        
+        if textField != txt_ConfirmPassword {
             return true
         }
         updateTxtFieldLoseFocusStyleForIphone4()
-
         return true
     }
     
@@ -183,7 +193,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         if !isIphone4 {
             return
         }
-        adjustViewOrigin(y: 0)
+        adjustViewOrigin(y: 35)
         constraint_BtnBackWidth.constant = 25
         constraint_BtnBackHeight.constant = 25
     }
@@ -191,7 +201,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 //=========UPDATE UI FOR IPHONE 4 WHEN ON TXTFIELD FOCUS=========
     
     private func updateTxtFieldFocusStyleForIphone4() {
-        adjustViewOrigin(y: 10)
+        adjustViewOrigin(y: 0)
         adjustTxtOrigin(y: 20)
         lbl_Welcome.isHidden = true
         constrant_TxtView_LoginView.constant = 0
@@ -200,7 +210,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 //=========REVERT UPDATE UI FOR IPHONE 4 ON TXTFIELD LOSE FOCUS=========
     
     private func updateTxtFieldLoseFocusStyleForIphone4() {
-        adjustViewOrigin(y: 30)
+        adjustViewOrigin(y: 35)
         adjustTxtOrigin(y: initialTxtOrigin)
         lbl_Welcome.isHidden = false
         constrant_TxtView_LoginView.constant = initialConstraintConstant

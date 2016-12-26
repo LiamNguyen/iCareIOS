@@ -10,16 +10,15 @@ import UIKit
 import QuartzCore
 import DropDown
 
-class BookingGeneralViewController: UIViewController {
+class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
-    @IBOutlet weak var lbl_Notification: UILabel!
-
     @IBOutlet weak var btn_CountriesDropDown: NiceButton!
     @IBOutlet weak var btn_CitiesDropDown: NiceButton!
     @IBOutlet weak var btn_DistrictsDropDown: NiceButton!
     @IBOutlet weak var btn_LocationsDropDown: NiceButton!
     @IBOutlet weak var btn_VouchersDropDown: NiceButton!
     @IBOutlet weak var btn_TypesDropDown: NiceButton!
+    @IBOutlet weak var slideBtn_Next: MMSlidingButton!
     
 //=========MARK: PROPERTIES=========
     
@@ -41,6 +40,8 @@ class BookingGeneralViewController: UIViewController {
                self.dropDown_Types]
     }()
     
+//=========VIEW DID LOAD FUNC=========
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     
@@ -52,21 +53,24 @@ class BookingGeneralViewController: UIViewController {
 
         setupDefaultDropDown()
         
-//=========CUSTOM STYLE FOR NOTIFICATION ICON=========
+//=========DELEGATING slideBtn_Next=========
         
-        customNotificationIcon()
-
+        self.slideBtn_Next.delegate  = self
+        self.slideBtn_Next.reset()
+        
     }
     
+//=========TRANSITION TO START-END DATE VIEW CONTROLLER=========
+
+    func buttonStatus(_ status:String, sender:MMSlidingButton) {
+        self.performSegue(withIdentifier: "segue_BookingGeneralToStartEnDate", sender: self)
+    }
+
 //=========btn_CountriesDropDown DROPDOWN=========
 
     @IBAction func btn_CountriesDropDown_OnClick(_ sender: Any) {
         dropDown_Countries.show()
     }
-    
-    
-    
-    
     
 //=========WIRED UP ALL DROPDOWNS=========
     
@@ -78,11 +82,15 @@ class BookingGeneralViewController: UIViewController {
 
     func dropDownCountriesWiredUp() {
         dropDown_Countries.anchorView = btn_CountriesDropDown
-        dropDown_Countries.bottomOffset = CGPoint(x: 0, y: btn_CountriesDropDown.bounds.height)
+
+        //dropDown_Countries.bottomOffset = CGPoint(x: 0, y: btn_CountriesDropDown.bounds.height)
         dropDown_Countries.selectionAction = { [unowned self] (index, item) in
             self.btn_CountriesDropDown.setTitle(item, for: .normal)
         }
-        dropDown_Countries.dataSource = ["Việt Nam - Vietnam", "Hàn Quốc - Korean", "Mỹ - America"]
+        dropDown_Countries.dataSource = ["Việt Nam - Vietnam", "Hàn Quốc - Korean", "Mỹ - America",
+        "Canada - Canada", "Singapore - Singapore"]
+            
+//            , "Nhật Bản - Japan", "Thái Lan - Thailand", "Đức - German", "Pháp - Paris", "Ý - Italia", "Thuỵ Điển - Swedish", "Thuỵ Sĩ - Switzerland"]
 
     }
     
@@ -112,14 +120,7 @@ class BookingGeneralViewController: UIViewController {
         }
         
         dropDowns.forEach { $0.dismissMode = .automatic }
-        dropDowns.forEach { $0.direction = .bottom }
-    }
-    
-//=========CUSTOM STYLE FOR NOTIFICATION ICON=========
-
-    func customNotificationIcon() {
-        let radius = min(lbl_Notification.frame.size.width, lbl_Notification.frame.size.height) / 2.0
-        lbl_Notification.layer.cornerRadius = radius
+        dropDowns.forEach { $0.direction = .any }
     }
     
 }

@@ -25,9 +25,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
     private var lineDrawer = LineDrawer()
+    var testReturnArr = HTTPClient()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let array = testReturnArr.returnDataFromGetRequest(url: "Select_EcoTime")
+        print(array)
+        testReturnArr.post(url: "Select_CheckUserExistence")
         
 //=========TXTFIELD DELEGATE=========
         
@@ -71,17 +76,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         updateLoadStyleForIphone4()
         
-//        //=========DRAW LINE=========
-//
-//        let firstPoint = CGPoint(x: 0, y: 480)
-//        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
-//        
-//        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-//        
-//        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
-//        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
-//        
-//        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+        //=========DRAW LINE=========
+
+        let firstPoint = CGPoint(x: 0, y: 480)
+        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+        
+        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+        
+        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+        
+        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
     
     }
 
@@ -114,12 +119,20 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        if !isIphone4 {
+        
+        if textField == txt_Username {
+            txt_Password.becomeFirstResponder()
+        }
+        
+        if !isIphone4 && textField == txt_Password {
             adjustViewOrigin(y: initialViewOrigin)
             return true
         }
+
+        if textField != txt_Password {
+            return true
+        }
         updateTxtFieldLoseFocusStyleForIphone4()
-        
         return true
     }
     
@@ -156,13 +169,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         if !isIphone4 {
             return
         }
-        adjustViewOrigin(y: 30)
+        adjustViewOrigin(y: 10)
     }
     
 //=========UPDATE UI FOR IPHONE 4 WHEN ON TXTFIELD FOCUS=========
     
     private func updateTxtFieldFocusStyleForIphone4() {
-        adjustViewOrigin(y: 10)
         adjustTxtOrigin(y: 60)
         constraint_BtnLogin_TxtConfirm.constant = 20
         btn_ResetPassword.isHidden = true
@@ -171,7 +183,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //=========REVERT UPDATE UI FOR IPHONE 4 ON TXTFIELD LOSE FOCUS=========
 
     private func updateTxtFieldLoseFocusStyleForIphone4() {
-        adjustViewOrigin(y: 30)
         adjustTxtOrigin(y: initialTxtOrigin)
         constraint_BtnLogin_TxtConfirm.constant = initialConstraintConstant
         btn_ResetPassword.isHidden = false
