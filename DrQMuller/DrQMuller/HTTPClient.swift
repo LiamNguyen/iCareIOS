@@ -14,7 +14,7 @@ protocol HTTPClientDelegate {
 
 public class HTTPClient {
     private var network = NetworkConnectivity()
-    private var serviceURL = ServiceURL(isPRD: true)
+    private var serviceURL = ServiceURL(isPRD: false)
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     

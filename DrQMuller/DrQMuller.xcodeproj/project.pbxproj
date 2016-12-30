@@ -16,6 +16,7 @@
 		ED41DF3D1E163EC900803A14 /* ModelHandleBookingGeneral.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF3C1E163EC900803A14 /* ModelHandleBookingGeneral.swift */; };
 		ED41DF3F1E164CC000803A14 /* APIHandleBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF3E1E164CC000803A14 /* APIHandleBooking.swift */; };
 		ED41DF411E164D0C00803A14 /* PMHandleBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF401E164D0C00803A14 /* PMHandleBooking.swift */; };
+		ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */; };
 		ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */; };
 		ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */; };
 		ED6986961E12E14000932E93 /* ModelHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6986951E12E14000932E93 /* ModelHandleLogin.swift */; };
@@ -82,6 +83,7 @@
 		ED41DF3C1E163EC900803A14 /* ModelHandleBookingGeneral.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingGeneral.swift; sourceTree = "<group>"; };
 		ED41DF3E1E164CC000803A14 /* APIHandleBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleBooking.swift; sourceTree = "<group>"; };
 		ED41DF401E164D0C00803A14 /* PMHandleBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleBooking.swift; sourceTree = "<group>"; };
+		ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOStaticArrayDataSource.swift; sourceTree = "<group>"; };
 		ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingDetailViewController.swift; sourceTree = "<group>"; };
 		ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingGeneralViewController.swift; sourceTree = "<group>"; };
 		ED6986951E12E14000932E93 /* ModelHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleLogin.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				ED95589A1E1172F1004893DA /* DTOAuthentication.swift */,
+				ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */,
 			);
 			name = DTO;
 			sourceTree = "<group>";
@@ -360,7 +363,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = LetsDev;
 				TargetAttributes = {
 					EDB338911DE9D86300DE940B = {
@@ -484,6 +487,7 @@
 			files = (
 				ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */,
 				ED6986981E12E8E700932E93 /* Messages.swift in Sources */,
+				ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */,
 				ED41DF3F1E164CC000803A14 /* APIHandleBooking.swift in Sources */,
 				ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */,
 				ED95589B1E1172F1004893DA /* DTOAuthentication.swift in Sources */,

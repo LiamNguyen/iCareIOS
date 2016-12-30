@@ -19,9 +19,12 @@ class APIHandleBooking: NSObject {
     }
     
     override init() {
+
         persistencyManager = PMHandleBooking()
     }
     
-    
+    func getDropDownsDataSource() {
+        persistencyManager.getDropDownsDataSource()
+    }
 
 }

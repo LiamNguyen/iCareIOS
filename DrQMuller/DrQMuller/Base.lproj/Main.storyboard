@@ -1087,6 +1087,9 @@
                                 <state key="normal" title="VIP Booking">
                                     <color key="titleColor" red="0.6129767340857013" green="0.060420009692819465" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="btn_VouchersDropDown_OnClick:" destination="zGE-cu-f7j" eventType="touchUpInside" id="GnD-ec-6fz"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropDownIcon" translatesAutoresizingMaskIntoConstraints="NO" id="qUQ-tW-CTN">
                                 <rect key="frame" x="284" y="283" width="20" height="20"/>
@@ -1102,6 +1105,9 @@
                                 <state key="normal" title="Cố Định">
                                     <color key="titleColor" red="0.6129767340857013" green="0.060420009692819465" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="btn_TypesDropDown_OnClick:" destination="zGE-cu-f7j" eventType="touchUpInside" id="ipr-wW-jIp"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dropDownIcon" translatesAutoresizingMaskIntoConstraints="NO" id="V8T-nu-J3C">
                                 <rect key="frame" x="284" y="99" width="20" height="20"/>
@@ -1466,10 +1472,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="25N-BX-oeo"/>
+        <segue reference="Hpz-zP-PTR"/>
         <segue reference="lUW-tB-BQG"/>
-        <segue reference="d88-TN-lRm"/>
+        <segue reference="25N-BX-oeo"/>
         <segue reference="Hn6-nH-Q49"/>
-        <segue reference="B6B-Of-tMD"/>
+        <segue reference="d88-TN-lRm"/>
     </inferredMetricsTieBreakers>
 </document>

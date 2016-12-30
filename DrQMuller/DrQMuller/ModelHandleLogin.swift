@@ -16,6 +16,7 @@ class ModelHandleLogin {
     
     init() {
         message = Messages()
+//OBSERVE FOR NOTIFICATION FROM PMHandleBooking
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "postRequestStatus"), object: nil, queue: nil, using: handleView)
     }
     
