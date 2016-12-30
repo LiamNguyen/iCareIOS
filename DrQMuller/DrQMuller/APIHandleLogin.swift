@@ -9,7 +9,21 @@
 import UIKit
 
 class APIHandleLogin: NSObject {
-//    func handleLogin(username: String, password: String) -> Bool {
-//        <#function body#>
-//    }
+    
+    private var persistencyManager: PMHandleLogin!
+    
+    class var sharedInstace: APIHandleLogin {
+        struct Singleton {
+            static let instance = APIHandleLogin()
+        }
+        return Singleton.instance
+    }
+    
+    override init() {
+        persistencyManager = PMHandleLogin()
+    }
+    
+    func handleLogin(username: String, password: String) {
+        persistencyManager.handleLogin(username: username, password: password)
+    }
 }

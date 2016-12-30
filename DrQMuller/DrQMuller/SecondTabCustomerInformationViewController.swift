@@ -24,8 +24,9 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     @IBOutlet weak var slideBtn_Next: MMSlidingButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
-    var picker_GenderDataSource = [String]()
-    let datePickerRange = DatePickerRange()
+    private var message = Messages()
+    private var picker_GenderDataSource = [String]()
+    private let datePickerRange = DatePickerRange()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,20 +70,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
 //=========POP UP CONFIRM DIALOG=========
         
-        confirmDialog()
-    }
-    
-//=========CREATE POP UP CONFIRM DIALOG=========
-    
-    private func confirmDialog() {
-        let confirmDialog = UIAlertController(title: "Quý khách sẽ đăng thoát?", message: "Những thông tin chưa được xác nhận sẽ không được lưu trữ.", preferredStyle: UIAlertControllerStyle.alert)
-        confirmDialog.addAction(UIAlertAction(title: "Đăng thoát", style: .default, handler: { (action: UIAlertAction!) in
-            self.performSegue(withIdentifier: "segue_CustomerInformationSecondTabToLogin", sender: self)
-        }))
-        confirmDialog.addAction(UIAlertAction(title: "Huỷ", style: .cancel, handler: { (action: UIAlertAction!) in
-            
-        }))
-        present(confirmDialog, animated: true, completion: nil)
+        message.confirmDialog(sender: self)
     }
     
 //=========TRANSITION TO FIRST INFO PAGE=========

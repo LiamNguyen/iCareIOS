@@ -27,7 +27,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var initialConstraintConstant: CGFloat!
     private var screenWidth: CGFloat!
     private var screenHeight: CGFloat!
-    private var isIphone4 = true
+    private var isIphone4 = false
     private var lineDrawer = LineDrawer()
     
     override func viewDidLoad() {

@@ -23,9 +23,21 @@ class BookingDetailViewController: UIViewController {
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func lbl_Back_OnClick(_ sender: Any) {
+        self.performSegue(withIdentifier: "segue_BookingDetailToBookingGeneral", sender: self)
     }
+    
+    @IBAction func btn_Back_OnClick(_ sender: Any) {
+        self.performSegue(withIdentifier: "segue_BookingDetailToBookingGeneral", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "segue_BookingDetailToBookingGeneral"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 1
+            }
+        }
+    }
+    
     
 }

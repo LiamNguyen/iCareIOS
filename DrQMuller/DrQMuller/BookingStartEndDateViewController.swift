@@ -22,5 +22,20 @@ class BookingStartEndDateViewController: UIViewController {
 
     }
 
+    @IBAction func lbl_Back_OnClick(_ sender: Any) {
+        self.performSegue(withIdentifier: "segue_BookingDateToBookingGeneral", sender: self)
+    }
+    
+    @IBAction func btn_Back_OnClick(_ sender: Any) {
+        self.performSegue(withIdentifier: "segue_BookingDateToBookingGeneral", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segue_BookingDateToBookingGeneral" {
+            if let tabVC = segue.destination as? UITabBarController {
+                tabVC.selectedIndex = 1
+            }
+        }
+    }
 
 }

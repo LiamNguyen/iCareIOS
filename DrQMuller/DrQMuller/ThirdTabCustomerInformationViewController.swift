@@ -23,6 +23,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet weak var txt_Phone: UITextField!
     
     private var customerInformationController = CustomStyleCustomerInformation()
+    private var message = Messages()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,21 +59,8 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========POP UP CONFIRM DIALOG=========
         
-        confirmDialog()
+        message.confirmDialog(sender: self)
         
-    }
-    
-//=========CREATE POP UP CONFIRM DIALOG=========
-    
-    private func confirmDialog() {
-        let confirmDialog = UIAlertController(title: "Quý khách sẽ đăng thoát?", message: "Những thông tin chưa được xác nhận sẽ không được lưu trữ.", preferredStyle: UIAlertControllerStyle.alert)
-        confirmDialog.addAction(UIAlertAction(title: "Đăng thoát", style: .default, handler: { (action: UIAlertAction!) in
-            self.performSegue(withIdentifier: "segue_CustomerInformationThirdTabToLogin", sender: self)
-        }))
-        confirmDialog.addAction(UIAlertAction(title: "Huỷ", style: .cancel, handler: { (action: UIAlertAction!) in
-            
-        }))
-        present(confirmDialog, animated: true, completion: nil)
     }
     
 //=========TRANSITION TO FIRST INFO PAGE=========

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class DTOAuthentication {
+public class DTOAuthentication: NSObject {
     private var _username: String!
     var username: String {
         get {

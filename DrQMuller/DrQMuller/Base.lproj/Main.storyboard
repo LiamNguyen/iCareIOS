@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="715-Lq-BFk">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -111,6 +111,9 @@
                                                 <state key="normal" title="Đăng nhập">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="btn_Login_OnClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WBJ-hX-HtN"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FuG-ai-bV8">
                                                 <rect key="frame" x="0.0" y="232" width="263" height="50"/>
@@ -123,7 +126,7 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="ElV-lj-bZP" kind="show" id="SES-AU-orA"/>
+                                                    <segue destination="ElV-lj-bZP" kind="show" identifier="segue_LoginToRegister" id="SES-AU-orA"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EXZ-pt-WS2">
@@ -224,6 +227,7 @@
                         <segue destination="uw5-Ou-aKy" kind="show" identifier="segue_LoginToCustomerInformationFirstTab" id="d88-TN-lRm"/>
                         <segue destination="os0-hg-hVA" kind="show" identifier="segue_LoginToCustomerInformationSecondTab" id="Hn6-nH-Q49"/>
                         <segue destination="ioB-WT-TZj" kind="show" identifier="segue_LoginToCustomerInformationThirdTab" id="25N-BX-oeo"/>
+                        <segue destination="715-Lq-BFk" kind="show" identifier="segue_LoginToBookingTabViewController" id="NtQ-bk-9Of"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -1012,7 +1016,8 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="38" id="11E-xt-qan"/>
                                 </constraints>
-                                <state key="normal" title="Việt Nam">
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="15"/>
+                                <state key="normal" title="Quốc gia">
                                     <color key="titleColor" red="0.6129767340857013" green="0.060420009692819465" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
@@ -1210,7 +1215,7 @@
                                         <state key="normal" title="Button" image="backIcon2"/>
                                         <connections>
                                             <action selector="btn_Back_OnClick:" destination="os0-hg-hVA" eventType="touchUpInside" id="G8d-6d-9Kj"/>
-                                            <segue destination="zGE-cu-f7j" kind="presentation" modalTransitionStyle="crossDissolve" id="pzw-S6-xLk"/>
+                                            <action selector="btn_Back_OnClick:" destination="dGw-41-sbb" eventType="touchUpInside" id="ssa-YM-taa"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1iq-R8-nnq">
@@ -1220,7 +1225,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="zGE-cu-f7j" kind="presentation" modalTransitionStyle="crossDissolve" id="RX4-yc-0IZ"/>
+                                            <action selector="lbl_Back_OnClick:" destination="dGw-41-sbb" eventType="touchUpInside" id="hKD-ww-j97"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1306,6 +1311,7 @@
                         <outlet property="picker_EndDate" destination="pBC-g2-AR8" id="hJA-Iq-XcT"/>
                         <outlet property="picker_StartDate" destination="Xd9-Xj-VhK" id="fVO-K3-BSQ"/>
                         <outlet property="slideBtn_Next" destination="2UY-zD-BI7" id="2qz-eE-M5H"/>
+                        <segue destination="715-Lq-BFk" kind="show" identifier="segue_BookingDateToBookingGeneral" id="Hpz-zP-PTR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFv-Y1-j96" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1335,8 +1341,8 @@
                                         </constraints>
                                         <state key="normal" title="Button" image="backIcon2"/>
                                         <connections>
+                                            <action selector="btn_Back_OnClick:" destination="rI9-M0-Ata" eventType="touchUpInside" id="IQx-Qv-Rgj"/>
                                             <action selector="btn_Back_OnClick:" destination="os0-hg-hVA" eventType="touchUpInside" id="hEB-3W-ruX"/>
-                                            <segue destination="zGE-cu-f7j" kind="presentation" modalTransitionStyle="crossDissolve" id="RXF-3R-oH0"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zKY-zv-c0S">
@@ -1346,7 +1352,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="zGE-cu-f7j" kind="presentation" modalTransitionStyle="crossDissolve" id="6gn-g0-S1y"/>
+                                            <action selector="lbl_Back_OnClick:" destination="rI9-M0-Ata" eventType="touchUpInside" id="yAl-Rt-61e"/>
                                         </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cartIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xXy-c9-a6G">
@@ -1392,6 +1398,7 @@
                     </view>
                     <connections>
                         <outlet property="lbl_Notification" destination="xGj-AD-CDi" id="KK2-0E-iPb"/>
+                        <segue destination="715-Lq-BFk" kind="show" identifier="segue_BookingDetailToBookingGeneral" id="B6B-Of-tMD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tP4-ZY-qPZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1459,10 +1466,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lUW-tB-BQG"/>
-        <segue reference="Hn6-nH-Q49"/>
         <segue reference="25N-BX-oeo"/>
+        <segue reference="lUW-tB-BQG"/>
         <segue reference="d88-TN-lRm"/>
-        <segue reference="pzw-S6-xLk"/>
+        <segue reference="Hn6-nH-Q49"/>
+        <segue reference="B6B-Of-tMD"/>
     </inferredMetricsTieBreakers>
 </document>

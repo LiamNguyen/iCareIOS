@@ -8,10 +8,15 @@
 
 import Foundation
 
+protocol HTTPClientDelegate {
+    func onReceiveRequestResponse(data: AnyObject) -> Void
+}
+
 public class HTTPClient {
     private var network = NetworkConnectivity()
     private var serviceURL = ServiceURL(isPRD: true)
     private var returnArray = [AnyObject]()
+    var delegate: HTTPClientDelegate?
     
     func getRequest(url: String) {
         if !network.isConnected() {
@@ -19,32 +24,56 @@ public class HTTPClient {
         }
 
         let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
-        let data = NSData(contentsOf: URL as! URL)
-        let JSONResponse = try! JSONSerialization.jsonObject(with: data as! Data, options: .allowFragments) as! NSDictionary
+        var request = URLRequest(url: URL as! URL)
+        request.httpMethod = "GET"
         
-        returnArray = (JSONResponse[url] as? [AnyObject])!
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if data?.count != 0 {
+                let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
+                self.delegate?.onReceiveRequestResponse(data: JSONResponse)
+            }
+        
+        }
+        
+        task.resume()
     }
     
-    func postRequest(url: String, body: String) {
+    func postRequest(url: String, body: String, postCompleted: @escaping (_ success: Bool, _ msg: String) -> ()) {
+        if !network.isConnected() {
+            return
+        }
         var request = URLRequest(url: URL(string: serviceURL.getServiceURL(serviceURL: url))!)
         request.httpMethod = "POST"
         let postString = body
         request.httpBody = postString.data(using: .utf8)
+        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
                 print("error=\(error)")
+                postCompleted(false, "JSON data receives error: \(error)")
                 return
             }
             
             if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                 print("statusCode should be 200, but is \(httpStatus.statusCode)")
                 print("response = \(response)")
+                postCompleted(false, "http status receives error: \(error)_Status code: \(httpStatus.statusCode)")
             }
             
-            if let responseString = String(data: data, encoding: .utf8) {
-                print("responseString = \(responseString)")
+            if data.count != 0 {
+                let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
+                print("Response from server: \(JSONResponse)")
+                if let success = JSONResponse["Status"] as? String {
+                    if success == "true" {
+                        print("Success in HTTPClient class")
+                        postCompleted(true, "Login verified")
+                    } else if success == "false" {
+                        postCompleted(false, "Login Failed")
+                    }
+                }
             }
         }
+        
         task.resume()
     }
     

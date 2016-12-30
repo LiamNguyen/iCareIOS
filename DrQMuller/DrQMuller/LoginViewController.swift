@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDelegate {
 
     @IBOutlet private weak var loginView: UIView!
     @IBOutlet private weak var txtView: UIView!
@@ -26,23 +26,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var initialConstraintConstant: CGFloat!
     private var lineDrawer = LineDrawer()
     var testReturnArr = HTTPClient()
-    var dtoAuth = DTOAuthentication()
+    private var modelHandleLogin = ModelHandleLogin()
+    private var message = Messages()
+    
+    func onReceiveRequestResponse(data: AnyObject) {
+        if let array = data["Select_Vouchers"]! as? NSArray {
+            let dict = array[1] as! NSDictionary
+            print(dict["VOUCHER"]!)
+        } else if let array = data["Select_AllTime"]! as? NSArray {
+            print(array)
+        } else {
+            print("Wrongggg")
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let array = testReturnArr.returnDataFromGetRequest(url: "Select_EcoTime")
-        print(array)
-        
-        dtoAuth.username = "pnguyen10"
-        dtoAuth.password = "pnguyen10"
-        
-        if let postStr = dtoAuth.returnHttpBody() {
-            testReturnArr.postRequest(url: "Select_ToAuthenticate", body: postStr)
-            print("return str: \(dtoAuth.returnHttpBody())")
-        } else {
-            print("Missing DTO")
-        }
+        testReturnArr.delegate = self
+        testReturnArr.getRequest(url: "Select_AllTime")
+        testReturnArr.getRequest(url: "Select_Vouchers")
         
 //=========TXTFIELD DELEGATE=========
         
@@ -86,17 +89,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         updateLoadStyleForIphone4()
         
-        //=========DRAW LINE=========
-
-        let firstPoint = CGPoint(x: 0, y: 480)
-        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
-        
-        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-        
-        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
-        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
-        
-        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+//        //=========DRAW LINE=========
+//
+//        let firstPoint = CGPoint(x: 0, y: 480)
+//        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+//        
+//        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+//        
+//        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+//        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+//        
+//        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
     
     }
 
@@ -197,5 +200,42 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         constraint_BtnLogin_TxtConfirm.constant = initialConstraintConstant
         btn_ResetPassword.isHidden = false
     }
+    
+    
+    @IBAction func btn_Login_OnClick(_ sender: Any) {
+        if !frontValidationPassed() {
+            return
+        }
+        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!, viewController: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if(segue.identifier == "segue_LoginToBookingTabViewController"){
+            if let tabVC = segue.destination as? UITabBarController{
+                tabVC.selectedIndex = 1
+            }
+        }
+    }
+
+    
+//=========VALIDATE TEXTFIELD=========
+    
+    private func frontValidationPassed() -> Bool {
+        if let username = txt_Username.text, let password = txt_Password.text {
+            if username.isEmpty {
+                message.errorMessage(sender: self, msg: "Tên đăng nhập trống")
+                return false
+            }
+            
+            if password.isEmpty {
+                message.errorMessage(sender: self, msg: "Mật khẩu trống")
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    
+    
 }
 
