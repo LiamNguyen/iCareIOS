@@ -18,12 +18,12 @@ public class HTTPClient {
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
-    func getRequest(url: String) {
+    func getRequest(url: String, parameter: String) {
         if !network.isConnected() {
             return
         }
 
-        let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
+        let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
         var request = URLRequest(url: URL as! URL)
         request.httpMethod = "GET"
         
@@ -75,11 +75,6 @@ public class HTTPClient {
         }
         
         task.resume()
-    }
-    
-    func returnDataFromGetRequest(url: String) -> [AnyObject] {
-        getRequest(url: url)
-        return returnArray
     }
 }
 

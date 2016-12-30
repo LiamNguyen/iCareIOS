@@ -44,8 +44,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         super.viewDidLoad()
         
         testReturnArr.delegate = self
-        testReturnArr.getRequest(url: "Select_AllTime")
-        testReturnArr.getRequest(url: "Select_Vouchers")
+
         
 //=========TXTFIELD DELEGATE=========
         
@@ -89,17 +88,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         
         updateLoadStyleForIphone4()
         
-//        //=========DRAW LINE=========
-//
-//        let firstPoint = CGPoint(x: 0, y: 480)
-//        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
-//        
-//        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-//        
-//        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
-//        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
-//        
-//        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+        //=========DRAW LINE=========
+
+        let firstPoint = CGPoint(x: 0, y: 480)
+        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+        
+        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor(netHex: 0x8F00B3), view: self.view)
+        
+        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+        
+        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
     
     }
 

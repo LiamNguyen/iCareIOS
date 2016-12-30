@@ -89,11 +89,11 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     }
     
     func getDropDownsDataSource() {
-        httpClient.getRequest(url: "Select_Countries")
-        httpClient.getRequest(url: "Select_Cities")
-        httpClient.getRequest(url: "Select_Districts")
-        httpClient.getRequest(url: "Select_Locations")
-        httpClient.getRequest(url: "Select_Vouchers")
-        httpClient.getRequest(url: "Select_Types")
+        httpClient.getRequest(url: "Select_Countries", parameter: "")
+        httpClient.getRequest(url: "Select_Cities", parameter: "")
+        httpClient.getRequest(url: "Select_Districts", parameter: "")
+        httpClient.getRequest(url: "Select_Locations", parameter: "")
+        httpClient.getRequest(url: "Select_Vouchers", parameter: "")
+        httpClient.getRequest(url: "Select_Types", parameter: "")
     }
 }

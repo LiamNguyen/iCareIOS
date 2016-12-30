@@ -31,7 +31,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
-    lazy var dropDowns: [DropDown] = {
+    private lazy var dropDowns: [DropDown] = {
         return [self.dropDown_Countries,
                 self.dropDown_Cites,
                 self.dropDown_Districts,
@@ -70,16 +70,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     func bindDataSource(notification: Notification) {
         if let userInfo = notification.userInfo {
             let dtoArrays = userInfo["returnArrayDataSource"] as? DTOStaticArrayDataSource
-            
-            dropDownCountriesWiredUp(dataSource: (dtoArrays?.dropDownCountriesDataSource)!)
-            dropDownVouchersWiredUp(dataSource: (dtoArrays?.dropDownVouchersDataSource)!)
-            dropDownTypesWiredUp(dataSource: (dtoArrays?.dropDownTypesDataSource)!)
-            
-            DispatchQueue.main.async {
-                self.btn_CountriesDropDown.setTitle(self.dropDown_Countries.selectedItem, for: .normal)
-                self.btn_VouchersDropDown.setTitle(self.dropDown_Vouchers.selectedItem, for: .normal)
-                self.btn_TypesDropDown.setTitle(self.dropDown_Types.selectedItem, for: .normal)
-            }
+            dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, vouchers: (dtoArrays?.dropDownCitiesDataSource)!, types: (dtoArrays?.dropDownTypesDataSource)!)
         }
     }
     
@@ -108,15 +99,23 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     }
 //=========WIRED UP ALL DROPDOWNS=========
     
-    func dropDownAllWiredUp() {
-        //dropDownCountriesWiredUp()
+    private func dropDownAllWiredUp(countries: [String], vouchers: [String], types: [String]) {
+        dropDownCountriesWiredUp(dataSource: countries)
+        dropDownVouchersWiredUp(dataSource: vouchers)
+        dropDownTypesWiredUp(dataSource: types)
+        
+        DispatchQueue.main.async {
+            self.btn_CountriesDropDown.setTitle(self.dropDown_Countries.selectedItem, for: .normal)
+            self.btn_VouchersDropDown.setTitle(self.dropDown_Vouchers.selectedItem, for: .normal)
+            self.btn_TypesDropDown.setTitle(self.dropDown_Types.selectedItem, for: .normal)
+        }
     }
     
 //=========WIRED UP dropDown_Countries=========
     
-    func dropDownCountriesWiredUp(dataSource: [String]) {
+    private func dropDownCountriesWiredUp(dataSource: [String]) {
         dropDown_Countries.anchorView = btn_CountriesDropDown
-                
+        
         dropDown_Countries.dataSource = dataSource
         dropDown_Countries.selectRow(at: 234)
         
@@ -136,7 +135,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
 //=========WIRED UP dropDown_Vouchers=========
     
-    func dropDownVouchersWiredUp(dataSource: [String]) {
+    private func dropDownVouchersWiredUp(dataSource: [String]) {
         dropDown_Vouchers.anchorView = btn_VouchersDropDown
         
         dropDown_Vouchers.dataSource = dataSource
@@ -149,7 +148,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
 //=========WIRED UP dropDown_Types=========
     
-    func dropDownTypesWiredUp(dataSource: [String]) {
+    private func dropDownTypesWiredUp(dataSource: [String]) {
         dropDown_Types.anchorView = btn_TypesDropDown
         
         dropDown_Types.dataSource = dataSource
@@ -163,7 +162,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
 //=========DEFAULT DROPDOWN STYLE=========
     
-    func setupDefaultDropDown() {
+    private func setupDefaultDropDown() {
         DropDown.setupDefaultAppearance()
         
         dropDowns.forEach {
