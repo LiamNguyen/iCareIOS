@@ -40,6 +40,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownCitiesDataSource.append(dictItem["CITY"]! as! String)
             }
+            dtoArrays.dropDownCitiesDataSource = dropDownCitiesDataSource
         }
 //HANDLE DISTRICTS DATASOURCE
         var dropDownDistrictsDataSource = [String]()
@@ -48,14 +49,16 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownDistrictsDataSource.append(dictItem["DISTRICT"]! as! String)
             }
+            dtoArrays.dropDownDistrictsDataSource = dropDownDistrictsDataSource
         }
 //HANDLE LOCATIONS DATASOURCE
         var dropDownLocationsDataSource = [String]()
         if let arrayDataSource = data["Select_Locations"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownLocationsDataSource.append(dictItem["LOCATION_NAME"]! as! String)
+                dropDownLocationsDataSource.append(dictItem["ADDRESS"]! as! String)
             }
+            dtoArrays.dropDownLocationsDataSource = dropDownLocationsDataSource
         }
 //HANDLE VOUCHERS DATASOURCE
         var dropDownVouchersDataSource = [String]()
@@ -76,23 +79,21 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             dtoArrays.dropDownTypesDataSource = dropDownTypesDataSource
         }
         
-        
-        if self.counter == 3 {
+        if self.counter == 6 {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
             returnArrayDataSource["returnArrayDataSource"] = dtoArrays
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
 
             counter = 1
         }
-        
         counter += 1
     }
     
     func getDropDownsDataSource() {
         httpClient.getRequest(url: "Select_Countries", parameter: "")
-        httpClient.getRequest(url: "Select_Cities", parameter: "")
-        httpClient.getRequest(url: "Select_Districts", parameter: "")
-        httpClient.getRequest(url: "Select_Locations", parameter: "")
+        httpClient.getRequest(url: "Select_Cities", parameter: "?country_id=235")
+        httpClient.getRequest(url: "Select_Districts", parameter: "?city_id=58")
+        httpClient.getRequest(url: "Select_Locations", parameter: "?district_id=630")
         httpClient.getRequest(url: "Select_Vouchers", parameter: "")
         httpClient.getRequest(url: "Select_Types", parameter: "")
     }

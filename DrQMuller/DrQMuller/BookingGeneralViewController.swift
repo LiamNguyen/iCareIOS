@@ -23,7 +23,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     //=========MARK: PROPERTIES=========
     
     private let dropDown_Countries = DropDown()
-    private let dropDown_Cites = DropDown()
+    private let dropDown_Cities = DropDown()
     private let dropDown_Districts = DropDown()
     private let dropDown_Locations = DropDown()
     private let dropDown_Vouchers = DropDown()
@@ -33,7 +33,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     private lazy var dropDowns: [DropDown] = {
         return [self.dropDown_Countries,
-                self.dropDown_Cites,
+                self.dropDown_Cities,
                 self.dropDown_Districts,
                 self.dropDown_Locations,
                 self.dropDown_Vouchers,
@@ -70,7 +70,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     func bindDataSource(notification: Notification) {
         if let userInfo = notification.userInfo {
             let dtoArrays = userInfo["returnArrayDataSource"] as? DTOStaticArrayDataSource
-            dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, vouchers: (dtoArrays?.dropDownCitiesDataSource)!, types: (dtoArrays?.dropDownTypesDataSource)!)
+
+            dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, cities: (dtoArrays?.dropDownCitiesDataSource)!, districts: (dtoArrays?.dropDownDistrictsDataSource)!, locations: (dtoArrays?.dropDownLocationsDataSource)!, vouchers: (dtoArrays?.dropDownVouchersDataSource)!, types: (dtoArrays?.dropDownTypesDataSource)!)
         }
     }
     
@@ -86,6 +87,24 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Countries.show()
     }
     
+//=========btn_CitiesDropDown DROPDOWN=========
+    
+    @IBAction func btn_CitiesDropDown_OnClick(_ sender: Any) {
+        dropDown_Cities.show()
+    }
+    
+//=========btn_DistrictsDropDown DROPDOWN=========
+    
+    @IBAction func btn_DistrictsDropDown_OnClick(_ sender: Any) {
+        dropDown_Districts.show()
+    }
+    
+//=========btn_LocationsDropDown DROPDOWN=========
+    
+    @IBAction func btn_LocationsDropDown_OnClick(_ sender: Any) {
+        dropDown_Locations.show()
+    }
+    
 //=========btn_VouchersDropDown DROPDOWN=========
     
     @IBAction func btn_VouchersDropDown_OnClick(_ sender: Any) {
@@ -99,13 +118,19 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     }
 //=========WIRED UP ALL DROPDOWNS=========
     
-    private func dropDownAllWiredUp(countries: [String], vouchers: [String], types: [String]) {
+    private func dropDownAllWiredUp(countries: [String], cities: [String], districts: [String], locations: [String], vouchers: [String], types: [String]) {
         dropDownCountriesWiredUp(dataSource: countries)
+        dropDownCitiesWiredUp(dataSource: cities)
+        dropDownDistrictsWiredUp(dataSource: districts)
+        dropDownLocationsWiredUp(dataSource: locations)
         dropDownVouchersWiredUp(dataSource: vouchers)
         dropDownTypesWiredUp(dataSource: types)
         
         DispatchQueue.main.async {
             self.btn_CountriesDropDown.setTitle(self.dropDown_Countries.selectedItem, for: .normal)
+            self.btn_CitiesDropDown.setTitle(self.dropDown_Cities.selectedItem, for: .normal)
+            self.btn_DistrictsDropDown.setTitle(self.dropDown_Districts.selectedItem, for: .normal)
+            self.btn_LocationsDropDown.setTitle(self.dropDown_Locations.selectedItem, for: .normal)
             self.btn_VouchersDropDown.setTitle(self.dropDown_Vouchers.selectedItem, for: .normal)
             self.btn_TypesDropDown.setTitle(self.dropDown_Types.selectedItem, for: .normal)
         }
@@ -126,12 +151,43 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
 //=========WIRED UP dropDown_Cities=========
     
+    private func dropDownCitiesWiredUp(dataSource: [String]) {
+        dropDown_Cities.anchorView = btn_CitiesDropDown
+        
+        dropDown_Cities.dataSource = dataSource
+        dropDown_Cities.selectRow(at: 57)
+        
+        dropDown_Cities.selectionAction = { [unowned self] (index, item) in
+            self.btn_CitiesDropDown.setTitle(item, for: .normal)
+        }
+    }
     
 //=========WIRED UP dropDown_Districts=========
+    
+    private func dropDownDistrictsWiredUp(dataSource: [String]) {
+        dropDown_Districts.anchorView = btn_DistrictsDropDown
+        
+        dropDown_Districts.dataSource = dataSource
+        dropDown_Districts.selectRow(at: 7)
+        
+        dropDown_Districts.selectionAction = { [unowned self] (index, item) in
+            self.btn_DistrictsDropDown.setTitle(item, for: .normal)
+        }
+    }
     
     
 //=========WIRED UP dropDown_Locations=========
     
+    private func dropDownLocationsWiredUp(dataSource: [String]) {
+        dropDown_Locations.anchorView = btn_LocationsDropDown
+        
+        dropDown_Locations.dataSource = dataSource
+        dropDown_Locations.selectRow(at: 0)
+        
+        dropDown_Locations.selectionAction = { [unowned self] (index, item) in
+            self.btn_LocationsDropDown.setTitle(item, for: .normal)
+        }
+    }
     
 //=========WIRED UP dropDown_Vouchers=========
     
@@ -173,8 +229,6 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDowns.forEach { $0.dismissMode = .automatic }
         dropDowns.forEach { $0.direction = .any }
     }
-
-    
 }
 
 
