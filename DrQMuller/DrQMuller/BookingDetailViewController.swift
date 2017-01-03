@@ -8,27 +8,43 @@
 
 import UIKit
 
-class BookingDetailViewController: UIViewController {
+class BookingDetailViewController: UIViewController
+//, UITableViewDelegate, UITableViewDataSource
+{
     
     @IBOutlet weak var lbl_Notification: UILabel!
-    private let ThemeColor   = UIColor(red: 255/255.0, green: 163/255.0, blue: 0/255.0, alpha: 1.0)
-    private var presentWindow : UIWindow?
+    @IBOutlet weak var view_TopView: UIView!
+    @IBOutlet weak var tableView_BookingTime: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//=========DELEGATING TABLE VIEW=========
+        
+//        self.tableView_BookingTime.delegate = self
+//        self.tableView_BookingTime.dataSource = self
+        
 //=========CUSTOM STYLE FOR NOTIFICATION ICON=========
 
         let radius = min(lbl_Notification.frame.size.width, lbl_Notification.frame.size.height) / 2.0
         lbl_Notification.layer.cornerRadius = radius
-        edgesForExtendedLayout = UIRectEdge()
-        UIView.hr_setToastThemeColor(color: ThemeColor)
-        presentWindow = UIApplication.shared.keyWindow
+        
+//=========SET UP TOAST COLOR STYLE=========
+        
+        UIView.hr_setToastThemeColor(color: ToastColor)
     }
     
-    @IBAction func btn_Toast_OnClick(_ sender: Any) {
-        view.makeToast(message: "Simple Toast", duration: 2, position: HRToastPositionTop as AnyObject, title: "<Title>")
-    }
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        <#code#>
+//    }
+//    
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        <#code#>
+//    }
+//    
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        <#code#>
+//    }
     
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
         self.performSegue(withIdentifier: "segue_BookingDetailToBookingGeneral", sender: self)

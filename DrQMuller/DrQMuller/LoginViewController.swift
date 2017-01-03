@@ -99,7 +99,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
         
         lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-    
+        
+//=========TOAST SET UP COLOR=========
+        
+        UIView.hr_setToastThemeColor(color: ToastColorAlert)
     }
 
     override func didReceiveMemoryWarning() {
@@ -205,7 +208,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         if !frontValidationPassed() {
             return
         }
-        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!, viewController: self)
+        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!, viewController: self, toastView: loginView)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -222,12 +225,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private func frontValidationPassed() -> Bool {
         if let username = txt_Username.text, let password = txt_Password.text {
             if username.isEmpty {
-                message.errorMessage(sender: self, msg: "Tên đăng nhập trống")
+                ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập trống")
                 return false
             }
             
             if password.isEmpty {
-                message.errorMessage(sender: self, msg: "Mật khẩu trống")
+                ToastManager.sharedInstance.alert(view: loginView, msg: "Mật khẩu trống")
                 return false
             }
             return true

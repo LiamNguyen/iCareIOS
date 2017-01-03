@@ -8,7 +8,15 @@
 
 import UIKit
 
-class DTOStaticArrayDataSource: NSObject {
+class DTOStaticArrayDataSource: NSObject, NSCoding {
+    
+    class var sharedInstance: DTOStaticArrayDataSource {
+        struct Singleton {
+            static let instance = DTOStaticArrayDataSource()
+        }
+        return Singleton.instance
+    }
+    
     private var _dropDownCountriesDataSource: [String]!
     var dropDownCountriesDataSource: [String] {
         get {
@@ -73,5 +81,27 @@ class DTOStaticArrayDataSource: NSObject {
         set (newVal) {
             _dropDownTypesDataSource = newVal
         }
+    }
+    
+    override init() {
+        
+    }
+    
+    required init(coder decoder: NSCoder) {
+        self._dropDownCountriesDataSource = decoder.decodeObject(forKey: "countries") as? [String] ?? [""]
+        self._dropDownCitiesDataSource = decoder.decodeObject(forKey: "cities") as? [String] ?? [""]
+        self._dropDownDistrictsDataSource = decoder.decodeObject(forKey: "districts") as? [String] ?? [""]
+        self._dropDownLocationsDataSource = decoder.decodeObject(forKey: "locations") as? [String] ?? [""]
+        self._dropDownVouchersDataSource = decoder.decodeObject(forKey: "vouchers") as? [String] ?? [""]
+        self._dropDownTypesDataSource = decoder.decodeObject(forKey: "types") as? [String] ?? [""]
+    }
+    
+    func encode(with coder: NSCoder) {
+        coder.encode(_dropDownCountriesDataSource, forKey: "countries")
+        coder.encode(_dropDownCitiesDataSource, forKey: "cities")
+        coder.encode(_dropDownDistrictsDataSource, forKey: "districts")
+        coder.encode(_dropDownLocationsDataSource, forKey: "locations")
+        coder.encode(_dropDownVouchersDataSource, forKey: "vouchers")
+        coder.encode(_dropDownTypesDataSource, forKey: "types")
     }
 }

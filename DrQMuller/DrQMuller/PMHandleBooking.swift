@@ -10,15 +10,12 @@ import UIKit
 
 class PMHandleBooking: NSObject, HTTPClientDelegate {
     private var httpClient: HTTPClient!
-    private var dtoArrays: DTOStaticArrayDataSource!
-    var counter = 1
+    private var counter = 1
     
     override init() {
         super.init()
         httpClient = HTTPClient()
         httpClient.delegate = self
-        
-        dtoArrays = DTOStaticArrayDataSource()
     }
     
     //=========LISTEN TO RESPONSE FROM GET REQUEST=========
@@ -31,7 +28,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownCountriesDataSource.append(dictItem["COUNTRY"]! as! String)
             }
-            dtoArrays.dropDownCountriesDataSource = dropDownCountriesDataSource
+            DTOStaticArrayDataSource.sharedInstance.dropDownCountriesDataSource = dropDownCountriesDataSource
         }
 //HANDLE CITIES DATASOURCE
         var dropDownCitiesDataSource = [String]()
@@ -40,7 +37,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownCitiesDataSource.append(dictItem["CITY"]! as! String)
             }
-            dtoArrays.dropDownCitiesDataSource = dropDownCitiesDataSource
+            DTOStaticArrayDataSource.sharedInstance.dropDownCitiesDataSource = dropDownCitiesDataSource
         }
 //HANDLE DISTRICTS DATASOURCE
         var dropDownDistrictsDataSource = [String]()
@@ -49,7 +46,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownDistrictsDataSource.append(dictItem["DISTRICT"]! as! String)
             }
-            dtoArrays.dropDownDistrictsDataSource = dropDownDistrictsDataSource
+            DTOStaticArrayDataSource.sharedInstance.dropDownDistrictsDataSource = dropDownDistrictsDataSource
         }
 //HANDLE LOCATIONS DATASOURCE
         var dropDownLocationsDataSource = [String]()
@@ -58,7 +55,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownLocationsDataSource.append(dictItem["ADDRESS"]! as! String)
             }
-            dtoArrays.dropDownLocationsDataSource = dropDownLocationsDataSource
+            DTOStaticArrayDataSource.sharedInstance.dropDownLocationsDataSource = dropDownLocationsDataSource
         }
 //HANDLE VOUCHERS DATASOURCE
         var dropDownVouchersDataSource = [String]()
@@ -67,7 +64,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownVouchersDataSource.append(dictItem["VOUCHER"]! as! String)
             }
-            dtoArrays.dropDownVouchersDataSource = dropDownVouchersDataSource
+            DTOStaticArrayDataSource.sharedInstance.dropDownVouchersDataSource = dropDownVouchersDataSource
         }
 //HANDLE TYPES DATASOURCE
         var dropDownTypesDataSource = [String]()
@@ -76,20 +73,30 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownTypesDataSource.append(dictItem["TYPE"]! as! String)
             }
-            dtoArrays.dropDownTypesDataSource = dropDownTypesDataSource
+            DTOStaticArrayDataSource.sharedInstance.dropDownTypesDataSource = dropDownTypesDataSource
         }
         
         if self.counter == 6 {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
-            returnArrayDataSource["returnArrayDataSource"] = dtoArrays
+            returnArrayDataSource["returnArrayDataSource"] = DTOStaticArrayDataSource.sharedInstance
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
-
+            pushToUserDefaults(arrayDataSourceObj: DTOStaticArrayDataSource.sharedInstance)
+            
             counter = 1
         }
         counter += 1
     }
-    
+
     func getDropDownsDataSource() {
+        let pulledDtoArrays = pullFromUserDefaults()
+        
+        if pulledDtoArrays != nil {
+            var returnArrayDataSourceOffline = [String: DTOStaticArrayDataSource]()
+            returnArrayDataSourceOffline["returnArrayDataSourceOffline"] = pulledDtoArrays
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil, userInfo: returnArrayDataSourceOffline)
+            return
+        }
+        
         httpClient.getRequest(url: "Select_Countries", parameter: "")
         httpClient.getRequest(url: "Select_Cities", parameter: "?country_id=235")
         httpClient.getRequest(url: "Select_Districts", parameter: "?city_id=58")
@@ -97,4 +104,27 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         httpClient.getRequest(url: "Select_Vouchers", parameter: "")
         httpClient.getRequest(url: "Select_Types", parameter: "")
     }
+    
+    private func pushToUserDefaults(arrayDataSourceObj: DTOStaticArrayDataSource) {
+        let userDefaults = UserDefaults.standard
+        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: arrayDataSourceObj)
+        userDefaults.set(encodedData, forKey: "arrayDataSourceOffline")
+        if userDefaults.synchronize() {
+            print("Array DataSource Stored")
+        }
+    }
+    
+    private func pullFromUserDefaults() -> DTOStaticArrayDataSource? {
+        let userDefaults = UserDefaults.standard
+        
+        if userDefaults.object(forKey: "arrayDataSourceOffline") == nil {
+            return nil
+        }
+        
+        let decodedData = userDefaults.object(forKey: "arrayDataSourceOffline") as! Data
+        let pulledDtoArrays = NSKeyedUnarchiver.unarchiveObject(with: decodedData) as! DTOStaticArrayDataSource
+        return pulledDtoArrays
+    }
+
+    
 }

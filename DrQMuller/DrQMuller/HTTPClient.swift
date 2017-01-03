@@ -38,7 +38,7 @@ public class HTTPClient {
         task.resume()
     }
     
-    func postRequest(url: String, body: String, postCompleted: @escaping (_ success: Bool, _ msg: String) -> ()) {
+    func postRequest(url: String, body: String) {//, postCompleted: @escaping (_ success: Bool, _ msg: String) -> ()) {
         if !network.isConnected() {
             return
         }
@@ -50,27 +50,20 @@ public class HTTPClient {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
                 print("error=\(error)")
-                postCompleted(false, "JSON data receives error: \(error)")
+//                postCompleted(false, "JSON data receives error: \(error)")
                 return
             }
             
             if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                 print("statusCode should be 200, but is \(httpStatus.statusCode)")
                 print("response = \(response)")
-                postCompleted(false, "http status receives error: \(error)_Status code: \(httpStatus.statusCode)")
+//                postCompleted(false, "http status receives error: \(error)_Status code: \(httpStatus.statusCode)")
             }
             
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
                 print("Response from server: \(JSONResponse)")
-                if let success = JSONResponse["Status"] as? String {
-                    if success == "true" {
-                        print("Success in HTTPClient class")
-                        postCompleted(true, "Login verified")
-                    } else if success == "false" {
-                        postCompleted(false, "Login Failed")
-                    }
-                }
+                self.delegate?.onReceiveRequestResponse(data: JSONResponse)
             }
         }
         

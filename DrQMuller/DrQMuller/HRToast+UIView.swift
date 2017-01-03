@@ -10,15 +10,15 @@
 import UIKit
 
 /*
-*  Infix overload method
-*/
+ *  Infix overload method
+ */
 func /(lhs: CGFloat, rhs: Int) -> CGFloat {
     return lhs / CGFloat(rhs)
 }
 
 /*
-*  Toast Config
-*/
+ *  Toast Config
+ */
 let HRToastDefaultDuration  =   2.0
 let HRToastFadeDuration     =   0.2
 let HRToastHorizontalMargin : CGFloat  =   10.0
@@ -61,8 +61,8 @@ var HRToastFontName: UnsafePointer<String>?        =   nil
 var HRToastFontColor: UnsafePointer<UIColor>?      =   nil
 
 /*
-*  Custom Config
-*/
+ *  Custom Config
+ */
 let HRToastHidesOnTap       =   true
 let HRToastDisplayShadow    =   true
 
@@ -71,8 +71,8 @@ let HRToastDisplayShadow    =   true
 extension UIView {
     
     /*
-    *  public methods
-    */
+     *  public methods
+     */
     class func hr_setToastThemeColor(color: UIColor) {
         objc_setAssociatedObject(self, &HRToastThemeColor, color, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
     }
@@ -182,13 +182,13 @@ extension UIView {
         objc_setAssociatedObject(self, &HRToastView, toast, .OBJC_ASSOCIATION_RETAIN)
         
         UIView.animate(withDuration: HRToastFadeDuration,
-            delay: 0.0, options: ([.curveEaseOut, .allowUserInteraction]),
-            animations: {
-                toast.alpha = 1.0
-            },
-            completion: { (finished: Bool) in
-                let timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(UIView.toastTimerDidFinish(_:)), userInfo: toast, repeats: false)
-                objc_setAssociatedObject(toast, &HRToastTimer, timer, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                       delay: 0.0, options: ([.curveEaseOut, .allowUserInteraction]),
+                       animations: {
+                        toast.alpha = 1.0
+        },
+                       completion: { (finished: Bool) in
+                        let timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(UIView.toastTimerDidFinish(_:)), userInfo: toast, repeats: false)
+                        objc_setAssociatedObject(toast, &HRToastTimer, timer, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         })
     }
     
@@ -240,32 +240,32 @@ extension UIView {
         objc_setAssociatedObject(self, &HRToastActivityView, activityView, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         
         UIView.animate(withDuration: HRToastFadeDuration,
-            delay: 0.0,
-            options: UIViewAnimationOptions.curveEaseOut,
-            animations: {
-                activityView.alpha = 1.0
-            },
-            completion: nil)
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseOut,
+                       animations: {
+                        activityView.alpha = 1.0
+        },
+                       completion: nil)
     }
     
     func hideToastActivity() {
         let existingActivityView = objc_getAssociatedObject(self, &HRToastActivityView) as! UIView?
         if existingActivityView == nil { return }
         UIView.animate(withDuration: HRToastFadeDuration,
-            delay: 0.0,
-            options: UIViewAnimationOptions.curveEaseOut,
-            animations: {
-                existingActivityView!.alpha = 0.0
-            },
-            completion: { (finished: Bool) in
-                existingActivityView!.removeFromSuperview()
-                objc_setAssociatedObject(self, &HRToastActivityView, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                       delay: 0.0,
+                       options: UIViewAnimationOptions.curveEaseOut,
+                       animations: {
+                        existingActivityView!.alpha = 0.0
+        },
+                       completion: { (finished: Bool) in
+                        existingActivityView!.removeFromSuperview()
+                        objc_setAssociatedObject(self, &HRToastActivityView, nil, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         })
     }
     
     /*
-    *  private methods (helper)
-    */
+     *  private methods (helper)
+     */
     func hideToast(toast: UIView) {
         hideToast(toast: toast, force: false);
     }
@@ -280,12 +280,12 @@ extension UIView {
             completeClosure(true)
         } else {
             UIView.animate(withDuration: HRToastFadeDuration,
-                delay: 0.0,
-                options: ([.curveEaseIn, .beginFromCurrentState]),
-                animations: {
-                    toast.alpha = 0.0
-                },
-                completion:completeClosure)
+                           delay: 0.0,
+                           options: ([.curveEaseIn, .beginFromCurrentState]),
+                           animations: {
+                            toast.alpha = 0.0
+            },
+                           completion:completeClosure)
         }
     }
     
@@ -440,7 +440,7 @@ extension String {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineBreakMode = .byWordWrapping
         let attributes = [NSFontAttributeName:font!,
-            NSParagraphStyleAttributeName:paragraphStyle.copy()]
+                          NSParagraphStyleAttributeName:paragraphStyle.copy()]
         
         let text = self as NSString
         let rect = text.boundingRect(with: size, options:.usesLineFragmentOrigin, attributes: attributes, context:nil)

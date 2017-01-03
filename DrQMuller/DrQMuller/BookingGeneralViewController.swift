@@ -10,6 +10,10 @@ import UIKit
 import QuartzCore
 import DropDown
 
+let ToastColor = UIColor(netHex: 0xE89D00)
+let ThemeColor = UIColor(netHex: 0x8F00B3)
+let ToastColorAlert = UIColor.red
+
 class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBOutlet private weak var btn_CountriesDropDown: NiceButton!
@@ -19,6 +23,10 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var btn_VouchersDropDown: NiceButton!
     @IBOutlet private weak var btn_TypesDropDown: NiceButton!
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
+    @IBOutlet weak var view_TopView: UIView!
+    
+    //=========MARK: TOAST PROPERTY=========
+
     
     //=========MARK: PROPERTIES=========
     
@@ -28,6 +36,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private let dropDown_Locations = DropDown()
     private let dropDown_Vouchers = DropDown()
     private let dropDown_Types = DropDown()
+    
+    private let firstPhaseWithOneLocation = true
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -47,18 +57,27 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//=========SEND REQUEST TO GET DROPDOWNS DATASOURCE=========
-        
-        modelHandleBookingGeneral.getDropDownsDataSource()
-        
 //=========DELEGATING slideBtn_Next=========
         
         self.slideBtn_Next.delegate  = self
         self.slideBtn_Next.reset()
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
-        
+
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "arrayDataSource"), object: nil, queue: nil, using: bindDataSource)
+        
+//=========OBSERVING NOTIFICATION FROM PMHandleBooking OFFLINE DATASOURCE==========
+        
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil, queue: nil, using: bindDataSourceOffline)
+        
+//=========SEND REQUEST TO GET DROPDOWNS DATASOURCE=========
+        
+        modelHandleBookingGeneral.getDropDownsDataSource()
+        
+//=========TOAST SET UP COLOR==========
+        
+        UIView.hr_setToastThemeColor(color: ToastColor)
+        
     }
     
     deinit {
@@ -68,9 +87,21 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 //=========BINDING DATASOURCE FOR DROPDOWNS==========
     
     func bindDataSource(notification: Notification) {
+        handleReceivedNotificationData(notification: notification, userInfoKey: "returnArrayDataSource")
+    }
+    
+//=========BINDING DATASOURCE OFFLINE FOR DROPDOWNS==========
+    
+    func bindDataSourceOffline(notification: Notification) {
+        handleReceivedNotificationData(notification: notification, userInfoKey: "returnArrayDataSourceOffline")
+    }
+    
+//=========HANDLE RECEIVE DATA FROM NOTIFICATION==========
+    
+    func handleReceivedNotificationData(notification: Notification, userInfoKey: String) {
         if let userInfo = notification.userInfo {
-            let dtoArrays = userInfo["returnArrayDataSource"] as? DTOStaticArrayDataSource
-
+            let dtoArrays = userInfo[userInfoKey] as? DTOStaticArrayDataSource
+            
             dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, cities: (dtoArrays?.dropDownCitiesDataSource)!, districts: (dtoArrays?.dropDownDistrictsDataSource)!, locations: (dtoArrays?.dropDownLocationsDataSource)!, vouchers: (dtoArrays?.dropDownVouchersDataSource)!, types: (dtoArrays?.dropDownTypesDataSource)!)
         }
     }
@@ -78,30 +109,67 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 //=========TRANSITION TO START-END DATE VIEW CONTROLLER=========
 
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
+        if dropDown_Vouchers.selectedItem == nil {
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Vouchers")
+            slideBtn_Next.reset()
+            return
+        }
+        
+        if dropDown_Types.selectedItem == nil {
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Loại Dịch Vụ")
+            slideBtn_Next.reset()
+            return
+        }
+        
+        DTOBookingInformation.sharedInstance.country = dropDown_Countries.selectedItem!
+        DTOBookingInformation.sharedInstance.city = dropDown_Cities.selectedItem!
+        DTOBookingInformation.sharedInstance.district = dropDown_Districts.selectedItem!
+        DTOBookingInformation.sharedInstance.location = dropDown_Locations.selectedItem!
+        DTOBookingInformation.sharedInstance.voucher = dropDown_Vouchers.selectedItem!
+        DTOBookingInformation.sharedInstance.type = dropDown_Types.selectedItem!
+        
+        
+        
         self.performSegue(withIdentifier: "segue_BookingGeneralToStartEnDate", sender: self)
     }
 
 //=========btn_CountriesDropDown DROPDOWN=========
 
     @IBAction func btn_CountriesDropDown_OnClick(_ sender: Any) {
+        if firstPhaseWithOneLocation {
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            return
+        }
         dropDown_Countries.show()
     }
     
 //=========btn_CitiesDropDown DROPDOWN=========
     
     @IBAction func btn_CitiesDropDown_OnClick(_ sender: Any) {
+        if firstPhaseWithOneLocation {
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            return
+        }
         dropDown_Cities.show()
     }
     
 //=========btn_DistrictsDropDown DROPDOWN=========
     
     @IBAction func btn_DistrictsDropDown_OnClick(_ sender: Any) {
+        if firstPhaseWithOneLocation {
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            return
+        }
         dropDown_Districts.show()
     }
     
 //=========btn_LocationsDropDown DROPDOWN=========
     
     @IBAction func btn_LocationsDropDown_OnClick(_ sender: Any) {
+        if firstPhaseWithOneLocation {
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            return
+        }
         dropDown_Locations.show()
     }
     
@@ -116,6 +184,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBAction func btn_TypesDropDown_OnClick(_ sender: Any) {
         dropDown_Types.show()
     }
+    
 //=========WIRED UP ALL DROPDOWNS=========
     
     private func dropDownAllWiredUp(countries: [String], cities: [String], districts: [String], locations: [String], vouchers: [String], types: [String]) {
@@ -131,8 +200,6 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
             self.btn_CitiesDropDown.setTitle(self.dropDown_Cities.selectedItem, for: .normal)
             self.btn_DistrictsDropDown.setTitle(self.dropDown_Districts.selectedItem, for: .normal)
             self.btn_LocationsDropDown.setTitle(self.dropDown_Locations.selectedItem, for: .normal)
-            self.btn_VouchersDropDown.setTitle(self.dropDown_Vouchers.selectedItem, for: .normal)
-            self.btn_TypesDropDown.setTitle(self.dropDown_Types.selectedItem, for: .normal)
         }
     }
     
@@ -195,7 +262,6 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Vouchers.anchorView = btn_VouchersDropDown
         
         dropDown_Vouchers.dataSource = dataSource
-        dropDown_Vouchers.selectRow(at: 0)
         
         dropDown_Vouchers.selectionAction = { [unowned self] (index, item) in
             self.btn_VouchersDropDown.setTitle(item, for: .normal)
@@ -208,7 +274,6 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Types.anchorView = btn_TypesDropDown
         
         dropDown_Types.dataSource = dataSource
-        dropDown_Types.selectRow(at: 0)
         
         dropDown_Types.selectionAction = { [unowned self] (index, item) in
             self.btn_TypesDropDown.setTitle(item, for: .normal)

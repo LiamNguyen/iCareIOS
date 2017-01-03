@@ -17,7 +17,4 @@ class ModelHandleBookingGeneral {
     func getDropDownsDataSource() {
         APIHandleBooking.sharedInstace.getDropDownsDataSource()
     }
-    
-
-
 }

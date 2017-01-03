@@ -8,7 +8,15 @@
 
 import Foundation
 
-public class DTOAuthentication: NSObject {
+class DTOAuthentication: NSObject {
+    
+    class var sharedInstance: DTOAuthentication {
+        struct Singleton {
+            static let instance = DTOAuthentication()
+        }
+        return Singleton.instance
+    }
+    
     private var _username: String!
     var username: String {
         get {
@@ -32,9 +40,6 @@ public class DTOAuthentication: NSObject {
     }
     
     func returnHttpBody() -> String! {
-//        if _username.isEmpty || _username == nil || _password.isEmpty || _password == nil {
-//            return ""
-//        }
         if let username = _username, let password = _password {
             return "username=\(username)&password=\(password)"
         } else {
