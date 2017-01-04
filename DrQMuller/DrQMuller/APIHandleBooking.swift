@@ -26,5 +26,9 @@ class APIHandleBooking: NSObject {
     func getDropDownsDataSource() {
         persistencyManager.getDropDownsDataSource()
     }
+    
+    func getTimeDataSource() {
+        persistencyManager.getTimeDataSource()
+    }
 
 }

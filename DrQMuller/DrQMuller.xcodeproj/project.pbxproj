@@ -45,6 +45,7 @@
 		EDE41FDA1E08CE66006CCE99 /* CustomStyleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */; };
 		EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */; };
 		EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */; };
+		EDEAC1661E1D3DAC002FF282 /* ModelHandleBookingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEAC1651E1D3DAC002FF282 /* ModelHandleBookingDetail.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,7 @@
 		EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStyleCustomerInformation.swift; sourceTree = "<group>"; };
 		EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineDrawer.swift; sourceTree = "<group>"; };
+		EDEAC1651E1D3DAC002FF282 /* ModelHandleBookingDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingDetail.swift; sourceTree = "<group>"; };
 		F4CDD90B0CF1F864033543A5 /* Pods-DrQMuller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrQMuller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller.debug.xcconfig"; sourceTree = "<group>"; };
 		F58401B7A7C57AC9EFB8729C /* Pods_DrQMuller.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DrQMuller.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -190,6 +192,7 @@
 				ED939FE31E0D248F00A1164F /* DatePickerRange.swift */,
 				ED6986951E12E14000932E93 /* ModelHandleLogin.swift */,
 				ED41DF3C1E163EC900803A14 /* ModelHandleBookingGeneral.swift */,
+				EDEAC1651E1D3DAC002FF282 /* ModelHandleBookingDetail.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -507,6 +510,7 @@
 				EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */,
 				ED9558921E10F4DC004893DA /* HTTPClient.swift in Sources */,
 				ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */,
+				EDEAC1661E1D3DAC002FF282 /* ModelHandleBookingDetail.swift in Sources */,
 				ED040F491E0C7808003166FD /* NiceButton.swift in Sources */,
 				ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,

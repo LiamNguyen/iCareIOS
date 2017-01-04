@@ -76,24 +76,39 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             DTOStaticArrayDataSource.sharedInstance.dropDownTypesDataSource = dropDownTypesDataSource
         }
         
-        if self.counter == 6 {
+//HANDLE ALL TIME DATASOURCE
+        var allTimeDataSource = [String]()
+        if let arrayDataSource = data["Select_AllTime"]! as? NSArray {
+            for arrayItem in arrayDataSource {
+                let dictItem = arrayItem as! NSDictionary
+                allTimeDataSource.append(dictItem["TIME"]! as! String)
+            }
+            DTOStaticArrayDataSource.sharedInstance.allTimeDataSource = allTimeDataSource
+        }
+        
+//HANDLE ECO TIME DATASOURCE
+        var ecoTimeDataSource = [String]()
+        if let arrayDataSource = data["Select_EcoTime"]! as? NSArray {
+            for arrayItem in arrayDataSource {
+                let dictItem = arrayItem as! NSDictionary
+                ecoTimeDataSource.append(dictItem["TIME"]! as! String)
+            }
+            DTOStaticArrayDataSource.sharedInstance.ecoTimeDataSource = ecoTimeDataSource
+        }
+        
+        if counter == 8 {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
             returnArrayDataSource["returnArrayDataSource"] = DTOStaticArrayDataSource.sharedInstance
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
             pushToUserDefaults(arrayDataSourceObj: DTOStaticArrayDataSource.sharedInstance)
-            
-            counter = 1
         }
+        
         counter += 1
+        
     }
 
     func getDropDownsDataSource() {
-        let pulledDtoArrays = pullFromUserDefaults()
-        
-        if pulledDtoArrays != nil {
-            var returnArrayDataSourceOffline = [String: DTOStaticArrayDataSource]()
-            returnArrayDataSourceOffline["returnArrayDataSourceOffline"] = pulledDtoArrays
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil, userInfo: returnArrayDataSourceOffline)
+        if staticArrayDataSourceHasExisted() {
             return
         }
         
@@ -103,6 +118,33 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         httpClient.getRequest(url: "Select_Locations", parameter: "?district_id=630")
         httpClient.getRequest(url: "Select_Vouchers", parameter: "")
         httpClient.getRequest(url: "Select_Types", parameter: "")
+        
+//DOWNLOAD OTHER NECCESSARY ARRAY DATASOURCE
+        
+        httpClient.getRequest(url: "Select_AllTime", parameter: "")
+        httpClient.getRequest(url: "Select_EcoTime", parameter: "")
+    }
+    
+    func getTimeDataSource() {
+        if staticArrayDataSourceHasExisted() {
+            return
+        }
+        
+        httpClient.getRequest(url: "Select_AllTime", parameter: "")
+        httpClient.getRequest(url: "Select_EcoTime", parameter: "")
+    }
+    
+    func staticArrayDataSourceHasExisted() -> Bool {
+        let pulledDtoArrays = pullFromUserDefaults()
+        
+        if pulledDtoArrays != nil {
+            var returnArrayDataSourceOffline = [String: DTOStaticArrayDataSource]()
+            returnArrayDataSourceOffline["returnArrayDataSourceOffline"] = pulledDtoArrays
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil, userInfo: returnArrayDataSourceOffline)
+            return true
+        } else {
+            return false
+        }
     }
     
     private func pushToUserDefaults(arrayDataSourceObj: DTOStaticArrayDataSource) {

@@ -83,6 +83,28 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
+    private var _allTimeDataSource: [String]!
+    var allTimeDataSource: [String] {
+        get {
+            return _allTimeDataSource
+        }
+        
+        set (newVal) {
+            _allTimeDataSource = newVal
+        }
+    }
+    
+    private var _ecoTimeDataSource: [String]!
+    var ecoTimeDataSource: [String] {
+        get {
+            return _ecoTimeDataSource
+        }
+        
+        set(newVal) {
+            _ecoTimeDataSource = newVal
+        }
+    }
+    
     override init() {
         
     }
@@ -94,6 +116,8 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         self._dropDownLocationsDataSource = decoder.decodeObject(forKey: "locations") as? [String] ?? [""]
         self._dropDownVouchersDataSource = decoder.decodeObject(forKey: "vouchers") as? [String] ?? [""]
         self._dropDownTypesDataSource = decoder.decodeObject(forKey: "types") as? [String] ?? [""]
+        self._allTimeDataSource = decoder.decodeObject(forKey: "allTime") as? [String] ?? [""]
+        self._ecoTimeDataSource = decoder.decodeObject(forKey: "ecoTime") as? [String] ?? [""]
     }
     
     func encode(with coder: NSCoder) {
@@ -103,5 +127,7 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         coder.encode(_dropDownLocationsDataSource, forKey: "locations")
         coder.encode(_dropDownVouchersDataSource, forKey: "vouchers")
         coder.encode(_dropDownTypesDataSource, forKey: "types")
+        coder.encode(_allTimeDataSource, forKey: "allTime")
+        coder.encode(_ecoTimeDataSource, forKey: "ecoTime")
     }
 }
