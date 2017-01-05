@@ -21,6 +21,16 @@ class BookingDetailViewController: UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
+        
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: updateTable)
+        
+        modelHandelBookingDetail = ModelHandleBookingDetail(isEco: false)
+        
+//=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
+
+        modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: "1")
+        
 //=========CUSTOM STYLE FOR NOTIFICATION ICON=========
 
         let radius = min(lbl_Notification.frame.size.width, lbl_Notification.frame.size.height) / 2.0
@@ -29,6 +39,13 @@ class BookingDetailViewController: UIViewController
 //=========SET UP TOAST COLOR STYLE=========
         
         UIView.hr_setToastThemeColor(color: ToastColor)
+    }
+    
+    func updateTable(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            let freeTimeDataSource = userInfo["returnArrayDataSource"]! as! [String]
+            print(freeTimeDataSource)
+        }
     }
     
 //    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

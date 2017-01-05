@@ -77,8 +77,9 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 //=========TOAST SET UP COLOR==========
         
         UIView.hr_setToastThemeColor(color: ToastColor)
-        
     }
+    
+
     
     deinit {
         NotificationCenter.default.removeObserver(self)

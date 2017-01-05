@@ -10,7 +10,6 @@ import UIKit
 
 class PMHandleBooking: NSObject, HTTPClientDelegate {
     private var httpClient: HTTPClient!
-    private var counter = 1
     private var dtoStaticArrayDataSource: DTOStaticArrayDataSource!
     
     override init() {
@@ -84,8 +83,10 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         if let arrayDataSource = data["Select_AllTime"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                allTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
+                allTimeDataSource[(dictItem["TIME_ID"] as? String)!] = (dictItem["TIME"] as? String)!
             }
+            let sortedArray = sortDictionary(dictionary: allTimeDataSource)
+            dtoStaticArrayDataSource.allTimeDisplayArray = sortedArray
             dtoStaticArrayDataSource.allTimeDataSource = allTimeDataSource
         }
         
@@ -94,20 +95,34 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         if let arrayDataSource = data["Select_EcoTime"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                ecoTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
+                ecoTimeDataSource[(dictItem["TIME_ID"] as? String)!] = dictItem["TIME"]! as? String
             }
+            let sortedArray = sortDictionary(dictionary: ecoTimeDataSource)
+            dtoStaticArrayDataSource.ecoTimeDisplayArray = sortedArray
             dtoStaticArrayDataSource.ecoTimeDataSource = ecoTimeDataSource
         }
         
-        if counter == 8 {
+//HANDLE SELECTED TIME DATASOURCE
+        var selectedTimeDataSource = Dictionary<String, String>()
+        if let arrayDataSource = data["Select_SelectedTime"]! as? NSArray {
+            for arrayItem in arrayDataSource {
+                let dictItem = arrayItem as! NSDictionary
+                selectedTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
+            }
+        }
+        
+        if !selectedTimeDataSource.isEmpty {
+            var returnArrayDataSource = [String: Any]()
+            returnArrayDataSource["returnArrayDataSource"] = selectedTimeDataSource
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
+        }
+        
+        if staticArrayDataSourceHasCompletelySet() {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
             returnArrayDataSource["returnArrayDataSource"] = dtoStaticArrayDataSource
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
             pushToUserDefaults(arrayDataSourceObj: dtoStaticArrayDataSource)
         }
-        
-        counter += 1
-        
     }
 
     func getDropDownsDataSource() {
@@ -163,5 +178,58 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         let decodedData = userDefaults.object(forKey: "arrayDataSourceOffline") as! Data
         let pulledDtoArrays = NSKeyedUnarchiver.unarchiveObject(with: decodedData) as! DTOStaticArrayDataSource
         return pulledDtoArrays
+    }
+    
+    private func staticArrayDataSourceHasCompletelySet() -> Bool {
+        if dtoStaticArrayDataSource.dropDownCountriesDataSource.isEmpty {
+            return false
+        }
+        if dtoStaticArrayDataSource.dropDownCitiesDataSource.isEmpty {
+            return false
+        }
+        if dtoStaticArrayDataSource.dropDownDistrictsDataSource.isEmpty {
+            return false
+        }
+        if dtoStaticArrayDataSource.dropDownLocationsDataSource.isEmpty {
+            return false
+        }
+        if dtoStaticArrayDataSource.dropDownVouchersDataSource.isEmpty {
+            return false
+        }
+        if dtoStaticArrayDataSource.dropDownTypesDataSource.isEmpty {
+            return false
+        }
+        if dtoStaticArrayDataSource.allTimeDataSource.isEmpty {
+            return false
+        }
+        if dtoStaticArrayDataSource.ecoTimeDataSource.isEmpty {
+            return false
+        }
+        return true
+    }
+    
+    func sortDictionary(dictionary: [String: String]) -> [String] {
+        var sortedArr = [String]()
+        
+        for key in dictionary.values {
+            let convertedKeyStr = key.replacingOccurrences(of: ":", with: "")
+            let convertedKey = Int(convertedKeyStr)!
+            if sortedArr.isEmpty {
+                sortedArr.append(key)
+                continue
+            }
+            for item in sortedArr {
+                if convertedKey < Int(item.replacingOccurrences(of: ":", with: ""))! {
+                    sortedArr.insert(key, at: sortedArr.index(of: item)!)
+                    break
+                }
+                
+                if sortedArr.index(of: item) == sortedArr.count - 1 {
+                    sortedArr.insert(key, at: sortedArr.count)
+                }
+            }
+        }
+
+        return sortedArr
     }
 }

@@ -13,6 +13,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
     private var _dropDownCountriesDataSource: [String]!
     var dropDownCountriesDataSource: [String] {
         get {
+            if _dropDownCountriesDataSource == nil {
+                return [String]()
+            }
             return _dropDownCountriesDataSource
         }
         
@@ -24,6 +27,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
     private var _dropDownCitiesDataSource: [String]!
     var dropDownCitiesDataSource: [String] {
         get {
+            if _dropDownCitiesDataSource == nil {
+                return [String]()
+            }
             return _dropDownCitiesDataSource
         }
         
@@ -35,6 +41,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
     private var _dropDownDistrictsDataSource: [String]!
     var dropDownDistrictsDataSource: [String] {
         get {
+            if _dropDownDistrictsDataSource == nil {
+                return [String]()
+            }
             return _dropDownDistrictsDataSource
         }
         
@@ -46,6 +55,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
     private var _dropDownLocationsDataSource: [String]!
     var dropDownLocationsDataSource: [String] {
         get {
+            if _dropDownLocationsDataSource == nil {
+                return [String]()
+            }
             return _dropDownLocationsDataSource
         }
         
@@ -57,6 +69,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
     private var _dropDownVouchersDataSource: [String]!
     var dropDownVouchersDataSource: [String] {
         get {
+            if _dropDownVouchersDataSource == nil {
+                return [String]()
+            }
             return _dropDownVouchersDataSource
         }
         
@@ -68,6 +83,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
     private var _dropDownTypesDataSource: [String]!
     var dropDownTypesDataSource: [String] {
         get {
+            if _dropDownTypesDataSource == nil {
+                return [String]()
+            }
             return _dropDownTypesDataSource
         }
         
@@ -76,9 +94,26 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
+    private var _allTimeDisplayArray: [String]!
+    var allTimeDisplayArray: [String] {
+        get {
+            if _allTimeDisplayArray == nil {
+                return [String]()
+            }
+            return _allTimeDisplayArray
+        }
+        
+        set (newVal) {
+            _allTimeDisplayArray = newVal
+        }
+    }
+    
     private var _allTimeDataSource: Dictionary<String, String>!
     var allTimeDataSource: Dictionary<String, String> {
         get {
+            if _allTimeDataSource == nil {
+                return Dictionary<String, String>()
+            }
             return _allTimeDataSource
         }
         
@@ -87,9 +122,26 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
+    private var _ecoTimeDisplayArray: [String]!
+    var ecoTimeDisplayArray: [String] {
+        get {
+            if _ecoTimeDisplayArray == nil {
+                return [String]()
+            }
+            return _ecoTimeDisplayArray
+        }
+        
+        set (newVal) {
+            _ecoTimeDisplayArray = newVal
+        }
+    }
+    
     private var _ecoTimeDataSource: Dictionary<String, String>!
     var ecoTimeDataSource: Dictionary<String, String> {
         get {
+            if _ecoTimeDataSource == nil {
+                return Dictionary<String, String>()
+            }
             return _ecoTimeDataSource
         }
         
@@ -109,7 +161,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         self._dropDownLocationsDataSource = decoder.decodeObject(forKey: "locations") as? [String] ?? [""]
         self._dropDownVouchersDataSource = decoder.decodeObject(forKey: "vouchers") as? [String] ?? [""]
         self._dropDownTypesDataSource = decoder.decodeObject(forKey: "types") as? [String] ?? [""]
+        self._allTimeDisplayArray = decoder.decodeObject(forKey: "allTimeDisplay") as? [String] ?? [""]
         self._allTimeDataSource = decoder.decodeObject(forKey: "allTime") as? Dictionary<String, String> ?? Dictionary<String, String>()
+        self._ecoTimeDisplayArray = decoder.decodeObject(forKey: "ecoTimeDisplay") as? [String] ?? [""]
         self._ecoTimeDataSource = decoder.decodeObject(forKey: "ecoTime") as? Dictionary<String, String> ?? Dictionary<String, String>()
     }
     
@@ -120,7 +174,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         coder.encode(_dropDownLocationsDataSource, forKey: "locations")
         coder.encode(_dropDownVouchersDataSource, forKey: "vouchers")
         coder.encode(_dropDownTypesDataSource, forKey: "types")
+        coder.encode(_allTimeDisplayArray, forKey: "allTimeDisplay")
         coder.encode(_allTimeDataSource, forKey: "allTime")
+        coder.encode(ecoTimeDisplayArray, forKey: "ecoTimeDisplay")
         coder.encode(_ecoTimeDataSource, forKey: "ecoTime")
     }
 }
