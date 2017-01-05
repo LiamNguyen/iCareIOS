@@ -20,6 +20,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     private var isTypeFix: Bool!
     private var constraintDatePicker = DatePickerRange()
+    private var datePickerHasChanged = false
     
     private var startDay =  Int()
     private var startMonth = Int()
@@ -61,6 +62,8 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     }
     
     @IBAction func picker_StartDate_OnValueChanged(_ sender: Any) {
+        datePickerHasChanged = true
+
         startDay = picker_StartDate.date.day
         startMonth = picker_StartDate.date.month
         startYear = picker_StartDate.date.year
@@ -71,6 +74,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         endMonth = picker_EndDate.date.month
         endYear = picker_EndDate.date.year
         setUpDatePickersList()
+        
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -84,19 +88,24 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
 //=========SLIDE BUTTON ONCLICK=========
     
     func buttonStatus(_ status:String, sender:MMSlidingButton) {
-        var datePickersIsEmpty = false
-        datePickersValues.forEach {
-            if $0 == 0 {
-                datePickersIsEmpty = true
+        
+//MAKE SURE THAT DATEPICKER HAS STOP SCROLLING
+        
+        if datePickerHasChanged {
+            var datePickersIsEmpty = false
+            datePickersValues.forEach {
+                if $0 == 0 {
+                    datePickersIsEmpty = true
+                    return
+                }
+            }
+        
+            if datePickersIsEmpty {
+                ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng đợi cho ngày đã được chọn và dừng hẳn")
+                slideBtn_Next.reset()
+                datePickersIsEmpty = false
                 return
             }
-        }
-        
-        if datePickersIsEmpty {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng đợi cho ngày đã được chọn và dừng hẳn")
-            slideBtn_Next.reset()
-            datePickersIsEmpty = false
-            return
         }
         
         if isTypeFix! {
@@ -144,6 +153,16 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         self.datePickersValues.append(endMonth)
         self.datePickersValues.append(endYear)
     }
+    
+//    private func formShortEndDate() -> String{
+//        let endYear = String(picker_EndDate.date.year)
+//        let endMonth = String(picker_EndDate.date.month)
+//        let endDay = String(picker_EndDate.date.day + 1)
+//        
+//        let shortDateFormat = "\(endYear)-\(endMonth)-\(endDay)"
+//        
+//        return shortDateFormat
+//    }
 
 }
 

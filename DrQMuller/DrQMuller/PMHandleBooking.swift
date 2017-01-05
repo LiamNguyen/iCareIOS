@@ -11,11 +11,14 @@ import UIKit
 class PMHandleBooking: NSObject, HTTPClientDelegate {
     private var httpClient: HTTPClient!
     private var counter = 1
+    private var dtoStaticArrayDataSource: DTOStaticArrayDataSource!
     
     override init() {
         super.init()
-        httpClient = HTTPClient()
-        httpClient.delegate = self
+        
+        self.httpClient = HTTPClient()
+        self.httpClient.delegate = self
+        self.dtoStaticArrayDataSource = DTOStaticArrayDataSource()
     }
     
     //=========LISTEN TO RESPONSE FROM GET REQUEST=========
@@ -28,7 +31,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownCountriesDataSource.append(dictItem["COUNTRY"]! as! String)
             }
-            DTOStaticArrayDataSource.sharedInstance.dropDownCountriesDataSource = dropDownCountriesDataSource
+            dtoStaticArrayDataSource.dropDownCountriesDataSource = dropDownCountriesDataSource
         }
 //HANDLE CITIES DATASOURCE
         var dropDownCitiesDataSource = [String]()
@@ -37,7 +40,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownCitiesDataSource.append(dictItem["CITY"]! as! String)
             }
-            DTOStaticArrayDataSource.sharedInstance.dropDownCitiesDataSource = dropDownCitiesDataSource
+            dtoStaticArrayDataSource.dropDownCitiesDataSource = dropDownCitiesDataSource
         }
 //HANDLE DISTRICTS DATASOURCE
         var dropDownDistrictsDataSource = [String]()
@@ -46,7 +49,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownDistrictsDataSource.append(dictItem["DISTRICT"]! as! String)
             }
-            DTOStaticArrayDataSource.sharedInstance.dropDownDistrictsDataSource = dropDownDistrictsDataSource
+            dtoStaticArrayDataSource.dropDownDistrictsDataSource = dropDownDistrictsDataSource
         }
 //HANDLE LOCATIONS DATASOURCE
         var dropDownLocationsDataSource = [String]()
@@ -55,7 +58,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownLocationsDataSource.append(dictItem["ADDRESS"]! as! String)
             }
-            DTOStaticArrayDataSource.sharedInstance.dropDownLocationsDataSource = dropDownLocationsDataSource
+            dtoStaticArrayDataSource.dropDownLocationsDataSource = dropDownLocationsDataSource
         }
 //HANDLE VOUCHERS DATASOURCE
         var dropDownVouchersDataSource = [String]()
@@ -64,7 +67,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownVouchersDataSource.append(dictItem["VOUCHER"]! as! String)
             }
-            DTOStaticArrayDataSource.sharedInstance.dropDownVouchersDataSource = dropDownVouchersDataSource
+            dtoStaticArrayDataSource.dropDownVouchersDataSource = dropDownVouchersDataSource
         }
 //HANDLE TYPES DATASOURCE
         var dropDownTypesDataSource = [String]()
@@ -73,34 +76,34 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownTypesDataSource.append(dictItem["TYPE"]! as! String)
             }
-            DTOStaticArrayDataSource.sharedInstance.dropDownTypesDataSource = dropDownTypesDataSource
+            dtoStaticArrayDataSource.dropDownTypesDataSource = dropDownTypesDataSource
         }
         
 //HANDLE ALL TIME DATASOURCE
-        var allTimeDataSource = [String]()
+        var allTimeDataSource = Dictionary<String, String>()
         if let arrayDataSource = data["Select_AllTime"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                allTimeDataSource.append(dictItem["TIME"]! as! String)
+                allTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
             }
-            DTOStaticArrayDataSource.sharedInstance.allTimeDataSource = allTimeDataSource
+            dtoStaticArrayDataSource.allTimeDataSource = allTimeDataSource
         }
         
 //HANDLE ECO TIME DATASOURCE
-        var ecoTimeDataSource = [String]()
+        var ecoTimeDataSource = Dictionary<String, String>()
         if let arrayDataSource = data["Select_EcoTime"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                ecoTimeDataSource.append(dictItem["TIME"]! as! String)
+                ecoTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
             }
-            DTOStaticArrayDataSource.sharedInstance.ecoTimeDataSource = ecoTimeDataSource
+            dtoStaticArrayDataSource.ecoTimeDataSource = ecoTimeDataSource
         }
         
         if counter == 8 {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
-            returnArrayDataSource["returnArrayDataSource"] = DTOStaticArrayDataSource.sharedInstance
+            returnArrayDataSource["returnArrayDataSource"] = dtoStaticArrayDataSource
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
-            pushToUserDefaults(arrayDataSourceObj: DTOStaticArrayDataSource.sharedInstance)
+            pushToUserDefaults(arrayDataSourceObj: dtoStaticArrayDataSource)
         }
         
         counter += 1
@@ -111,7 +114,6 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         if staticArrayDataSourceHasExisted() {
             return
         }
-        
         httpClient.getRequest(url: "Select_Countries", parameter: "")
         httpClient.getRequest(url: "Select_Cities", parameter: "?country_id=235")
         httpClient.getRequest(url: "Select_Districts", parameter: "?city_id=58")
@@ -125,17 +127,12 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         httpClient.getRequest(url: "Select_EcoTime", parameter: "")
     }
     
-    func getTimeDataSource() {
-        if staticArrayDataSourceHasExisted() {
-            return
-        }
-        
-        httpClient.getRequest(url: "Select_AllTime", parameter: "")
-        httpClient.getRequest(url: "Select_EcoTime", parameter: "")
+    func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
+        httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)")
     }
     
-    func staticArrayDataSourceHasExisted() -> Bool {
-        let pulledDtoArrays = pullFromUserDefaults()
+    private func staticArrayDataSourceHasExisted() -> Bool {
+        let pulledDtoArrays = pulledStaticArrayFromUserDefaults()
         
         if pulledDtoArrays != nil {
             var returnArrayDataSourceOffline = [String: DTOStaticArrayDataSource]()
@@ -156,7 +153,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
     }
     
-    private func pullFromUserDefaults() -> DTOStaticArrayDataSource? {
+    func pulledStaticArrayFromUserDefaults() -> DTOStaticArrayDataSource? {
         let userDefaults = UserDefaults.standard
         
         if userDefaults.object(forKey: "arrayDataSourceOffline") == nil {
@@ -167,6 +164,4 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         let pulledDtoArrays = NSKeyedUnarchiver.unarchiveObject(with: decodedData) as! DTOStaticArrayDataSource
         return pulledDtoArrays
     }
-
-    
 }

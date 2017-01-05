@@ -10,13 +10,6 @@ import UIKit
 
 class DTOStaticArrayDataSource: NSObject, NSCoding {
     
-    class var sharedInstance: DTOStaticArrayDataSource {
-        struct Singleton {
-            static let instance = DTOStaticArrayDataSource()
-        }
-        return Singleton.instance
-    }
-    
     private var _dropDownCountriesDataSource: [String]!
     var dropDownCountriesDataSource: [String] {
         get {
@@ -83,8 +76,8 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
-    private var _allTimeDataSource: [String]!
-    var allTimeDataSource: [String] {
+    private var _allTimeDataSource: Dictionary<String, String>!
+    var allTimeDataSource: Dictionary<String, String> {
         get {
             return _allTimeDataSource
         }
@@ -94,8 +87,8 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
-    private var _ecoTimeDataSource: [String]!
-    var ecoTimeDataSource: [String] {
+    private var _ecoTimeDataSource: Dictionary<String, String>!
+    var ecoTimeDataSource: Dictionary<String, String> {
         get {
             return _ecoTimeDataSource
         }
@@ -116,8 +109,8 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         self._dropDownLocationsDataSource = decoder.decodeObject(forKey: "locations") as? [String] ?? [""]
         self._dropDownVouchersDataSource = decoder.decodeObject(forKey: "vouchers") as? [String] ?? [""]
         self._dropDownTypesDataSource = decoder.decodeObject(forKey: "types") as? [String] ?? [""]
-        self._allTimeDataSource = decoder.decodeObject(forKey: "allTime") as? [String] ?? [""]
-        self._ecoTimeDataSource = decoder.decodeObject(forKey: "ecoTime") as? [String] ?? [""]
+        self._allTimeDataSource = decoder.decodeObject(forKey: "allTime") as? Dictionary<String, String> ?? Dictionary<String, String>()
+        self._ecoTimeDataSource = decoder.decodeObject(forKey: "ecoTime") as? Dictionary<String, String> ?? Dictionary<String, String>()
     }
     
     func encode(with coder: NSCoder) {
