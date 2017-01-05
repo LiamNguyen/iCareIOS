@@ -8,15 +8,14 @@
 
 import UIKit
 
-class BookingDetailViewController: UIViewController
-    //, UITableViewDelegate, UITableViewDataSource
-{
+class BookingDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet private weak var lbl_Notification: UILabel!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var tableView_BookingTime: UITableView!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
+    private var freeTimeDataSource = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,11 +24,18 @@ class BookingDetailViewController: UIViewController
         
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: updateTable)
         
+//=========MODELHANDELBOOKINGDETAIL=========
+        
         modelHandelBookingDetail = ModelHandleBookingDetail(isEco: false)
         
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
 
         modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: "1")
+        
+//=========DELEGATING TABLEVIEW=========
+
+        self.tableView_BookingTime.dataSource = self
+        self.tableView_BookingTime.delegate = self
         
 //=========CUSTOM STYLE FOR NOTIFICATION ICON=========
 
@@ -44,18 +50,35 @@ class BookingDetailViewController: UIViewController
     func updateTable(notification: Notification) {
         if let userInfo = notification.userInfo {
             let freeTimeDataSource = userInfo["returnArrayDataSource"]! as! [String]
+            
+            self.freeTimeDataSource = freeTimeDataSource
+            DispatchQueue.main.async {
+                self.tableView_BookingTime.reloadData()
+                
+                //self.tableView(self.tableView_BookingTime, numberOfRowsInSection: freeTimeDataSource.count)
+                
+            }
             print(freeTimeDataSource)
         }
     }
     
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        <#code#>
-//    }
-//    
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        <#code#>
-//    }
-//    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return freeTimeDataSource.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellIdentifier = "TimeTableViewCell"
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimeTableViewCell
+        
+        let item = freeTimeDataSource[indexPath.row]
+        
+        cell.lbl_Time.text = item
+        
+        return cell
+    }
+
+//
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        <#code#>
 //    }
