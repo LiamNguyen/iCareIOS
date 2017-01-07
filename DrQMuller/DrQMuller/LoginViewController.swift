@@ -141,6 +141,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         
         if !isIphone4 && textField == txt_Password {
             adjustViewOrigin(y: initialViewOrigin)
+            login()
             return true
         }
 
@@ -205,6 +206,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     
     
     @IBAction func btn_Login_OnClick(_ sender: Any) {
+        login()
+    }
+    
+    private func login() {
         if !frontValidationPassed() {
             return
         }

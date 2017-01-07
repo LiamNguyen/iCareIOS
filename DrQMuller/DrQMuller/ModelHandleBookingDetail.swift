@@ -78,37 +78,41 @@ class ModelHandleBookingDetail {
                 if selectedTimeDataSourceWithID.isEmpty {
                     freeTimeDataSource = ecoTimeDisplayArray
                     freeTimeDataSourceWithID = ecoTimeDataSource
-                    return
-                }
+                } else {
                 
-                for (ecoTimeID, ecoTimeItem) in ecoTimeDataSource {
-                    if !selectedTimeDataSourceWithID.values.contains(ecoTimeItem) {
-                        freeTimeDataSourceWithID[ecoTimeID] = ecoTimeItem
+                    for (ecoTimeID, ecoTimeItem) in ecoTimeDataSource {
+                        if !selectedTimeDataSourceWithID.values.contains(ecoTimeItem) {
+                            freeTimeDataSourceWithID[ecoTimeID] = ecoTimeItem
+                        }
                     }
-                }
-                
-                for displayItem in ecoTimeDisplayArray {
-                    if !selectedTimeDataSourceWithID.values.contains(displayItem) {
-                        freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                    
+                    for displayItem in ecoTimeDisplayArray {
+                        if !selectedTimeDataSourceWithID.values.contains(displayItem) {
+                            freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                        }
                     }
+                    
                 }
             default:
                 if selectedTimeDataSourceWithID.isEmpty {
+                    
                     freeTimeDataSource = allTimeDisplayArray
                     freeTimeDataSourceWithID = allTimeDataSource
-                    return
-                }
-                
-                for (allTimeID, allTimeItem) in allTimeDataSource {
-                    if !selectedTimeDataSourceWithID.values.contains(allTimeItem) {
-                        freeTimeDataSourceWithID[allTimeID] = allTimeItem
+                    
+                } else {
+                    
+                    for (allTimeID, allTimeItem) in allTimeDataSource {
+                        if !selectedTimeDataSourceWithID.values.contains(allTimeItem) {
+                            freeTimeDataSourceWithID[allTimeID] = allTimeItem
+                        }
                     }
-                }
-                
-                for displayItem in allTimeDisplayArray {
-                    if !selectedTimeDataSourceWithID.values.contains(displayItem) {
-                        freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                    
+                    for displayItem in allTimeDisplayArray {
+                        if !selectedTimeDataSourceWithID.values.contains(displayItem) {
+                            freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                        }
                     }
+                    
                 }
             }
             

@@ -133,7 +133,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             let translatedSelectedDay = modelHandleBookingStartEnd.translateDaysOfWeek(en: picker_StartDate.date.dayOfWeek)
             if (translatedSelectedDay == "Thứ bảy" || translatedSelectedDay == "Chủ nhật") && isEco {
                 let message = "Hiện tại đối với Voucher ECO Booking, quý khách chỉ có thể sử dụng dịch vụ vào các ngày trong tuần, ngoại trừ Thứ Bảy và Chủ Nhật. Xin vui lòng liên hệ Trung Tâm Dr.Q-Muller để biết thêm chi tiết qua số điện thoại: [phone_number_waiting]"
-                ToastManager.sharedInstance.message(view: createMessageViewContainer(), msg: message, duration: 6)
+                ToastManager.sharedInstance.message(view: createMessageViewContainer(), msg: message, duration: 10)
                 slideBtn_Next.reset()
                 return
             }
@@ -180,7 +180,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4 + 10)
         self.view.addSubview(messageView)
         self.messageView = messageView
-        timer = Timer.scheduledTimer(timeInterval: 6.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
+        timer = Timer.scheduledTimer(timeInterval: 10.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
         
         return messageView
     }
