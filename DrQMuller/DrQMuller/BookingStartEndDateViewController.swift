@@ -15,10 +15,11 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var lbl_EndDate: UILabel!
     @IBOutlet private weak var picker_StartDate: UIDatePicker!
     @IBOutlet private weak var picker_EndDate: UIDatePicker!
-    @IBOutlet private weak var constraint_SlideBtn_picker_StartDate: NSLayoutConstraint!
-    @IBOutlet weak var view_TopView: UIView!
+    @IBOutlet private weak var view_TopView: UIView!
+    @IBOutlet private weak var constraint_DatePickerStartHeight: NSLayoutConstraint!
     
-    private var isTypeFix: Bool!
+    private var isTypeFree = false
+    private var isEco = false
     private var constraintDatePicker = DatePickerRange()
     private var datePickerHasChanged = false
     
@@ -30,10 +31,15 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var endYear = Int()
     
     private var datePickersValues = [Int]()
+    
+    private var lineDrawer = LineDrawer()
+    private var messageView: UIView!
+    private var timer: Timer!
+    private var modelHandleBookingStartEnd  = ModelHandelBookingStartEnd()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
 //=========PREPARE UI BASE ON LOGIC OF DTOBookingInformation=========
         
         prepareUI()
@@ -45,12 +51,19 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
 //=========DELEGATING SLIDE BTN=========
 
         self.slideBtn_Next.delegate = self
+        self.slideBtn_Next.buttonText = "Tiếp tục"
+        self.slideBtn_Next.reset()
         
 //=========CONSTRAINT FOR DATEPICKER START AND END=========
 
         constraintDatePicker.datePickerConstraintMin(MinRangeFromCurrentDate: 0, DatePicker: picker_StartDate)
         constraintDatePicker.startEndRangeDatePickerConstraintMin(startYear: picker_StartDate.date.year, startMonth: picker_StartDate.date.month, startDay: picker_StartDate.date.day, DatePicker: picker_EndDate)
         
+//=========SET ECO FLAG=========
+
+        if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
+            isEco = true
+        }
     }
 
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
@@ -108,7 +121,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             }
         }
         
-        if isTypeFix! {
+        if !isTypeFree {
             if (endDay - startDay) < 0 || (endMonth - startMonth) < 0 || (endYear - startYear) < 0 {
                 ToastManager.sharedInstance.alert(view: view_TopView, msg: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu")
                 slideBtn_Next.reset()
@@ -116,8 +129,15 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             }
         }
         
-        if !isTypeFix {
-            DTOBookingInformation.sharedInstance.exactDayOfWeek = picker_StartDate.date.dayOfWeek
+        if isTypeFree {
+            let translatedSelectedDay = modelHandleBookingStartEnd.translateDaysOfWeek(en: picker_StartDate.date.dayOfWeek)
+            if (translatedSelectedDay == "Thứ bảy" || translatedSelectedDay == "Chủ nhật") && isEco {
+                let message = "Hiện tại đối với Voucher ECO Booking, quý khách chỉ có thể sử dụng dịch vụ vào các ngày trong tuần, ngoại trừ Thứ Bảy và Chủ Nhật. Xin vui lòng liên hệ Trung Tâm Dr.Q-Muller để biết thêm chi tiết qua số điện thoại: [phone_number_waiting]"
+                ToastManager.sharedInstance.message(view: createMessageViewContainer(), msg: message, duration: 6)
+                slideBtn_Next.reset()
+                return
+            }
+            DTOBookingInformation.sharedInstance.exactDayOfWeek = translatedSelectedDay
             DTOBookingInformation.sharedInstance.exactDate = picker_StartDate.date.shortDate
         } else {
             DTOBookingInformation.sharedInstance.startDate = picker_StartDate.date.shortDate
@@ -135,11 +155,10 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             lbl_StartDate.text = "Ngày thực hiện"
             lbl_EndDate.isHidden = true
             picker_EndDate.isHidden = true
-            constraint_SlideBtn_picker_StartDate.constant = 20
-            isTypeFix = false
+            constraint_DatePickerStartHeight.constant = 290
+            isTypeFree = true
             return
         }
-        isTypeFix = true
     }
     
 //=========SET UP LIST OF DATEPICKER VALUES=========
@@ -153,6 +172,31 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         self.datePickersValues.append(endMonth)
         self.datePickersValues.append(endYear)
     }
+    
+//=========CREATE MESSAGE VIEW CONTAINER=========
+    
+    func createMessageViewContainer() -> UIView {
+        let messageView = UIView(frame: CGRect(x: -UIScreen.main.bounds.width, y: 20, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2))
+        messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4 + 10)
+        self.view.addSubview(messageView)
+        self.messageView = messageView
+        timer = Timer.scheduledTimer(timeInterval: 6.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
+        
+        return messageView
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let messageView = self.messageView {
+            if messageView.center.x == UIScreen.main.bounds.width / 2 {
+                hideContainer()
+            }
+        }
+    }
+    
+    @objc private func hideContainer() {
+        self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 4)
+    }
+    
     
 //    private func formShortEndDate() -> String{
 //        let endYear = String(picker_EndDate.date.year)

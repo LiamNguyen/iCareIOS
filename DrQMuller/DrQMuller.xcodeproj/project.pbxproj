@@ -36,6 +36,7 @@
 		ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589C1E118529004893DA /* PMHandleLogin.swift */; };
 		ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589E1E11867A004893DA /* APIHandleLogin.swift */; };
 		ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */; };
+		ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
 		EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338971DE9D86300DE940B /* LoginViewController.swift */; };
 		EDB3389B1DE9D86300DE940B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB338991DE9D86300DE940B /* Main.storyboard */; };
@@ -109,6 +110,7 @@
 		ED95589C1E118529004893DA /* PMHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleLogin.swift; sourceTree = "<group>"; };
 		ED95589E1E11867A004893DA /* APIHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleLogin.swift; sourceTree = "<group>"; };
 		ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMSlidingButton.swift; sourceTree = "<group>"; };
+		ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingStartEnd.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338951DE9D86300DE940B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDB338971DE9D86300DE940B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -195,6 +197,7 @@
 				ED6986951E12E14000932E93 /* ModelHandleLogin.swift */,
 				ED41DF3C1E163EC900803A14 /* ModelHandleBookingGeneral.swift */,
 				EDEAC1651E1D3DAC002FF282 /* ModelHandleBookingDetail.swift */,
+				ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 				ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */,
 				ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */,
 				EDE41FDA1E08CE66006CCE99 /* CustomStyleCustomerInformation.swift in Sources */,
+				ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */,
 				ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */,
 				ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */,
 				EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */,

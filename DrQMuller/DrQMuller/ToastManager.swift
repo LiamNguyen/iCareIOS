@@ -22,6 +22,10 @@ class ToastManager {
         view.makeToast(message: msg, duration: 2.5, position: HRToastPositionTop as AnyObject)
     }
     
+    func message(view: UIView, msg: String, duration: Double) {
+        view.makeToast(message: msg, duration: duration, position: HRToastPositionTop as AnyObject)
+    }
+    
 //    func alertError(view: UIView) -> <#return type#> {
 //        <#function body#>
 //    }

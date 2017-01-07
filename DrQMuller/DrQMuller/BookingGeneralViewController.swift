@@ -25,9 +25,6 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
     @IBOutlet weak var view_TopView: UIView!
     
-    //=========MARK: TOAST PROPERTY=========
-
-    
     //=========MARK: PROPERTIES=========
     
     private let dropDown_Countries = DropDown()
@@ -38,6 +35,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private let dropDown_Types = DropDown()
     
     private let firstPhaseWithOneLocation = true
+    
+    private let lineDrawer = LineDrawer()
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -60,6 +59,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 //=========DELEGATING slideBtn_Next=========
         
         self.slideBtn_Next.delegate  = self
+        self.slideBtn_Next.buttonText = "Tiếp tục"
         self.slideBtn_Next.reset()
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
@@ -77,9 +77,9 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 //=========TOAST SET UP COLOR==========
         
         UIView.hr_setToastThemeColor(color: ToastColor)
-    }
-    
 
+        
+    }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
@@ -128,8 +128,6 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         DTOBookingInformation.sharedInstance.location = dropDown_Locations.selectedItem!
         DTOBookingInformation.sharedInstance.voucher = dropDown_Vouchers.selectedItem!
         DTOBookingInformation.sharedInstance.type = dropDown_Types.selectedItem!
-        
-        
         
         self.performSegue(withIdentifier: "segue_BookingGeneralToStartEnDate", sender: self)
     }

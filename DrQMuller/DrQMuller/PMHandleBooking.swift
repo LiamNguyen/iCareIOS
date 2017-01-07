@@ -80,26 +80,46 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         
 //HANDLE ALL TIME DATASOURCE
         var allTimeDataSource = Dictionary<String, String>()
+        var allTimeDisplayArray = [String]()
         if let arrayDataSource = data["Select_AllTime"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
+                allTimeDisplayArray.append((dictItem["TIME"] as? String)!)
                 allTimeDataSource[(dictItem["TIME_ID"] as? String)!] = (dictItem["TIME"] as? String)!
             }
-            let sortedArray = sortDictionary(dictionary: allTimeDataSource)
-            dtoStaticArrayDataSource.allTimeDisplayArray = sortedArray
+            //let sortedArray = sortDictionary(dictionary: allTimeDataSource)
+            //dtoStaticArrayDataSource.allTimeDisplayArray = sortedArray
+            dtoStaticArrayDataSource.allTimeDisplayArray = allTimeDisplayArray
             dtoStaticArrayDataSource.allTimeDataSource = allTimeDataSource
         }
         
 //HANDLE ECO TIME DATASOURCE
         var ecoTimeDataSource = Dictionary<String, String>()
+        var ecoTimeDisplayArray = [String]()
         if let arrayDataSource = data["Select_EcoTime"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
+                ecoTimeDisplayArray.append((dictItem["TIME"] as? String)!)
                 ecoTimeDataSource[(dictItem["TIME_ID"] as? String)!] = dictItem["TIME"]! as? String
             }
-            let sortedArray = sortDictionary(dictionary: ecoTimeDataSource)
-            dtoStaticArrayDataSource.ecoTimeDisplayArray = sortedArray
+            //let sortedArray = sortDictionary(dictionary: ecoTimeDataSource)
+            //dtoStaticArrayDataSource.ecoTimeDisplayArray = sortedArray
+            dtoStaticArrayDataSource.ecoTimeDisplayArray = ecoTimeDisplayArray
             dtoStaticArrayDataSource.ecoTimeDataSource = ecoTimeDataSource
+        }
+        
+//HANDLE DAYS OF WEEK DATASOURCE
+
+        //var daysOfWeekDataSource = Dictionary<String, String>()
+        var daysOfWeekDisplayArray = [String]()
+        if let arrayDataSource = data["Select_DaysOfWeek"]! as? NSArray {
+            for arrayItem in arrayDataSource {
+                let dictItem = arrayItem as! NSDictionary
+                //daysOfWeekDataSource[(dictItem["DAY_ID"] as? String)!] = dictItem["DAY"]! as? String
+                daysOfWeekDisplayArray.append((dictItem["DAY"] as? String)!)
+            }
+            //dtoStaticArrayDataSource.daysOfWeekDataSource = daysOfWeekDataSource
+            dtoStaticArrayDataSource.daysOfWeekDisplayArray = daysOfWeekDisplayArray
         }
         
 //HANDLE SELECTED TIME DATASOURCE
@@ -111,13 +131,15 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             }
         }
         
-        if !selectedTimeDataSource.isEmpty {
-            var returnArrayDataSource = [String: Any]()
-            returnArrayDataSource["returnArrayDataSource"] = selectedTimeDataSource
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
-        }
+//PASS SELECTED TIME DATASOURCE
         
-        if staticArrayDataSourceHasCompletelySet() {
+        var returnArrayDataSource = [String: Any]()
+        returnArrayDataSource["returnArrayDataSource"] = selectedTimeDataSource
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
+        
+//PASS AND SAVE STATIC ARRAY DATASOURCE
+        
+        if staticArrayDataSourceIsCompletelySet() {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
             returnArrayDataSource["returnArrayDataSource"] = dtoStaticArrayDataSource
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
@@ -125,6 +147,8 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
     }
 
+//MAKE GET REQUEST FOR STATIC ARRAY DATASOURCE
+    
     func getDropDownsDataSource() {
         if staticArrayDataSourceHasExisted() {
             return
@@ -140,6 +164,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         
         httpClient.getRequest(url: "Select_AllTime", parameter: "")
         httpClient.getRequest(url: "Select_EcoTime", parameter: "")
+        httpClient.getRequest(url: "Select_DaysOfWeek", parameter: "")
     }
     
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
@@ -147,7 +172,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     }
     
     private func staticArrayDataSourceHasExisted() -> Bool {
-        let pulledDtoArrays = pulledStaticArrayFromUserDefaults()
+        let pulledDtoArrays = pulledStaticArrayFromUserDefaults() as? DTOStaticArrayDataSource
         
         if pulledDtoArrays != nil {
             var returnArrayDataSourceOffline = [String: DTOStaticArrayDataSource]()
@@ -159,7 +184,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
     }
     
-    private func pushToUserDefaults(arrayDataSourceObj: DTOStaticArrayDataSource) {
+//=========PUSH STATIC ARRAY DATASOURCE TO USER DEFAULT==========
+    
+    private func pushToUserDefaults(arrayDataSourceObj: Any) {
         let userDefaults = UserDefaults.standard
         let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: arrayDataSourceObj)
         userDefaults.set(encodedData, forKey: "arrayDataSourceOffline")
@@ -168,7 +195,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
     }
     
-    func pulledStaticArrayFromUserDefaults() -> DTOStaticArrayDataSource? {
+//=========PULL STATIC ARRAY DATASOURCE TO USER DEFAULT==========
+    
+    func pulledStaticArrayFromUserDefaults() -> Any? {
         let userDefaults = UserDefaults.standard
         
         if userDefaults.object(forKey: "arrayDataSourceOffline") == nil {
@@ -180,7 +209,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         return pulledDtoArrays
     }
     
-    private func staticArrayDataSourceHasCompletelySet() -> Bool {
+//=========CHECK IF ALL STATIC ARRAY DATASOURCE IS COMPLETELY SET==========
+    
+    private func staticArrayDataSourceIsCompletelySet() -> Bool {
         if dtoStaticArrayDataSource.dropDownCountriesDataSource.isEmpty {
             return false
         }
@@ -205,31 +236,36 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         if dtoStaticArrayDataSource.ecoTimeDataSource.isEmpty {
             return false
         }
+        if dtoStaticArrayDataSource.daysOfWeekDisplayArray.isEmpty {
+            return false
+        }
         return true
     }
     
-    func sortDictionary(dictionary: [String: String]) -> [String] {
-        var sortedArr = [String]()
-        
-        for key in dictionary.values {
-            let convertedKeyStr = key.replacingOccurrences(of: ":", with: "")
-            let convertedKey = Int(convertedKeyStr)!
-            if sortedArr.isEmpty {
-                sortedArr.append(key)
-                continue
-            }
-            for item in sortedArr {
-                if convertedKey < Int(item.replacingOccurrences(of: ":", with: ""))! {
-                    sortedArr.insert(key, at: sortedArr.index(of: item)!)
-                    break
-                }
-                
-                if sortedArr.index(of: item) == sortedArr.count - 1 {
-                    sortedArr.insert(key, at: sortedArr.count)
-                }
-            }
-        }
-
-        return sortedArr
-    }
+//=========SORT DICTIONARY KEYS OR VALUES AND RETURN ARRAY=========
+   
+//    func sortDictionary(dictionary: [String: String]) -> [String] {
+//        var sortedArr = [String]()
+//        
+//        for key in dictionary.values {
+//            let convertedKeyStr = key.replacingOccurrences(of: ":", with: "")
+//            let convertedKey = Int(convertedKeyStr)!
+//            if sortedArr.isEmpty {
+//                sortedArr.append(key)
+//                continue
+//            }
+//            for item in sortedArr {
+//                if convertedKey < Int(item.replacingOccurrences(of: ":", with: ""))! {
+//                    sortedArr.insert(key, at: sortedArr.index(of: item)!)
+//                    break
+//                }
+//                
+//                if sortedArr.index(of: item) == sortedArr.count - 1 {
+//                    sortedArr.insert(key, at: sortedArr.count)
+//                }
+//            }
+//        }
+//
+//        return sortedArr
+//    }
 }

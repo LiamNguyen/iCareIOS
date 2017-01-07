@@ -7,15 +7,28 @@
 //
 
 import UIKit
+import QuartzCore
+import DropDown
 
-class BookingDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class BookingDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SlideButtonDelegate {
     
     @IBOutlet private weak var lbl_Notification: UILabel!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var tableView_BookingTime: UITableView!
+    @IBOutlet private weak var btn_DropDownDaysOfWeek: NiceButton!
+    @IBOutlet private weak var slideBtn: MMSlidingButton!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
     private var freeTimeDataSource = [String]()
+    private let dropDown_DaysOfWeek = DropDown()
+    private var staticArrayFromUserDefaults: DTOStaticArrayDataSource!
+    private var daysOfWeekDataSource: [String]!
+    //private var daysOfWeekDataSouceWithID: [String: String]! //Dictionary
+    private var isEco = false
+    private var isTypeFree = false
+    private var selectedDay: String!
+    
+    private var presentWindow : UIWindow?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,18 +37,23 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: updateTable)
         
-//=========MODELHANDELBOOKINGDETAIL=========
+//=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
+        if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
+            isEco = true
+        }
         
-        modelHandelBookingDetail = ModelHandleBookingDetail(isEco: false)
-        
-//=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
-
-        modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: "1")
+        modelHandelBookingDetail = ModelHandleBookingDetail(isEco: isEco)
         
 //=========DELEGATING TABLEVIEW=========
 
         self.tableView_BookingTime.dataSource = self
         self.tableView_BookingTime.delegate = self
+        
+//=========DELEGATING SLIDE BUTTON=========
+
+        self.slideBtn.delegate = self
+        self.slideBtn.buttonText = "Hoàn Tất"
+        self.slideBtn.reset()
         
 //=========CUSTOM STYLE FOR NOTIFICATION ICON=========
 
@@ -45,6 +63,31 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========SET UP TOAST COLOR STYLE=========
         
         UIView.hr_setToastThemeColor(color: ToastColor)
+//        presentWindow = UIApplication.shared.keyWindow
+//        presentWindow!.makeToastActivity()
+
+//=========HIDE TABLE VIEW=========
+        
+        self.tableView_BookingTime.isHidden = true
+        
+//=========RETRIEVE DAYS OF WEEK DATASOURCE=========
+        
+        self.staticArrayFromUserDefaults = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()
+        
+        self.daysOfWeekDataSource = staticArrayFromUserDefaults.daysOfWeekDisplayArray
+        
+//=========SET TYPE=========
+        
+        if DTOBookingInformation.sharedInstance.type == "Tự do" {
+            isTypeFree = true
+            self.selectedDay = DTOBookingInformation.sharedInstance.exactDayOfWeek
+            let day_ID = String(self.daysOfWeekDataSource.index(of: self.selectedDay)! + 1)
+            modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
+        }
+        
+//=========BIND DAYS OF WEEK DATASOURCE TO DROPDOWN=========
+        
+        dropDownDaysOfWeekWiredUp()
     }
     
     func updateTable(notification: Notification) {
@@ -54,12 +97,17 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.freeTimeDataSource = freeTimeDataSource
             DispatchQueue.main.async {
                 self.tableView_BookingTime.reloadData()
-                
-                //self.tableView(self.tableView_BookingTime, numberOfRowsInSection: freeTimeDataSource.count)
-                
+                self.tableView_BookingTime.isHidden = false
+                self.tableView_BookingTime.setContentOffset(CGPoint.zero, animated: true)
             }
-            print(freeTimeDataSource)
         }
+    }
+    
+    @IBAction func btn_DropDownDaysOfWeek_OnClick(_ sender: Any) {
+        if isTypeFree {
+            return
+        }
+        dropDown_DaysOfWeek.show()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -78,10 +126,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
 
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
+    
+    func buttonStatus(_ status: String, sender: MMSlidingButton) {
+        print("Saved")
+    }
     
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
         self.performSegue(withIdentifier: "segue_BookingDetailToBookingGeneral", sender: self)
@@ -98,6 +149,67 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
     }
+    
+//=========WIRED UP DAYS OF WEEK DROPDOWN=========
+
+    private func dropDownDaysOfWeekWiredUp() {
+        var datasource = self.daysOfWeekDataSource!
+        
+//REMOVE SATURDAY AND SUNDAY IF ISECO
+        if isEco && !isTypeFree {
+            datasource.removeLast()
+            datasource.removeLast()
+        }
+        
+        dropDown_DaysOfWeek.dataSource = datasource
+        
+        if isTypeFree {
+            btn_DropDownDaysOfWeek.setTitle(self.selectedDay, for: .normal)
+            dropDown_DaysOfWeek.selectRow(at: datasource.index(of: self.selectedDay))
+            return
+        }
+        
+        dropDown_DaysOfWeek.anchorView = btn_DropDownDaysOfWeek
+        
+        dropDown_DaysOfWeek.selectionAction = { [unowned self] (index, item) in
+            self.btn_DropDownDaysOfWeek.setTitle(item, for: .normal)
+            if let selected = self.selectedDay {
+                if selected == item {
+                    return
+                }
+            }
+            let day_ID = String(self.dropDown_DaysOfWeek.indexForSelectedRow! + 1)
+            //OBSERVING NOTIFICATION FROM ModelHandleBookingDetail
+            self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
+            self.tableView_BookingTime.isHidden = true
+            self.selectedDay = item
+        }
+    }
+    
+//=========DEFAULT DROPDOWN STYLE=========
+    
+    private func setupDefaultDropDown() {
+        DropDown.setupDefaultAppearance()
+        dropDown_DaysOfWeek.cellNib = UINib(nibName: "DropDownCell", bundle: Bundle(for: DropDownCell.self))
+        dropDown_DaysOfWeek.customCellConfiguration = nil
+        dropDown_DaysOfWeek.dismissMode = .automatic
+        dropDown_DaysOfWeek.direction = .any
+    }
+    
+//=========RETURN DAYS OF WEEK ARRAY =========
+    
+    //    private func returnArray(dictionary: [String: String]!) -> [String] {
+    //        var resultArray = [String]()
+    //
+    //        if dictionary == nil {
+    //            return resultArray
+    //        }
+    //
+    //        for values in dictionary.values {
+    //            resultArray.insert(values, at: resultArray.count)
+    //        }
+    //        return resultArray
+    //    }
     
     
 }

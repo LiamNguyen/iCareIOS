@@ -21,6 +21,8 @@ class ModelHandleBookingDetail {
     private var freeTimeDataSource: [String]!
     private var freeTimeDataSourceWithID: Dictionary<String, String>!
     
+    private var daysOfWeekDisplayArray: [String]!
+    
     private var staticArrayFromUserDefaults: DTOStaticArrayDataSource!
     private var isEco: Bool!
     
@@ -36,6 +38,8 @@ class ModelHandleBookingDetail {
         
         freeTimeDataSource = [String]()
         freeTimeDataSourceWithID = Dictionary<String, String>()
+        
+        daysOfWeekDisplayArray = staticArrayFromUserDefaults.daysOfWeekDisplayArray
         
         self.isEco = isEco
         bindTimeDataSource(isEco: isEco)
@@ -63,12 +67,20 @@ class ModelHandleBookingDetail {
     }
     
     func setFreeTimeDataSource(notification: Notification) {
+        freeTimeDataSourceWithID = Dictionary<String, String>() //CLEAR DICTIONARY
+        freeTimeDataSource = [String]()                         //CLEAR ARRAY
         if let userInfo = notification.userInfo {
             let receivedSelectedTimeDataSource = userInfo["returnArrayDataSource"]! as? Dictionary<String, String>
             selectedTimeDataSourceWithID = receivedSelectedTimeDataSource
             
             switch isEco {
             case true:
+                if selectedTimeDataSourceWithID.isEmpty {
+                    freeTimeDataSource = ecoTimeDisplayArray
+                    freeTimeDataSourceWithID = ecoTimeDataSource
+                    return
+                }
+                
                 for (ecoTimeID, ecoTimeItem) in ecoTimeDataSource {
                     if !selectedTimeDataSourceWithID.values.contains(ecoTimeItem) {
                         freeTimeDataSourceWithID[ecoTimeID] = ecoTimeItem
@@ -81,6 +93,12 @@ class ModelHandleBookingDetail {
                     }
                 }
             default:
+                if selectedTimeDataSourceWithID.isEmpty {
+                    freeTimeDataSource = allTimeDisplayArray
+                    freeTimeDataSourceWithID = allTimeDataSource
+                    return
+                }
+                
                 for (allTimeID, allTimeItem) in allTimeDataSource {
                     if !selectedTimeDataSourceWithID.values.contains(allTimeItem) {
                         freeTimeDataSourceWithID[allTimeID] = allTimeItem
@@ -98,6 +116,12 @@ class ModelHandleBookingDetail {
             returnArrayDataSource["returnArrayDataSource"] = freeTimeDataSource
             NotificationCenter.default.post(name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
         }
+    }
+    
+    func returnPreSelectedDayIDForTypeFree() -> Int {
+        let selectedDayID: Int!
+        selectedDayID = daysOfWeekDisplayArray.index(of: DTOBookingInformation.sharedInstance.exactDate)! + 1
+        return selectedDayID
     }
     
     

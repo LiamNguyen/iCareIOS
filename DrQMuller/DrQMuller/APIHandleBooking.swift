@@ -28,7 +28,7 @@ class APIHandleBooking: NSObject {
     }
     
     func pulledStaticArrayFromUserDefaults() -> DTOStaticArrayDataSource? {
-        return persistencyManager.pulledStaticArrayFromUserDefaults()
+        return persistencyManager.pulledStaticArrayFromUserDefaults() as! DTOStaticArrayDataSource?
     }
     
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {

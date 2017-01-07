@@ -150,6 +150,34 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
+    private var _daysOfWeekDisplayArray: [String]!
+    var daysOfWeekDisplayArray: [String] {
+        get {
+            if _daysOfWeekDisplayArray == nil {
+                return [String]()
+            }
+            return _daysOfWeekDisplayArray
+        }
+        
+        set (newVal) {
+            _daysOfWeekDisplayArray = newVal
+        }
+    }
+    
+//    private var _daysOfWeekDataSource: Dictionary<String, String>!
+//    var daysOfWeekDataSource: Dictionary<String, String> {
+//        get {
+//            if _daysOfWeekDataSource == nil {
+//                return Dictionary<String, String>()
+//            }
+//            return _daysOfWeekDataSource
+//        }
+//        
+//        set(newVal) {
+//            _daysOfWeekDataSource = newVal
+//        }
+//    }
+    
     override init() {
         
     }
@@ -165,6 +193,8 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         self._allTimeDataSource = decoder.decodeObject(forKey: "allTime") as? Dictionary<String, String> ?? Dictionary<String, String>()
         self._ecoTimeDisplayArray = decoder.decodeObject(forKey: "ecoTimeDisplay") as? [String] ?? [""]
         self._ecoTimeDataSource = decoder.decodeObject(forKey: "ecoTime") as? Dictionary<String, String> ?? Dictionary<String, String>()
+        self._daysOfWeekDisplayArray = decoder.decodeObject(forKey: "daysDisplay") as? [String] ?? [""]
+        //self._daysOfWeekDataSource = decoder.decodeObject(forKey: "days") as? Dictionary<String, String> ?? Dictionary<String, String>()
     }
     
     func encode(with coder: NSCoder) {
@@ -178,5 +208,7 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         coder.encode(_allTimeDataSource, forKey: "allTime")
         coder.encode(ecoTimeDisplayArray, forKey: "ecoTimeDisplay")
         coder.encode(_ecoTimeDataSource, forKey: "ecoTime")
+        coder.encode(_daysOfWeekDisplayArray, forKey: "daysDisplay")
+        //coder.encode(_daysOfWeekDataSource, forKey: "days")
     }
 }
