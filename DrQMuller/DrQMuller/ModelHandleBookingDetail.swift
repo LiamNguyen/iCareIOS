@@ -26,6 +26,8 @@ class ModelHandleBookingDetail {
     private var staticArrayFromUserDefaults: DTOStaticArrayDataSource!
     private var isEco: Bool!
     
+    private var dataHasReturn = false
+    
     init(isEco: Bool) {
         staticArrayFromUserDefaults = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()
         
@@ -44,6 +46,7 @@ class ModelHandleBookingDetail {
         self.isEco = isEco
         bindTimeDataSource(isEco: isEco)
         
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, queue: nil, using: setFreeTimeDataSource)
     }
     
@@ -67,6 +70,9 @@ class ModelHandleBookingDetail {
     }
     
     func setFreeTimeDataSource(notification: Notification) {
+        if dataHasReturn {
+            return
+        }
         freeTimeDataSourceWithID = Dictionary<String, String>() //CLEAR DICTIONARY
         freeTimeDataSource = [String]()                         //CLEAR ARRAY
         if let userInfo = notification.userInfo {
@@ -119,6 +125,9 @@ class ModelHandleBookingDetail {
             var returnArrayDataSource = [String: Any]()
             returnArrayDataSource["returnArrayDataSource"] = freeTimeDataSource
             NotificationCenter.default.post(name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
+            
+            NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil)
+            dataHasReturn = true
         }
     }
     

@@ -32,6 +32,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             }
             dtoStaticArrayDataSource.dropDownCountriesDataSource = dropDownCountriesDataSource
         }
+        
 //HANDLE CITIES DATASOURCE
         var dropDownCitiesDataSource = [String]()
         if let arrayDataSource = data["Select_Cities"]! as? NSArray {
@@ -41,6 +42,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             }
             dtoStaticArrayDataSource.dropDownCitiesDataSource = dropDownCitiesDataSource
         }
+        
 //HANDLE DISTRICTS DATASOURCE
         var dropDownDistrictsDataSource = [String]()
         if let arrayDataSource = data["Select_Districts"]! as? NSArray {
@@ -50,6 +52,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             }
             dtoStaticArrayDataSource.dropDownDistrictsDataSource = dropDownDistrictsDataSource
         }
+        
 //HANDLE LOCATIONS DATASOURCE
         var dropDownLocationsDataSource = [String]()
         if let arrayDataSource = data["Select_Locations"]! as? NSArray {
@@ -59,6 +62,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             }
             dtoStaticArrayDataSource.dropDownLocationsDataSource = dropDownLocationsDataSource
         }
+        
 //HANDLE VOUCHERS DATASOURCE
         var dropDownVouchersDataSource = [String]()
         if let arrayDataSource = data["Select_Vouchers"]! as? NSArray {
@@ -68,6 +72,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             }
             dtoStaticArrayDataSource.dropDownVouchersDataSource = dropDownVouchersDataSource
         }
+        
 //HANDLE TYPES DATASOURCE
         var dropDownTypesDataSource = [String]()
         if let arrayDataSource = data["Select_Types"]! as? NSArray {
