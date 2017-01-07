@@ -67,6 +67,7 @@ class ModelHandleBookingDetail {
     
     func bindFreeTimeDataSource(selectedDayOfWeek_ID: String) {
         APIHandleBooking.sharedInstace.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
+        self.dataHasReturn = false
     }
     
     func setFreeTimeDataSource(notification: Notification) {

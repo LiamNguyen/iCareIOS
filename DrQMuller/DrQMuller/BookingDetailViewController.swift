@@ -189,6 +189,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
             self.tableView_BookingTime.isHidden = true
             self.selectedDay = item
+            self.dataHasReceive = false
         }
     }
     
