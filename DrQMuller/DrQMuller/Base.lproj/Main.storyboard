@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="zGE-cu-f7j">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -23,14 +23,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.94999998807907104" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IOSwallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="4LI-XB-3Fz">
-                                <rect key="frame" x="0.0" y="-49" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="568" id="73R-UR-AN7"/>
                                     <constraint firstAttribute="width" constant="320" id="A1F-uW-y40"/>
                                 </constraints>
                             </imageView>
                             <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLJ-wL-IUr">
-                                <rect key="frame" x="16" y="89" width="289" height="422"/>
+                                <rect key="frame" x="16" y="89" width="289" height="471"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E6Y-t5-FoC">
                                         <rect key="frame" x="25" y="8" width="240" height="61"/>
@@ -139,13 +139,6 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                             </button>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="googleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="VAD-oo-aFm">
-                                                <rect key="frame" x="196" y="307" width="47" height="47"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="47" id="P6t-OI-H5a"/>
-                                                    <constraint firstAttribute="height" constant="47" id="f25-2Z-mYz"/>
-                                                </constraints>
-                                            </imageView>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fbIcon" translatesAutoresizingMaskIntoConstraints="NO" id="evt-hn-txo">
                                                 <rect key="frame" x="20" y="307" width="47" height="47"/>
                                                 <constraints>
@@ -160,6 +153,13 @@
                                                     <constraint firstAttribute="height" constant="47" id="y54-Uh-3c4"/>
                                                 </constraints>
                                             </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitterIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WLe-o6-l7I">
+                                                <rect key="frame" x="196" y="307" width="47" height="47"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="47" id="fCK-dg-1ah"/>
+                                                    <constraint firstAttribute="width" constant="47" id="ye1-0a-Ht0"/>
+                                                </constraints>
+                                            </imageView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="b95-gX-40N" firstAttribute="centerX" secondItem="E94-vc-DIs" secondAttribute="centerX" id="0Ji-sf-UPV"/>
@@ -170,22 +170,22 @@
                                             <constraint firstItem="qCg-ff-z2A" firstAttribute="top" secondItem="E94-vc-DIs" secondAttribute="top" constant="13" id="5KW-mc-3Yl"/>
                                             <constraint firstItem="EXZ-pt-WS2" firstAttribute="top" secondItem="hUP-wI-J2T" secondAttribute="bottom" constant="17" id="695-Aq-b02"/>
                                             <constraint firstItem="hUP-wI-J2T" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" id="6UZ-rw-kKz"/>
-                                            <constraint firstItem="VAD-oo-aFm" firstAttribute="top" secondItem="FuG-ai-bV8" secondAttribute="bottom" constant="25" id="6Ua-Oy-d4y"/>
                                             <constraint firstAttribute="trailing" secondItem="FuG-ai-bV8" secondAttribute="trailing" id="7vO-In-y44"/>
                                             <constraint firstItem="qCg-ff-z2A" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" constant="6" id="Ch7-uK-AiC"/>
                                             <constraint firstAttribute="trailing" secondItem="2FU-pK-ntI" secondAttribute="trailing" id="J4I-Fj-d7g"/>
                                             <constraint firstItem="hUP-wI-J2T" firstAttribute="top" secondItem="2FU-pK-ntI" secondAttribute="bottom" constant="22" id="KNY-fU-nVk"/>
                                             <constraint firstAttribute="trailing" secondItem="hUP-wI-J2T" secondAttribute="trailing" id="O2A-Xd-n2s"/>
                                             <constraint firstAttribute="trailing" secondItem="EXZ-pt-WS2" secondAttribute="trailing" constant="6" id="Od1-OZ-fB4"/>
+                                            <constraint firstItem="WLe-o6-l7I" firstAttribute="leading" secondItem="b95-gX-40N" secondAttribute="trailing" constant="41" id="TLJ-dq-LCx"/>
                                             <constraint firstItem="or7-Q3-ggf" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" id="Umc-Pj-VY5"/>
                                             <constraint firstItem="b95-gX-40N" firstAttribute="top" secondItem="FuG-ai-bV8" secondAttribute="bottom" constant="25" id="ZZ0-sR-vO2"/>
                                             <constraint firstItem="2FU-pK-ntI" firstAttribute="top" secondItem="E94-vc-DIs" secondAttribute="top" constant="7" id="df1-3N-iy2"/>
                                             <constraint firstItem="FuG-ai-bV8" firstAttribute="top" secondItem="or7-Q3-ggf" secondAttribute="bottom" constant="8" id="f7c-gy-eBd"/>
                                             <constraint firstItem="XKm-9m-zaZ" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" constant="6" id="iJv-Ne-b7O"/>
+                                            <constraint firstItem="WLe-o6-l7I" firstAttribute="top" secondItem="FuG-ai-bV8" secondAttribute="bottom" constant="25" id="lTq-JI-NGk"/>
                                             <constraint firstItem="XKm-9m-zaZ" firstAttribute="top" secondItem="2FU-pK-ntI" secondAttribute="bottom" constant="27" id="peF-xs-TzN"/>
                                             <constraint firstItem="or7-Q3-ggf" firstAttribute="top" secondItem="hUP-wI-J2T" secondAttribute="bottom" constant="55" id="sKZ-kC-hKk"/>
                                             <constraint firstItem="2FU-pK-ntI" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" id="uch-Qh-RZz"/>
-                                            <constraint firstItem="VAD-oo-aFm" firstAttribute="leading" secondItem="b95-gX-40N" secondAttribute="trailing" constant="41" id="ybp-XR-zk0"/>
                                             <constraint firstItem="EXZ-pt-WS2" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" constant="5" id="z0m-tj-nlH"/>
                                             <constraint firstItem="b95-gX-40N" firstAttribute="leading" secondItem="evt-hn-txo" secondAttribute="trailing" constant="41" id="zZm-XT-787"/>
                                         </constraints>
@@ -247,14 +247,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IOSwallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="Oih-lh-26s">
-                                <rect key="frame" x="0.0" y="-49" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="4i8-yd-32o"/>
                                     <constraint firstAttribute="height" constant="568" id="m9z-GJ-5dL"/>
                                 </constraints>
                             </imageView>
                             <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZf-Cv-cRx">
-                                <rect key="frame" x="15" y="89" width="289" height="364"/>
+                                <rect key="frame" x="15" y="89" width="289" height="413"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baS-db-70e">
                                         <rect key="frame" x="14" y="109" width="263" height="269"/>
@@ -411,7 +411,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZk-aq-va0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2859" y="-321"/>
+            <point key="canvasLocation" x="2857.5" y="-321.12676056338029"/>
         </scene>
         <!--First Tab Customer Information View Controller-->
         <scene sceneID="h13-6I-DDo">
@@ -1592,7 +1592,6 @@
         <image name="emailIcon" width="600" height="580"/>
         <image name="fbIcon" width="432" height="432"/>
         <image name="genderIcon" width="512" height="512"/>
-        <image name="googleIcon" width="600" height="600"/>
         <image name="homeIcon" width="512" height="512"/>
         <image name="phoneIcon" width="512" height="512"/>
         <image name="plusIcon" width="420" height="420"/>
@@ -1602,10 +1601,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d88-TN-lRm"/>
-        <segue reference="B1e-Gq-0DU"/>
-        <segue reference="Hpz-zP-PTR"/>
-        <segue reference="Hn6-nH-Q49"/>
+        <segue reference="NtQ-bk-9Of"/>
+        <segue reference="lUW-tB-BQG"/>
         <segue reference="25N-BX-oeo"/>
+        <segue reference="Hn6-nH-Q49"/>
+        <segue reference="d88-TN-lRm"/>
     </inferredMetricsTieBreakers>
 </document>
