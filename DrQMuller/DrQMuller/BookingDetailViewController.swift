@@ -26,6 +26,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     //private var daysOfWeekDataSouceWithID: [String: String]! //Dictionary
     private var isEco = false
     private var isTypeFree = false
+    private var dataHasReceive = false
     private var selectedDay: String!
     
     private var presentWindow : UIWindow?
@@ -91,6 +92,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func updateTable(notification: Notification) {
+        if dataHasReceive {
+            return
+        }
         if let userInfo = notification.userInfo {
             let freeTimeDataSource = userInfo["returnArrayDataSource"]! as! [String]
             
@@ -100,6 +104,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.tableView_BookingTime.isHidden = false
                 self.tableView_BookingTime.setContentOffset(CGPoint.zero, animated: true)
             }
+            
+            dataHasReceive = true
         }
     }
     
