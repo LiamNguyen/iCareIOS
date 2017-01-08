@@ -160,6 +160,9 @@
                                                     <constraint firstAttribute="width" constant="47" id="ye1-0a-Ht0"/>
                                                 </constraints>
                                             </imageView>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="da1-Cb-Mkv">
+                                                <rect key="frame" x="218" y="181" width="37" height="37"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="b95-gX-40N" firstAttribute="centerX" secondItem="E94-vc-DIs" secondAttribute="centerX" id="0Ji-sf-UPV"/>
@@ -171,6 +174,7 @@
                                             <constraint firstItem="EXZ-pt-WS2" firstAttribute="top" secondItem="hUP-wI-J2T" secondAttribute="bottom" constant="17" id="695-Aq-b02"/>
                                             <constraint firstItem="hUP-wI-J2T" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" id="6UZ-rw-kKz"/>
                                             <constraint firstAttribute="trailing" secondItem="FuG-ai-bV8" secondAttribute="trailing" id="7vO-In-y44"/>
+                                            <constraint firstAttribute="trailing" secondItem="da1-Cb-Mkv" secondAttribute="trailing" constant="8" id="Agn-Zd-xyN"/>
                                             <constraint firstItem="qCg-ff-z2A" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" constant="6" id="Ch7-uK-AiC"/>
                                             <constraint firstAttribute="trailing" secondItem="2FU-pK-ntI" secondAttribute="trailing" id="J4I-Fj-d7g"/>
                                             <constraint firstItem="hUP-wI-J2T" firstAttribute="top" secondItem="2FU-pK-ntI" secondAttribute="bottom" constant="22" id="KNY-fU-nVk"/>
@@ -186,6 +190,7 @@
                                             <constraint firstItem="XKm-9m-zaZ" firstAttribute="top" secondItem="2FU-pK-ntI" secondAttribute="bottom" constant="27" id="peF-xs-TzN"/>
                                             <constraint firstItem="or7-Q3-ggf" firstAttribute="top" secondItem="hUP-wI-J2T" secondAttribute="bottom" constant="55" id="sKZ-kC-hKk"/>
                                             <constraint firstItem="2FU-pK-ntI" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" id="uch-Qh-RZz"/>
+                                            <constraint firstItem="da1-Cb-Mkv" firstAttribute="top" secondItem="EXZ-pt-WS2" secondAttribute="bottom" constant="15" id="w12-13-dGD"/>
                                             <constraint firstItem="EXZ-pt-WS2" firstAttribute="leading" secondItem="E94-vc-DIs" secondAttribute="leading" constant="5" id="z0m-tj-nlH"/>
                                             <constraint firstItem="b95-gX-40N" firstAttribute="leading" secondItem="evt-hn-txo" secondAttribute="trailing" constant="41" id="zZm-XT-787"/>
                                         </constraints>
@@ -216,6 +221,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="da1-Cb-Mkv" id="ZAp-bP-Bdm"/>
                         <outlet property="btn_Login" destination="or7-Q3-ggf" id="kq0-qL-ChR"/>
                         <outlet property="btn_Register" destination="FuG-ai-bV8" id="rOU-tu-uhr"/>
                         <outlet property="btn_ResetPassword" destination="EXZ-pt-WS2" id="vqP-AU-iwX"/>
@@ -322,6 +328,9 @@
                                                     <action selector="btn_Register_OnClick:" destination="ElV-lj-bZP" eventType="touchUpInside" id="u6L-4U-vA1"/>
                                                 </connections>
                                             </button>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Rgh-8H-IK7">
+                                                <rect key="frame" x="218" y="208" width="37" height="37"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="BkN-R5-2uF" firstAttribute="top" secondItem="bg7-se-Sqz" secondAttribute="bottom" constant="17" id="3gc-BP-bjZ"/>
@@ -337,9 +346,11 @@
                                             <constraint firstItem="ebk-ap-kSs" firstAttribute="leading" secondItem="baS-db-70e" secondAttribute="leading" constant="6" id="QBZ-xF-pyT"/>
                                             <constraint firstItem="ebk-ap-kSs" firstAttribute="top" secondItem="VrT-zv-g0p" secondAttribute="bottom" constant="27" id="W1I-0q-kaf"/>
                                             <constraint firstItem="VrT-zv-g0p" firstAttribute="leading" secondItem="baS-db-70e" secondAttribute="leading" id="WZq-sC-yxt"/>
+                                            <constraint firstItem="Rgh-8H-IK7" firstAttribute="top" secondItem="BkN-R5-2uF" secondAttribute="bottom" constant="25" id="YyO-cu-z4H"/>
                                             <constraint firstItem="Bhz-mN-Ejq" firstAttribute="leading" secondItem="baS-db-70e" secondAttribute="leading" constant="6" id="cFS-k4-6yi"/>
                                             <constraint firstItem="9CU-CP-VZC" firstAttribute="leading" secondItem="baS-db-70e" secondAttribute="leading" constant="6" id="d0x-qw-ZUB"/>
                                             <constraint firstItem="YDo-Ru-RcU" firstAttribute="top" secondItem="BkN-R5-2uF" secondAttribute="bottom" constant="18" id="dzC-uw-9mB"/>
+                                            <constraint firstAttribute="trailing" secondItem="Rgh-8H-IK7" secondAttribute="trailing" constant="8" id="evD-bm-G1m"/>
                                             <constraint firstItem="bg7-se-Sqz" firstAttribute="leading" secondItem="baS-db-70e" secondAttribute="leading" id="gyR-On-5Md"/>
                                             <constraint firstItem="VrT-zv-g0p" firstAttribute="top" secondItem="baS-db-70e" secondAttribute="top" constant="10" id="kFn-5a-oWL"/>
                                             <constraint firstItem="9CU-CP-VZC" firstAttribute="top" secondItem="bg7-se-Sqz" secondAttribute="bottom" constant="22" id="p9Z-fY-OgA"/>
@@ -1462,7 +1473,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1601,10 +1612,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NtQ-bk-9Of"/>
+        <segue reference="B6B-Of-tMD"/>
+        <segue reference="rTw-Hr-u68"/>
         <segue reference="lUW-tB-BQG"/>
-        <segue reference="25N-BX-oeo"/>
         <segue reference="Hn6-nH-Q49"/>
-        <segue reference="d88-TN-lRm"/>
+        <segue reference="25N-BX-oeo"/>
     </inferredMetricsTieBreakers>
 </document>
