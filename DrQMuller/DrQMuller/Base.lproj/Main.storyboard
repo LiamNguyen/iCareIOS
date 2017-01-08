@@ -406,6 +406,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="Rgh-8H-IK7" id="zLR-6O-VIs"/>
                         <outlet property="btn_Back" destination="QHX-bL-XLa" id="yXe-eH-AaW"/>
                         <outlet property="btn_Register" destination="YDo-Ru-RcU" id="MNT-6W-cBE"/>
                         <outlet property="constraint_BtnBackHeight" destination="Vhe-7h-nkG" id="Rq2-PE-UwJ"/>
@@ -935,7 +936,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="715-Lq-BFk" kind="show" id="5rf-7u-S8A"/>
+                                    <segue destination="715-Lq-BFk" kind="show" identifier="segue_CustomerInformationToBookingTabViewController" id="5rf-7u-S8A"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1473,7 +1474,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1612,10 +1613,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="B6B-Of-tMD"/>
-        <segue reference="rTw-Hr-u68"/>
         <segue reference="lUW-tB-BQG"/>
-        <segue reference="Hn6-nH-Q49"/>
         <segue reference="25N-BX-oeo"/>
+        <segue reference="sE2-L0-Rza"/>
+        <segue reference="rTw-Hr-u68"/>
+        <segue reference="B6B-Of-tMD"/>
     </inferredMetricsTieBreakers>
 </document>
