@@ -223,7 +223,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         if !frontValidationPassed() {
             return
         }
-        activityIndicator.startAnimating()
+        uiWaitingLoginResponse(isDone: false)
         modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!)
         self.hasReceiveLoginResponse = false
     }
@@ -244,7 +244,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
                 ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
             }
         }
-        self.activityIndicator.stopAnimating()
+        uiWaitingLoginResponse(isDone: true)
         self.hasReceiveLoginResponse = true
     }
     
@@ -273,6 +273,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             return true
         }
         return false
+    }
+    
+//=========LOCK UI ELEMENTS WAITING LOGIN RESPONSE=========
+    
+    private func uiWaitingLoginResponse(isDone: Bool) {
+        if !isDone {
+            self.activityIndicator.startAnimating()
+            self.txt_Username.isEnabled = false
+            self.txt_Password.isEnabled = false
+            self.btn_ResetPassword.isEnabled = false
+            self.btn_Login.isEnabled = false
+            self.btn_Register.isEnabled = false
+        } else {
+            self.activityIndicator.stopAnimating()
+            self.txt_Username.isEnabled = true
+            self.txt_Password.isEnabled = true
+            self.btn_ResetPassword.isEnabled = true
+            self.btn_Login.isEnabled = true
+            self.btn_Register.isEnabled = true
+        }
     }
     
     
