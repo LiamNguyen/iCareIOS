@@ -17,6 +17,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private weak var tableView_BookingTime: UITableView!
     @IBOutlet private weak var btn_DropDownDaysOfWeek: NiceButton!
     @IBOutlet private weak var slideBtn: MMSlidingButton!
+    private var activityIndicator: UIActivityIndicatorView!
+    private var activityIndicatorViewContainer: ActivityIndicatorViewContainer!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
     private var freeTimeDataSource = [String]()
@@ -77,9 +79,15 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.daysOfWeekDataSource = staticArrayFromUserDefaults.daysOfWeekDisplayArray
         
+//=========INITIALIZE ACTIVITY INDICATOR=========
+        
+        self.activityIndicatorViewContainer = ActivityIndicatorViewContainer()
+        self.activityIndicator = activityIndicatorViewContainer.createActivityIndicator(view: self.view)
+        
 //=========SET TYPE=========
         
         if DTOBookingInformation.sharedInstance.type == "Tự do" {
+            self.activityIndicator.startAnimating()
             isTypeFree = true
             self.selectedDay = DTOBookingInformation.sharedInstance.exactDayOfWeek
             let day_ID = String(self.daysOfWeekDataSource.index(of: self.selectedDay)! + 1)
@@ -89,6 +97,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========BIND DAYS OF WEEK DATASOURCE TO DROPDOWN=========
         
         dropDownDaysOfWeekWiredUp()
+    
     }
     
     func updateTable(notification: Notification) {
@@ -101,7 +110,18 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.freeTimeDataSource = freeTimeDataSource
             DispatchQueue.main.async {
                 self.tableView_BookingTime.reloadData()
+
+                
+                let animation = CATransition()
+                animation.type = kCATransitionFade
+                animation.duration = 0.2
+                
+                self.activityIndicator.layer.add(animation, forKey: nil)
+                self.activityIndicator.stopAnimating()
+
+                self.tableView_BookingTime.layer.add(animation, forKey: nil)
                 self.tableView_BookingTime.isHidden = false
+                
                 self.tableView_BookingTime.setContentOffset(CGPoint.zero, animated: true)
             }
             
@@ -134,6 +154,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+
     }
     
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
@@ -178,6 +202,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dropDown_DaysOfWeek.anchorView = btn_DropDownDaysOfWeek
         
         dropDown_DaysOfWeek.selectionAction = { [unowned self] (index, item) in
+            self.tableView_BookingTime.isHidden = true
+            self.activityIndicator.startAnimating()
             self.btn_DropDownDaysOfWeek.setTitle(item, for: .normal)
             if let selected = self.selectedDay {
                 if selected == item {
@@ -187,7 +213,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             let day_ID = String(self.dropDown_DaysOfWeek.indexForSelectedRow! + 1)
             //OBSERVING NOTIFICATION FROM ModelHandleBookingDetail
             self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
-            self.tableView_BookingTime.isHidden = true
             self.selectedDay = item
             self.dataHasReceive = false
         }

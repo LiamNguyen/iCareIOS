@@ -18,6 +18,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     @IBOutlet private weak var btn_Login: UIButton!
     @IBOutlet private weak var btn_Register: UIButton!
     @IBOutlet private weak var constraint_BtnLogin_TxtConfirm: NSLayoutConstraint!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
@@ -30,21 +31,23 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private var message = Messages()
     
     func onReceiveRequestResponse(data: AnyObject) {
-        if let array = data["Select_Vouchers"]! as? NSArray {
-            let dict = array[1] as! NSDictionary
-            print(dict["VOUCHER"]!)
-        } else if let array = data["Select_AllTime"]! as? NSArray {
-            print(array)
-        } else {
-            print("Wrongggg")
+        if let arrayResponse = data["Select_AllTime"] as? NSArray {
+            for arrayItem in arrayResponse {
+                let arrayDict = arrayItem as! NSDictionary
+                if let result = arrayDict["TIME"] as? String {
+                    print(result)
+                }
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        testReturnArr.delegate = self
+        self.testReturnArr.delegate = self
 
+        
+        activityIndicator.stopAnimating()
         
 //=========TXTFIELD DELEGATE=========
         
@@ -213,7 +216,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         if !frontValidationPassed() {
             return
         }
-        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!, viewController: self, toastView: loginView)
+        activityIndicator.startAnimating()
+        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!, viewController: self, toastView: loginView, indicator: activityIndicator)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
