@@ -114,7 +114,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 let animation = CATransition()
                 animation.type = kCATransitionFade
-                animation.duration = 0.2
+                animation.duration = 0.7
                 
                 self.activityIndicator.layer.add(animation, forKey: nil)
                 self.activityIndicator.stopAnimating()
@@ -202,14 +202,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dropDown_DaysOfWeek.anchorView = btn_DropDownDaysOfWeek
         
         dropDown_DaysOfWeek.selectionAction = { [unowned self] (index, item) in
-            self.tableView_BookingTime.isHidden = true
-            self.activityIndicator.startAnimating()
             self.btn_DropDownDaysOfWeek.setTitle(item, for: .normal)
             if let selected = self.selectedDay {
                 if selected == item {
                     return
                 }
             }
+            self.tableView_BookingTime.isHidden = true
+            self.activityIndicator.startAnimating()
             let day_ID = String(self.dropDown_DaysOfWeek.indexForSelectedRow! + 1)
             //OBSERVING NOTIFICATION FROM ModelHandleBookingDetail
             self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)

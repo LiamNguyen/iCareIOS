@@ -21,6 +21,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet private weak var constraint_BtnBackHeight: NSLayoutConstraint!
     @IBOutlet private weak var lbl_Welcome: UILabel!
     @IBOutlet private weak var constrant_TxtView_LoginView: NSLayoutConstraint!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
@@ -92,6 +93,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         txt_Username.becomeFirstResponder()
 
+        self.activityIndicator.stopAnimating()
     }
 
     override func didReceiveMemoryWarning() {

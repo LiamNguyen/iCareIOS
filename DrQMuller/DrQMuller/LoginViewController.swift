@@ -249,7 +249,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "segue_CustomerInformationToBookingTabViewController"){
+        if(segue.identifier == "segue_LoginToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
                 tabVC.selectedIndex = 1
             }

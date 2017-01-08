@@ -406,6 +406,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="Rgh-8H-IK7" id="zLR-6O-VIs"/>
                         <outlet property="btn_Back" destination="QHX-bL-XLa" id="yXe-eH-AaW"/>
                         <outlet property="btn_Register" destination="YDo-Ru-RcU" id="MNT-6W-cBE"/>
                         <outlet property="constraint_BtnBackHeight" destination="Vhe-7h-nkG" id="Rq2-PE-UwJ"/>
@@ -1612,10 +1613,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rf-7u-S8A"/>
-        <segue reference="25N-BX-oeo"/>
         <segue reference="lUW-tB-BQG"/>
+        <segue reference="25N-BX-oeo"/>
+        <segue reference="sE2-L0-Rza"/>
         <segue reference="rTw-Hr-u68"/>
-        <segue reference="Hn6-nH-Q49"/>
+        <segue reference="B6B-Of-tMD"/>
     </inferredMetricsTieBreakers>
 </document>
