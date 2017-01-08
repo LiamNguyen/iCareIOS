@@ -92,14 +92,6 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     }
     
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "segue_CustomerInformationToBookingTabViewController"){
-            if let tabVC = segue.destination as? UITabBarController{
-                tabVC.selectedIndex = 1
-            }
-        }
-    }
-    
     
     
     

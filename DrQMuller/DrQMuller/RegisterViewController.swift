@@ -21,7 +21,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet private weak var constraint_BtnBackHeight: NSLayoutConstraint!
     @IBOutlet private weak var lbl_Welcome: UILabel!
     @IBOutlet private weak var constrant_TxtView_LoginView: NSLayoutConstraint!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
@@ -76,24 +75,23 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(swipeRight)
         
-//        //=========DRAW LINE=========
-//        
-//        let firstPoint = CGPoint(x: 0, y: 480)
-//        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
-//        
-//        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-//        
-//        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
-//        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
-//        
-//        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+        //=========DRAW LINE=========
+        
+        let firstPoint = CGPoint(x: 0, y: 480)
+        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+        
+        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+        
+        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+        
+        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
         
 
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
         
         txt_Username.becomeFirstResponder()
-        
-        activityIndicator.stopAnimating()
+
     }
 
     override func didReceiveMemoryWarning() {

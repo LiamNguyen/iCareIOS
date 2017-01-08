@@ -406,7 +406,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="activityIndicator" destination="Rgh-8H-IK7" id="zQS-oH-bht"/>
                         <outlet property="btn_Back" destination="QHX-bL-XLa" id="yXe-eH-AaW"/>
                         <outlet property="btn_Register" destination="YDo-Ru-RcU" id="MNT-6W-cBE"/>
                         <outlet property="constraint_BtnBackHeight" destination="Vhe-7h-nkG" id="Rq2-PE-UwJ"/>
@@ -1474,11 +1473,11 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
-                                                    <rect key="frame" x="113" y="15" width="64" height="21"/>
+                                                    <rect key="frame" x="113" y="15" width="63.5" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="yT5-K1-fSa"/>
                                                     </constraints>
@@ -1487,7 +1486,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="4YJ-Jn-K1i">
-                                                    <rect key="frame" x="255" y="13" width="25" height="24"/>
+                                                    <rect key="frame" x="255" y="13" width="25" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="FEG-4B-PNY"/>
                                                     </constraints>
@@ -1613,10 +1612,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rf-7u-S8A"/>
-        <segue reference="25N-BX-oeo"/>
-        <segue reference="lUW-tB-BQG"/>
+        <segue reference="B6B-Of-tMD"/>
         <segue reference="rTw-Hr-u68"/>
-        <segue reference="sE2-L0-Rza"/>
+        <segue reference="lUW-tB-BQG"/>
+        <segue reference="Hn6-nH-Q49"/>
+        <segue reference="25N-BX-oeo"/>
     </inferredMetricsTieBreakers>
 </document>
