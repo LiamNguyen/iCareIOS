@@ -18,7 +18,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     @IBOutlet private weak var btn_Login: UIButton!
     @IBOutlet private weak var btn_Register: UIButton!
     @IBOutlet private weak var constraint_BtnLogin_TxtConfirm: NSLayoutConstraint!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
@@ -26,9 +26,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
     private var lineDrawer = LineDrawer()
+    
     var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
-    private var message = Messages()
+    private var hasReceiveLoginResponse = false
     
     func onReceiveRequestResponse(data: AnyObject) {
         if let arrayResponse = data["Select_AllTime"] as? NSArray {
@@ -91,6 +92,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         
         updateLoadStyleForIphone4()
         
+        
+//=========OBSERVE FOR NOTIFICATION FROM PMHandleLogin=========
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "postRequestStatus"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "postRequestStatus"), object: nil, queue: nil, using: handleView)
+
+        
 //        //=========DRAW LINE=========
 //
 //        let firstPoint = CGPoint(x: 0, y: 480)
@@ -108,8 +115,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         UIView.hr_setToastThemeColor(color: ToastColorAlert)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
 //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========
@@ -217,7 +224,28 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             return
         }
         activityIndicator.startAnimating()
-        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!, viewController: self, toastView: loginView, indicator: activityIndicator)
+        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!)
+        self.hasReceiveLoginResponse = false
+    }
+    
+//=========HANDLE LOGIN PROCEDURE=========
+    
+    func handleView(notification: Notification) {
+        if hasReceiveLoginResponse {
+            return
+        }
+        if let userInfo = notification.userInfo {
+            let isOk = userInfo["status"] as? Bool
+            if isOk! {
+                print("Login Success")
+                self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
+            } else {
+                print("Login Failed")
+                ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
+            }
+        }
+        self.activityIndicator.stopAnimating()
+        self.hasReceiveLoginResponse = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
