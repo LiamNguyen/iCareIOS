@@ -90,8 +90,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.activityIndicator.startAnimating()
             isTypeFree = true
             self.selectedDay = DTOBookingInformation.sharedInstance.exactDayOfWeek
-            let day_ID = String(self.daysOfWeekDataSource.index(of: self.selectedDay)! + 1)
-            modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
+            let selectedDay_ID = modelHandelBookingDetail.returnPreSelectedDayIDForTypeFree()
+            modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: selectedDay_ID)
         }
         
 //=========BIND DAYS OF WEEK DATASOURCE TO DROPDOWN=========
@@ -153,11 +153,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-
+        print(freeTimeDataSource[indexPath.row])
     }
     
     func buttonStatus(_ status: String, sender: MMSlidingButton) {

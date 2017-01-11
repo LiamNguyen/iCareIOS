@@ -26,6 +26,8 @@ class ModelHandleBookingDetail {
     private var staticArrayFromUserDefaults: DTOStaticArrayDataSource!
     private var isEco: Bool!
     
+    private var selectedDayID: Int!
+    
     private var dataHasReturn = false
     
     init(isEco: Bool) {
@@ -132,10 +134,9 @@ class ModelHandleBookingDetail {
         }
     }
     
-    func returnPreSelectedDayIDForTypeFree() -> Int {
-        let selectedDayID: Int!
-        selectedDayID = daysOfWeekDisplayArray.index(of: DTOBookingInformation.sharedInstance.exactDate)! + 1
-        return selectedDayID
+    func returnPreSelectedDayIDForTypeFree() -> String {
+        selectedDayID = daysOfWeekDisplayArray.index(of: DTOBookingInformation.sharedInstance.exactDayOfWeek)! + 1
+        return String(selectedDayID)
     }
     
     
