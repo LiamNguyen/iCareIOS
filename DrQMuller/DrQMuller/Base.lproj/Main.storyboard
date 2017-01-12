@@ -1476,7 +1476,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1538,13 +1538,16 @@
                                     <state key="normal" title="Xoá hết ">
                                         <color key="titleColor" red="1" green="0.99118970809999996" blue="0.9964207504" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="btn_ClearAllCartItem_OnClick:" destination="rI9-M0-Ata" eventType="touchUpInside" id="RSR-mG-7uw"/>
+                                    </connections>
                                 </button>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CartOrderTableViewCell" rowHeight="45" id="dIo-Gb-0Gh" customClass="CartOrderTableViewCell" customModule="DrQMuller" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="211" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="211" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -1586,7 +1589,7 @@
                                                 <constraint firstItem="lE5-B3-IZp" firstAttribute="leading" secondItem="eaA-Jx-FL9" secondAttribute="trailing" constant="55" id="ubq-pA-Oog"/>
                                             </constraints>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" red="0.98885581359999997" green="0.92435741299999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="1" green="0.84410898748024432" blue="0.99528195873027225" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="lbl_BookingTime" destination="ZG8-qO-psB" id="I0D-yy-sRs"/>
                                             <outlet property="lbl_DayOfWeek" destination="6Y6-vQ-qYi" id="2UG-po-saK"/>

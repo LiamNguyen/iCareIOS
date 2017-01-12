@@ -44,12 +44,15 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var messageView: UIView!
     
     private var timer: Timer!
+    private var deleteCartOrderItemIndexPath: NSIndexPath? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
         
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
+
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: updateTable)
         
 //=========OBSERING NOTIFICATION FROM PMHandleBooking FOR CHECKING BOOKING TIME EXISTENCY RESULT=========
@@ -74,6 +77,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.tableView_BookingTime.isHidden = true
         self.tableView_CartOrder.isHidden = true
+        
+        decorateCartOrderTableView()
         
 //=========DELEGATING SLIDE BUTTON=========
 
@@ -128,6 +133,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
 //=========UPDATE FREE TIME LIST WHEN RECEIVING RESPONSE FROM SERVER=========
     
     func updateTable(notification: Notification) {
@@ -166,6 +179,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             if existencyResult == "1" {
                 DispatchQueue.main.sync {
+                    self.activityIndicator.stopAnimating()
+                    self.tableView_BookingTime.isUserInteractionEnabled = true
                     ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Giờ đã bị đặt. Xin vui lòng chọn giờ khác.")
                 }
             } else {
@@ -180,6 +195,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     
                     ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Chọn thành công\n\(self.tupleBookingTime.value.day) - \(self.tupleBookingTime.value.time)")
                     
+                    self.activityIndicator.stopAnimating()
+                    self.tableView_BookingTime.isUserInteractionEnabled = true
                     self.tableView_BookingTime.isHidden = true
                     self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
                     self.dropDown_DaysOfWeek.deselectRow(at: Int(self.tupleBookingTime.id.day_ID)! - 1)
@@ -209,6 +226,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dropDown_DaysOfWeek.show()
     }
     
+    @IBAction func btn_ClearAllCartItem_OnClick(_ sender: Any) {
+        resetBookingTime(isUsedForDeleteAllItems: true)
+    }
+    
 //=========TABLE VIEW DELEGATE METHODS=========
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -228,7 +249,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if tableView == self.tableView_BookingTime {
         //FREE TIME TABLE VIEW
             let cellIdentifier = "TimeTableViewCell"
-            
+        
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimeTableViewCell
             
             let item = freeTimeDataSource[indexPath.row]
@@ -272,6 +293,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 }
             }
             
+            self.activityIndicator.startAnimating()
+            self.tableView_BookingTime.isUserInteractionEnabled = false
             modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row])
             
             let time_ID = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
@@ -280,9 +303,62 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tupleBookingTime.value.time = freeTimeDataSource[indexPath.row]
         } else {
             self.tableView_CartOrder.isHidden = true
+            self.tableView_BookingTime.isHidden = false
             ToastManager.sharedInstance.alert(view: view_TopView, msg: "Vui lòng vuốt từ phải sang trái để xoá lịch đặt trong giỏ")
         }
 
+    }
+    
+//=========TABLE VIEW DELEGATE METHODS=========
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete && tableView == self.tableView_CartOrder {
+            self.deleteCartOrderItemIndexPath = indexPath as NSIndexPath?
+            let rowToDelete = self.tupleBookingTime_Array[indexPath.row]
+            confirmDelete(row: rowToDelete)
+        }
+    }
+    
+    func confirmDelete(row: (id: (day_ID: String, time_ID: String), value: (day: String, time: String))) {
+        let alert = UIAlertController(title: "Xác nhận", message: "Quý khách muốn xoá \(row.value.day) - \(row.value.time) khỏi giỏ hàng?", preferredStyle: .actionSheet)
+        
+        let DeleteAction = UIAlertAction(title: "Xoá", style: .destructive, handler: handleDeleteCartItem)
+        let CancelAction = UIAlertAction(title: "Huỷ", style: .cancel, handler: cancelDeleteCartItem)
+        
+        alert.addAction(DeleteAction)
+        alert.addAction(CancelAction)
+        
+        // Support display in iPad
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRect(x: self.view.bounds.size.width / 2.0, y: self.view.bounds.size.height / 2.0, width: 1.0, height: 1.0)
+        
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func handleDeleteCartItem(alertAction: UIAlertAction!) -> Void {
+        if let indexPath = deleteCartOrderItemIndexPath {
+            self.tableView_CartOrder.beginUpdates()
+            
+            DTOBookingInformation.sharedInstance.bookingTime.remove(at: indexPath.row)
+            self.tupleBookingTime_Array.remove(at: indexPath.row)
+            self.tableView_CartOrder.deleteRows(at: [indexPath as IndexPath], with: .automatic)
+            self.deleteCartOrderItemIndexPath = nil
+            
+            self.tableView_CartOrder.endUpdates()
+            
+            self.lbl_Notification.text = String(Int(self.lbl_Notification.text!)! - 1)
+            if self.lbl_Notification.text == "0" {
+                self.lbl_Notification.isHidden = true
+                self.tableView_CartOrder.isHidden = true
+                
+                self.tableView_BookingTime.isHidden = false
+            }
+        }
+    }
+    
+    func cancelDeleteCartItem(alertAction: UIAlertAction!) -> Void {
+        self.deleteCartOrderItemIndexPath = nil
     }
     
 //=========SLIDE BUTTON_ONSLIDE=========
@@ -363,9 +439,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func alertMessage_ThreeBookingsRestrict() {
         let message = "Quý khách đã đặt 3 giờ trong một tuần.\nXin vui lòng tiếp tục để hoàn tất lịch hẹn."
         
-        let messageViewContainer = MessageViewContainer()
-        self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
-        
+        if self.messageView == nil {
+            let messageViewContainer = MessageViewContainer()
+            self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+        }
         ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 3.5)
         
         self.timer = Timer.scheduledTimer(timeInterval: 3.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
@@ -382,7 +459,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         if self.tableView_CartOrder.isHidden == false {
             self.tableView_CartOrder.isHidden = true
-            self.tableView_BookingTime.isHidden = false
+            if self.tupleBookingTime.value.day != "" {
+                self.tableView_BookingTime.isHidden = false
+            }
         }
     }
     
@@ -415,13 +494,46 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tableView_CartOrder.reloadData()
             
             self.tableView_CartOrder.isHidden = false
-            self.tableView_BookingTime.isHidden = true
+            
+            if self.tupleBookingTime.value.day != "" {
+                self.tableView_BookingTime.isHidden = true
+            }
         } else {
             self.tableView_CartOrder.isHidden = true
-            self.tableView_BookingTime.isHidden = false
+            
+            if self.tupleBookingTime.value.day != "" {
+                self.tableView_BookingTime.isHidden = false
+            }
         }
     }
     
+//=========RESET ALL BOOKING TIME AND RELEASE CART ITEM=========
+    
+    func resetBookingTime(isUsedForDeleteAllItems: Bool) {
+        self.tableView_CartOrder.isHidden = true
+        if self.tupleBookingTime.value.day != "" {
+            self.tableView_BookingTime.isHidden = false
+        }
+        
+        self.lbl_Notification.text = "0"
+        self.lbl_Notification.isHidden = true
+        
+        self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
+        self.tupleBookingTime_Array.removeAll()
+        DTOBookingInformation.sharedInstance.bookingTime.removeAll()
+        
+        if isUsedForDeleteAllItems {
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Đã xoá tất cả lịch hẹn trong giỏ thành công")
+        }
+        
+    }
+    
+    func decorateCartOrderTableView() {
+        self.tableView_CartOrder.layer.shadowColor = UIColor.black.cgColor
+        self.tableView_CartOrder.layer.shadowOffset = CGSize.zero
+        self.tableView_CartOrder.layer.shadowOpacity = 0.7
+        self.tableView_CartOrder.layer.shadowRadius = 10
+    }
     
 
     
