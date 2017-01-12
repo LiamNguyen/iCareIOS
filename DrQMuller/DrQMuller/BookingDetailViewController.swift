@@ -13,10 +13,16 @@ import DropDown
 class BookingDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SlideButtonDelegate {
     
     @IBOutlet private weak var lbl_Notification: UILabel!
+    @IBOutlet weak var btn_ShowCart: UIImageView!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var tableView_BookingTime: UITableView!
+
+    @IBOutlet weak var tableView_CartOrder: UITableView!
     @IBOutlet private weak var btn_DropDownDaysOfWeek: NiceButton!
     @IBOutlet private weak var slideBtn: MMSlidingButton!
+    @IBOutlet weak var btn_ClearAllCartItems: UIButton!
+    @IBOutlet weak var constraint_CartOrderTableView_Height: NSLayoutConstraint!
+    
     private var activityIndicator: UIActivityIndicatorView!
     private var activityIndicatorViewContainer: ActivityIndicatorViewContainer!
     
@@ -30,6 +36,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var isTypeFree = false
     private var dataHasReceive = false
 
+    private var tupleBookingTime_Array = [(id: (day_ID: String, time_ID: String), value: (day: String, time: String))]()
+    
     private var tupleBookingTime: (id: (day_ID: String, time_ID: String), value: (day: String, time: String))!
     
     private var presentWindow : UIWindow?
@@ -39,8 +47,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
         
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
         
@@ -63,6 +69,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView_BookingTime.dataSource = self
         self.tableView_BookingTime.delegate = self
         
+        self.tableView_CartOrder.dataSource = self
+        self.tableView_CartOrder.delegate = self
+        
+        self.tableView_BookingTime.isHidden = true
+        self.tableView_CartOrder.isHidden = true
+        
 //=========DELEGATING SLIDE BUTTON=========
 
         self.slideBtn.delegate = self
@@ -78,13 +90,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========SET UP TOAST COLOR STYLE=========
         
         UIView.hr_setToastThemeColor(color: ToastColor)
-//        presentWindow = UIApplication.shared.keyWindow
-//        presentWindow!.makeToastActivity()
 
-//=========HIDE TABLE VIEW=========
-        
-        self.tableView_BookingTime.isHidden = true
-        
 //=========RETRIEVE DAYS OF WEEK DATASOURCE=========
         
         self.staticArrayFromUserDefaults = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()
@@ -95,6 +101,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.activityIndicatorViewContainer = ActivityIndicatorViewContainer()
         self.activityIndicator = activityIndicatorViewContainer.createActivityIndicator(view: self.view)
+        
+//=========INITIALIZE TUPLE BOOKING TIME=========
+        
+        self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
         
 //=========SET TYPE=========
         
@@ -111,6 +121,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========BIND DAYS OF WEEK DATASOURCE TO DROPDOWN=========
         
         dropDownDaysOfWeekWiredUp()
+
+//=========WIRED UP TAP RECOGNIZER FOR NOTIFICATION BUTTON=========
+ 
+        setUpTapRecognitionForCartButton()
     
     }
     
@@ -149,6 +163,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func onReceiveExistencyResult(notification: Notification) {
         if let userInfo = notification.userInfo {
             let existencyResult = userInfo["returnExistencyResult"] as! String
+            
             if existencyResult == "1" {
                 DispatchQueue.main.sync {
                     ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Giờ đã bị đặt. Xin vui lòng chọn giờ khác.")
@@ -157,6 +172,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 let bookingTime = [self.tupleBookingTime.id.day_ID, self.tupleBookingTime.id.time_ID]
                 
                 DTOBookingInformation.sharedInstance.bookingTime.insert(bookingTime, at: DTOBookingInformation.sharedInstance.bookingTime.count)
+                
+                self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
+                
                 print(DTOBookingInformation.sharedInstance.bookingTime)
                 DispatchQueue.main.async {
                     
@@ -169,7 +187,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     
                 //UPDATE NOTIFICATION LABEL
                 
-                    self.lbl_Notification.text = "1"
+                    self.lbl_Notification.text = String(DTOBookingInformation.sharedInstance.bookingTime.count)
                     let notificationNumber = Int(self.lbl_Notification.text!)
                     if notificationNumber == 1 {
                         self.lbl_Notification.isHidden = false
@@ -184,62 +202,92 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if isTypeFree {
             return
         }
+        
+        if self.tableView_CartOrder.isHidden == false {
+            self.tableView_CartOrder.isHidden = true
+        }
         dropDown_DaysOfWeek.show()
     }
     
 //=========TABLE VIEW DELEGATE METHODS=========
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return freeTimeDataSource.count
+        
+        if tableView == self.tableView_BookingTime {
+        //FREE TIME TABLE VIEW
+            return freeTimeDataSource.count
+        } else {
+        //CART ORDER TABLE VIEW
+            return DTOBookingInformation.sharedInstance.bookingTime.count
+        }
     }
     
 //=========TABLE VIEW DELEGATE METHODS=========
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "TimeTableViewCell"
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimeTableViewCell
-        
-        let item = freeTimeDataSource[indexPath.row]
-        
-        cell.lbl_Time.text = item
-        
-        return cell
+        if tableView == self.tableView_BookingTime {
+        //FREE TIME TABLE VIEW
+            let cellIdentifier = "TimeTableViewCell"
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimeTableViewCell
+            
+            let item = freeTimeDataSource[indexPath.row]
+            
+            cell.lbl_Time.text = item
+            
+            return cell
+        } else {
+        //CART ORDER TABLE VIEW
+            let cellIdentifier = "CartOrderTableViewCell"
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CartOrderTableViewCell
+            
+            let itemDay = self.tupleBookingTime_Array[indexPath.row]
+            
+            cell.lbl_DayOfWeek.text = itemDay.value.day
+            cell.lbl_BookingTime.text = itemDay.value.time
+            
+            return cell
+        }
     }
     
 //=========TABLE VIEW DELEGATE METHODS=========
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let bookingTime = DTOBookingInformation.sharedInstance.bookingTime
-        
-        if bookingTime.count == 3 {
-            alertMessage_ThreeBookingsRestrict()
+        if tableView == self.tableView_BookingTime {
+            let bookingTime = DTOBookingInformation.sharedInstance.bookingTime
             
-            return
-        }
-        
-        if !bookingTime.isEmpty {
-            for item in bookingTime {
-                if item[0] == self.tupleBookingTime.id.day_ID {
-                    ToastManager.sharedInstance.alert(view: view_TopView, msg: "Chỉ được đặt 1 giờ trong 1 ngày.\nQuý khách đã đặt \(self.tupleBookingTime.value.day).")
-                    return
+            if bookingTime.count == 3 {
+                alertMessage_ThreeBookingsRestrict()
+                
+                return
+            }
+            
+            if !bookingTime.isEmpty {
+                for item in bookingTime {
+                    if item[0] == self.tupleBookingTime.id.day_ID {
+                        ToastManager.sharedInstance.alert(view: view_TopView, msg: "Chỉ được đặt 1 giờ trong 1 ngày.\nQuý khách đã đặt \(self.tupleBookingTime.value.day).")
+                        return
+                    }
                 }
             }
+            
+            modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row])
+            
+            let time_ID = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
+            
+            self.tupleBookingTime.id.time_ID = time_ID
+            self.tupleBookingTime.value.time = freeTimeDataSource[indexPath.row]
+        } else {
+            self.tableView_CartOrder.isHidden = true
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Vui lòng vuốt từ phải sang trái để xoá lịch đặt trong giỏ")
         }
-        
-        modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row])
-        
-        let time_ID = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
-        
-        self.tupleBookingTime.id.time_ID = time_ID
-        self.tupleBookingTime.value.time = freeTimeDataSource[indexPath.row]
 
     }
     
 //=========SLIDE BUTTON_ONSLIDE=========
     
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
-        alertMessage_ThreeBookingsRestrict()
         print("Saved")
     }
     
@@ -331,6 +379,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 hideContainer()
             }
         }
+        
+        if self.tableView_CartOrder.isHidden == false {
+            self.tableView_CartOrder.isHidden = true
+            self.tableView_BookingTime.isHidden = false
+        }
     }
     
     @objc private func hideContainer() {
@@ -339,6 +392,37 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
 
+    func setUpTapRecognitionForCartButton() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.btn_ShowCart_OnClick))
+        tap.numberOfTapsRequired = 1
+        btn_ShowCart.isUserInteractionEnabled = true
+        btn_ShowCart.addGestureRecognizer(tap)
+    }
+    
+    func btn_ShowCart_OnClick() {
+        
+        if DTOBookingInformation.sharedInstance.bookingTime.count < 1 {
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Chưa có lịch hẹn được đặt.")
+            return
+        }
+        
+        if self.tableView_CartOrder.isHidden == true {
+            let rowHeight = self.tableView_CartOrder.rowHeight
+            let numberOfRows = CGFloat(self.tupleBookingTime_Array.count)
+            let expectedTableViewHeight = (rowHeight * numberOfRows) + 32
+            
+            self.constraint_CartOrderTableView_Height.constant = expectedTableViewHeight
+            self.tableView_CartOrder.reloadData()
+            
+            self.tableView_CartOrder.isHidden = false
+            self.tableView_BookingTime.isHidden = true
+        } else {
+            self.tableView_CartOrder.isHidden = true
+            self.tableView_BookingTime.isHidden = false
+        }
+    }
+    
+    
 
     
 //=========RETURN DAYS OF WEEK ARRAY =========
