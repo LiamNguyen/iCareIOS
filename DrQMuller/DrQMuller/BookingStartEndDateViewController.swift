@@ -35,7 +35,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var lineDrawer = LineDrawer()
     private var messageView: UIView!
     private var modelHandleBookingStartEnd  = ModelHandelBookingStartEnd()
-    
+    private var timer: Timer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,7 +184,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         
         ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 10)
         
-        Timer.scheduledTimer(timeInterval: 10.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
+        self.timer = Timer.scheduledTimer(timeInterval: 10.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
     }
     
 //========HANDLE MESSAGE VIEW CONTAINER=========
@@ -199,6 +199,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     @objc private func hideContainer() {
         self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 4)
+        self.timer.invalidate()
     }
     
     

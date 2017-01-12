@@ -33,6 +33,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var tupleBookingTime: (id: (day_ID: String, time_ID: String), value: (day: String, time: String))!
     
     private var presentWindow : UIWindow?
+    private var messageView: UIView!
+    
+    private var timer: Timer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -210,7 +213,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let bookingTime = DTOBookingInformation.sharedInstance.bookingTime
         
         if bookingTime.count == 3 {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Quý khách đã đặt 3 giờ trong một tuần.\nXin vui lòng tiếp tục để hoàn tất lịch hẹn.")
+            alertMessage_ThreeBookingsRestrict()
+            
             return
         }
         
@@ -235,6 +239,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========SLIDE BUTTON_ONSLIDE=========
     
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
+        alertMessage_ThreeBookingsRestrict()
         print("Saved")
     }
     
@@ -304,6 +309,36 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dropDown_DaysOfWeek.dismissMode = .automatic
         dropDown_DaysOfWeek.direction = .any
     }
+    
+//========CREATE MESSAGE VIEW CONTAINER=========
+    
+    func alertMessage_ThreeBookingsRestrict() {
+        let message = "Quý khách đã đặt 3 giờ trong một tuần.\nXin vui lòng tiếp tục để hoàn tất lịch hẹn."
+        
+        let messageViewContainer = MessageViewContainer()
+        self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+        
+        ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 3.5)
+        
+        self.timer = Timer.scheduledTimer(timeInterval: 3.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
+    }
+    
+//========HANDLE MESSAGE VIEW CONTAINER=========
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let messageView = self.messageView {
+            if messageView.center.x == UIScreen.main.bounds.width / 2 {
+                hideContainer()
+            }
+        }
+    }
+    
+    @objc private func hideContainer() {
+        self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 4)
+        self.timer.invalidate()
+    }
+    
+
 
     
 //=========RETURN DAYS OF WEEK ARRAY =========
