@@ -11,6 +11,7 @@
 		ED040F491E0C7808003166FD /* NiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED040F481E0C7808003166FD /* NiceButton.swift */; };
 		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
 		ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */; };
+		ED1A48481E27616F0034857A /* MessageViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A48471E27616F0034857A /* MessageViewContainer.swift */; };
 		ED3011E01E1928A90037F020 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3011DF1E1928A90037F020 /* ToastManager.swift */; };
 		ED3011E21E192D790037F020 /* DTOBookingInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3011E11E192D790037F020 /* DTOBookingInformation.swift */; };
 		ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3011E31E19877C0037F020 /* DateExtensions.swift */; };
@@ -86,6 +87,7 @@
 		ED040F481E0C7808003166FD /* NiceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceButton.swift; sourceTree = "<group>"; };
 		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
+		ED1A48471E27616F0034857A /* MessageViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewContainer.swift; sourceTree = "<group>"; };
 		ED3011DF1E1928A90037F020 /* ToastManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 		ED3011E11E192D790037F020 /* DTOBookingInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOBookingInformation.swift; sourceTree = "<group>"; };
 		ED3011E31E19877C0037F020 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
@@ -229,6 +231,7 @@
 				ED3011DF1E1928A90037F020 /* ToastManager.swift */,
 				ED3011E31E19877C0037F020 /* DateExtensions.swift */,
 				ED9CC8221E222FB10025E78F /* ActivityIndicatorViewContainer.swift */,
+				ED1A48471E27616F0034857A /* MessageViewContainer.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -527,6 +530,7 @@
 				EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */,
 				ED9558921E10F4DC004893DA /* HTTPClient.swift in Sources */,
 				ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */,
+				ED1A48481E27616F0034857A /* MessageViewContainer.swift in Sources */,
 				EDEAC1661E1D3DAC002FF282 /* ModelHandleBookingDetail.swift in Sources */,
 				ED9CC8231E222FB10025E78F /* ActivityIndicatorViewContainer.swift in Sources */,
 				ED040F491E0C7808003166FD /* NiceButton.swift in Sources */,
