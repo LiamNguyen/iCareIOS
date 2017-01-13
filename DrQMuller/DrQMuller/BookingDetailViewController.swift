@@ -45,6 +45,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     private var timer: Timer!
     private var deleteCartOrderItemIndexPath: NSIndexPath? = nil
+    private var dtoBookingTime: [[String]]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,7 +131,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========WIRED UP TAP RECOGNIZER FOR NOTIFICATION BUTTON=========
  
         setUpTapRecognitionForCartButton()
-    
+        
+        
+        dtoBookingTime = [[String]]()
     }
     
     deinit {
@@ -175,7 +178,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func onReceiveExistencyResult(notification: Notification) {
         if let userInfo = notification.userInfo {
+            
+//------>>Suspect 1
+            
             let existencyResult = userInfo["returnExistencyResult"] as! String
+            
+//------>>Suspect 1
             
             if existencyResult == "1" {
                 DispatchQueue.main.sync {
@@ -186,31 +194,32 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             } else {
                 let bookingTime = [self.tupleBookingTime.id.day_ID, self.tupleBookingTime.id.time_ID]
                 
-                DTOBookingInformation.sharedInstance.bookingTime.insert(bookingTime, at: DTOBookingInformation.sharedInstance.bookingTime.count)
-                
+                dtoBookingTime.insert(bookingTime, at: dtoBookingTime.count)
+
                 self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
-                
-                print(DTOBookingInformation.sharedInstance.bookingTime)
+                self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
+
                 DispatchQueue.main.async {
                     
-                    ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Chọn thành công\n\(self.tupleBookingTime.value.day) - \(self.tupleBookingTime.value.time)")
+                    ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Chọn thành công\n\(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.day) - \(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.time)")
                     
                     self.activityIndicator.stopAnimating()
                     self.tableView_BookingTime.isUserInteractionEnabled = true
                     self.tableView_BookingTime.isHidden = true
                     self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
-                    self.dropDown_DaysOfWeek.deselectRow(at: Int(self.tupleBookingTime.id.day_ID)! - 1)
-                    self.tupleBookingTime.value.day = ""
                     
+                    self.dropDown_DaysOfWeek.deselectRow(at: Int(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].id.day_ID)! - 1)
+
                 //UPDATE NOTIFICATION LABEL
                 
-                    self.lbl_Notification.text = String(DTOBookingInformation.sharedInstance.bookingTime.count)
+                    self.lbl_Notification.text = String(self.dtoBookingTime.count)
                     let notificationNumber = Int(self.lbl_Notification.text!)
                     if notificationNumber == 1 {
                         self.lbl_Notification.isHidden = false
                     }
                     
                 }
+                
             }
         }
     }
@@ -239,7 +248,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             return freeTimeDataSource.count
         } else {
         //CART ORDER TABLE VIEW
-            return DTOBookingInformation.sharedInstance.bookingTime.count
+            return dtoBookingTime.count
         }
     }
     
@@ -276,16 +285,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.tableView_BookingTime {
-            let bookingTime = DTOBookingInformation.sharedInstance.bookingTime
+            let bookingTime = dtoBookingTime
             
-            if bookingTime.count == 3 {
+            if bookingTime?.count == 3 {
                 alertMessage_ThreeBookingsRestrict()
                 
                 return
             }
             
-            if !bookingTime.isEmpty {
-                for item in bookingTime {
+            if !(bookingTime?.isEmpty)! {
+                for item in bookingTime! {
                     if item[0] == self.tupleBookingTime.id.day_ID {
                         ToastManager.sharedInstance.alert(view: view_TopView, msg: "Chỉ được đặt 1 giờ trong 1 ngày.\nQuý khách đã đặt \(self.tupleBookingTime.value.day).")
                         return
@@ -295,6 +304,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.activityIndicator.startAnimating()
             self.tableView_BookingTime.isUserInteractionEnabled = false
+            
             modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row])
             
             let time_ID = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
@@ -303,7 +313,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tupleBookingTime.value.time = freeTimeDataSource[indexPath.row]
         } else {
             self.tableView_CartOrder.isHidden = true
-            self.tableView_BookingTime.isHidden = false
+            if self.tupleBookingTime.value.day != "" {
+                self.tableView_BookingTime.isHidden = false
+            }
             ToastManager.sharedInstance.alert(view: view_TopView, msg: "Vui lòng vuốt từ phải sang trái để xoá lịch đặt trong giỏ")
         }
 
@@ -340,7 +352,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if let indexPath = deleteCartOrderItemIndexPath {
             self.tableView_CartOrder.beginUpdates()
             
-            DTOBookingInformation.sharedInstance.bookingTime.remove(at: indexPath.row)
+            dtoBookingTime.remove(at: indexPath.row)
+            
             self.tupleBookingTime_Array.remove(at: indexPath.row)
             self.tableView_CartOrder.deleteRows(at: [indexPath as IndexPath], with: .automatic)
             self.deleteCartOrderItemIndexPath = nil
@@ -352,7 +365,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.lbl_Notification.isHidden = true
                 self.tableView_CartOrder.isHidden = true
                 
-                self.tableView_BookingTime.isHidden = false
+                if self.tupleBookingTime.value.day != "" {
+                    self.tableView_BookingTime.isHidden = false
+                }
             }
         }
     }
@@ -480,7 +495,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func btn_ShowCart_OnClick() {
         
-        if DTOBookingInformation.sharedInstance.bookingTime.count < 1 {
+        if dtoBookingTime.count < 1 {
             ToastManager.sharedInstance.alert(view: view_TopView, msg: "Chưa có lịch hẹn được đặt.")
             return
         }
@@ -520,7 +535,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
         self.tupleBookingTime_Array.removeAll()
-        DTOBookingInformation.sharedInstance.bookingTime.removeAll()
+        dtoBookingTime.removeAll()
         
         if isUsedForDeleteAllItems {
             ToastManager.sharedInstance.alert(view: view_TopView, msg: "Đã xoá tất cả lịch hẹn trong giỏ thành công")
