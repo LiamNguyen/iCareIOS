@@ -17,6 +17,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var picker_EndDate: UIDatePicker!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var constraint_DatePickerStartHeight: NSLayoutConstraint!
+    @IBOutlet private weak var btn_Back: UIButton!
     
     private var isTypeFree = false
     private var isEco = false
@@ -40,6 +41,12 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.btn_Back.setTitle("Booking General Information", for: .normal)
+        self.lbl_StartDate.text = "Start Date"
+        self.lbl_EndDate.text = "End Date"
+        self.slideBtn_Next.buttonText = "Slide to continue"
+        
+        
 //=========PREPARE UI BASE ON LOGIC OF DTOBookingInformation=========
         
         prepareUI()
@@ -51,7 +58,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
 //=========DELEGATING SLIDE BTN=========
 
         self.slideBtn_Next.delegate = self
-        self.slideBtn_Next.buttonText = "Tiếp tục"
+        //self.slideBtn_Next.buttonText = "Tiếp tục"
         self.slideBtn_Next.reset()
         
 //=========CONSTRAINT FOR DATEPICKER START AND END=========

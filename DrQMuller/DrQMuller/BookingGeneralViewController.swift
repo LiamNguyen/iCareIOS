@@ -24,6 +24,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var btn_TypesDropDown: NiceButton!
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
     @IBOutlet weak var view_TopView: UIView!
+    @IBOutlet weak var lbl_Title: UILabel!
     
     //=========MARK: PROPERTIES=========
     
@@ -56,10 +57,15 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.lbl_Title.text = "Booking General Information"
+        self.btn_VouchersDropDown.setTitle("Select Vouchers", for: .normal)
+        self.btn_TypesDropDown.setTitle("Select Types of Service", for: .normal)
+        self.slideBtn_Next.buttonText = "Slide to continue"
+        
 //=========DELEGATING slideBtn_Next=========
         
         self.slideBtn_Next.delegate  = self
-        self.slideBtn_Next.buttonText = "Tiếp tục"
+        //self.slideBtn_Next.buttonText = "Tiếp tục"
         self.slideBtn_Next.reset()
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
@@ -111,13 +117,15 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
         if dropDown_Vouchers.selectedItem == nil {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Vouchers")
+            //ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Vouchers")
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Please choose Vouchers")
             slideBtn_Next.reset()
             return
         }
         
         if dropDown_Types.selectedItem == nil {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Loại Dịch Vụ")
+            //ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Loại Dịch Vụ")
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Please choose Type of Service")
             slideBtn_Next.reset()
             return
         }

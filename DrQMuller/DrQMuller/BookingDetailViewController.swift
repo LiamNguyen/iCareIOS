@@ -251,7 +251,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.activityIndicator.stopAnimating()
                     self.tableView_BookingTime.isUserInteractionEnabled = true
                     self.tableView_BookingTime.isHidden = true
-                    self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
+                    //self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
+                    self.btn_DropDownDaysOfWeek.setTitle("Select day of week", for: .normal)
                     print(self.tupleBookingTime_Array)
                     self.dropDown_DaysOfWeek.deselectRow(at: Int(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].id.day_ID)! - 1)
 

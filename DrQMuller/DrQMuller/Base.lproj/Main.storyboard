@@ -1241,6 +1241,7 @@
                         <outlet property="btn_LocationsDropDown" destination="6CG-sc-rGc" id="GqM-kC-NkQ"/>
                         <outlet property="btn_TypesDropDown" destination="8Jf-Yq-mUQ" id="BmK-St-yeK"/>
                         <outlet property="btn_VouchersDropDown" destination="uGx-F8-eki" id="Gl7-TG-MPI"/>
+                        <outlet property="lbl_Title" destination="EfR-pY-uXM" id="VhR-wL-QGn"/>
                         <outlet property="slideBtn_Next" destination="SsW-LW-5Uc" id="sGr-8H-Jcq"/>
                         <outlet property="view_TopView" destination="8d5-Pl-buM" id="afi-gF-S73"/>
                         <segue destination="dGw-41-sbb" kind="presentation" identifier="segue_BookingGeneralToStartEnDate" id="Qzw-y1-yFF"/>
@@ -1368,6 +1369,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btn_Back" destination="1iq-R8-nnq" id="r0D-Tr-05n"/>
                         <outlet property="constraint_DatePickerStartHeight" destination="s7b-Ba-83k" id="LKQ-YP-Zag"/>
                         <outlet property="lbl_EndDate" destination="Cxm-jM-xzZ" id="xKf-EI-UVM"/>
                         <outlet property="lbl_StartDate" destination="So7-aJ-iri" id="hbp-kI-6bM"/>
@@ -1476,7 +1478,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1547,7 +1549,7 @@
                                         <rect key="frame" x="0.0" y="28" width="211" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="211" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -1697,9 +1699,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="B1e-Gq-0DU"/>
-        <segue reference="B6B-Of-tMD"/>
-        <segue reference="25N-BX-oeo"/>
+        <segue reference="Hpz-zP-PTR"/>
         <segue reference="d88-TN-lRm"/>
+        <segue reference="25N-BX-oeo"/>
         <segue reference="Hn6-nH-Q49"/>
     </inferredMetricsTieBreakers>
 </document>

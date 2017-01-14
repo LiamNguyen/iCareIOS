@@ -45,6 +45,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.txt_Username.placeholder = "Your username"
+        self.txt_Password.placeholder = "Your password"
+        self.btn_Login.setTitle("Login", for: .normal)
+        self.btn_Register.setTitle("Register", for: .normal)
+        self.btn_ResetPassword.setTitle("Don't remember you username or password?", for: .normal)
+        
         self.testReturnArr.delegate = self
 
         
@@ -216,12 +222,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     
     
     @IBAction func btn_Login_OnClick(_ sender: Any) {
+        login()
+        
         if !isIphone4 {
             adjustViewOrigin(y: initialViewOrigin)
             return
         }
         updateTxtFieldLoseFocusStyleForIphone4()
-        login()
     }
     
     private func login() {
