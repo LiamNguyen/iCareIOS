@@ -126,4 +126,45 @@ class DTOBookingInformation: NSObject {
             _exactDayOfWeek = newVal
         }
     }
+    
+    private var _bookingTime: [[String]]!
+    var bookingTime: [[String]] {
+        get {
+            if _bookingTime == nil {
+                return [[String]]()
+            }
+            return _bookingTime
+        }
+        
+        set (newVal) {
+            _bookingTime = newVal
+        }
+    }
+    
+//    func returnHttpBody() -> String! {
+//        if let bookingTime = jsonStringify(obj: _bookingTime) {
+//            return ""
+//        }
+//    }
+    
+    func jsonStringify(obj: AnyObject) -> String {
+        let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
+        
+        let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
+        
+        return jsonString
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

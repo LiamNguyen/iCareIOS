@@ -8,6 +8,34 @@
 
 import UIKit
 
+//=========PUSH TO USER DEFAULT==========
+
+func pushToUserDefaults(obj: Any, key: String) {
+    let userDefaults = UserDefaults.standard
+    let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: obj)
+    userDefaults.set(encodedData, forKey: key)
+    if userDefaults.synchronize() {
+        print("User Default has stored \(key)")
+    }
+}
+
+//=========CHECK EXISTENCE OF OBJ ON USER DEFAULTS==========
+
+func isExistedOnUserDefaults(key: String) -> Bool {
+    let userDefaults = UserDefaults.standard
+    if userDefaults.object(forKey: key) == nil {
+        return false
+    }
+    return true
+}
+
+//=========REMOVE OBJ ON USER DEFAULTS==========
+
+func userDefaultsRemove(key: String) {
+    let userDefaults = UserDefaults.standard
+    userDefaults.removeObject(forKey: key)
+}
+
 class PMHandleBooking: NSObject, HTTPClientDelegate {
     private var httpClient: HTTPClient!
     private var dtoStaticArrayDataSource: DTOStaticArrayDataSource!
@@ -21,6 +49,16 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     }
     
     //=========LISTEN TO RESPONSE FROM GET REQUEST=========
+    
+    
+    
+
+//----------------->>lUKA CHECK IT OUT HEREE
+    
+    //It turns back to here, now it will be the return round of the response
+    
+    //The specific method after the call is mark with:        Mark: HANDLE CHECKING BOOKING TIME EXISTENCY
+    
     
     func onReceiveRequestResponse(data: AnyObject) {
 //HANDLE COUNTRIES DATASOURCE
@@ -134,13 +172,12 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 selectedTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
             }
+        //PASS SELECTED TIME DATASOURCE
+            
+            var returnArrayDataSource = [String: Any]()
+            returnArrayDataSource["returnArrayDataSource"] = selectedTimeDataSource
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
         }
-        
-//PASS SELECTED TIME DATASOURCE
-        
-        var returnArrayDataSource = [String: Any]()
-        returnArrayDataSource["returnArrayDataSource"] = selectedTimeDataSource
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
         
 //PASS AND SAVE STATIC ARRAY DATASOURCE
         
@@ -148,9 +185,64 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
             returnArrayDataSource["returnArrayDataSource"] = dtoStaticArrayDataSource
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
-            pushToUserDefaults(arrayDataSourceObj: dtoStaticArrayDataSource)
+            pushToUserDefaults(obj: dtoStaticArrayDataSource, key: "arrayDataSourceOffline")
         }
+        
+        
+        
+        
+        
+        
+//------------->> THIS IS THE ONE LUKA
+        
+        
+        
+        
+//HANDLE CHECKING BOOKING TIME EXISTENCY
+        
+        var existency: String!
+        if let arrayDataSource = data["BookingTransaction"]! as? NSArray {
+            for arrayItem in arrayDataSource {
+                let dictItem = arrayItem as! NSDictionary
+                existency = dictItem["existency"]! as! String
+            }
+        //PASS CHECKING EXISTENCY RESULT
+
+            var returnExistencyResult = [String: String]()
+            returnExistencyResult["returnExistencyResult"] = existency
+            
+            
+//FUNNY PART STARTS HERE: I POST THE NOTIFICATION HERE, TO LET THE OBSERVER WHO REGISTER TO BE NOTIFIED, THIS CASE: BookingDetailViewController.swift 
+        
+            //NOTIFICATION NAME IS:   "existencyResult"
+            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "existencyResult"), object: nil, userInfo: returnExistencyResult)
+            
+            
+            
+        }
+    
+        
+        
+        
+//------------->> THIS IS THE ONE LUKA
+        
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 //MAKE GET REQUEST FOR STATIC ARRAY DATASOURCE
     
@@ -165,16 +257,46 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         httpClient.getRequest(url: "Select_Vouchers", parameter: "")
         httpClient.getRequest(url: "Select_Types", parameter: "")
         
-//DOWNLOAD OTHER NECCESSARY ARRAY DATASOURCE
+        //DOWNLOAD OTHER NECCESSARY ARRAY DATASOURCE
         
         httpClient.getRequest(url: "Select_AllTime", parameter: "")
         httpClient.getRequest(url: "Select_EcoTime", parameter: "")
         httpClient.getRequest(url: "Select_DaysOfWeek", parameter: "")
     }
-    
+ 
+//MAKE GET REQUEST FOR SELECTED TIME
+
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
         httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)")
     }
+   
+    
+    
+    
+    
+    
+//----------------->>lUKA CHECK IT OUT HEREE
+
+    //After this will come to class => HTTPClient.swift
+    
+    
+//MAKE GET REQUEST FOR CHECKING EXISTENCE OF BOOKING TIME
+    
+    func checkBookingTime(day_ID: String, time_ID: String) {
+        httpClient.getRequest(url: "BookingTransaction", parameter: "?day_id=\(day_ID)&time_id=\(time_ID)")
+    }
+    
+    
+    
+//----------------->>lUKA CHECK IT OUT HEREE
+    
+    
+    
+    
+    
+    
+    
+//CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT
     
     private func staticArrayDataSourceHasExisted() -> Bool {
         let pulledDtoArrays = pulledStaticArrayFromUserDefaults() as? DTOStaticArrayDataSource
@@ -186,17 +308,6 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             return true
         } else {
             return false
-        }
-    }
-    
-//=========PUSH STATIC ARRAY DATASOURCE TO USER DEFAULT==========
-    
-    private func pushToUserDefaults(arrayDataSourceObj: Any) {
-        let userDefaults = UserDefaults.standard
-        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: arrayDataSourceObj)
-        userDefaults.set(encodedData, forKey: "arrayDataSourceOffline")
-        if userDefaults.synchronize() {
-            print("Array DataSource Stored")
         }
     }
     

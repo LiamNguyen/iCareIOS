@@ -17,6 +17,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var picker_EndDate: UIDatePicker!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var constraint_DatePickerStartHeight: NSLayoutConstraint!
+    @IBOutlet private weak var btn_Back: UIButton!
     
     private var isTypeFree = false
     private var isEco = false
@@ -34,11 +35,17 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     private var lineDrawer = LineDrawer()
     private var messageView: UIView!
-    private var timer: Timer!
     private var modelHandleBookingStartEnd  = ModelHandelBookingStartEnd()
+    private var timer: Timer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.btn_Back.setTitle("Booking General Information", for: .normal)
+        self.lbl_StartDate.text = "Start Date"
+        self.lbl_EndDate.text = "End Date"
+        self.slideBtn_Next.buttonText = "Slide to continue"
+        
         
 //=========PREPARE UI BASE ON LOGIC OF DTOBookingInformation=========
         
@@ -51,7 +58,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
 //=========DELEGATING SLIDE BTN=========
 
         self.slideBtn_Next.delegate = self
-        self.slideBtn_Next.buttonText = "Tiếp tục"
+        //self.slideBtn_Next.buttonText = "Tiếp tục"
         self.slideBtn_Next.reset()
         
 //=========CONSTRAINT FOR DATEPICKER START AND END=========
@@ -132,8 +139,9 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         if isTypeFree {
             let translatedSelectedDay = modelHandleBookingStartEnd.translateDaysOfWeek(en: picker_StartDate.date.dayOfWeek)
             if (translatedSelectedDay == "Thứ bảy" || translatedSelectedDay == "Chủ nhật") && isEco {
-                let message = "Hiện tại đối với Voucher ECO Booking, quý khách chỉ có thể sử dụng dịch vụ vào các ngày trong tuần, ngoại trừ Thứ Bảy và Chủ Nhật. Xin vui lòng liên hệ Trung Tâm Dr.Q-Muller để biết thêm chi tiết qua số điện thoại: [phone_number_waiting]"
-                ToastManager.sharedInstance.message(view: createMessageViewContainer(), msg: message, duration: 10)
+
+                alertMessage_WeekendRestrict()
+                
                 slideBtn_Next.reset()
                 return
             }
@@ -173,17 +181,20 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         self.datePickersValues.append(endYear)
     }
     
-//=========CREATE MESSAGE VIEW CONTAINER=========
+//========CREATE MESSAGE VIEW CONTAINER=========
     
-    func createMessageViewContainer() -> UIView {
-        let messageView = UIView(frame: CGRect(x: -UIScreen.main.bounds.width, y: 20, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2))
-        messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4 + 10)
-        self.view.addSubview(messageView)
-        self.messageView = messageView
-        timer = Timer.scheduledTimer(timeInterval: 10.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
+    func alertMessage_WeekendRestrict() {
+        let message = "Hiện tại đối với Voucher ECO Booking, quý khách chỉ có thể sử dụng dịch vụ vào các ngày trong tuần, ngoại trừ Thứ Bảy và Chủ Nhật. Xin vui lòng liên hệ Trung Tâm Dr.Q-Muller để biết thêm chi tiết qua số điện thoại: [phone_number_waiting]"
         
-        return messageView
+        let messageViewContainer = MessageViewContainer()
+        self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+        
+        ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 10)
+        
+        self.timer = Timer.scheduledTimer(timeInterval: 10.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
     }
+    
+//========HANDLE MESSAGE VIEW CONTAINER=========
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let messageView = self.messageView {
@@ -195,6 +206,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     @objc private func hideContainer() {
         self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 4)
+        self.timer.invalidate()
     }
     
     
