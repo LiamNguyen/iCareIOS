@@ -35,7 +35,16 @@ class APIHandleBooking: NSObject {
         persistencyManager.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
     }
     
+    
+    //-------------->LUKA CHECK IT OUT HEREE
+    
+    //After this it will come to class => PMHandleBooking.swift     THIS IS PERSISTENCY MANAGER
+    
     func checkBookingTime(day_ID: String, time_ID: String) {
         persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
     }
+    
+    
+    
+    
 }

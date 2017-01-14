@@ -35,6 +35,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var isEco = false
     private var isTypeFree = false
     private var dataHasReceive = false
+    private var existencyResultHasReceive = false
 
     private var tupleBookingTime_Array = [(id: (day_ID: String, time_ID: String), value: (day: String, time: String))]()
     
@@ -50,16 +51,47 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
+        
+        
+        
+        
+//------------->> THIS IS THE ONE LUKA
+        
+        
+        //HERE I REGISTER FOR THE NOTIFICATION
+        
+        
+//=========REGISTER NOTIFICATION FROM MODEL BOOKING DETAIL=========
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
-
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: updateTable)
         
-//=========OBSERING NOTIFICATION FROM PMHandleBooking FOR CHECKING BOOKING TIME EXISTENCY RESULT=========
+        
+        //JUST TO MAKE SURE THAT IT IS NOT REGISTER MANY TIME, I REMOVE IT BEFORE ADD IT AGAIN ==> NO HELP
+        
+        //PLEASE COME DOWN TO FUNCTION      ** onReceiveExistencyResult() **
+    
+        
+        
+        //*********NOTE: THIS SELECTOR IS THE ONE WHO IS CALLED AS MANY TIMES AS WE ENTER THIS VIEW CONTROLLER :(
+        
+        
+        
+        //=========OBSERING NOTIFICATION FROM PMHandleBooking FOR CHECKING BOOKING TIME EXISTENCY RESULT=========
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "existencyResult"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "existencyResult"), object: nil, queue: nil, using: onReceiveExistencyResult)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "existencyResult"), object: nil, queue: nil, using: onReceiveExistencyResult)  //<------
+        
+        
+        
+        
+//------------->> THIS IS THE ONE LUKA
+        
+        
+        
+        
+        
+        
         
 //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
@@ -137,11 +169,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "existencyResult"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "existencyResult"), object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
+        
+        resetBookingTime(isUsedForDeleteAllItems: false)
+        userDefaultsRemove(key: "bookingDetailVCNotiFlag")
     }
     
 //=========UPDATE FREE TIME LIST WHEN RECEIVING RESPONSE FROM SERVER=========
@@ -174,16 +211,24 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    
+    
+    
+//--------> HERE IT IS, THE ORIGIN OF EVERY PROBLEM, I PRAY THAT YOU CAN HELP ME OUT, OR EVEN GIVE ME A BETTER SOLUTION TO IMPLEMENT IT
+    
+//I PUT THE BREAKPOINTS FOR YOU TO SEE HOW MANY TIMES IT TURNS BACK AND BACK AND BACK
+    
 //=========RECEVING BOOKING TIME EXISTENCY RESULT=========
     
     func onReceiveExistencyResult(notification: Notification) {
+        print(self.existencyResultHasReceive)
+        if existencyResultHasReceive {
+            return
+        }
+        self.existencyResultHasReceive = true
         if let userInfo = notification.userInfo {
             
-//------>>Suspect 1
-            
             let existencyResult = userInfo["returnExistencyResult"] as! String
-            
-//------>>Suspect 1
             
             if existencyResult == "1" {
                 DispatchQueue.main.sync {
@@ -195,7 +240,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 let bookingTime = [self.tupleBookingTime.id.day_ID, self.tupleBookingTime.id.time_ID]
                 
                 dtoBookingTime.insert(bookingTime, at: dtoBookingTime.count)
-
+                print("2nd\(self.tupleBookingTime)")
                 self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
                 self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
 
@@ -207,7 +252,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.tableView_BookingTime.isUserInteractionEnabled = true
                     self.tableView_BookingTime.isHidden = true
                     self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
-                    
+                    print(self.tupleBookingTime_Array)
                     self.dropDown_DaysOfWeek.deselectRow(at: Int(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].id.day_ID)! - 1)
 
                 //UPDATE NOTIFICATION LABEL
@@ -217,12 +262,20 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     if notificationNumber == 1 {
                         self.lbl_Notification.isHidden = false
                     }
-                    
                 }
-                
             }
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     @IBAction func btn_DropDownDaysOfWeek_OnClick(_ sender: Any) {
         if isTypeFree {
@@ -281,7 +334,18 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    
+    
+    
+    
+    
+//--------------------->> LUKA CHECK IT OUT HEREE
+    
+    
 //=========TABLE VIEW DELEGATE METHODS=========
+    
+    //
+    //This is the place when I start to call the request to ask for data from server
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.tableView_BookingTime {
@@ -289,7 +353,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             if bookingTime?.count == 3 {
                 alertMessage_ThreeBookingsRestrict()
-                
                 return
             }
             
@@ -305,12 +368,27 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.activityIndicator.startAnimating()
             self.tableView_BookingTime.isUserInteractionEnabled = false
             
+            
+            
+            
+            
+            //This is when it call for the request, I put the breakpoints and it will lead you through the class and into my API
+            
+            //After this call it will come to class => ModelHandleBookingDetail.swift
+            
             modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row])
+            
+            
+
+
             
             let time_ID = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
             
             self.tupleBookingTime.id.time_ID = time_ID
             self.tupleBookingTime.value.time = freeTimeDataSource[indexPath.row]
+            print("1st\(self.tupleBookingTime)")
+            
+            self.existencyResultHasReceive = false
         } else {
             self.tableView_CartOrder.isHidden = true
             if self.tupleBookingTime.value.day != "" {
@@ -320,6 +398,21 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
 
     }
+    
+//--------------------->> LUKA CHECK IT OUT HEREE
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 //=========TABLE VIEW DELEGATE METHODS=========
 
@@ -348,7 +441,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.present(alert, animated: true, completion: nil)
     }
     
-    func handleDeleteCartItem(alertAction: UIAlertAction!) -> Void {
+    func handleDeleteCartItem(alertAction: UIAlertAction!) {
         if let indexPath = deleteCartOrderItemIndexPath {
             self.tableView_CartOrder.beginUpdates()
             
@@ -361,6 +454,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tableView_CartOrder.endUpdates()
             
             self.lbl_Notification.text = String(Int(self.lbl_Notification.text!)! - 1)
+            
+            updateCartOrderTableViewHeight()
+            
             if self.lbl_Notification.text == "0" {
                 self.lbl_Notification.isHidden = true
                 self.tableView_CartOrder.isHidden = true
@@ -369,10 +465,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.tableView_BookingTime.isHidden = false
                 }
             }
+            
+            
         }
     }
     
-    func cancelDeleteCartItem(alertAction: UIAlertAction!) -> Void {
+    func cancelDeleteCartItem(alertAction: UIAlertAction!) {
         self.deleteCartOrderItemIndexPath = nil
     }
     
@@ -485,6 +583,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.timer.invalidate()
     }
     
+//=========ONTOUCH BUTTON SHOWCART=========
 
     func setUpTapRecognitionForCartButton() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.btn_ShowCart_OnClick))
@@ -492,6 +591,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn_ShowCart.isUserInteractionEnabled = true
         btn_ShowCart.addGestureRecognizer(tap)
     }
+    
+//=========ONCLICK BUTTON SHOWCART=========
     
     func btn_ShowCart_OnClick() {
         
@@ -501,11 +602,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         if self.tableView_CartOrder.isHidden == true {
-            let rowHeight = self.tableView_CartOrder.rowHeight
-            let numberOfRows = CGFloat(self.tupleBookingTime_Array.count)
-            let expectedTableViewHeight = (rowHeight * numberOfRows) + 32
+            updateCartOrderTableViewHeight()
             
-            self.constraint_CartOrderTableView_Height.constant = expectedTableViewHeight
             self.tableView_CartOrder.reloadData()
             
             self.tableView_CartOrder.isHidden = false
@@ -520,6 +618,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.tableView_BookingTime.isHidden = false
             }
         }
+    }
+    
+//=========UPDATE CART TABLE VIEW HEIGHT WHILE DELETING ITEMS=========
+    
+    func updateCartOrderTableViewHeight() {
+        let rowHeight = self.tableView_CartOrder.rowHeight
+        let numberOfRows = CGFloat(self.tupleBookingTime_Array.count)
+        let expectedTableViewHeight = (rowHeight * numberOfRows) + 32
+        
+        self.constraint_CartOrderTableView_Height.constant = expectedTableViewHeight
     }
     
 //=========RESET ALL BOOKING TIME AND RELEASE CART ITEM=========

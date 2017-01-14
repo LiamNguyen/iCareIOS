@@ -18,6 +18,15 @@ public class HTTPClient {
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
+    
+    
+    
+    
+//----------------->>lUKA CHECK IT OUT HEREE
+    
+    //This is the one, but not the important one, after this,
+    
+    
     func getRequest(url: String, parameter: String) {
         if !network.isConnected() {
             return
@@ -30,7 +39,19 @@ public class HTTPClient {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if data?.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
-                self.delegate?.onReceiveRequestResponse(data: JSONResponse)
+                
+                
+                
+                //DELEGATION AFTER RECEIVING REPONSE FROM SERVER
+                
+                //After this is     PMHandleBooking.swift       will handle the response
+                
+/*>>>>>>>>*/    self.delegate?.onReceiveRequestResponse(data: JSONResponse)   /*<<<<<<<<*/
+                
+                
+                
+                
+                
             }
         
         }
@@ -38,7 +59,15 @@ public class HTTPClient {
         task.resume()
     }
     
-    func postRequest(url: String, body: String) {//, postCompleted: @escaping (_ success: Bool, _ msg: String) -> ()) {
+    
+    
+//----------------->>lUKA CHECK IT OUT HEREE
+    
+    
+    
+    
+    
+    func postRequest(url: String, body: String) {
         if !network.isConnected() {
             return
         }
@@ -50,14 +79,12 @@ public class HTTPClient {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
                 print("error=\(error)")
-//                postCompleted(false, "JSON data receives error: \(error)")
                 return
             }
             
             if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                 print("statusCode should be 200, but is \(httpStatus.statusCode)")
                 print("response = \(response)")
-//                postCompleted(false, "http status receives error: \(error)_Status code: \(httpStatus.statusCode)")
             }
             
             if data.count != 0 {

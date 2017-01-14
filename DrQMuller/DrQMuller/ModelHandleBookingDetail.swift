@@ -151,10 +151,35 @@ class ModelHandleBookingDetail {
     
 //MAKE GET REQUEST FOR CHECKING BOOKING TIME EXISTENCY
     
+
+    
+    
+    
+    
+//---------------->>LUKA CHECK IT OUT
+    
+    
+    
+    //This will basically call the API method to actual get request
+    
+    //After this is class => APIHandleBooking.swift
+    
     func checkBookingTime(day_ID: String, chosenTime: String) {
         let time_ID = returnTimeID(chosenTime: chosenTime)
         APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
     }
+    
+    
+    
+    
+    
+    
+//---------------->>LUKA CHECK IT OUT
+    
+    
+    
+    
+    
     
 //GET TIME STRING TO RETURN TIME ID
     
