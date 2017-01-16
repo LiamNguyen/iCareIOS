@@ -178,9 +178,15 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     func alertMessage_WeekendRestrict() {
         let message = "Hiện tại đối với Voucher ECO Booking, quý khách chỉ có thể sử dụng dịch vụ vào các ngày trong tuần, ngoại trừ Thứ Bảy và Chủ Nhật. Xin vui lòng liên hệ Trung Tâm Dr.Q-Muller để biết thêm chi tiết qua số điện thoại: [phone_number_waiting]"
-        
-        let messageViewContainer = MessageViewContainer()
-        self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+        if self.messageView == nil {
+            let messageViewContainer = MessageViewContainer()
+            self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+        } else {
+            if messageView.center.x == UIScreen.main.bounds.width / 2 {
+                return
+            }
+            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4)
+        }
         
         ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 10)
         

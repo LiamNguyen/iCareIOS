@@ -460,7 +460,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if self.messageView == nil {
             let messageViewContainer = MessageViewContainer()
             self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+        } else {
+            if messageView.center.x == UIScreen.main.bounds.width / 2 {
+                return
+            }
+            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4)
         }
+        
         ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 3.5)
         
         self.timer = Timer.scheduledTimer(timeInterval: 3.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
