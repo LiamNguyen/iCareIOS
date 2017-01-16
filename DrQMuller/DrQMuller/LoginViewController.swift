@@ -216,12 +216,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     
     
     @IBAction func btn_Login_OnClick(_ sender: Any) {
+        login()
         if !isIphone4 {
             adjustViewOrigin(y: initialViewOrigin)
             return
         }
         updateTxtFieldLoseFocusStyleForIphone4()
-        login()
     }
     
     private func login() {
