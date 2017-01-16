@@ -63,6 +63,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
 //=========DELEGATING slideBtn_Next=========
         
         self.slideBtn_Next.delegate  = self
+        self.slideBtn_Next.buttonText = "Tiếp tục"
         self.slideBtn_Next.reset()
     }
     
