@@ -195,7 +195,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.dtoBookingTime.insert(bookingTime, at: self.dtoBookingTime.count)
                     
                     self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
-                    self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
                     
                     DispatchQueue.main.async {
                         
@@ -203,10 +202,17 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         
                         self.activityIndicator.stopAnimating()
                         self.tableView_BookingTime.isUserInteractionEnabled = true
-                        self.tableView_BookingTime.isHidden = true
-                        self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
                         
-                        self.dropDown_DaysOfWeek.deselectRow(at: self.dropDownSelectedRowIndex)
+                        if !self.isTypeFree {
+                            self.tableView_BookingTime.isHidden = true
+                            self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
+                            
+                            self.dropDown_DaysOfWeek.deselectRow(at: self.dropDownSelectedRowIndex)
+                        } else {
+                            DispatchQueue.main.async {
+                                self.tableView_BookingTime.reloadData()
+                            }
+                        }
                         
                         //UPDATE NOTIFICATION LABEL
                         
@@ -218,7 +224,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     }
                 }
             }
-            
         }
     }
     
@@ -248,7 +253,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         //CART ORDER TABLE VIEW
             return dtoBookingTime.count
         }
-    }
+    } 
     
 //=========TABLE VIEW DELEGATE METHODS=========
     
@@ -311,9 +316,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tupleBookingTime.value.time = freeTimeDataSource[indexPath.row]
         } else {
             self.tableView_CartOrder.isHidden = true
-            if self.tupleBookingTime.value.day != "" {
+            if self.dropDown_DaysOfWeek.selectedItem != nil {
                 self.tableView_BookingTime.isHidden = false
             }
+            
             ToastManager.sharedInstance.alert(view: view_TopView, msg: "Vui lòng vuốt từ phải sang trái để xoá lịch đặt trong giỏ")
         }
 
@@ -351,13 +357,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tableView_CartOrder.beginUpdates()
             
             dtoBookingTime.remove(at: indexPath.row)
-            
             self.tupleBookingTime_Array.remove(at: indexPath.row)
+            
             self.tableView_CartOrder.deleteRows(at: [indexPath as IndexPath], with: .automatic)
             self.deleteCartOrderItemIndexPath = nil
             
             self.tableView_CartOrder.endUpdates()
             
+            if isTypeFree {
+                self.tableView_BookingTime.reloadData()
+            }
             self.lbl_Notification.text = String(Int(self.lbl_Notification.text!)! - 1)
             
             updateCartOrderTableViewHeight()
@@ -366,7 +375,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.lbl_Notification.isHidden = true
                 self.tableView_CartOrder.isHidden = true
                 
-                if self.tupleBookingTime.value.day != "" {
+                if self.dropDown_DaysOfWeek.selectedItem != nil {
                     self.tableView_BookingTime.isHidden = false
                 }
             }
@@ -483,7 +492,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         if self.tableView_CartOrder.isHidden == false {
             self.tableView_CartOrder.isHidden = true
-            if self.tupleBookingTime.value.day != "" {
+            if self.dropDown_DaysOfWeek.selectedItem != nil {
                 self.tableView_BookingTime.isHidden = false
             }
         }
@@ -516,13 +525,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.tableView_CartOrder.isHidden = false
             
-            if self.tupleBookingTime.value.day != "" {
+            if self.dropDown_DaysOfWeek.selectedItem != nil {
                 self.tableView_BookingTime.isHidden = true
             }
         } else {
             self.tableView_CartOrder.isHidden = true
             
-            if self.tupleBookingTime.value.day != "" {
+            if self.dropDown_DaysOfWeek.selectedItem != nil {
                 self.tableView_BookingTime.isHidden = false
             }
         }
@@ -539,14 +548,17 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func resetBookingTime(isUsedForDeleteAllItems: Bool) {
         self.tableView_CartOrder.isHidden = true
-        if self.tupleBookingTime.value.day != "" {
+        if self.dropDown_DaysOfWeek.selectedItem != nil {
             self.tableView_BookingTime.isHidden = false
         }
         
         self.lbl_Notification.text = "0"
         self.lbl_Notification.isHidden = true
         
-        self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
+        if isTypeFree {
+            self.tableView_BookingTime.reloadData()
+        }
+        
         self.tupleBookingTime_Array.removeAll()
         dtoBookingTime.removeAll()
         
