@@ -247,7 +247,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func btn_ClearAllCartItem_OnClick(_ sender: Any) {
-        resetBookingTime(isUsedForDeleteAllItems: true)
+        let alert = UIAlertController(title: "Xác nhận", message: "Bạn muốn xoá hết các giờ vừa đặt trong giỏ?", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Xoá", style: .destructive, handler: { (action: UIAlertAction!) in
+            self.resetBookingTime(isUsedForDeleteAllItems: true)
+        }))
+        alert.addAction(UIAlertAction(title: "Huỷ", style: .cancel, handler: { (action: UIAlertAction!) in
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
 //=========TABLE VIEW DELEGATE METHODS=========
