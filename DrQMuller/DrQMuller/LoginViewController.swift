@@ -240,13 +240,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             return
         }
         if let userInfo = notification.userInfo {
-            let isOk = userInfo["status"] as? Bool
-            if isOk! {
-                print("Login Success")
-                self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
-            } else {
-                print("Login Failed")
-                ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
+            if let isOk = userInfo["status"] as? Bool {
+                if isOk {
+                    print("Login Success")
+                    self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
+                } else {
+                    print("Login Failed")
+                    ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
+                }
             }
         }
         uiWaitingLoginResponse(isDone: true)
