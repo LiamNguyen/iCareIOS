@@ -18,6 +18,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     @IBOutlet private weak var btn_Login: UIButton!
     @IBOutlet private weak var btn_Register: UIButton!
     @IBOutlet private weak var constraint_BtnLogin_TxtConfirm: NSLayoutConstraint!
+    @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
@@ -25,26 +26,29 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
     private var lineDrawer = LineDrawer()
+    
     var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
-    private var message = Messages()
+    private var hasReceiveLoginResponse = false
     
     func onReceiveRequestResponse(data: AnyObject) {
-        if let array = data["Select_Vouchers"]! as? NSArray {
-            let dict = array[1] as! NSDictionary
-            print(dict["VOUCHER"]!)
-        } else if let array = data["Select_AllTime"]! as? NSArray {
-            print(array)
-        } else {
-            print("Wrongggg")
+        if let arrayResponse = data["Select_AllTime"] as? NSArray {
+            for arrayItem in arrayResponse {
+                let arrayDict = arrayItem as! NSDictionary
+                if let result = arrayDict["TIME"] as? String {
+                    print(result)
+                }
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        testReturnArr.delegate = self
+        self.testReturnArr.delegate = self
 
+        
+        activityIndicator.stopAnimating()
         
 //=========TXTFIELD DELEGATE=========
         
@@ -88,6 +92,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         
         updateLoadStyleForIphone4()
         
+        
+//=========OBSERVE FOR NOTIFICATION FROM PMHandleLogin=========
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loginResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "loginResponse"), object: nil, queue: nil, using: handleView)
+
+        
 //        //=========DRAW LINE=========
 //
 //        let firstPoint = CGPoint(x: 0, y: 480)
@@ -105,8 +115,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         UIView.hr_setToastThemeColor(color: ToastColorAlert)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
 //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========
@@ -207,13 +217,40 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     
     @IBAction func btn_Login_OnClick(_ sender: Any) {
         login()
+        if !isIphone4 {
+            adjustViewOrigin(y: initialViewOrigin)
+            return
+        }
+        updateTxtFieldLoseFocusStyleForIphone4()
     }
     
     private func login() {
         if !frontValidationPassed() {
             return
         }
-        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!, viewController: self, toastView: loginView)
+        uiWaitingLoginResponse(isDone: false)
+        modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!)
+        self.hasReceiveLoginResponse = false
+    }
+    
+//=========HANDLE LOGIN PROCEDURE=========
+    
+    func handleView(notification: Notification) {
+        if hasReceiveLoginResponse {
+            return
+        }
+        if let userInfo = notification.userInfo {
+            let isOk = userInfo["status"] as? Bool
+            if isOk! {
+                print("Login Success")
+                self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
+            } else {
+                print("Login Failed")
+                ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
+            }
+        }
+        uiWaitingLoginResponse(isDone: true)
+        self.hasReceiveLoginResponse = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -241,6 +278,26 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             return true
         }
         return false
+    }
+    
+//=========LOCK UI ELEMENTS WAITING LOGIN RESPONSE=========
+    
+    private func uiWaitingLoginResponse(isDone: Bool) {
+        if !isDone {
+            self.activityIndicator.startAnimating()
+            self.txt_Username.isEnabled = false
+            self.txt_Password.isEnabled = false
+            self.btn_ResetPassword.isEnabled = false
+            self.btn_Login.isEnabled = false
+            self.btn_Register.isEnabled = false
+        } else {
+            self.activityIndicator.stopAnimating()
+            self.txt_Username.isEnabled = true
+            self.txt_Password.isEnabled = true
+            self.btn_ResetPassword.isEnabled = true
+            self.btn_Login.isEnabled = true
+            self.btn_Register.isEnabled = true
+        }
     }
     
     
