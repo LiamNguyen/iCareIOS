@@ -23,10 +23,6 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.94999998807907104" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IOSwallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="4LI-XB-3Fz">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="568" id="73R-UR-AN7"/>
-                                    <constraint firstAttribute="width" constant="320" id="A1F-uW-y40"/>
-                                </constraints>
                             </imageView>
                             <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLJ-wL-IUr">
                                 <rect key="frame" x="16" y="89" width="289" height="471"/>
@@ -154,7 +150,7 @@
                                                     <constraint firstAttribute="height" constant="47" id="y54-Uh-3c4"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitterIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WLe-o6-l7I">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="googleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WLe-o6-l7I">
                                                 <rect key="frame" x="196" y="307" width="47" height="47"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="47" id="fCK-dg-1ah"/>
@@ -201,11 +197,9 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="E94-vc-DIs" secondAttribute="trailing" constant="12" id="Dcm-UJ-Uoh"/>
                                     <constraint firstItem="E6Y-t5-FoC" firstAttribute="top" secondItem="JLJ-wL-IUr" secondAttribute="top" constant="8" id="Y1Y-Zc-8Ww"/>
-                                    <constraint firstAttribute="width" constant="289" id="YqO-Ur-gNX"/>
                                     <constraint firstItem="E94-vc-DIs" firstAttribute="top" secondItem="E6Y-t5-FoC" secondAttribute="bottom" constant="40" id="brK-oZ-aIJ"/>
                                     <constraint firstItem="E6Y-t5-FoC" firstAttribute="centerX" secondItem="JLJ-wL-IUr" secondAttribute="centerX" id="fWg-8O-bhW"/>
                                     <constraint firstItem="E94-vc-DIs" firstAttribute="leading" secondItem="JLJ-wL-IUr" secondAttribute="leading" constant="14" id="n6S-TN-oN2"/>
-                                    <constraint firstAttribute="height" constant="471" id="yZ1-XT-5se"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -255,10 +249,6 @@
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IOSwallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="Oih-lh-26s">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="320" id="4i8-yd-32o"/>
-                                    <constraint firstAttribute="height" constant="568" id="m9z-GJ-5dL"/>
-                                </constraints>
                             </imageView>
                             <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZf-Cv-cRx">
                                 <rect key="frame" x="15" y="89" width="289" height="413"/>
@@ -375,8 +365,6 @@
                                     <constraint firstItem="49n-me-sda" firstAttribute="top" secondItem="fZf-Cv-cRx" secondAttribute="top" constant="16" id="6Gu-iW-ZKq"/>
                                     <constraint firstItem="baS-db-70e" firstAttribute="top" secondItem="fZf-Cv-cRx" secondAttribute="top" constant="109" id="R0G-Rb-bYr"/>
                                     <constraint firstAttribute="trailing" secondItem="baS-db-70e" secondAttribute="trailing" constant="12" id="X2G-OA-Ifx"/>
-                                    <constraint firstAttribute="width" constant="289" id="XuW-E8-cs0"/>
-                                    <constraint firstAttribute="height" constant="413" id="jME-0z-iDq"/>
                                     <constraint firstItem="baS-db-70e" firstAttribute="leading" secondItem="fZf-Cv-cRx" secondAttribute="leading" constant="14" id="sL2-EK-m3r"/>
                                 </constraints>
                             </view>
@@ -723,14 +711,14 @@
                                 <locale key="locale" localeIdentifier="vi_VN"/>
                             </datePicker>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="genderIcon" translatesAutoresizingMaskIntoConstraints="NO" id="TI6-LQ-dOl">
-                                <rect key="frame" x="134" y="147" width="53" height="53"/>
+                                <rect key="frame" x="133.5" y="147" width="53" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="E7z-zV-FKP"/>
                                     <constraint firstAttribute="width" constant="53" id="a06-LS-BFX"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dobIcon" translatesAutoresizingMaskIntoConstraints="NO" id="VIG-fB-paA">
-                                <rect key="frame" x="134" y="296" width="53" height="53"/>
+                                <rect key="frame" x="133.5" y="296" width="53" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="53" id="j3T-tp-1fs"/>
                                     <constraint firstAttribute="height" constant="53" id="wRi-f3-V3Q"/>
@@ -1311,7 +1299,7 @@
                                 </connections>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày bắt đầu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="So7-aJ-iri">
-                                <rect key="frame" x="100" y="89" width="121" height="24"/>
+                                <rect key="frame" x="99.5" y="89" width="121" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.61297673409999998" green="0.060420009689999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1327,7 +1315,7 @@
                                 <locale key="locale" localeIdentifier="vi_VN"/>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày kết thúc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cxm-jM-xzZ">
-                                <rect key="frame" x="98" y="256" width="125" height="24"/>
+                                <rect key="frame" x="97.5" y="256" width="125" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.61297673409999998" green="0.060420009689999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1475,11 +1463,11 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
-                                                    <rect key="frame" x="113" y="15" width="63.5" height="21"/>
+                                                    <rect key="frame" x="112" y="15" width="64" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="yT5-K1-fSa"/>
                                                     </constraints>
@@ -1488,7 +1476,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plusIcon" translatesAutoresizingMaskIntoConstraints="NO" id="4YJ-Jn-K1i">
-                                                    <rect key="frame" x="255" y="13" width="25" height="25"/>
+                                                    <rect key="frame" x="255" y="13" width="25" height="24"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="FEG-4B-PNY"/>
                                                     </constraints>
@@ -1534,7 +1522,7 @@
                                         <rect key="frame" x="0.0" y="28" width="211" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="211" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -1686,6 +1674,7 @@
         <image name="emailIcon" width="600" height="580"/>
         <image name="fbIcon" width="432" height="432"/>
         <image name="genderIcon" width="512" height="512"/>
+        <image name="googleIcon" width="600" height="600"/>
         <image name="homeIcon" width="512" height="512"/>
         <image name="phoneIcon" width="512" height="512"/>
         <image name="plusIcon" width="420" height="420"/>
@@ -1695,9 +1684,9 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rf-7u-S8A"/>
+        <segue reference="NtQ-bk-9Of"/>
+        <segue reference="lUW-tB-BQG"/>
         <segue reference="25N-BX-oeo"/>
-        <segue reference="LG0-4y-V3J"/>
         <segue reference="Hn6-nH-Q49"/>
         <segue reference="d88-TN-lRm"/>
     </inferredMetricsTieBreakers>
