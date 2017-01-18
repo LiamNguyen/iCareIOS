@@ -46,13 +46,18 @@ class ModelHandleBookingDetail {
         self.isEco = isEco
         bindTimeDataSource(isEco: isEco)
         
+//OBSERVING NOTIFICATION FROM PMHandleBooking FOR SELECTED TIME DATASOURCE
+        
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, queue: nil, using: setFreeTimeDataSource)
+        
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
+    
+//INITIALIZE ALLTIME AND ECOTIME DATASOURCE
     
     private func bindTimeDataSource(isEco: Bool) {
         switch isEco {
@@ -65,9 +70,14 @@ class ModelHandleBookingDetail {
         }
     }
     
+//MAKE GET REQUEST FOR SELECTED TIME DATASOURCE TO HANDLE IN MODEL AND RETURN FREE TIME DATASOURCE
+    
     func bindFreeTimeDataSource(selectedDayOfWeek_ID: String) {
         APIHandleBooking.sharedInstace.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
+        self.dataHasReturn = false
     }
+    
+//SET FREE TIME DATASOURCE AFTER RECEIVED RESPONSE
     
     func setFreeTimeDataSource(notification: Notification) {
         if dataHasReturn {
@@ -124,6 +134,7 @@ class ModelHandleBookingDetail {
             
             var returnArrayDataSource = [String: Any]()
             returnArrayDataSource["returnArrayDataSource"] = freeTimeDataSource
+            
             NotificationCenter.default.post(name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
             
             NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil)
@@ -131,11 +142,44 @@ class ModelHandleBookingDetail {
         }
     }
     
-    func returnPreSelectedDayIDForTypeFree() -> Int {
-        let selectedDayID: Int!
-        selectedDayID = daysOfWeekDisplayArray.index(of: DTOBookingInformation.sharedInstance.exactDate)! + 1
-        return selectedDayID
+//RETURN SELECTED DAY FOR TYPE FREE
+    
+    func returnPreSelectedDayIDForTypeFree() -> String {
+        var selectedDay_ID: Int!
+        selectedDay_ID = daysOfWeekDisplayArray.index(of: DTOBookingInformation.sharedInstance.exactDayOfWeek)! + 1
+        return String(selectedDay_ID)
     }
     
+//MAKE GET REQUEST FOR CHECKING BOOKING TIME EXISTENCY
+    
+    func checkBookingTime(day_ID: String, chosenTime: String) {
+        let time_ID = returnTimeID(chosenTime: chosenTime)
+        APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
+    }
+    
+//GET TIME STRING TO RETURN TIME ID
+    
+    func returnTimeID(chosenTime: String) -> String {
+        var time_ID: String!
+        
+        switch isEco {
+        case true:
+            print("Eco - Model : chosenTime \(chosenTime)")
+            for item in ecoTimeDataSource {
+                if item.value == chosenTime {
+                    time_ID = item.key
+                }
+            }
+        default:
+            print("All - Model: chosenTime \(chosenTime)")
+            for item in allTimeDataSource {
+                if item.value == chosenTime {
+                    time_ID = item.key
+                }
+            }
+        }
+        
+        return time_ID
+    }
     
 }

@@ -34,4 +34,8 @@ class APIHandleBooking: NSObject {
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
         persistencyManager.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
     }
+    
+    func checkBookingTime(day_ID: String, time_ID: String) {
+        persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
+    }
 }

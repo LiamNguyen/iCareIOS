@@ -64,10 +64,12 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
 
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "arrayDataSource"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "arrayDataSource"), object: nil, queue: nil, using: bindDataSource)
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking OFFLINE DATASOURCE==========
         
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil, queue: nil, using: bindDataSourceOffline)
         
 //=========SEND REQUEST TO GET DROPDOWNS DATASOURCE=========
@@ -82,6 +84,12 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     }
     
     deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
         NotificationCenter.default.removeObserver(self)
     }
     

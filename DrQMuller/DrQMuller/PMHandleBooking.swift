@@ -134,13 +134,12 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 selectedTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
             }
+        //PASS SELECTED TIME DATASOURCE
+            
+            var returnArrayDataSource = [String: Any]()
+            returnArrayDataSource["returnArrayDataSource"] = selectedTimeDataSource
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
         }
-        
-//PASS SELECTED TIME DATASOURCE
-        
-        var returnArrayDataSource = [String: Any]()
-        returnArrayDataSource["returnArrayDataSource"] = selectedTimeDataSource
-        NotificationCenter.default.post(name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
         
 //PASS AND SAVE STATIC ARRAY DATASOURCE
         
@@ -149,6 +148,21 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             returnArrayDataSource["returnArrayDataSource"] = dtoStaticArrayDataSource
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
             pushToUserDefaults(arrayDataSourceObj: dtoStaticArrayDataSource)
+        }
+        
+//HANDLE CHECKING BOOKING TIME EXISTENCY
+        
+        var existency: String!
+        if let arrayDataSource = data["BookingTransaction"]! as? NSArray {
+            for arrayItem in arrayDataSource {
+                let dictItem = arrayItem as! NSDictionary
+                existency = dictItem["existency"]! as! String
+            }
+        //PASS CHECKING EXISTENCY RESULT
+
+            var returnExistencyResult = [String: String]()
+            returnExistencyResult["returnExistencyResult"] = existency
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "existencyResult"), object: nil, userInfo: returnExistencyResult)
         }
     }
 
@@ -165,16 +179,26 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         httpClient.getRequest(url: "Select_Vouchers", parameter: "")
         httpClient.getRequest(url: "Select_Types", parameter: "")
         
-//DOWNLOAD OTHER NECCESSARY ARRAY DATASOURCE
+        //DOWNLOAD OTHER NECCESSARY ARRAY DATASOURCE
         
         httpClient.getRequest(url: "Select_AllTime", parameter: "")
         httpClient.getRequest(url: "Select_EcoTime", parameter: "")
         httpClient.getRequest(url: "Select_DaysOfWeek", parameter: "")
     }
-    
+ 
+//MAKE GET REQUEST FOR SELECTED TIME
+
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
         httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)")
     }
+    
+//MAKE GET REQUEST FOR CHECKING EXISTENCE OF BOOKING TIME
+    
+    func checkBookingTime(day_ID: String, time_ID: String) {
+        httpClient.getRequest(url: "BookingTransaction", parameter: "?day_id=\(day_ID)&time_id=\(time_ID)")
+    }
+    
+//CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT
     
     private func staticArrayDataSourceHasExisted() -> Bool {
         let pulledDtoArrays = pulledStaticArrayFromUserDefaults() as? DTOStaticArrayDataSource
