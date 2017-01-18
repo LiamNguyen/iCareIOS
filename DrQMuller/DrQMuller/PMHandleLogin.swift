@@ -43,6 +43,8 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
                 }
             }
         }
-        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "postRequestStatus"), object: nil, userInfo: isOk)
+        DispatchQueue.main.async {
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginResponse"), object: nil, userInfo: isOk)
+        }
     }
 }

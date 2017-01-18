@@ -30,6 +30,7 @@ public class HTTPClient {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             if data?.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
+                print("GET: \(URL!)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse)
             }
         
@@ -42,7 +43,8 @@ public class HTTPClient {
         if !network.isConnected() {
             return
         }
-        var request = URLRequest(url: URL(string: serviceURL.getServiceURL(serviceURL: url))!)
+        let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
+        var request = URLRequest(url: URL as! URL)
         request.httpMethod = "POST"
         let postString = body
         request.httpBody = postString.data(using: .utf8)
@@ -63,6 +65,7 @@ public class HTTPClient {
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
                 print("Response from server: \(JSONResponse)")
+                print("POST: \(URL!)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse)
             }
         }

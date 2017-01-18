@@ -134,6 +134,7 @@ class ModelHandleBookingDetail {
             
             var returnArrayDataSource = [String: Any]()
             returnArrayDataSource["returnArrayDataSource"] = freeTimeDataSource
+            
             NotificationCenter.default.post(name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
             
             NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil)
@@ -163,12 +164,14 @@ class ModelHandleBookingDetail {
         
         switch isEco {
         case true:
+            print("Eco - Model : chosenTime \(chosenTime)")
             for item in ecoTimeDataSource {
                 if item.value == chosenTime {
                     time_ID = item.key
                 }
             }
         default:
+            print("All - Model: chosenTime \(chosenTime)")
             for item in allTimeDataSource {
                 if item.value == chosenTime {
                     time_ID = item.key

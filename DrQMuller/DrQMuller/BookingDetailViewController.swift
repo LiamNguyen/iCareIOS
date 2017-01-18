@@ -55,7 +55,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
-
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: updateTable)
         
 //=========OBSERING NOTIFICATION FROM PMHandleBooking FOR CHECKING BOOKING TIME EXISTENCY RESULT=========
@@ -98,12 +97,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========SET UP TOAST COLOR STYLE=========
         
         UIView.hr_setToastThemeColor(color: ToastColor)
-
-//=========RETRIEVE DAYS OF WEEK DATASOURCE=========
-        
-        self.staticArrayFromUserDefaults = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()
-        
-        self.daysOfWeekDataSource = staticArrayFromUserDefaults.daysOfWeekDisplayArray
         
 //=========INITIALIZE ACTIVITY INDICATOR=========
         
@@ -118,13 +111,18 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         if DTOBookingInformation.sharedInstance.type == "Tự do" {
             self.activityIndicator.startAnimating()
-            isTypeFree = true
+            self.isTypeFree = true
             
             self.tupleBookingTime.value.day = DTOBookingInformation.sharedInstance.exactDayOfWeek
             self.tupleBookingTime.id.day_ID = modelHandelBookingDetail.returnPreSelectedDayIDForTypeFree()
             
             modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: self.tupleBookingTime.id.day_ID)
         }
+        
+//=========RETRIEVE DAYS OF WEEK DATASOURCE=========
+        
+        self.staticArrayFromUserDefaults = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()
+        self.daysOfWeekDataSource = staticArrayFromUserDefaults.daysOfWeekDisplayArray
         
 //=========BIND DAYS OF WEEK DATASOURCE TO DROPDOWN=========
         
@@ -136,6 +134,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         
         dtoBookingTime = [[String]]()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
     }
     
     deinit {
@@ -153,26 +156,28 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             return
         }
         if let userInfo = notification.userInfo {
-            let freeTimeDataSource = userInfo["returnArrayDataSource"]! as! [String]
-            
-            self.freeTimeDataSource = freeTimeDataSource
-            DispatchQueue.main.async {
-                self.tableView_BookingTime.reloadData()
-                
-                let animation = CATransition()
-                animation.type = kCATransitionFade
-                animation.duration = 0.7
-                
-                self.activityIndicator.layer.add(animation, forKey: nil)
-                self.activityIndicator.stopAnimating()
+            DispatchQueue.global(qos: .userInteractive).async {
 
-                self.tableView_BookingTime.layer.add(animation, forKey: nil)
-                self.tableView_BookingTime.isHidden = false
+                let freeTimeDataSource = userInfo["returnArrayDataSource"]! as! [String]
+                self.freeTimeDataSource = freeTimeDataSource
+                self.dataHasReceive = true
                 
-                self.tableView_BookingTime.setContentOffset(CGPoint.zero, animated: true)
+                DispatchQueue.main.async {
+                    self.tableView_BookingTime.reloadData()
+                    
+                    let animation = CATransition()
+                    animation.type = kCATransitionFade
+                    animation.duration = 0.7
+                    
+                    self.activityIndicator.layer.add(animation, forKey: nil)
+                    self.activityIndicator.stopAnimating()
+                    
+                    self.tableView_BookingTime.layer.add(animation, forKey: nil)
+                    self.tableView_BookingTime.isHidden = false
+                    
+                    self.tableView_BookingTime.setContentOffset(CGPoint.zero, animated: true)
+                }
             }
-            
-            dataHasReceive = true
         }
     }
     
@@ -197,21 +202,19 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
                     
                     DispatchQueue.main.async {
-                        
-                        ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Chọn thành công\n\(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.day) - \(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.time)")
-                        
-                        self.activityIndicator.stopAnimating()
-                        self.tableView_BookingTime.isUserInteractionEnabled = true
-                        
                         if !self.isTypeFree {
                             self.tableView_BookingTime.isHidden = true
                             self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
                             
                             self.dropDown_DaysOfWeek.deselectRow(at: self.dropDownSelectedRowIndex)
                         } else {
-                            DispatchQueue.main.async {
-                                self.tableView_BookingTime.reloadData()
+                            for i in 0 ..< self.freeTimeDataSource.count {
+                                if self.freeTimeDataSource[i] == self.tupleBookingTime.value.time {
+                                    self.freeTimeDataSource.remove(at: i)
+                                    break
+                                }
                             }
+                            self.tableView_BookingTime.reloadData()
                         }
                         
                         //UPDATE NOTIFICATION LABEL
@@ -221,6 +224,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         if notificationNumber == 1 {
                             self.lbl_Notification.isHidden = false
                         }
+                        
+                        ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Chọn thành công\n\(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.day) - \(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.time)")
+                        
+                        self.activityIndicator.stopAnimating()
+                        self.tableView_BookingTime.isUserInteractionEnabled = true
                     }
                 }
             }
@@ -432,7 +440,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dropDown_DaysOfWeek.selectionAction = { [unowned self] (index, item) in
             self.btn_DropDownDaysOfWeek.setTitle(item, for: .normal)
             
-            if self.tupleBookingTime.value.day == item {
+            if self.tupleBookingTime.value.day == item && self.dropDown_DaysOfWeek.selectedItem != nil {
                 return
             }
             

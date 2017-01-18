@@ -94,8 +94,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         
         
 //=========OBSERVE FOR NOTIFICATION FROM PMHandleLogin=========
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "postRequestStatus"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "postRequestStatus"), object: nil, queue: nil, using: handleView)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loginResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "loginResponse"), object: nil, queue: nil, using: handleView)
 
         
 //        //=========DRAW LINE=========
