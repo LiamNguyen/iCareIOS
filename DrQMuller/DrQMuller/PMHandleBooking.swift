@@ -270,31 +270,32 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         return true
     }
-    
+}
+
+//GLOBAL FUNCTION 
 //=========SORT DICTIONARY KEYS OR VALUES AND RETURN ARRAY=========
-   
-//    func sortDictionary(dictionary: [String: String]) -> [String] {
-//        var sortedArr = [String]()
-//        
-//        for key in dictionary.values {
-//            let convertedKeyStr = key.replacingOccurrences(of: ":", with: "")
-//            let convertedKey = Int(convertedKeyStr)!
-//            if sortedArr.isEmpty {
-//                sortedArr.append(key)
-//                continue
-//            }
-//            for item in sortedArr {
-//                if convertedKey < Int(item.replacingOccurrences(of: ":", with: ""))! {
-//                    sortedArr.insert(key, at: sortedArr.index(of: item)!)
-//                    break
-//                }
-//                
-//                if sortedArr.index(of: item) == sortedArr.count - 1 {
-//                    sortedArr.insert(key, at: sortedArr.count)
-//                }
-//            }
-//        }
-//
-//        return sortedArr
-//    }
+
+func sortDictionary(dictionary: [String: String]) -> [String] {
+    var sortedArr = [String]()
+    
+    for key in dictionary.values {
+        let convertedKeyStr = key.replacingOccurrences(of: ":", with: "")
+        let convertedKey = Int(convertedKeyStr)!
+        if sortedArr.isEmpty {
+            sortedArr.append(key)
+            continue
+        }
+        for item in sortedArr {
+            if convertedKey < Int(item.replacingOccurrences(of: ":", with: ""))! {
+                sortedArr.insert(key, at: sortedArr.index(of: item)!)
+                break
+            }
+            
+            if sortedArr.index(of: item) == sortedArr.count - 1 {
+                sortedArr.insert(key, at: sortedArr.count)
+            }
+        }
+    }
+    
+    return sortedArr
 }

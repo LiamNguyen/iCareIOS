@@ -141,20 +141,19 @@ class DTOBookingInformation: NSObject {
         }
     }
     
-//    func returnHttpBody() -> String! {
-//        if let bookingTime = jsonStringify(obj: _bookingTime) {
-//            return ""
-//        }
-//    }
-    
-    func jsonStringify(obj: AnyObject) -> String {
-        let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
-        
-        let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
-        
-        return jsonString
+    func clearAllDTOBookingInfo() {
+        self._country = nil
+        self._city = nil
+        self._district = nil
+        self._location = nil
+        self._voucher = nil
+        self._type = nil
+        self._startDate = nil
+        self._endDate = nil
+        self._exactDate = nil
+        self._exactDayOfWeek = nil
+        self._bookingTime = nil
     }
-    
     
     
     

@@ -178,8 +178,14 @@ class ModelHandleBookingDetail {
                 }
             }
         }
-        
+        print(time_ID)
         return time_ID
+    }
+    
+//RELEASE TIME IN TEMPORARY BOOK TBL
+    
+    func releaseTime(timeObj: [[String]]) {
+        APIHandleReleaseTime.sharedInstace.releaseTime(timeObj: timeObj)
     }
     
 }

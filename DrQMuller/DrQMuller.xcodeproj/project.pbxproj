@@ -40,6 +40,7 @@
 		ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */; };
 		ED9CC8231E222FB10025E78F /* ActivityIndicatorViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9CC8221E222FB10025E78F /* ActivityIndicatorViewContainer.swift */; };
 		ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */; };
+		EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
 		EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338971DE9D86300DE940B /* LoginViewController.swift */; };
 		EDB3389B1DE9D86300DE940B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB338991DE9D86300DE940B /* Main.storyboard */; };
@@ -47,6 +48,7 @@
 		EDB338A01DE9D86300DE940B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB3389E1DE9D86300DE940B /* LaunchScreen.storyboard */; };
 		EDB338AB1DE9D86300DE940B /* DrQMullerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338AA1DE9D86300DE940B /* DrQMullerTests.swift */; };
 		EDB338B61DE9D86300DE940B /* DrQMullerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338B51DE9D86300DE940B /* DrQMullerUITests.swift */; };
+		EDCE22CE1E309F490022F0C8 /* APIHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE22CD1E309F490022F0C8 /* APIHandleReleaseTime.swift */; };
 		EDE41FDA1E08CE66006CCE99 /* CustomStyleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */; };
 		EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */; };
 		EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */; };
@@ -117,6 +119,7 @@
 		ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMSlidingButton.swift; sourceTree = "<group>"; };
 		ED9CC8221E222FB10025E78F /* ActivityIndicatorViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewContainer.swift; sourceTree = "<group>"; };
 		ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingStartEnd.swift; sourceTree = "<group>"; };
+		EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleReleaseTime.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338951DE9D86300DE940B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDB338971DE9D86300DE940B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +133,7 @@
 		EDB338B11DE9D86300DE940B /* DrQMullerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrQMullerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338B51DE9D86300DE940B /* DrQMullerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrQMullerUITests.swift; sourceTree = "<group>"; };
 		EDB338B71DE9D86300DE940B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EDCE22CD1E309F490022F0C8 /* APIHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleReleaseTime.swift; sourceTree = "<group>"; };
 		EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStyleCustomerInformation.swift; sourceTree = "<group>"; };
 		EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineDrawer.swift; sourceTree = "<group>"; };
@@ -252,6 +256,7 @@
 			children = (
 				ED95589E1E11867A004893DA /* APIHandleLogin.swift */,
 				ED41DF3E1E164CC000803A14 /* APIHandleBooking.swift */,
+				EDCE22CD1E309F490022F0C8 /* APIHandleReleaseTime.swift */,
 			);
 			name = LibraryAPI;
 			sourceTree = "<group>";
@@ -264,6 +269,7 @@
 				ED9558971E10FFF7004893DA /* NetworkConnectivity.swift */,
 				ED95589C1E118529004893DA /* PMHandleLogin.swift */,
 				ED41DF401E164D0C00803A14 /* PMHandleBooking.swift */,
+				EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */,
 			);
 			name = PersistencyManager;
 			sourceTree = "<group>";
@@ -527,6 +533,7 @@
 				ED6986981E12E8E700932E93 /* Messages.swift in Sources */,
 				ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */,
 				ED41DF3F1E164CC000803A14 /* APIHandleBooking.swift in Sources */,
+				EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */,
 				ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */,
 				ED3011E21E192D790037F020 /* DTOBookingInformation.swift in Sources */,
 				ED95589B1E1172F1004893DA /* DTOAuthentication.swift in Sources */,
@@ -541,6 +548,7 @@
 				ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,
 				ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */,
+				EDCE22CE1E309F490022F0C8 /* APIHandleReleaseTime.swift in Sources */,
 				ED9558981E10FFF7004893DA /* NetworkConnectivity.swift in Sources */,
 				ED6986961E12E14000932E93 /* ModelHandleLogin.swift in Sources */,
 				ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */,
