@@ -154,13 +154,17 @@ class ModelHandleBookingDetail {
     
     func checkBookingTime(day_ID: String, chosenTime: String) {
         let time_ID = returnTimeID(chosenTime: chosenTime)
+        if time_ID.isEmpty {
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "timeIDIsNil"), object: nil)
+            return
+        }
         APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
     }
     
 //GET TIME STRING TO RETURN TIME ID
     
     func returnTimeID(chosenTime: String) -> String {
-        var time_ID: String!
+        var time_ID = ""
         
         switch isEco {
         case true:

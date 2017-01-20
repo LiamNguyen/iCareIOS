@@ -71,6 +71,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "releaseTimeResponse"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "releaseTimeResponse"), object: nil, queue: nil, using: onReceiveReleaseTimeResponse)
         
+//=========OBSERING NOTIFICATION FROM ModelHandleBookingDetail WHEN TIME_ID IS NIL=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "timeIDIsNil"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "timeIDIsNil"), object: nil, queue: nil, using: onHandleWhenTimeIDIsNil)
+        
 //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
             isEco = true
@@ -644,6 +649,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView_CartOrder.layer.shadowOffset = CGSize.zero
         self.tableView_CartOrder.layer.shadowOpacity = 0.7
         self.tableView_CartOrder.layer.shadowRadius = 10
+    }
+    
+    func onHandleWhenTimeIDIsNil(notification: Notification) {
+        ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin quý khách vui lòng thử lại")
     }
     
 
