@@ -44,11 +44,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var messageView: UIView!
     
     private var timer: Timer!
+    private var timer_bookingExpire: Timer?
     private var deleteCartOrderItemIndexPath: NSIndexPath? = nil
     private var dtoBookingTime: [[String]]!
     
     private var dropDownSelectedRowIndex: Int!
-    private var btn_ClearAll_IsClicked = false
+    private var isRequiredClearAllCartItems = false
     
     private var deletedTime: String!
     private var hasFinishedInThisPage = false
@@ -75,6 +76,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "timeIDIsNil"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "timeIDIsNil"), object: nil, queue: nil, using: onHandleWhenTimeIDIsNil)
+        
+//=========OBSERING NOTIFICATION FROM AppDelegate WHEN Application is close=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "appResignActive"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "appResignActive"), object: nil, queue: nil, using: onBookingExpire)
+        
+//=========OBSERING NOTIFICATION FROM AppDelegate WHEN Application is close=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "appTerminate"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "appTerminate"), object: nil, queue: nil, using: onBookingExpire)
         
 //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
@@ -159,6 +170,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         modelHandelBookingDetail.releaseTime(timeObj: dtoBookingTime)
     }
     
+    
 //=========UPDATE FREE TIME LIST WHEN RECEIVING RESPONSE FROM SERVER=========
     
     func updateTable(notification: Notification) {
@@ -212,6 +224,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
                     
                     DispatchQueue.main.async {
+                        if self.dtoBookingTime.count == 1 {
+                            self.timer_bookingExpire = Timer.scheduledTimer(timeInterval: 15 * 60, target: self, selector: #selector(self.onBookingTimeExpire), userInfo: nil, repeats: false)
+                        }
+                        
                         if !self.isTypeFree {
                             self.tableView_BookingTime.isHidden = true
                             self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
@@ -259,7 +275,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func btn_ClearAllCartItem_OnClick(_ sender: Any) {
-        self.btn_ClearAll_IsClicked = true
+        self.isRequiredClearAllCartItems = true
         let alert = UIAlertController(title: "Xác nhận", message: "Bạn muốn xoá hết các giờ vừa đặt trong giỏ?", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Xoá", style: .destructive, handler: { (action: UIAlertAction!) in
             self.activityIndicator.startAnimating()
@@ -407,9 +423,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if let userInfo = notification.userInfo {
             if let isOk = userInfo["status"] as? Bool {
                 if isOk {
-                    if self.btn_ClearAll_IsClicked {
+                    if self.isRequiredClearAllCartItems {
                         self.resetBookingTime()
-                        self.btn_ClearAll_IsClicked = false
+                        self.isRequiredClearAllCartItems = false
                     } else {
                         updateLocalWhenDeleteOneItem()
                     }
@@ -655,7 +671,20 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin quý khách vui lòng thử lại")
     }
     
-
+    func onBookingExpire(notification: Notification) {
+        onBookingTimeExpire()
+    }
+    
+    @objc private func onBookingTimeExpire() {
+        if dtoBookingTime.count < 1 {
+            print("Not doing anything")
+            return
+        }
+        self.isRequiredClearAllCartItems = true
+        modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
+        self.timer_bookingExpire?.invalidate()
+        print("Clear all cart items")
+    }
     
 //=========RETURN DAYS OF WEEK ARRAY =========
     
@@ -674,3 +703,5 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     
 }
+
+
