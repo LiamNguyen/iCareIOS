@@ -286,18 +286,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private func uiWaitingLoginResponse(isDone: Bool) {
         if !isDone {
             self.activityIndicator.startAnimating()
-            self.txt_Username.isEnabled = false
-            self.txt_Password.isEnabled = false
-            self.btn_ResetPassword.isEnabled = false
-            self.btn_Login.isEnabled = false
-            self.btn_Register.isEnabled = false
+            self.view.isUserInteractionEnabled = false
         } else {
-            self.activityIndicator.stopAnimating()
-            self.txt_Username.isEnabled = true
-            self.txt_Password.isEnabled = true
-            self.btn_ResetPassword.isEnabled = true
-            self.btn_Login.isEnabled = true
-            self.btn_Register.isEnabled = true
+            self.view.isUserInteractionEnabled = true
         }
     }
     
