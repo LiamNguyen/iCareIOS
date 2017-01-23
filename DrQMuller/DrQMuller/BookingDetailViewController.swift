@@ -493,6 +493,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.freeTimeDataSource.append(self.deletedTime ?? "")
             self.freeTimeDataSource.sort()
             self.tableView_BookingTime.reloadData()
+            self.tableView_BookingTimeConfirm.reloadData()
             
             self.lbl_Notification.text = String(Int(self.lbl_Notification.text!)! - 1)
             
