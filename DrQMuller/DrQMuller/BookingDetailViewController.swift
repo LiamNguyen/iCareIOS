@@ -13,15 +13,18 @@ import DropDown
 class BookingDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SlideButtonDelegate {
     
     @IBOutlet private weak var lbl_Notification: UILabel!
-    @IBOutlet weak var btn_ShowCart: UIImageView!
+    @IBOutlet private weak var btn_ShowCart: UIImageView!
+    
     @IBOutlet private weak var view_TopView: UIView!
+    @IBOutlet private weak var view_ConfirmView: UIView!
+    
     @IBOutlet private weak var tableView_BookingTime: UITableView!
-
-    @IBOutlet weak var tableView_CartOrder: UITableView!
+    @IBOutlet private weak var tableView_CartOrder: UITableView!
+    
     @IBOutlet private weak var btn_DropDownDaysOfWeek: NiceButton!
     @IBOutlet private weak var slideBtn: MMSlidingButton!
-    @IBOutlet weak var btn_ClearAllCartItems: UIButton!
-    @IBOutlet weak var constraint_CartOrderTableView_Height: NSLayoutConstraint!
+    @IBOutlet private weak var btn_ClearAllCartItems: UIButton!
+    @IBOutlet private weak var constraint_CartOrderTableView_Height: NSLayoutConstraint!
     
     private var activityIndicator: UIActivityIndicatorView!
     private var activityIndicatorViewContainer: ActivityIndicatorViewContainer!
@@ -102,6 +105,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView_CartOrder.dataSource = self
         self.tableView_CartOrder.delegate = self
         
+        self.tableView_BookingTimeConfirm.dataSource = self
+        self.tableView_BookingTimeConfirm.delegate = self
+        self.tableView_BookingTimeConfirm.isUserInteractionEnabled = false
+        
         self.tableView_BookingTime.isHidden = true
         self.tableView_CartOrder.isHidden = true
         
@@ -159,10 +166,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         
         dtoBookingTime = [[String]]()
+        
+        bindDataConfirmView()
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x + 400, y: self.view_ConfirmView.center.y)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -244,6 +257,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             }
                             self.tableView_BookingTime.reloadData()
                         }
+                        self.tableView_CartOrder.reloadData()
+                        self.tableView_BookingTimeConfirm.reloadData()
                         
                         //UPDATE NOTIFICATION LABEL
                         
@@ -293,18 +308,28 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.present(alert, animated: true, completion: nil)
     }
     
+//=========CLOSE CONFIRM BUTTON ONCLICK=========
+    
+    @IBAction func btn_CloseConfirm_OnClick(_ sender: Any) {
+        self.slideBtn.reset()
+        self.view_TopView.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.5) {
+            self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x + 400, y: self.view_ConfirmView.center.y)
+            self.view.backgroundColor = ThemeBackGroundColor
+        }
+    }
+    
 //=========TABLE VIEW DELEGATE METHODS=========
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        if tableView == self.tableView_BookingTime {
+        if tableView == self.tableView_CartOrder || tableView == self.tableView_BookingTimeConfirm {
+        //CART ORDER TABLE VIEW AND CART ORDER CONFIRM TABLE VIEW
+            return dtoBookingTime.count
+        } else {
         //FREE TIME TABLE VIEW
             return freeTimeDataSource.count
-        } else {
-        //CART ORDER TABLE VIEW
-            return dtoBookingTime.count
         }
-    } 
+    }
     
 //=========TABLE VIEW DELEGATE METHODS=========
     
@@ -318,6 +343,18 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             let item = freeTimeDataSource[indexPath.row]
             
             cell.lbl_Time.text = item
+            
+            return cell
+        } else if tableView == self.tableView_BookingTimeConfirm {
+            //CART ORDER CONFIRM
+            let cellIdentifier = "CartOrderConfirmTableViewCell"
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CartOrderConfirmTableViewCell
+            
+            let itemDay = self.tupleBookingTime_Array[indexPath.row]
+            
+            cell.lbl_DayOfWeek.text = itemDay.value.day
+            cell.lbl_Time.text = itemDay.value.time
             
             return cell
         } else {
@@ -470,7 +507,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 }
             }
         }
-    }
+    } 
     
     private func cancelDeleteCartItem(alertAction: UIAlertAction!) -> Void {
         self.deleteCartOrderItemIndexPath = nil
@@ -479,7 +516,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========SLIDE BUTTON_ONSLIDE=========
     
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
-        self.hasFinishedInThisPage = true
+        if self.tupleBookingTime_Array.isEmpty {
+            self.slideBtn.reset()
+            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn ít nhất một giờ")
+            return
+        }
+        self.view_TopView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.5) {
+            self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x - 400, y: self.view_ConfirmView.center.y)
+            self.view.backgroundColor = UIColor.gray
+        }
     }
     
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
@@ -611,7 +657,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if self.tableView_CartOrder.isHidden == true {
             updateCartOrderTableViewHeight()
             
-            self.tableView_CartOrder.reloadData()
             
             self.tableView_CartOrder.isHidden = false
             
@@ -647,6 +692,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.freeTimeDataSource.append(self.tupleBookingTime_Array[0].value.time)
             self.freeTimeDataSource.sort()
             self.tableView_BookingTime.reloadData()
+            self.tableView_BookingTimeConfirm.reloadData()
         } else {
             self.tableView_BookingTime.isHidden = true
             self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
@@ -667,11 +713,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView_CartOrder.layer.shadowRadius = 10
     }
     
-    func onHandleWhenTimeIDIsNil(notification: Notification) {
+    private func onHandleWhenTimeIDIsNil(notification: Notification) {
         ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin quý khách vui lòng thử lại")
     }
     
-    func onBookingExpire(notification: Notification) {
+    private func onBookingExpire(notification: Notification) {
         onBookingTimeExpire()
     }
     
@@ -680,10 +726,62 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             print("Not doing anything")
             return
         }
+        
+        if self.view_ConfirmView.center.x == self.view_ConfirmView.center.x - 400 {
+            self.slideBtn.reset()
+            self.view_TopView.isUserInteractionEnabled = true
+            UIView.animate(withDuration: 0.5) {
+                self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x + 400, y: self.view_ConfirmView.center.y)
+                self.view.backgroundColor = ThemeBackGroundColor
+            }
+        }
         self.isRequiredClearAllCartItems = true
         modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
+        self.tupleBookingTime_Array.removeAll()
+        dtoBookingTime.removeAll()
+        DTOBookingInformation.sharedInstance.bookingTime.removeAll()
         self.timer_bookingExpire?.invalidate()
         print("Clear all cart items")
+    }
+    
+    @IBOutlet weak var lbl_Voucher: UILabel!
+    @IBOutlet weak var lbl_Type: UILabel!
+    @IBOutlet weak var lbl_Location: UILabel!
+    @IBOutlet weak var lbl_StartDateHeader: UILabel!
+    @IBOutlet weak var lbl_StartDate: UILabel!
+    @IBOutlet weak var lbl_EndDateHeader: UILabel!
+    @IBOutlet weak var lbl_EndDate: UILabel!
+    
+    @IBOutlet weak var tableView_BookingTimeConfirm: UITableView!
+    
+    private func bindDataConfirmView() {
+        let bookingInfo = DTOBookingInformation.sharedInstance
+        self.lbl_Voucher.text = bookingInfo.voucher
+        self.lbl_Type.text = bookingInfo.type
+        self.lbl_Location.text = bookingInfo.location
+        if isTypeFree {
+            self.lbl_StartDateHeader.text = "Ngày thực hiện:"
+            self.lbl_StartDate.text = convertDateFormatFromStringToDate(str: bookingInfo.exactDate)?.shortDateVnFormatted
+            self.lbl_EndDateHeader.isHidden = true
+            self.lbl_EndDate.isHidden = true
+        } else {
+            self.lbl_StartDateHeader.text = "Ngày bắt đầu:"
+            self.lbl_EndDate.isHidden = false
+            self.lbl_EndDateHeader.isHidden = false
+            self.lbl_StartDate.text = convertDateFormatFromStringToDate(str: bookingInfo.startDate)?.shortDateVnFormatted
+            self.lbl_EndDate.text = convertDateFormatFromStringToDate(str: bookingInfo.endDate)?.shortDateVnFormatted
+        }
+    }
+    
+    @IBAction func btn_ConfirmBooking_OnClick(_ sender: Any) {
+        modelHandelBookingDetail.insertNewAppointment()
+    }
+    
+    func convertDateFormatFromStringToDate(str: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let formattedDate = dateFormatter.date(from: str)!
+        return formattedDate
     }
     
 //=========RETURN DAYS OF WEEK ARRAY =========

@@ -44,6 +44,7 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
                         if let cus_id = customer_ID {
                             UserDefaults.standard.set(cus_id, forKey: "Customer_ID")
                             print(UserDefaults.standard.string(forKey: "Customer_ID") ?? "Customer_ID not available")
+                            DTOBookingInformation.sharedInstance.customerID = cus_id
                         }
                     } else {
                         isOk["status"] = false

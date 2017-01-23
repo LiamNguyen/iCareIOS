@@ -141,6 +141,22 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             NotificationCenter.default.post(name: Notification.Name(rawValue: "selectedTimeDataSource"), object: nil, userInfo: returnArrayDataSource)
         }
         
+//HANDLE REPONSE OF NEW APPOINTMENT'S INSERTION
+        var isOk = [String: Bool]()
+        var appointment_ID: String?
+        if let arrayResponse = data["Insert_NewAppointment"]! as? NSArray {
+            for arrayItem in arrayResponse {
+                let arrayDict = arrayItem as! NSDictionary
+                if let result = arrayDict["Status"] as? String {
+                    if result == "1" {
+                        
+                    } else {
+                        
+                    }
+                }
+            }
+        }
+        
 //PASS AND SAVE STATIC ARRAY DATASOURCE
         
         if staticArrayDataSourceIsCompletelySet() {
@@ -196,6 +212,12 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
     func checkBookingTime(day_ID: String, time_ID: String) {
         httpClient.getRequest(url: "BookingTransaction", parameter: "?day_id=\(day_ID)&time_id=\(time_ID)")
+    }
+    
+//INSERT NEW APPOINTMENT
+    
+    func insertNewAppointment() {
+        httpClient.postRequest(url: "Insert_NewAppointment", body: DTOBookingInformation.sharedInstance.returnHttpBody()!)
     }
     
 //CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT

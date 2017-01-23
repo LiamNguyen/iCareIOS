@@ -38,4 +38,8 @@ class APIHandleBooking: NSObject {
     func checkBookingTime(day_ID: String, time_ID: String) {
         self.persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
     }
+    
+    func insertNewAppointment() {
+        self.persistencyManager.insertNewAppointment()
+    }
 }

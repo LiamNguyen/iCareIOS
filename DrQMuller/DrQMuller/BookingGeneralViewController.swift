@@ -12,6 +12,7 @@ import DropDown
 
 let ToastColor = UIColor(netHex: 0xE89D00)
 let ThemeColor = UIColor(netHex: 0x8F00B3)
+let ThemeBackGroundColor = UIColor(netHex: 0xFCECFF)
 let ToastColorAlert = UIColor.red
 
 class BookingGeneralViewController: UIViewController, SlideButtonDelegate {

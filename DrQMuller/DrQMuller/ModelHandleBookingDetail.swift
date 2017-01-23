@@ -161,6 +161,12 @@ class ModelHandleBookingDetail {
         APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
     }
     
+//INSERT NEW APPOINTMENT
+    
+    func insertNewAppointment() {
+        APIHandleBooking.sharedInstace.insertNewAppointment()
+    }
+    
 //GET TIME STRING TO RETURN TIME ID
     
     func returnTimeID(chosenTime: String) -> String {

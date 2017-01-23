@@ -22,6 +22,12 @@ extension Date {
         return formatter.string(from: self as Date)
     }
     
+    var shortDateVnFormatted: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyy"
+        return formatter.string(from: self as Date)
+    }
+    
     var day: Int {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd"
