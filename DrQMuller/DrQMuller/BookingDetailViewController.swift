@@ -27,7 +27,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private weak var constraint_CartOrderTableView_Height: NSLayoutConstraint!
     
     private var activityIndicator: UIActivityIndicatorView!
-    private var activityIndicatorViewContainer: ActivityIndicatorViewContainer!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
     private var freeTimeDataSource = [String]()
@@ -132,8 +131,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
 //=========INITIALIZE ACTIVITY INDICATOR=========
         
-        self.activityIndicatorViewContainer = ActivityIndicatorViewContainer()
-        self.activityIndicator = activityIndicatorViewContainer.createActivityIndicator(view: self.view)
+        self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
         
 //=========INITIALIZE TUPLE BOOKING TIME=========
         
@@ -163,7 +161,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========WIRED UP TAP RECOGNIZER FOR NOTIFICATION BUTTON=========
  
         setUpTapRecognitionForCartButton()
-        
         
         dtoBookingTime = [[String]]()
         
@@ -200,14 +197,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 DispatchQueue.main.async {
                     self.tableView_BookingTime.reloadData()
                     
-                    let animation = CATransition()
-                    animation.type = kCATransitionFade
-                    animation.duration = 0.7
-                    
-                    self.activityIndicator.layer.add(animation, forKey: nil)
+                    self.activityIndicator.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
                     self.activityIndicator.stopAnimating()
                     
-                    self.tableView_BookingTime.layer.add(animation, forKey: nil)
+                    self.tableView_BookingTime.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
                     self.tableView_BookingTime.isHidden = false
                     
                     self.tableView_BookingTime.setContentOffset(CGPoint.zero, animated: true)
@@ -227,7 +220,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     DispatchQueue.main.sync {
                         self.activityIndicator.stopAnimating()
                         self.tableView_BookingTime.isUserInteractionEnabled = true
-                        ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Giờ đã bị đặt. Xin vui lòng chọn giờ khác.")
+                        ToastManager.alert(view: self.view_TopView, msg: "Giờ đã bị đặt. Xin vui lòng chọn giờ khác.")
                     }
                 } else {
                     let bookingTime = [self.tupleBookingTime.id.day_ID, self.tupleBookingTime.id.time_ID]
@@ -268,7 +261,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             self.lbl_Notification.isHidden = false
                         }
                         
-                        ToastManager.sharedInstance.alert(view: self.view_TopView, msg: "Chọn thành công\n\(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.day) - \(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.time)")
+                        ToastManager.alert(view: self.view_TopView, msg: "Chọn thành công\n\(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.day) - \(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.time)")
                         
                         self.activityIndicator.stopAnimating()
                         self.tableView_BookingTime.isUserInteractionEnabled = true
@@ -387,7 +380,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             if !(bookingTime?.isEmpty)! {
                 for item in bookingTime! {
                     if item[0] == self.tupleBookingTime.id.day_ID {
-                        ToastManager.sharedInstance.alert(view: view_TopView, msg: "Chỉ được đặt 1 giờ trong 1 ngày.\nQuý khách đã đặt \(self.tupleBookingTime.value.day).")
+                        ToastManager.alert(view: view_TopView, msg: "Chỉ được đặt 1 giờ trong 1 ngày.\nQuý khách đã đặt \(self.tupleBookingTime.value.day).")
                         return
                     }
                 }
@@ -408,7 +401,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.tableView_BookingTime.isHidden = false
             }
             
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Vui lòng vuốt từ phải sang trái để xoá lịch đặt trong giỏ")
+            ToastManager.alert(view: view_TopView, msg: "Vui lòng vuốt từ phải sang trái để xoá lịch đặt trong giỏ")
         }
 
     }
@@ -469,9 +462,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     if self.hasFinishedInThisPage {
                         return
                     }
-                    ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xoá thành công")
+                    ToastManager.alert(view: view_TopView, msg: "Xoá thành công")
                 } else {
-                    ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xoá không thành công. Xin vui lòng thử lại")
+                    ToastManager.alert(view: view_TopView, msg: "Xoá không thành công. Xin vui lòng thử lại")
                 }
             }
         }
@@ -519,7 +512,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
         if self.tupleBookingTime_Array.isEmpty {
             self.slideBtn.reset()
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn ít nhất một giờ")
+            ToastManager.alert(view: view_TopView, msg: "Xin vui lòng chọn ít nhất một giờ")
             return
         }
         self.view_TopView.isUserInteractionEnabled = false
@@ -604,16 +597,15 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let message = "Quý khách đã đặt 3 giờ trong một tuần.\nXin vui lòng tiếp tục để hoàn tất lịch hẹn."
         
         if self.messageView == nil {
-            let messageViewContainer = MessageViewContainer()
-            self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+            self.messageView = UIFunctionality.createMessageViewContainer(parentView: self.view)
         } else {
             if messageView.center.x == UIScreen.main.bounds.width / 2 {
                 return
             }
-            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4)
+            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4 + 10)
         }
         
-        ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 3.5)
+        ToastManager.message(view: self.messageView, msg: message, duration: 3.5)
         
         self.timer = Timer.scheduledTimer(timeInterval: 3.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
     }
@@ -651,7 +643,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @objc private func btn_ShowCart_OnClick() {
         
         if dtoBookingTime.count < 1 {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Chưa có lịch hẹn được đặt.")
+            ToastManager.alert(view: view_TopView, msg: "Chưa có lịch hẹn được đặt.")
             return
         }
         
@@ -693,20 +685,20 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.freeTimeDataSource.append(self.tupleBookingTime_Array[0].value.time)
             self.freeTimeDataSource.sort()
             self.tableView_BookingTime.reloadData()
-            self.tableView_BookingTimeConfirm.reloadData()
         } else {
             self.tableView_BookingTime.isHidden = true
             self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
             self.dropDown_DaysOfWeek.deselectRow(at: self.dropDownSelectedRowIndex)
             self.dropDownSelectedRowIndex = nil
         }
-        
+        updateCartOrderTableViewHeight()
+        print(self.tupleBookingTime_Array)
         self.tupleBookingTime_Array.removeAll()
         dtoBookingTime.removeAll()
         DTOBookingInformation.sharedInstance.clearAllDTOBookingInfo()
         
     }
-    
+     
     private func decorateCartOrderTableView() {
         self.tableView_CartOrder.layer.shadowColor = UIColor.black.cgColor
         self.tableView_CartOrder.layer.shadowOffset = CGSize.zero
@@ -715,7 +707,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func onHandleWhenTimeIDIsNil(notification: Notification) {
-        ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin quý khách vui lòng thử lại")
+        ToastManager.alert(view: view_TopView, msg: "Xin quý khách vui lòng thử lại")
     }
     
     private func onBookingExpire(notification: Notification) {
@@ -738,9 +730,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
         self.isRequiredClearAllCartItems = true
         modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
-        self.tupleBookingTime_Array.removeAll()
-        dtoBookingTime.removeAll()
-        DTOBookingInformation.sharedInstance.bookingTime.removeAll()
         self.timer_bookingExpire?.invalidate()
         print("Clear all cart items")
     }
@@ -762,45 +751,21 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.lbl_Location.text = bookingInfo.location
         if isTypeFree {
             self.lbl_StartDateHeader.text = "Ngày thực hiện:"
-            self.lbl_StartDate.text = convertDateFormatFromStringToDate(str: bookingInfo.exactDate)?.shortDateVnFormatted
+            self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.exactDate)?.shortDateVnFormatted
             self.lbl_EndDateHeader.isHidden = true
             self.lbl_EndDate.isHidden = true
         } else {
             self.lbl_StartDateHeader.text = "Ngày bắt đầu:"
             self.lbl_EndDate.isHidden = false
             self.lbl_EndDateHeader.isHidden = false
-            self.lbl_StartDate.text = convertDateFormatFromStringToDate(str: bookingInfo.startDate)?.shortDateVnFormatted
-            self.lbl_EndDate.text = convertDateFormatFromStringToDate(str: bookingInfo.endDate)?.shortDateVnFormatted
+            self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.startDate)?.shortDateVnFormatted
+            self.lbl_EndDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.endDate)?.shortDateVnFormatted
         }
     }
     
     @IBAction func btn_ConfirmBooking_OnClick(_ sender: Any) {
         modelHandelBookingDetail.insertNewAppointment()
     }
-    
-    func convertDateFormatFromStringToDate(str: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy/MM/dd"
-        let formattedDate = dateFormatter.date(from: str)!
-        return formattedDate
-    }
-    
-//=========RETURN DAYS OF WEEK ARRAY =========
-    
-    //    private func returnArray(dictionary: [String: String]!) -> [String] {
-    //        var resultArray = [String]()
-    //
-    //        if dictionary == nil {
-    //            return resultArray
-    //        }
-    //
-    //        for values in dictionary.values {
-    //            resultArray.insert(values, at: resultArray.count)
-    //        }
-    //        return resultArray
-    //    }
-    
-    
 }
 
 

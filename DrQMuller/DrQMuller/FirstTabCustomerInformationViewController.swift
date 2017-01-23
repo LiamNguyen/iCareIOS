@@ -23,7 +23,6 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var txt_Address: UITextField!
     
     private var customerInformationController = CustomStyleCustomerInformation()
-    private var message = Messages()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +57,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========POP UP CONFIRM DIALOG=========
 
-        message.confirmDialog(sender: self)
+        DialogManager.confirmDialog(sender: self)
     }
 
     

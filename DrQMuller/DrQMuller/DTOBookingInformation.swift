@@ -174,6 +174,12 @@ class DTOBookingInformation: NSObject {
     }
     
     func returnHttpBody() -> String? {
+        let dtoArrays = DTOStaticArrayDataSource.sharedInstance
+        
+        let typesDataSource = dtoArrays.dropDownTypesDataSource
+        let vouchersDataSource = dtoArrays.dropDownVouchersDataSource
+        let locationsDataSource = dtoArrays.dropDownLocationsDataSource
+        
         var result = ""
         
         if _type == "Tự do" {
@@ -188,7 +194,12 @@ class DTOBookingInformation: NSObject {
         
         if let type = _type, let customerID = _customerID, let location = _location, let voucher = _voucher, let bookingTime = _bookingTime {
             self._verificationCode = generateVerificationCode(length: 10)
-            result += "type=\(type)&customer_id=\(customerID)&location_id=\(location)&voucher_id=\(voucher)&bookingTime=\(jsonStringify(obj: bookingTime as AnyObject))&code=\(self._verificationCode)"
+            result += "type=\(Functionality.findKeyFromValue(dictionary: typesDataSource, value: type))&" +
+                        "customer_id=\(customerID)&" +
+                        "location_id=\(Functionality.findKeyFromValue(dictionary: locationsDataSource, value: location))&" +
+                        "voucher_id=\(Functionality.findKeyFromValue(dictionary: vouchersDataSource, value: voucher))&" +
+                        "bookingTime=\(Functionality.jsonStringify(obj: bookingTime as AnyObject))&" +
+                        "code=\(self._verificationCode)"
         }
         return result
     }

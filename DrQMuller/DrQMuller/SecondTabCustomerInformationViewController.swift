@@ -24,7 +24,6 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     @IBOutlet weak var slideBtn_Next: MMSlidingButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
-    private var message = Messages()
     private var picker_GenderDataSource = [String]()
     private let datePickerRange = DatePickerRange()
     
@@ -71,7 +70,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
 //=========POP UP CONFIRM DIALOG=========
         
-        message.confirmDialog(sender: self)
+        DialogManager.confirmDialog(sender: self)
     }
     
 //=========TRANSITION TO FIRST INFO PAGE=========

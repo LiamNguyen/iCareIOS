@@ -54,31 +54,31 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE LOCATIONS DATASOURCE
-        var dropDownLocationsDataSource = [String]()
+        var dropDownLocationsDataSource = [String: String]()
         if let arrayDataSource = data["Select_Locations"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownLocationsDataSource.append(dictItem["ADDRESS"]! as! String)
+                dropDownLocationsDataSource[(dictItem["LOCATION_ID"] as? String)!] = (dictItem["ADDRESS"] as? String)!
             }
             dtoStaticArrayDataSource.dropDownLocationsDataSource = dropDownLocationsDataSource
         }
         
 //HANDLE VOUCHERS DATASOURCE
-        var dropDownVouchersDataSource = [String]()
+        var dropDownVouchersDataSource = [String: String]()
         if let arrayDataSource = data["Select_Vouchers"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownVouchersDataSource.append(dictItem["VOUCHER"]! as! String)
+                dropDownVouchersDataSource[(dictItem["VOUCHER_ID"] as? String)!] = (dictItem["VOUCHER"] as? String)!
             }
             dtoStaticArrayDataSource.dropDownVouchersDataSource = dropDownVouchersDataSource
         }
         
 //HANDLE TYPES DATASOURCE
-        var dropDownTypesDataSource = [String]()
+        var dropDownTypesDataSource = [String: String]()
         if let arrayDataSource = data["Select_Types"]! as? NSArray {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownTypesDataSource.append(dictItem["TYPE"]! as! String)
+                dropDownTypesDataSource[(dictItem["TYPE_ID"] as? String)!] = (dictItem["TYPE"] as? String)!
             }
             dtoStaticArrayDataSource.dropDownTypesDataSource = dropDownTypesDataSource
         }
@@ -142,21 +142,22 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE REPONSE OF NEW APPOINTMENT'S INSERTION
-        var isOk = [String: Bool]()
-        var appointment_ID: String?
-        if let arrayResponse = data["Insert_NewAppointment"]! as? NSArray {
-            for arrayItem in arrayResponse {
-                let arrayDict = arrayItem as! NSDictionary
-                if let result = arrayDict["Status"] as? String {
-                    if result == "1" {
-                        
-                    } else {
-                        
-                    }
-                }
-            }
-        }
         
+//        var isOk = [String: Bool]()
+//        var appointment_ID: String?
+//        if let arrayResponse = data["Insert_NewAppointment"]! as? NSArray {
+//            for arrayItem in arrayResponse {
+//                let arrayDict = arrayItem as! NSDictionary
+//                if let result = arrayDict["Status"] as? String {
+//                    if result == "1" {
+//                        
+//                    } else {
+//                        
+//                    }
+//                }
+//            }
+//        }
+   
 //PASS AND SAVE STATIC ARRAY DATASOURCE
         
         if staticArrayDataSourceIsCompletelySet() {
@@ -292,32 +293,4 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         return true
     }
-}
-
-//GLOBAL FUNCTION 
-//=========SORT DICTIONARY KEYS OR VALUES AND RETURN ARRAY=========
-
-func sortDictionary(dictionary: [String: String]) -> [String] {
-    var sortedArr = [String]()
-    
-    for key in dictionary.values {
-        let convertedKeyStr = key.replacingOccurrences(of: ":", with: "")
-        let convertedKey = Int(convertedKeyStr)!
-        if sortedArr.isEmpty {
-            sortedArr.append(key)
-            continue
-        }
-        for item in sortedArr {
-            if convertedKey < Int(item.replacingOccurrences(of: ":", with: ""))! {
-                sortedArr.insert(key, at: sortedArr.index(of: item)!)
-                break
-            }
-            
-            if sortedArr.index(of: item) == sortedArr.count - 1 {
-                sortedArr.insert(key, at: sortedArr.count)
-            }
-        }
-    }
-    
-    return sortedArr
 }

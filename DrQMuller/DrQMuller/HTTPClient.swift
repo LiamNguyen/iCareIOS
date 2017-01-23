@@ -13,13 +13,12 @@ protocol HTTPClientDelegate {
 }
 
 public class HTTPClient {
-    private var network = NetworkConnectivity()
     private var serviceURL = ServiceURL(isPRD: false)
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
     func getRequest(url: String, parameter: String) {
-        if !network.isConnected() {
+        if !Network.hasNetworkConnection() {
             return
         }
 
@@ -40,9 +39,10 @@ public class HTTPClient {
     }
     
     func postRequest(url: String, body: String) {//, postCompleted: @escaping (_ success: Bool, _ msg: String) -> ()) {
-        if !network.isConnected() {
+        if !Network.hasNetworkConnection() {
             return
         }
+        
         let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
         var request = URLRequest(url: URL as! URL)
         request.httpMethod = "POST"

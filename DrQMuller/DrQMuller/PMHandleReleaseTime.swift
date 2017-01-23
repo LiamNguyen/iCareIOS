@@ -8,13 +8,6 @@
 
 import UIKit
 
-func jsonStringify(obj: AnyObject) -> String {
-    let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
-    let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
-    
-    return jsonString
-}
-
 class PMHandleReleaseTime: NSObject, HTTPClientDelegate {
     
     private var httpClient: HTTPClient!
@@ -26,7 +19,7 @@ class PMHandleReleaseTime: NSObject, HTTPClientDelegate {
     }
     
     func releaseTime(timeObj: [[String]]) {
-        let jsonString = "bookingTime=\(jsonStringify(obj: timeObj as AnyObject))"
+        let jsonString = "bookingTime=\(Functionality.jsonStringify(obj: timeObj as AnyObject))"
         httpClient.postRequest(url: "Update_UnchosenTime", body: jsonString)
     }
     

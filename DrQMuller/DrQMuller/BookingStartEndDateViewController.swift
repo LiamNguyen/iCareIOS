@@ -32,7 +32,6 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     private var datePickersValues = [Int]()
     
-    private var lineDrawer = LineDrawer()
     private var messageView: UIView!
     private var modelHandleBookingStartEnd  = ModelHandelBookingStartEnd()
     private var timer: Timer!
@@ -114,7 +113,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             }
         
             if datePickersIsEmpty {
-                ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng đợi cho ngày đã được chọn và dừng hẳn")
+                ToastManager.alert(view: view_TopView, msg: "Xin vui lòng đợi cho ngày đã được chọn và dừng hẳn")
                 slideBtn_Next.reset()
                 datePickersIsEmpty = false
                 return
@@ -123,14 +122,14 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         
         if !isTypeFree {
             if (endDay - startDay) < 0 || (endMonth - startMonth) < 0 || (endYear - startYear) < 0 {
-                ToastManager.sharedInstance.alert(view: view_TopView, msg: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu")
+                ToastManager.alert(view: view_TopView, msg: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu")
                 slideBtn_Next.reset()
                 return
             }
         }
         
         if isTypeFree {
-            let translatedSelectedDay = modelHandleBookingStartEnd.translateDaysOfWeek(en: picker_StartDate.date.dayOfWeek)
+            let translatedSelectedDay = Functionality.translateDaysOfWeek(en: picker_StartDate.date.dayOfWeek)
             if (translatedSelectedDay == "Thứ bảy" || translatedSelectedDay == "Chủ nhật") && isEco {
 
                 alertMessage_WeekendRestrict()
@@ -176,19 +175,18 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
 //========CREATE MESSAGE VIEW CONTAINER=========
     
-    func alertMessage_WeekendRestrict() {
+    private func alertMessage_WeekendRestrict() {
         let message = "Hiện tại đối với Voucher ECO Booking, quý khách chỉ có thể sử dụng dịch vụ vào các ngày trong tuần, ngoại trừ Thứ Bảy và Chủ Nhật. Xin vui lòng liên hệ Trung Tâm Dr.Q-Muller để biết thêm chi tiết qua số điện thoại: [phone_number_waiting]"
         if self.messageView == nil {
-            let messageViewContainer = MessageViewContainer()
-            self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+            self.messageView = UIFunctionality.createMessageViewContainer(parentView: self.view)
         } else {
             if messageView.center.x == UIScreen.main.bounds.width / 2 {
                 return
             }
-            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4)
+            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4 + 10)
         }
         
-        ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 10)
+        ToastManager.message(view: self.messageView, msg: message, duration: 10)
         
         self.timer = Timer.scheduledTimer(timeInterval: 10.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
     }

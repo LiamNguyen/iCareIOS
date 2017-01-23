@@ -23,7 +23,6 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet weak var txt_Phone: UITextField!
     
     private var customerInformationController = CustomStyleCustomerInformation()
-    private var message = Messages()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +58,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========POP UP CONFIRM DIALOG=========
         
-        message.confirmDialog(sender: self)
+        DialogManager.confirmDialog(sender: self)
         
     }
     

@@ -36,8 +36,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private let dropDown_Types = DropDown()
     
     private let firstPhaseWithOneLocation = true
+    private var activityIndicator: UIActivityIndicatorView!
     
-    private let lineDrawer = LineDrawer()
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -81,7 +81,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         UIView.hr_setToastThemeColor(color: ToastColor)
 
-        
+        self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
+        self.activityIndicator.startAnimating()
     }
     
     deinit {
@@ -110,9 +111,20 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     func handleReceivedNotificationData(notification: Notification, userInfoKey: String) {
         if let userInfo = notification.userInfo {
-            let dtoArrays = userInfo[userInfoKey] as? DTOStaticArrayDataSource
-            
-            dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, cities: (dtoArrays?.dropDownCitiesDataSource)!, districts: (dtoArrays?.dropDownDistrictsDataSource)!, locations: (dtoArrays?.dropDownLocationsDataSource)!, vouchers: (dtoArrays?.dropDownVouchersDataSource)!, types: (dtoArrays?.dropDownTypesDataSource)!)
+            DispatchQueue.global(qos: .userInteractive).async {
+                let dtoArrays = userInfo[userInfoKey] as? DTOStaticArrayDataSource
+                
+                let locationsDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownLocationsDataSource, isReturnValue: true)
+                let vouchersDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownVouchersDataSource, isReturnValue: true)
+                let typesDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownTypesDataSource, isReturnValue: true)
+                
+                self.dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, cities: (dtoArrays?.dropDownCitiesDataSource)!, districts: (dtoArrays?.dropDownDistrictsDataSource)!, locations: locationsDisplayArray, vouchers: vouchersDisplayArray, types: typesDisplayArray)
+                DispatchQueue.main.async {
+                    self.activityIndicator.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
+                    self.activityIndicator.stopAnimating()
+                }
+            }
+
         }
     }
     
@@ -120,13 +132,13 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
         if dropDown_Vouchers.selectedItem == nil {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Vouchers")
+            ToastManager.alert(view: view_TopView, msg: "Xin vui lòng chọn Vouchers")
             slideBtn_Next.reset()
             return
         }
         
         if dropDown_Types.selectedItem == nil {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Loại Dịch Vụ")
+            ToastManager.alert(view: view_TopView, msg: "Xin vui lòng chọn Loại Dịch Vụ")
             slideBtn_Next.reset()
             return
         }
@@ -145,7 +157,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     @IBAction func btn_CountriesDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
             return
         }
         dropDown_Countries.show()
@@ -155,7 +167,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_CitiesDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
             return
         }
         dropDown_Cities.show()
@@ -165,7 +177,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_DistrictsDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
             return
         }
         dropDown_Districts.show()
@@ -175,7 +187,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_LocationsDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
             return
         }
         dropDown_Locations.show()

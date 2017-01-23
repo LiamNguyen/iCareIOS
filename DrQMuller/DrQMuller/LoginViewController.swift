@@ -25,7 +25,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private var screenHeight: CGFloat!
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
-    private var lineDrawer = LineDrawer()
     
     var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
@@ -246,7 +245,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
                     self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
                 } else {
                     print("Login Failed")
-                    ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
+                    ToastManager.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
                 }
             }
         }
@@ -268,12 +267,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private func frontValidationPassed() -> Bool {
         if let username = txt_Username.text, let password = txt_Password.text {
             if username.isEmpty {
-                ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập trống")
+                ToastManager.alert(view: loginView, msg: "Tên đăng nhập trống")
                 return false
             }
             
             if password.isEmpty {
-                ToastManager.sharedInstance.alert(view: loginView, msg: "Mật khẩu trống")
+                ToastManager.alert(view: loginView, msg: "Mật khẩu trống")
                 return false
             }
             return true

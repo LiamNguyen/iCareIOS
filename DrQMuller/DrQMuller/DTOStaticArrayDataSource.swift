@@ -10,6 +10,13 @@ import UIKit
 
 class DTOStaticArrayDataSource: NSObject, NSCoding {
     
+    class var sharedInstance: DTOStaticArrayDataSource {
+        struct Singleton {
+            static let instance = DTOStaticArrayDataSource()
+        }
+        return Singleton.instance
+    }
+    
     private var _dropDownCountriesDataSource: [String]!
     var dropDownCountriesDataSource: [String] {
         get {
@@ -52,11 +59,11 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
-    private var _dropDownLocationsDataSource: [String]!
-    var dropDownLocationsDataSource: [String] {
+    private var _dropDownLocationsDataSource: [String: String]!
+    var dropDownLocationsDataSource: [String: String] {
         get {
             if _dropDownLocationsDataSource == nil {
-                return [String]()
+                return [String: String]()
             }
             return _dropDownLocationsDataSource
         }
@@ -66,11 +73,11 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
-    private var _dropDownVouchersDataSource: [String]!
-    var dropDownVouchersDataSource: [String] {
+    private var _dropDownVouchersDataSource: [String: String]!
+    var dropDownVouchersDataSource: [String: String] {
         get {
             if _dropDownVouchersDataSource == nil {
-                return [String]()
+                return [String: String]()
             }
             return _dropDownVouchersDataSource
         }
@@ -80,11 +87,11 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         }
     }
     
-    private var _dropDownTypesDataSource: [String]!
-    var dropDownTypesDataSource: [String] {
+    private var _dropDownTypesDataSource: [String: String]!
+    var dropDownTypesDataSource: [String: String] {
         get {
             if _dropDownTypesDataSource == nil {
-                return [String]()
+                return [String: String]()
             }
             return _dropDownTypesDataSource
         }
@@ -186,9 +193,9 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         self._dropDownCountriesDataSource = decoder.decodeObject(forKey: "countries") as? [String] ?? [""]
         self._dropDownCitiesDataSource = decoder.decodeObject(forKey: "cities") as? [String] ?? [""]
         self._dropDownDistrictsDataSource = decoder.decodeObject(forKey: "districts") as? [String] ?? [""]
-        self._dropDownLocationsDataSource = decoder.decodeObject(forKey: "locations") as? [String] ?? [""]
-        self._dropDownVouchersDataSource = decoder.decodeObject(forKey: "vouchers") as? [String] ?? [""]
-        self._dropDownTypesDataSource = decoder.decodeObject(forKey: "types") as? [String] ?? [""]
+        self._dropDownLocationsDataSource = decoder.decodeObject(forKey: "locations") as? Dictionary<String, String> ?? Dictionary<String, String>()
+        self._dropDownVouchersDataSource = decoder.decodeObject(forKey: "vouchers") as? Dictionary<String, String> ?? Dictionary<String, String>()
+        self._dropDownTypesDataSource = decoder.decodeObject(forKey: "types") as? Dictionary<String, String> ?? Dictionary<String, String>()
         self._allTimeDisplayArray = decoder.decodeObject(forKey: "allTimeDisplay") as? [String] ?? [""]
         self._allTimeDataSource = decoder.decodeObject(forKey: "allTime") as? Dictionary<String, String> ?? Dictionary<String, String>()
         self._ecoTimeDisplayArray = decoder.decodeObject(forKey: "ecoTimeDisplay") as? [String] ?? [""]
@@ -206,7 +213,7 @@ class DTOStaticArrayDataSource: NSObject, NSCoding {
         coder.encode(_dropDownTypesDataSource, forKey: "types")
         coder.encode(_allTimeDisplayArray, forKey: "allTimeDisplay")
         coder.encode(_allTimeDataSource, forKey: "allTime")
-        coder.encode(ecoTimeDisplayArray, forKey: "ecoTimeDisplay")
+        coder.encode(_ecoTimeDisplayArray, forKey: "ecoTimeDisplay")
         coder.encode(_ecoTimeDataSource, forKey: "ecoTime")
         coder.encode(_daysOfWeekDisplayArray, forKey: "daysDisplay")
         //coder.encode(_daysOfWeekDataSource, forKey: "days")
