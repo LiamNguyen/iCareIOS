@@ -167,7 +167,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
 //PASS AND SAVE STATIC ARRAY DATASOURCE
         
-        if staticArrayDataSourceIsCompletelySet() {
+        if staticArrayDataSourceIsCompletelySet() && !staticArrayDataSourceHasExisted() {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
             returnArrayDataSource["returnArrayDataSource"] = DTOStaticArrayDataSource.sharedInstance
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
