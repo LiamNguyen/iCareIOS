@@ -719,7 +719,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         print(self.tupleBookingTime_Array)
         self.tupleBookingTime_Array.removeAll()
         dtoBookingTime.removeAll()
-        DTOBookingInformation.sharedInstance.clearAllDTOBookingInfo()
+        DTOBookingInformation.sharedInstance.bookingTime.removeAll()
         
     }
      
