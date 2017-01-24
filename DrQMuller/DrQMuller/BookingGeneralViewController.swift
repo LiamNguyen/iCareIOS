@@ -117,14 +117,13 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
                 let locationsDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownLocationsDataSource, isReturnValue: true)
                 let vouchersDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownVouchersDataSource, isReturnValue: true)
                 let typesDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownTypesDataSource, isReturnValue: true)
-                
+
                 self.dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, cities: (dtoArrays?.dropDownCitiesDataSource)!, districts: (dtoArrays?.dropDownDistrictsDataSource)!, locations: locationsDisplayArray, vouchers: vouchersDisplayArray, types: typesDisplayArray)
                 DispatchQueue.main.async {
                     self.activityIndicator.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
                     self.activityIndicator.stopAnimating()
                 }
             }
-
         }
     }
     

@@ -58,7 +58,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
@@ -88,6 +88,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "appTerminate"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "appTerminate"), object: nil, queue: nil, using: onBookingExpire)
+        
+//=========OBSERING NOTIFICATION FROM PMHandleBooking WHEN NEW APPOINTMENT IS INSERTED OR NOT=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil, queue: nil, using: onReceiveInsertAppointmentResponse)
         
 //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
@@ -265,6 +270,25 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         
                         self.activityIndicator.stopAnimating()
                         self.tableView_BookingTime.isUserInteractionEnabled = true
+                    }
+                }
+            }
+        }
+    }
+    
+    func onReceiveInsertAppointmentResponse(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            
+            DispatchQueue.global(qos: .userInteractive).async {
+                if let isOk = userInfo["status"] as? Bool {
+                    if isOk {
+                        DispatchQueue.main.async {
+                            ToastManager.alert(view: self.view_ConfirmView, msg: "Quý khách đã đặt lịch hẹn thành công")
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            ToastManager.alert(view: self.view_ConfirmView, msg: "Không thành công. Xin vui lòng thử lại")
+                        }
                     }
                 }
             }
@@ -721,13 +745,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         if self.view_ConfirmView.center.x == self.view_ConfirmView.center.x - 400 {
-            self.slideBtn.reset()
-            self.view_TopView.isUserInteractionEnabled = true
             UIView.animate(withDuration: 0.5) {
                 self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x + 400, y: self.view_ConfirmView.center.y)
                 self.view.backgroundColor = ThemeBackGroundColor
             }
         }
+        self.slideBtn.reset()
+        self.view_TopView.isUserInteractionEnabled = true
+        self.view.backgroundColor = ThemeBackGroundColor
         self.isRequiredClearAllCartItems = true
         modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
         self.timer_bookingExpire?.invalidate()
