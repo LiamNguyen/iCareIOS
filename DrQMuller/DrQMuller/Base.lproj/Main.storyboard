@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -22,10 +22,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.94999998807907104" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IOSwallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="4LI-XB-3Fz">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLJ-wL-IUr">
-                                <rect key="frame" x="16" y="89" width="289" height="422"/>
+                                <rect key="frame" x="16" y="89" width="289" height="471"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E6Y-t5-FoC">
                                         <rect key="frame" x="25" y="8" width="240" height="61"/>
@@ -248,10 +248,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.94999999999999996" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IOSwallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="Oih-lh-26s">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             </imageView>
                             <view alpha="0.80000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fZf-Cv-cRx">
-                                <rect key="frame" x="15" y="89" width="289" height="364"/>
+                                <rect key="frame" x="15" y="89" width="289" height="413"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="baS-db-70e">
                                         <rect key="frame" x="14" y="109" width="263" height="269"/>
@@ -583,11 +583,13 @@
                     </view>
                     <connections>
                         <outlet property="btn_FirstTab" destination="flP-8e-2lF" id="GUg-D1-FDJ"/>
+                        <outlet property="btn_Next" destination="VGp-js-YYB" id="XXL-yt-2FZ"/>
                         <outlet property="btn_SecondTab" destination="80w-gX-shu" id="hSN-SH-02v"/>
                         <outlet property="btn_ThirdTab" destination="hGe-UD-s9k" id="x3i-Xn-oai"/>
                         <outlet property="constraint_FirstTabWidth" destination="6ji-U3-IH7" id="hXQ-8y-LDo"/>
                         <outlet property="constraint_SecondTabWidth" destination="5Jy-Rq-4nT" id="kXP-zf-jhS"/>
                         <outlet property="constraint_ThirdTabWidth" destination="Aof-ra-Aug" id="OGD-R2-e1a"/>
+                        <outlet property="lbl_Title" destination="9SR-vK-qbP" id="Ky6-Ty-c5G"/>
                         <outlet property="txt_Address" destination="Fd9-gj-ufi" id="Ur7-TV-AZu"/>
                         <outlet property="txt_Name" destination="RfV-kd-qLS" id="KA3-Za-IA9"/>
                         <outlet property="view_FirstTabContainer" destination="98p-3b-6eA" id="uVN-VN-rhY"/>
@@ -711,14 +713,14 @@
                                 <locale key="locale" localeIdentifier="vi_VN"/>
                             </datePicker>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="genderIcon" translatesAutoresizingMaskIntoConstraints="NO" id="TI6-LQ-dOl">
-                                <rect key="frame" x="133.5" y="147" width="53" height="53"/>
+                                <rect key="frame" x="134" y="147" width="53" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="E7z-zV-FKP"/>
                                     <constraint firstAttribute="width" constant="53" id="a06-LS-BFX"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dobIcon" translatesAutoresizingMaskIntoConstraints="NO" id="VIG-fB-paA">
-                                <rect key="frame" x="133.5" y="296" width="53" height="53"/>
+                                <rect key="frame" x="134" y="296" width="53" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="53" id="j3T-tp-1fs"/>
                                     <constraint firstAttribute="height" constant="53" id="wRi-f3-V3Q"/>
@@ -775,6 +777,7 @@
                         <outlet property="constraint_FirstTabWidth" destination="AZY-NT-Z2O" id="62W-bH-VI2"/>
                         <outlet property="constraint_SecondTabWidth" destination="WIJ-Fd-Jve" id="FZS-UZ-ERc"/>
                         <outlet property="constraint_ThirdTabWidth" destination="ieO-GK-2Lq" id="ZV6-HB-MMT"/>
+                        <outlet property="lbl_Title" destination="Pnj-CZ-xP4" id="lIp-40-Ebf"/>
                         <outlet property="picker_Date" destination="zge-R6-in4" id="fgY-ZU-U2B"/>
                         <outlet property="picker_Gender" destination="x8D-ed-gXG" id="i9U-bt-uAC"/>
                         <outlet property="slideBtn_Next" destination="yS5-v1-cXd" id="DMw-GE-VBq"/>
@@ -962,11 +965,13 @@
                     </view>
                     <connections>
                         <outlet property="btn_FirstTab" destination="CSQ-CE-yPX" id="BjE-c6-77R"/>
+                        <outlet property="btn_Next" destination="Yyh-9V-xuh" id="2Zs-2g-OyH"/>
                         <outlet property="btn_SecondTab" destination="qBB-Jc-amT" id="daa-cN-Z88"/>
                         <outlet property="btn_ThirdTab" destination="qO8-nO-bYO" id="vLL-Vi-rdb"/>
                         <outlet property="constraint_FirstTabWidth" destination="UTZ-bi-SpJ" id="kZq-No-0Tw"/>
                         <outlet property="constraint_SecondTabWidth" destination="Vq2-Y6-JmT" id="19B-Ik-Pvq"/>
                         <outlet property="constraint_ThirdTabWidth" destination="wmU-gx-z2H" id="LXA-r2-KYo"/>
+                        <outlet property="lbl_Title" destination="rq8-p1-UGM" id="5lK-S6-F4S"/>
                         <outlet property="txt_Email" destination="1A7-mF-PmF" id="YoQ-iW-WHS"/>
                         <outlet property="txt_Phone" destination="jhL-Rk-YbK" id="Qc3-yG-amL"/>
                         <outlet property="view_FirstTabContainer" destination="INr-Ik-r4u" id="plg-uK-5WW"/>
@@ -1224,6 +1229,7 @@
                         <outlet property="btn_LocationsDropDown" destination="6CG-sc-rGc" id="GqM-kC-NkQ"/>
                         <outlet property="btn_TypesDropDown" destination="8Jf-Yq-mUQ" id="BmK-St-yeK"/>
                         <outlet property="btn_VouchersDropDown" destination="uGx-F8-eki" id="Gl7-TG-MPI"/>
+                        <outlet property="lbl_Title" destination="EfR-pY-uXM" id="ddH-em-l7e"/>
                         <outlet property="slideBtn_Next" destination="SsW-LW-5Uc" id="sGr-8H-Jcq"/>
                         <outlet property="view_TopView" destination="8d5-Pl-buM" id="afi-gF-S73"/>
                         <segue destination="dGw-41-sbb" kind="presentation" identifier="segue_BookingGeneralToStartEnDate" id="Qzw-y1-yFF"/>
@@ -1261,7 +1267,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1iq-R8-nnq">
-                                        <rect key="frame" x="42" y="8.5" width="137" height="33"/>
+                                        <rect key="frame" x="42" y="9" width="137" height="33"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Thông tin lịch hẹn">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1294,7 +1300,7 @@
                                 </connections>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày bắt đầu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="So7-aJ-iri">
-                                <rect key="frame" x="99.5" y="89" width="121" height="24"/>
+                                <rect key="frame" x="100" y="89" width="121" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.61297673409999998" green="0.060420009689999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1310,7 +1316,7 @@
                                 <locale key="locale" localeIdentifier="vi_VN"/>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày kết thúc" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cxm-jM-xzZ">
-                                <rect key="frame" x="97.5" y="256" width="125" height="24"/>
+                                <rect key="frame" x="98" y="256" width="125" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.61297673409999998" green="0.060420009689999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1458,7 +1464,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1517,7 +1523,7 @@
                                         <rect key="frame" x="0.0" y="28" width="211" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="211" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -1672,7 +1678,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="240" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YPq-Ty-icK" id="i1a-c2-P1O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hON-Vy-TFd">
@@ -1790,12 +1796,16 @@
                         <outlet property="constraint_CartOrderTableView_Height" destination="Akn-zu-oqd" id="jiK-sg-bnk"/>
                         <outlet property="lbl_EndDate" destination="Acr-Cy-eeg" id="PLh-lG-5KW"/>
                         <outlet property="lbl_EndDateHeader" destination="vGW-Dm-qtV" id="Ygc-Om-3FY"/>
-                        <outlet property="lbl_Location" destination="xrE-Cb-A0q" id="eRg-z0-oZv"/>
+                        <outlet property="lbl_Location" destination="xrE-Cb-A0q" id="xDa-6Q-eMW"/>
+                        <outlet property="lbl_LocationTitle" destination="041-LN-ggM" id="ZTj-Xe-8AB"/>
                         <outlet property="lbl_Notification" destination="xGj-AD-CDi" id="KK2-0E-iPb"/>
                         <outlet property="lbl_StartDate" destination="5Fu-Pm-Fbs" id="xLc-67-did"/>
                         <outlet property="lbl_StartDateHeader" destination="peJ-NI-9gf" id="ov4-DE-Bf4"/>
-                        <outlet property="lbl_Type" destination="nbu-1w-RGR" id="lEa-NG-mT2"/>
-                        <outlet property="lbl_Voucher" destination="l4g-fV-zqB" id="SjT-dp-LNz"/>
+                        <outlet property="lbl_Title" destination="FNN-SK-MoO" id="fsS-1z-ALk"/>
+                        <outlet property="lbl_Type" destination="nbu-1w-RGR" id="jiB-RS-aHI"/>
+                        <outlet property="lbl_TypeTitle" destination="4ae-zo-T05" id="s3h-0c-U1h"/>
+                        <outlet property="lbl_Voucher" destination="l4g-fV-zqB" id="O5Y-dZ-czQ"/>
+                        <outlet property="lbl_VoucherTitle" destination="rb1-ni-4eZ" id="7yp-0O-rcC"/>
                         <outlet property="slideBtn" destination="yvD-pX-fey" id="Cnv-Ik-RZa"/>
                         <outlet property="tableView_BookingTime" destination="0cb-Fk-2MU" id="Olf-7L-Erm"/>
                         <outlet property="tableView_BookingTimeConfirm" destination="y2r-hO-FvT" id="Tex-Mj-hwc"/>
@@ -1873,10 +1883,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="B1e-Gq-0DU"/>
-        <segue reference="NtQ-bk-9Of"/>
-        <segue reference="25N-BX-oeo"/>
-        <segue reference="d88-TN-lRm"/>
-        <segue reference="Hn6-nH-Q49"/>
+        <segue reference="5rf-7u-S8A"/>
+        <segue reference="hCt-e9-enO"/>
+        <segue reference="sE2-L0-Rza"/>
+        <segue reference="G0p-To-aUJ"/>
+        <segue reference="mIe-MO-60a"/>
     </inferredMetricsTieBreakers>
 </document>

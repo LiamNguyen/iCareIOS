@@ -21,9 +21,32 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
     @IBOutlet private weak var txt_Name: UITextField!
     @IBOutlet private weak var txt_Address: UITextField!
+    @IBOutlet private weak var lbl_Title: UILabel!
+    @IBOutlet weak var btn_Next: UIButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
+    private var language: String!
 
+    private func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized(lang: self.language)
+        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        
+        txt_Name.placeholder = "FULLNAME_PLACEHOLDER".localized(lang: self.language)
+        txt_Address.placeholder = "ADDRESS_PLACEHOLDER".localized(lang: self.language)
+        
+        btn_Next.setTitle("BTN_NEXT_TITLE".localized(lang: self.language), for: .normal)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        handleLanguageChanged()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -51,13 +74,14 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
 
         txt_Name.becomeFirstResponder()
+        
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
         
 //=========POP UP CONFIRM DIALOG=========
 
-        DialogManager.confirmDialog(sender: self)
+        DialogManager.confirmLogout(sender: self)
     }
 
     

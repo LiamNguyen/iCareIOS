@@ -26,6 +26,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private weak var btn_ClearAllCartItems: UIButton!
     @IBOutlet private weak var constraint_CartOrderTableView_Height: NSLayoutConstraint!
     
+    @IBOutlet weak var lbl_Title: UILabel!
+    @IBOutlet weak var lbl_VoucherTitle: UILabel!
+    @IBOutlet weak var lbl_TypeTitle: UILabel!
+    @IBOutlet weak var lbl_LocationTitle: UILabel!
+    
+    
     private var activityIndicator: UIActivityIndicatorView!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!

@@ -1,0 +1,48 @@
+/* 
+  Localizable.strings
+  DrQMuller
+
+  Created by Cao Do Nguyen on /25/01/2017.
+  Copyright © 2017 LetsDev. All rights reserved.
+*/
+
+"CONFIRM_LOGOUT_TITLE" = "Quý khách sẽ đăng thoát?";
+"CONFIRM_LOGOUT_MESSAGE" = "Những thông tin chưa được xác nhận sẽ không được lưu trữ.";
+"LOGOUT_EXECUTE_TITLE" = "Đăng thoát";
+"DIALOG_CANCEL_TITLE" = "Huỷ";
+"BTN_NEXT_TITLE" = "Tiếp tục";
+"BTN_FINISH_TITLE" = "Hoàn tất";
+"SLIDE_BTN_UNLOCKED_TITLE" = "Thành công";
+"USERNAME_PLACEHOLDER" = "Tên đăng nhập";
+"PASSWORD_PLACEHOLDER" = "Mật khẩu";
+"CONFIRM_PASSWORD_PLACEHOLDER" = "Xác nhận mật khẩu";
+"FULLNAME_PLACEHOLDER" = "Họ và tên của bạn";
+"ADDRESS_PLACEHOLDER" = "Địa chỉ của bạn";
+"EMAIL_PLACEHOLDER" = "Email của bạn";
+"PHONE_PLACEHOLDER" = "Số điện thoại của bạn";
+"RESET_PASnWORD_LINK" = "Quên mật khẩu hoặc tên đăng nhập?";
+"LOGIN_BTN_TITLE" = "Đăng nhập";
+"REGISTER_BTN_TITLE" = "Đăng ký";
+"FIRST_TAB_BTN_TITLE" = "Cơ bản";
+"SECOND_TAB_BTN_TITLE" = "Cần thiết";
+"THIRD_TAB_BTN_TITLE" = "Quan Trọng";
+"GENDER_MALE" = "Nam";
+"GENDER_FEMALE" = "Nữ";
+"CUSTOMER_INFO_PAGE_TITLE" = "Thông tin khách hàng";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+"" = "";
+

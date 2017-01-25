@@ -25,6 +25,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private var screenHeight: CGFloat!
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
+    private var language: String!
     
     var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
@@ -40,13 +41,38 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             }
         }
     }
+
+    private func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        //=========TXTFIELD PLACEHOLDER=========
+        
+        txt_Username.placeholder = "USERNAME_PLACEHOLDER".localized(lang: self.language)
+        txt_Password.placeholder = "PASSWORD_PLACEHOLDER".localized(lang: self.language)
+        
+        //=========STYLE FOR RESET PASSWORD LINK=========
+        
+        let attrString = NSAttributedString(string: "RESET_PASSWORD_LINK".localized(lang: self.language), attributes: [NSForegroundColorAttributeName:UIColor.white, NSUnderlineStyleAttributeName: 1])
+        
+        btn_ResetPassword.setAttributedTitle(attrString, for: .normal)
+        
+        //=========BUTTON TITLE=========
+        
+        btn_Login.setTitle("LOGIN_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_Register.setTitle("REGISTER_BTN_TITLE".localized(lang: self.language), for: .normal)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        handleLanguageChanged()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.testReturnArr.delegate = self
 
-        
         activityIndicator.stopAnimating()
         
 //=========TXTFIELD DELEGATE=========
@@ -54,11 +80,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         self.txt_Username.delegate = self
         self.txt_Password.delegate = self
         
-//=========STYLE FOR RESET PASSWORD LINK=========
-        
-        let attrString = NSAttributedString(string: "Quên mật khẩu hoặc tên đăng nhập?", attributes: [NSForegroundColorAttributeName:UIColor.white, NSUnderlineStyleAttributeName: 1])
-        
-        btn_ResetPassword.setAttributedTitle(attrString, for: .normal)
+
         
 //=========STYLE BUTTONS=========
         

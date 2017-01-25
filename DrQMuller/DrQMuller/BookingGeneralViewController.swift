@@ -25,6 +25,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var btn_TypesDropDown: NiceButton!
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
     @IBOutlet weak var view_TopView: UIView!
+    @IBOutlet weak var lbl_Title: UILabel!
     
     //=========MARK: PROPERTIES=========
     

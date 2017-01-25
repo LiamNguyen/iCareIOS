@@ -24,6 +24,8 @@
 		ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */; };
 		ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */; };
 		ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */; };
+		ED522D5E1E38F65800E53403 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED522D601E38F65800E53403 /* Localizable.strings */; };
+		ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED522D621E38F84C00E53403 /* StringExtension.swift */; };
 		ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */; };
 		ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */; };
 		ED6986961E12E14000932E93 /* ModelHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6986951E12E14000932E93 /* ModelHandleLogin.swift */; };
@@ -99,6 +101,11 @@
 		ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOStaticArrayDataSource.swift; sourceTree = "<group>"; };
 		ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingDetailViewController.swift; sourceTree = "<group>"; };
 		ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingGeneralViewController.swift; sourceTree = "<group>"; };
+		ED522D5A1E38F5DA00E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
+		ED522D5B1E38F5DA00E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		ED522D5F1E38F65800E53403 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ED522D611E38F66200E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ED522D621E38F84C00E53403 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartOrderConfirmTableViewCell.swift; sourceTree = "<group>"; };
 		ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
 		ED6986951E12E14000932E93 /* ModelHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleLogin.swift; sourceTree = "<group>"; };
@@ -181,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				ED03CEB11E36983D00C9EBFB /* FunctionalityHelper.swift */,
+				ED522D621E38F84C00E53403 /* StringExtension.swift */,
 			);
 			name = Resusable;
 			sourceTree = "<group>";
@@ -211,6 +219,7 @@
 		ED3BEBD41E0845B500CAA173 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ED522D641E390F3A00E53403 /* Locale */,
 				ED03CEB01E36981A00C9EBFB /* Resusable */,
 				ED939FE31E0D248F00A1164F /* DatePickerRange.swift */,
 				ED6986951E12E14000932E93 /* ModelHandleLogin.swift */,
@@ -244,6 +253,14 @@
 				ED3011E31E19877C0037F020 /* DateExtensions.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		ED522D641E390F3A00E53403 /* Locale */ = {
+			isa = PBXGroup;
+			children = (
+				ED522D601E38F65800E53403 /* Localizable.strings */,
+			);
+			name = Locale;
 			sourceTree = "<group>";
 		};
 		ED92AB591E1E076300989D03 /* TableCell */ = {
@@ -440,6 +457,7 @@
 			knownRegions = (
 				en,
 				Base,
+				vi,
 			);
 			mainGroup = EDB338891DE9D86300DE940B;
 			productRefGroup = EDB338931DE9D86300DE940B /* Products */;
@@ -459,6 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDB338A01DE9D86300DE940B /* LaunchScreen.storyboard in Resources */,
+				ED522D5E1E38F65800E53403 /* Localizable.strings in Resources */,
 				EDB3389D1DE9D86300DE940B /* Assets.xcassets in Resources */,
 				EDB3389B1DE9D86300DE940B /* Main.storyboard in Resources */,
 			);
@@ -536,6 +555,7 @@
 				ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */,
 				ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */,
 				ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */,
+				ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */,
 				ED41DF3F1E164CC000803A14 /* APIHandleBooking.swift in Sources */,
 				EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */,
 				ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */,
@@ -604,10 +624,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		ED522D601E38F65800E53403 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED522D5F1E38F65800E53403 /* en */,
+				ED522D611E38F66200E53403 /* vi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		EDB338991DE9D86300DE940B /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				EDB3389A1DE9D86300DE940B /* Base */,
+				ED522D5A1E38F5DA00E53403 /* vi */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -616,6 +646,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				EDB3389F1DE9D86300DE940B /* Base */,
+				ED522D5B1E38F5DA00E53403 /* vi */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -627,6 +658,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -681,6 +713,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

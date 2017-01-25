@@ -1,0 +1,219 @@
+
+/* Class = "UILabel"; text = "Trung tâm:"; ObjectID = "041-LN-ggM"; */
+"041-LN-ggM.text" = "Trung tâm:";
+
+/* Class = "UITextField"; placeholder = "Email của bạn"; ObjectID = "1A7-mF-PmF"; */
+"1A7-mF-PmF.placeholder" = "Email của bạn";
+
+/* Class = "UIButton"; normalTitle = "Thông tin lịch hẹn"; ObjectID = "1iq-R8-nnq"; */
+"1iq-R8-nnq.normalTitle" = "Thông tin lịch hẹn";
+
+/* Class = "UITextField"; placeholder = "Tên đăng nhập"; ObjectID = "2FU-pK-ntI"; */
+"2FU-pK-ntI.placeholder" = "Tên đăng nhập";
+
+/* Class = "UILabel"; text = "Welcome"; ObjectID = "49n-me-sda"; */
+"49n-me-sda.text" = "Welcome";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "4RK-VB-LG7"; */
+"4RK-VB-LG7.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Loại: "; ObjectID = "4ae-zo-T05"; */
+"4ae-zo-T05.text" = "Loại: ";
+
+/* Class = "UILabel"; text = "30/12/2016"; ObjectID = "5Fu-Pm-Fbs"; */
+"5Fu-Pm-Fbs.text" = "30/12/2016";
+
+/* Class = "UILabel"; text = "Q-Muller"; ObjectID = "69W-dO-mjP"; */
+"69W-dO-mjP.text" = "Q-Muller";
+
+/* Class = "UIButton"; normalTitle = "Trung tâm"; ObjectID = "6CG-sc-rGc"; */
+"6CG-sc-rGc.normalTitle" = "Trung tâm";
+
+/* Class = "UILabel"; text = "Chủ nhật"; ObjectID = "6Y6-vQ-qYi"; */
+"6Y6-vQ-qYi.text" = "Chủ nhật";
+
+/* Class = "UIButton"; normalTitle = "Cần thiết"; ObjectID = "80w-gX-shu"; */
+"80w-gX-shu.normalTitle" = "Cần thiết";
+
+/* Class = "UIButton"; normalTitle = "Chọn loại dịch vụ"; ObjectID = "8Jf-Yq-mUQ"; */
+"8Jf-Yq-mUQ.normalTitle" = "Chọn loại dịch vụ";
+
+/* Class = "UILabel"; text = "Thông tin khách hàng"; ObjectID = "9SR-vK-qbP"; */
+"9SR-vK-qbP.text" = "Thông tin khách hàng";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "AH9-fR-c4U"; */
+"AH9-fR-c4U.text" = "Label";
+
+/* Class = "UIButton"; normalTitle = "Cơ bản"; ObjectID = "AV8-bO-gRB"; */
+"AV8-bO-gRB.normalTitle" = "Cơ bản";
+
+/* Class = "UILabel"; text = "30/01/2016"; ObjectID = "Acr-Cy-eeg"; */
+"Acr-Cy-eeg.text" = "30/01/2016";
+
+/* Class = "UIButton"; normalTitle = "Thành phố"; ObjectID = "AgT-2G-ZMB"; */
+"AgT-2G-ZMB.normalTitle" = "Thành phố";
+
+/* Class = "UITextField"; placeholder = "Xác nhận mật khẩu"; ObjectID = "BkN-R5-2uF"; */
+"BkN-R5-2uF.placeholder" = "Xác nhận mật khẩu";
+
+/* Class = "UIButton"; normalTitle = "Cơ bản"; ObjectID = "CSQ-CE-yPX"; */
+"CSQ-CE-yPX.normalTitle" = "Cơ bản";
+
+/* Class = "UILabel"; text = "Thứ ba"; ObjectID = "CcC-yI-OvW"; */
+"CcC-yI-OvW.text" = "Thứ ba";
+
+/* Class = "UILabel"; text = "Ngày kết thúc"; ObjectID = "Cxm-jM-xzZ"; */
+"Cxm-jM-xzZ.text" = "Ngày kết thúc";
+
+/* Class = "UIButton"; normalTitle = "Quên mật khẩu hoặc tên đăng nhập?"; ObjectID = "EXZ-pt-WS2"; */
+"EXZ-pt-WS2.normalTitle" = "Quên mật khẩu hoặc tên đăng nhập?";
+
+/* Class = "UILabel"; text = "Thông tin lịch hẹn"; ObjectID = "EfR-pY-uXM"; */
+"EfR-pY-uXM.text" = "Thông tin lịch hẹn";
+
+/* Class = "UILabel"; text = "Thông tin lịch hẹn"; ObjectID = "FNN-SK-MoO"; */
+"FNN-SK-MoO.text" = "Thông tin lịch hẹn";
+
+/* Class = "UITextField"; placeholder = "Địa chỉ của bạn"; ObjectID = "Fd9-gj-ufi"; */
+"Fd9-gj-ufi.placeholder" = "Địa chỉ của bạn";
+
+/* Class = "UIButton"; normalTitle = "Đăng ký"; ObjectID = "FuG-ai-bV8"; */
+"FuG-ai-bV8.normalTitle" = "Đăng ký";
+
+/* Class = "UILabel"; text = "Dr."; ObjectID = "HEa-Y7-Kqn"; */
+"HEa-Y7-Kqn.text" = "Dr.";
+
+/* Class = "UIButton"; normalTitle = "Quận huyện"; ObjectID = "Ioj-Mo-ODf"; */
+"Ioj-Mo-ODf.normalTitle" = "Quận huyện";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "IyF-Wl-b2q"; */
+"IyF-Wl-b2q.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "MYN-dK-VOw"; */
+"MYN-dK-VOw.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Thông tin khách hàng"; ObjectID = "Pnj-CZ-xP4"; */
+"Pnj-CZ-xP4.text" = "Thông tin khách hàng";
+
+/* Class = "UITextField"; placeholder = "Họ và tên của bạn"; ObjectID = "RfV-kd-qLS"; */
+"RfV-kd-qLS.placeholder" = "Họ và tên của bạn";
+
+/* Class = "UILabel"; text = "Ngày bắt đầu"; ObjectID = "So7-aJ-iri"; */
+"So7-aJ-iri.text" = "Ngày bắt đầu";
+
+/* Class = "UIButton"; normalTitle = "Xác nhận"; ObjectID = "U9u-nt-tJq"; */
+"U9u-nt-tJq.normalTitle" = "Xác nhận";
+
+/* Class = "UIButton"; normalTitle = "Tiếp tục"; ObjectID = "VGp-js-YYB"; */
+"VGp-js-YYB.normalTitle" = "Tiếp tục";
+
+/* Class = "UITextField"; placeholder = "Tên đăng nhập"; ObjectID = "VrT-zv-g0p"; */
+"VrT-zv-g0p.placeholder" = "Tên đăng nhập";
+
+/* Class = "UIButton"; normalTitle = "Đăng ký"; ObjectID = "YDo-Ru-RcU"; */
+"YDo-Ru-RcU.normalTitle" = "Đăng ký";
+
+/* Class = "UIButton"; normalTitle = "Tiếp tục"; ObjectID = "Yyh-9V-xuh"; */
+"Yyh-9V-xuh.normalTitle" = "Tiếp tục";
+
+/* Class = "UILabel"; text = "22:00"; ObjectID = "ZG8-qO-psB"; */
+"ZG8-qO-psB.text" = "22:00";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "ZXL-y9-Jsa"; */
+"ZXL-y9-Jsa.normalTitle" = "Button";
+
+/* Class = "UITextField"; placeholder = "Mật khẩu"; ObjectID = "bg7-se-Sqz"; */
+"bg7-se-Sqz.placeholder" = "Mật khẩu";
+
+/* Class = "UITabBarItem"; title = "Mới"; ObjectID = "dL9-cL-qIi"; */
+"dL9-cL-qIi.title" = "Mới";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "eaA-Jx-FL9"; */
+"eaA-Jx-FL9.text" = "-";
+
+/* Class = "UIButton"; normalTitle = "Quan trọng"; ObjectID = "elb-z5-C9n"; */
+"elb-z5-C9n.normalTitle" = "Quan trọng";
+
+/* Class = "UIButton"; normalTitle = "Cơ bản"; ObjectID = "flP-8e-2lF"; */
+"flP-8e-2lF.normalTitle" = "Cơ bản";
+
+/* Class = "UITabBarItem"; title = "Người dùng"; ObjectID = "gk7-WV-IKb"; */
+"gk7-WV-IKb.title" = "Người dùng";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "hAJ-Gc-70X"; */
+"hAJ-Gc-70X.normalTitle" = "Button";
+
+/* Class = "UIButton"; normalTitle = "Quan trọng"; ObjectID = "hGe-UD-s9k"; */
+"hGe-UD-s9k.normalTitle" = "Quan trọng";
+
+/* Class = "UILabel"; text = "-"; ObjectID = "hON-Vy-TFd"; */
+"hON-Vy-TFd.text" = "-";
+
+/* Class = "UITextField"; placeholder = "Mật khẩu"; ObjectID = "hUP-wI-J2T"; */
+"hUP-wI-J2T.placeholder" = "Mật khẩu";
+
+/* Class = "UIButton"; normalTitle = "Chọn thứ trong tuần"; ObjectID = "iwr-W3-F45"; */
+"iwr-W3-F45.normalTitle" = "Chọn thứ trong tuần";
+
+/* Class = "UITextField"; placeholder = "Số điện thoại của bạn"; ObjectID = "jhL-Rk-YbK"; */
+"jhL-Rk-YbK.placeholder" = "Số điện thoại của bạn";
+
+/* Class = "UIButton"; normalTitle = "Cần thiết"; ObjectID = "kzT-vS-2iB"; */
+"kzT-vS-2iB.normalTitle" = "Cần thiết";
+
+/* Class = "UILabel"; text = "ECO Booking"; ObjectID = "l4g-fV-zqB"; */
+"l4g-fV-zqB.text" = "ECO Booking";
+
+/* Class = "UIButton"; normalTitle = "Button"; ObjectID = "mQN-r5-g0H"; */
+"mQN-r5-g0H.normalTitle" = "Button";
+
+/* Class = "UILabel"; text = "Cố định"; ObjectID = "nbu-1w-RGR"; */
+"nbu-1w-RGR.text" = "Cố định";
+
+/* Class = "UIButton"; normalTitle = "Đăng nhập"; ObjectID = "or7-Q3-ggf"; */
+"or7-Q3-ggf.normalTitle" = "Đăng nhập";
+
+/* Class = "UILabel"; text = "Ngày bắt đầu:"; ObjectID = "peJ-NI-9gf"; */
+"peJ-NI-9gf.text" = "Ngày bắt đầu:";
+
+/* Class = "UIButton"; normalTitle = "Cần thiết"; ObjectID = "qBB-Jc-amT"; */
+"qBB-Jc-amT.normalTitle" = "Cần thiết";
+
+/* Class = "UIButton"; normalTitle = "Quan trọng"; ObjectID = "qO8-nO-bYO"; */
+"qO8-nO-bYO.normalTitle" = "Quan trọng";
+
+/* Class = "UIButton"; normalTitle = "Xoá hết "; ObjectID = "r6H-Ss-Xwl"; */
+"r6H-Ss-Xwl.normalTitle" = "Xoá hết ";
+
+/* Class = "UILabel"; text = "Liệu trình: "; ObjectID = "rb1-ni-4eZ"; */
+"rb1-ni-4eZ.text" = "Liệu trình: ";
+
+/* Class = "UILabel"; text = "Thông tin khách hàng"; ObjectID = "rq8-p1-UGM"; */
+"rq8-p1-UGM.text" = "Thông tin khách hàng";
+
+/* Class = "UILabel"; text = "21:00"; ObjectID = "ry7-ot-vcY"; */
+"ry7-ot-vcY.text" = "21:00";
+
+/* Class = "UINavigationItem"; title = "Thông tin lịch hẹn"; ObjectID = "tpL-h3-Yoz"; */
+"tpL-h3-Yoz.title" = "Thông tin lịch hẹn";
+
+/* Class = "UIButton"; normalTitle = "Chọn vouchers"; ObjectID = "uGx-F8-eki"; */
+"uGx-F8-eki.normalTitle" = "Chọn vouchers";
+
+/* Class = "UILabel"; text = "Ngày kết thúc:"; ObjectID = "vGW-Dm-qtV"; */
+"vGW-Dm-qtV.text" = "Ngày kết thúc:";
+
+/* Class = "UITabBarItem"; title = "Đặt lịch"; ObjectID = "vhL-qn-dVT"; */
+"vhL-qn-dVT.title" = "Đặt lịch";
+
+/* Class = "UILabel"; text = "0"; ObjectID = "xGj-AD-CDi"; */
+"xGj-AD-CDi.text" = "0";
+
+/* Class = "UILabel"; text = "Trần Quang Diệu"; ObjectID = "xrE-Cb-A0q"; */
+"xrE-Cb-A0q.text" = "Trần Quang Diệu";
+
+/* Class = "UIButton"; normalTitle = "Quốc gia"; ObjectID = "yp1-wo-AcN"; */
+"yp1-wo-AcN.normalTitle" = "Quốc gia";
+
+/* Class = "UIButton"; normalTitle = "Thông tin lịch hẹn"; ObjectID = "zKY-zv-c0S"; */
+"zKY-zv-c0S.normalTitle" = "Thông tin lịch hẹn";
