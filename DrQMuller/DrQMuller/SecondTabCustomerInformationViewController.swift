@@ -27,7 +27,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     private var customerInformationController = CustomStyleCustomerInformation()
     private var picker_GenderDataSource = [String]()
     private let datePickerRange = DatePickerRange()
-    private let language: String!
+    private var language: String!
     
     private func handleLanguageChanged() {
         self.language = UserDefaults.standard.string(forKey: "lang")

@@ -64,7 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        UserDefaults.standard.set("vi", forKey: "lang")
         handleLanguageChanged()
     }
     

@@ -1356,6 +1356,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btn_Back" destination="1iq-R8-nnq" id="1ba-ET-5J0"/>
                         <outlet property="constraint_DatePickerStartHeight" destination="s7b-Ba-83k" id="LKQ-YP-Zag"/>
                         <outlet property="lbl_EndDate" destination="Cxm-jM-xzZ" id="xKf-EI-UVM"/>
                         <outlet property="lbl_StartDate" destination="So7-aJ-iri" id="hbp-kI-6bM"/>
@@ -1464,7 +1465,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1523,7 +1524,7 @@
                                         <rect key="frame" x="0.0" y="28" width="211" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="211" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="211" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -1678,7 +1679,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="240" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YPq-Ty-icK" id="i1a-c2-P1O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hON-Vy-TFd">
@@ -1790,6 +1791,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btn_Back" destination="zKY-zv-c0S" id="IXv-W7-cZu"/>
                         <outlet property="btn_ClearAllCartItems" destination="r6H-Ss-Xwl" id="6VJ-Ny-IY6"/>
                         <outlet property="btn_DropDownDaysOfWeek" destination="iwr-W3-F45" id="OEX-Dc-cXV"/>
                         <outlet property="btn_ShowCart" destination="xXy-c9-a6G" id="v7F-Ui-oTP"/>
@@ -1883,10 +1885,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rf-7u-S8A"/>
+        <segue reference="B6B-Of-tMD"/>
+        <segue reference="mIe-MO-60a"/>
         <segue reference="hCt-e9-enO"/>
         <segue reference="sE2-L0-Rza"/>
         <segue reference="G0p-To-aUJ"/>
-        <segue reference="mIe-MO-60a"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -25,13 +25,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private weak var slideBtn: MMSlidingButton!
     @IBOutlet private weak var btn_ClearAllCartItems: UIButton!
     @IBOutlet private weak var constraint_CartOrderTableView_Height: NSLayoutConstraint!
+    @IBOutlet weak var btn_Back: UIButton!
     
-    @IBOutlet weak var lbl_Title: UILabel!
-    @IBOutlet weak var lbl_VoucherTitle: UILabel!
-    @IBOutlet weak var lbl_TypeTitle: UILabel!
-    @IBOutlet weak var lbl_LocationTitle: UILabel!
-    
-    
+    @IBOutlet private weak var lbl_Title: UILabel!
+    @IBOutlet private weak var lbl_VoucherTitle: UILabel!
+    @IBOutlet private weak var lbl_TypeTitle: UILabel!
+    @IBOutlet private weak var lbl_LocationTitle: UILabel!
+        
     private var activityIndicator: UIActivityIndicatorView!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
@@ -61,6 +61,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     private var deletedTime: String!
     private var hasFinishedInThisPage = false
+    private var language: String!
+    
+    func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(lang: self.language), for: .normal)
+        self.slideBtn.buttonText = "BTN_FINISH_TITLE".localized(lang: self.language)
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,7 +137,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========DELEGATING SLIDE BUTTON=========
 
         self.slideBtn.delegate = self
-        self.slideBtn.buttonText = "Hoàn Tất"
         self.slideBtn.reset()
         
 //=========CUSTOM STYLE FOR NOTIFICATION ICON=========

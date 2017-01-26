@@ -17,6 +17,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var picker_EndDate: UIDatePicker!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var constraint_DatePickerStartHeight: NSLayoutConstraint!
+    @IBOutlet weak var btn_Back: UIButton!
     
     private var isTypeFree = false
     private var isEco = false

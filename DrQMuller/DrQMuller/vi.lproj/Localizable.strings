@@ -20,7 +20,7 @@
 "ADDRESS_PLACEHOLDER" = "Địa chỉ của bạn";
 "EMAIL_PLACEHOLDER" = "Email của bạn";
 "PHONE_PLACEHOLDER" = "Số điện thoại của bạn";
-"RESET_PASnWORD_LINK" = "Quên mật khẩu hoặc tên đăng nhập?";
+"RESET_PASSWORD_LINK" = "Quên mật khẩu hoặc tên đăng nhập?";
 "LOGIN_BTN_TITLE" = "Đăng nhập";
 "REGISTER_BTN_TITLE" = "Đăng ký";
 "FIRST_TAB_BTN_TITLE" = "Cơ bản";
@@ -29,9 +29,9 @@
 "GENDER_MALE" = "Nam";
 "GENDER_FEMALE" = "Nữ";
 "CUSTOMER_INFO_PAGE_TITLE" = "Thông tin khách hàng";
+"hẹn" = "Thông tin lịch hẹn";
 "" = "";
-"" = "";
-"" = "";
+"" = ""n
 "" = "";
 "" = "";
 "" = "";
