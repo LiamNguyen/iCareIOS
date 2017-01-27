@@ -43,7 +43,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
         self.slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
         
-        self.slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: UserDefaults.standard.string(forKey: "lang")!)
+        self.slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
     }
     
     override func viewWillAppear(_ animated: Bool) {

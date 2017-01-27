@@ -38,6 +38,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     private let firstPhaseWithOneLocation = true
     private var activityIndicator: UIActivityIndicatorView!
+    private var language: String!
     
     
     //=========ARRAY OF ALL DROPDOWNS=========
@@ -52,6 +53,14 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     }()
     
     private var modelHandleBookingGeneral = ModelHandleBookingGeneral()
+    
+    private func handleLanguageChange() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized(lang: self.language)
+        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
+        self.slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+    }
     
 //=========VIEW DID LOAD FUNC=========
     

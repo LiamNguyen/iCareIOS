@@ -9,6 +9,13 @@
 "CONFIRM_LOGOUT_TITLE" = "Quý khách sẽ đăng thoát?";
 "CONFIRM_LOGOUT_MESSAGE" = "Những thông tin chưa được xác nhận sẽ không được lưu trữ.";
 "LOGOUT_EXECUTE_TITLE" = "Đăng thoát";
+"CONFIRM_DELETE_TITLE" = "Xác nhận";
+"CONFIRM_DELETE_MESSAGE" = "Bạn muốn xoá hết các giờ vừa đặt trong giỏ?";
+"CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART" = "Quý khách muốn xoá ";
+"CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART" = " khỏi giỏ hàng?";
+"DELETE_SUCCESS_MESSAGE" = "Xoá thành công";
+"DELETE_FAIL_MESSAGE" = "Xoá không thành công. Xin vui lòng thử lại";
+"DELETE_EXECUTE_TITLE" = "Xoá";
 "DIALOG_CANCEL_TITLE" = "Huỷ";
 "BTN_NEXT_TITLE" = "Tiếp tục";
 "BTN_FINISH_TITLE" = "Hoàn tất";
@@ -29,9 +36,26 @@
 "GENDER_MALE" = "Nam";
 "GENDER_FEMALE" = "Nữ";
 "CUSTOMER_INFO_PAGE_TITLE" = "Thông tin khách hàng";
-"hẹn" = "Thông tin lịch hẹn";
+"BOOKING_INFO_PAGE_TITLE" = "Thông tin lịch hẹn";
+"BTN_DROPDOWN_DAY_OF_WEEK" = "Chọn thứ trong tuần";
+"BTN_CLEAR_ALL_CART_ITEM" = "Xoá hết";
+"BOOKING_TIME_HAS_EXISTED_MESSAGE" = "Giờ đã bị đặt. Xin vui lòng chọn giờ khác";
+"BOOKING_TIME_SUCCESS_MESSAGE" = "Chọn thành công";
+"BOOKING_SUCCESS_MESSAGE" = "Quý khách đã đặt lịch hẹn thành công";
+"BOOKING_FAIL_MESSAGE" = "Không thành công. Xin vui lòng thử lại";
+"DUPLICATE_BOOKING_DAY_OF_WWEK_MESSAGE" = "Chỉ được đặt 1 giờ trong 1 ngày.\nQuý khách đã đặt ";
+"DELETE_EACH_CART_ITEM_MESSAGE" = "Vui lòng vuốt từ phải sang trái để xoá lịch đặt trong giỏ";
+"REQUIRE_BOOK_ATLEAST_ONE_TIME_MESSAGE" = "Xin vui lòng chọn ít nhất một giờ";
+"FULL_BOOKING_TIME_MESSAGE" = "Quý khách đã đặt 3 giờ trong một tuần.\nXin vui lòng tiếp tục để hoàn tất lịch hẹn";
+"CART_ORDER_EMPTY_MESSAGE" = "Chưa có lịch hẹn được đặt";
+"RETRY_MESSAGE" = "Xin quý khách vui lòng thử lại";
+"LBL_START_DATE" = "Ngày bắt đầu";
+"LBL_END_DATE" = "Ngày kết thúc";
+"LBL_EXACT_DATE" = "Ngày thực hiện";
+"LBL_VOUCHER_TITLE" = "Liệu trình";
+"LBL_TYPE_TITLE" = "Loại";
+"LBL_LOCATION_TITLE" = "Trung tâm";
 "" = "";
-"" = ""n
 "" = "";
 "" = "";
 "" = "";
@@ -44,5 +68,11 @@
 "" = "";
 "" = "";
 "" = "";
-"" = "";
+
+
+
+
+
+
+
 

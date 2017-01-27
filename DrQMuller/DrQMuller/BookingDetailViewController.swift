@@ -68,9 +68,22 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(lang: self.language), for: .normal)
         self.slideBtn.buttonText = "BTN_FINISH_TITLE".localized(lang: self.language)
+        self.slideBtn.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(lang: self.language), for: .normal)
+        btn_ClearAllCartItems.setTitle("BTN_CLEAR_ALL_CART_ITEM".localized(lang: self.language), for: .normal)
         
+        lbl_VoucherTitle.text = "LBL_VOUCHER_TITLE".localized(lang: self.language)
+        lbl_TypeTitle.text = "LBL_TYPE_TITLE".localized(lang: self.language)
+        lbl_LocationTitle.text = "LBL_LOCATION_TITLE".localized(lang: self.language)
+        lbl_StartDateHeader.text = "LBL_START_DATE".localized(lang: self.language)
+        lbl_EndDateHeader.text = "LBL_END_DATE".localized(lang: self.language)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        handleLanguageChanged()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -240,7 +253,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     DispatchQueue.main.sync {
                         self.activityIndicator.stopAnimating()
                         self.tableView_BookingTime.isUserInteractionEnabled = true
-                        ToastManager.alert(view: self.view_TopView, msg: "Giờ đã bị đặt. Xin vui lòng chọn giờ khác.")
+                        ToastManager.alert(view: self.view_TopView, msg: "BOOKING_TIME_HAS_EXISTED_MESSAGE".localized(lang: self.language))
                     }
                 } else {
                     let bookingTime = [self.tupleBookingTime.id.day_ID, self.tupleBookingTime.id.time_ID]
@@ -256,7 +269,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         
                         if !self.isTypeFree {
                             self.tableView_BookingTime.isHidden = true
-                            self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
+                            self.btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(lang: self.language), for: .normal)
                             
                             self.dropDown_DaysOfWeek.deselectRow(at: self.dropDownSelectedRowIndex)
                             self.dropDownSelectedRowIndex = nil
@@ -281,7 +294,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             self.lbl_Notification.isHidden = false
                         }
                         
-                        ToastManager.alert(view: self.view_TopView, msg: "Chọn thành công\n\(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.day) - \(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.time)")
+                        let msg = ("\("BOOKING_TIME_SUCCESS_MESSAGE".localized(lang: self.language))\n\(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.day) - \(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.time)")
+                        
+                        ToastManager.alert(view: self.view_TopView, msg: msg)
                         
                         self.activityIndicator.stopAnimating()
                         self.tableView_BookingTime.isUserInteractionEnabled = true
@@ -298,11 +313,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 if let isOk = userInfo["status"] as? Bool {
                     if isOk {
                         DispatchQueue.main.async {
-                            ToastManager.alert(view: self.view_ConfirmView, msg: "Quý khách đã đặt lịch hẹn thành công")
+                            ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_SUCCESS_MESSAGE".localized(lang: self.language))
                         }
                     } else {
                         DispatchQueue.main.async {
-                            ToastManager.alert(view: self.view_ConfirmView, msg: "Không thành công. Xin vui lòng thử lại")
+                            ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_FAIL_MESSAGE".localized(lang: self.language))
                         }
                     }
                 }
@@ -323,14 +338,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBAction func btn_ClearAllCartItem_OnClick(_ sender: Any) {
         self.isRequiredClearAllCartItems = true
-        let alert = UIAlertController(title: "Xác nhận", message: "Bạn muốn xoá hết các giờ vừa đặt trong giỏ?", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Xoá", style: .destructive, handler: { (action: UIAlertAction!) in
+        let alert = UIAlertController(title: "CONFIRM_DELETE_TITLE".localized(lang: self.language), message: "CONFIRM_DELETE_MESSAGE".localized(lang: self.language), preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "DELETE_EXECUTE_TITLE".localized(lang: self.language), style: .destructive, handler: { (action: UIAlertAction!) in
             self.activityIndicator.startAnimating()
             self.view.isUserInteractionEnabled = false
             
             self.modelHandelBookingDetail.releaseTime(timeObj: self.dtoBookingTime)
         }))
-        alert.addAction(UIAlertAction(title: "Huỷ", style: .cancel, handler: { (action: UIAlertAction!) in
+        alert.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(lang: self.language), style: .cancel, handler: { (action: UIAlertAction!) in
         }))
         
         // Support display in iPad
@@ -419,7 +434,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             if !(bookingTime?.isEmpty)! {
                 for item in bookingTime! {
                     if item[0] == self.tupleBookingTime.id.day_ID {
-                        ToastManager.alert(view: view_TopView, msg: "Chỉ được đặt 1 giờ trong 1 ngày.\nQuý khách đã đặt \(self.tupleBookingTime.value.day).")
+                        let msg = "\("DUPLICATE_BOOKING_DAY_OF_WWEK_MESSAGE".localized(lang: self.language))\(self.tupleBookingTime.value.day)"
+                        ToastManager.alert(view: view_TopView, msg: msg)
                         return
                     }
                 }
@@ -440,7 +456,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.tableView_BookingTime.isHidden = false
             }
             
-            ToastManager.alert(view: view_TopView, msg: "Vui lòng vuốt từ phải sang trái để xoá lịch đặt trong giỏ")
+            ToastManager.alert(view: view_TopView, msg: "DELETE_EACH_CART_ITEM_MESSAGE".localized(lang: self.language))
         }
 
     }
@@ -456,10 +472,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
      
     private func confirmDelete(row: (id: (day_ID: String, time_ID: String), value: (day: String, time: String))) {
-        let alert = UIAlertController(title: "Xác nhận", message: "Quý khách muốn xoá \(row.value.day) - \(row.value.time) khỏi giỏ hàng?", preferredStyle: .actionSheet)
+        let msg = "\("CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART".localized(lang: self.language))\(row.value.day) - \(row.value.time)\("CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART".localized(lang: self.language))"
         
-        let DeleteAction = UIAlertAction(title: "Xoá", style: .destructive, handler: handleDeleteCartItem)
-        let CancelAction = UIAlertAction(title: "Huỷ", style: .cancel, handler: cancelDeleteCartItem)
+        let alert = UIAlertController(title: "CONFIRM_DELETE_TITLE".localized(lang: self.language), message: msg, preferredStyle: .actionSheet)
+        
+        let DeleteAction = UIAlertAction(title: "DELETE_EXECUTE_TITLE".localized(lang: self.language), style: .destructive, handler: handleDeleteCartItem)
+        let CancelAction = UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(lang: self.language), style: .cancel, handler: cancelDeleteCartItem)
         
         alert.addAction(DeleteAction)
         alert.addAction(CancelAction)
@@ -501,9 +519,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     if self.hasFinishedInThisPage {
                         return
                     }
-                    ToastManager.alert(view: view_TopView, msg: "Xoá thành công")
+                    ToastManager.alert(view: view_TopView, msg: "DELETE_SUCCESS_MESSAGE".localized(lang: self.language))
                 } else {
-                    ToastManager.alert(view: view_TopView, msg: "Xoá không thành công. Xin vui lòng thử lại")
+                    ToastManager.alert(view: view_TopView, msg: "DELETE_FAIL_MESSAGE".localized(lang: self.language))
                 }
             }
         }
@@ -551,7 +569,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
         if self.tupleBookingTime_Array.isEmpty {
             self.slideBtn.reset()
-            ToastManager.alert(view: view_TopView, msg: "Xin vui lòng chọn ít nhất một giờ")
+            ToastManager.alert(view: view_TopView, msg: "REQUIRE_BOOK_ATLEAST_ONE_TIME_MESSAGE".localized(lang: self.language))
             return
         }
         self.view_TopView.isUserInteractionEnabled = false
@@ -633,7 +651,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //========CREATE MESSAGE VIEW CONTAINER=========
     
     private func alertMessage_ThreeBookingsRestrict() {
-        let message = "Quý khách đã đặt 3 giờ trong một tuần.\nXin vui lòng tiếp tục để hoàn tất lịch hẹn."
+        let message = "FULL_BOOKING_TIME_MESSAGE".localized(lang: self.language)
         
         if self.messageView == nil {
             self.messageView = UIFunctionality.createMessageViewContainer(parentView: self.view)
@@ -682,7 +700,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @objc private func btn_ShowCart_OnClick() {
         
         if dtoBookingTime.count < 1 {
-            ToastManager.alert(view: view_TopView, msg: "Chưa có lịch hẹn được đặt.")
+            ToastManager.alert(view: view_TopView, msg: "CART_ORDER_EMPTY_MESSAGE".localized(lang: self.language))
             return
         }
         
@@ -726,7 +744,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tableView_BookingTime.reloadData()
         } else {
             self.tableView_BookingTime.isHidden = true
-            self.btn_DropDownDaysOfWeek.setTitle("Chọn thứ trong tuần", for: .normal)
+            self.btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(lang: self.language), for: .normal)
             self.dropDown_DaysOfWeek.deselectRow(at: self.dropDownSelectedRowIndex)
             self.dropDownSelectedRowIndex = nil
         }
@@ -746,7 +764,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     private func onHandleWhenTimeIDIsNil(notification: Notification) {
-        ToastManager.alert(view: view_TopView, msg: "Xin quý khách vui lòng thử lại")
+        ToastManager.alert(view: view_TopView, msg: "RETRY_MESSAGE".localized(lang: self.language))
     }
     
     private func onBookingExpire(notification: Notification) {
@@ -790,12 +808,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.lbl_Type.text = bookingInfo.type
         self.lbl_Location.text = bookingInfo.location
         if isTypeFree {
-            self.lbl_StartDateHeader.text = "Ngày thực hiện:"
+            self.lbl_StartDateHeader.text = "\("LBL_EXACT_DATE".localized(lang: self.language)):"
             self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.exactDate)?.shortDateVnFormatted
             self.lbl_EndDateHeader.isHidden = true
             self.lbl_EndDate.isHidden = true
         } else {
-            self.lbl_StartDateHeader.text = "Ngày bắt đầu:"
+            self.lbl_StartDateHeader.text = "\("LBL_START_DATE".localized(lang: self.language)):"
             self.lbl_EndDate.isHidden = false
             self.lbl_EndDateHeader.isHidden = false
             self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.startDate)?.shortDateVnFormatted
