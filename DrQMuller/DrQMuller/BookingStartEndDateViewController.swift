@@ -36,6 +36,24 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var messageView: UIView!
     private var modelHandleBookingStartEnd  = ModelHandelBookingStartEnd()
     private var timer: Timer!
+    private var language: String!
+    
+    private func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        lbl_StartDate.text = "LBL_START_DATE".localized(lang: self.language)
+        lbl_EndDate.text = "LBL_END_DATE".localized(lang: self.language)
+        
+        slideBtn_Next.delegate = self
+        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
+        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        handleLanguageChanged()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,8 +68,6 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         
 //=========DELEGATING SLIDE BTN=========
 
-        self.slideBtn_Next.delegate = self
-        self.slideBtn_Next.buttonText = "Tiếp tục"
         self.slideBtn_Next.reset()
         
 //=========CONSTRAINT FOR DATEPICKER START AND END=========
@@ -114,7 +130,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             }
         
             if datePickersIsEmpty {
-                ToastManager.alert(view: view_TopView, msg: "Xin vui lòng đợi cho ngày đã được chọn và dừng hẳn")
+                ToastManager.alert(view: view_TopView, msg: "DATE_PICKER_ONSPINNING_MESSAGE".localized(lang: self.language))
                 slideBtn_Next.reset()
                 datePickersIsEmpty = false
                 return
@@ -123,7 +139,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         
         if !isTypeFree {
             if (endDay - startDay) < 0 || (endMonth - startMonth) < 0 || (endYear - startYear) < 0 {
-                ToastManager.alert(view: view_TopView, msg: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu")
+                ToastManager.alert(view: view_TopView, msg: "END_LESS_THAN_START".localized(lang: self.language))
                 slideBtn_Next.reset()
                 return
             }
@@ -153,7 +169,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     private func prepareUI() {
         if DTOBookingInformation.sharedInstance.type == "Tự do" { //TYPE OF FREE DATE
-            lbl_StartDate.text = "Ngày thực hiện"
+            lbl_StartDate.text = "LBL_EXACT_DATE".localized(lang: self.language)
             lbl_EndDate.isHidden = true
             picker_EndDate.isHidden = true
             constraint_DatePickerStartHeight.constant = 290
@@ -177,7 +193,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
 //========CREATE MESSAGE VIEW CONTAINER=========
     
     private func alertMessage_WeekendRestrict() {
-        let message = "Hiện tại đối với Voucher ECO Booking, quý khách chỉ có thể sử dụng dịch vụ vào các ngày trong tuần, ngoại trừ Thứ Bảy và Chủ Nhật. Xin vui lòng liên hệ Trung Tâm Dr.Q-Muller để biết thêm chi tiết qua số điện thoại: [phone_number_waiting]"
+        let message = "ECO_WEEKEND_RESTRICTION_MESSAGE".localized(lang: self.language)
         if self.messageView == nil {
             self.messageView = UIFunctionality.createMessageViewContainer(parentView: self.view)
         } else {

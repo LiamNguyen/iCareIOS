@@ -67,11 +67,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.language = UserDefaults.standard.string(forKey: "lang")
         
         btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(lang: self.language), for: .normal)
-        self.slideBtn.buttonText = "BTN_FINISH_TITLE".localized(lang: self.language)
-        self.slideBtn.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        slideBtn.buttonText = "BTN_FINISH_TITLE".localized(lang: self.language)
+        slideBtn.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
         btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(lang: self.language), for: .normal)
         btn_ClearAllCartItems.setTitle("BTN_CLEAR_ALL_CART_ITEM".localized(lang: self.language), for: .normal)
+        btn_ConfirmBooking.setTitle("CONFIRM_TITLE".localized(lang: self.language), for: .normal)
         
+        lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized(lang: self.language)
         lbl_VoucherTitle.text = "LBL_VOUCHER_TITLE".localized(lang: self.language)
         lbl_TypeTitle.text = "LBL_TYPE_TITLE".localized(lang: self.language)
         lbl_LocationTitle.text = "LBL_LOCATION_TITLE".localized(lang: self.language)
@@ -79,15 +81,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         lbl_EndDateHeader.text = "LBL_END_DATE".localized(lang: self.language)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        handleLanguageChanged()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        
+        handleLanguageChanged()
+        
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
@@ -338,7 +336,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBAction func btn_ClearAllCartItem_OnClick(_ sender: Any) {
         self.isRequiredClearAllCartItems = true
-        let alert = UIAlertController(title: "CONFIRM_DELETE_TITLE".localized(lang: self.language), message: "CONFIRM_DELETE_MESSAGE".localized(lang: self.language), preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "CONFIRM_TITLE".localized(lang: self.language), message: "CONFIRM_DELETE_MESSAGE".localized(lang: self.language), preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "DELETE_EXECUTE_TITLE".localized(lang: self.language), style: .destructive, handler: { (action: UIAlertAction!) in
             self.activityIndicator.startAnimating()
             self.view.isUserInteractionEnabled = false
@@ -472,9 +470,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
      
     private func confirmDelete(row: (id: (day_ID: String, time_ID: String), value: (day: String, time: String))) {
-        let msg = "\("CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART".localized(lang: self.language))\(row.value.day) - \(row.value.time)\("CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART".localized(lang: self.language))"
+        let msg = "\("CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART".localized(lang: self.language))\(row.value.day) - \(row.value.time)\("CONFIRM_DELETE_EACH_ITEM_MESSAGE_2ND_PART".localized(lang: self.language))"
         
-        let alert = UIAlertController(title: "CONFIRM_DELETE_TITLE".localized(lang: self.language), message: msg, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "CONFIRM_TITLE".localized(lang: self.language), message: msg, preferredStyle: .actionSheet)
         
         let DeleteAction = UIAlertAction(title: "DELETE_EXECUTE_TITLE".localized(lang: self.language), style: .destructive, handler: handleDeleteCartItem)
         let CancelAction = UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(lang: self.language), style: .cancel, handler: cancelDeleteCartItem)
@@ -799,6 +797,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var lbl_StartDate: UILabel!
     @IBOutlet weak var lbl_EndDateHeader: UILabel!
     @IBOutlet weak var lbl_EndDate: UILabel!
+    @IBOutlet weak var btn_ConfirmBooking: UIButton!
     
     @IBOutlet weak var tableView_BookingTimeConfirm: UITableView!
     

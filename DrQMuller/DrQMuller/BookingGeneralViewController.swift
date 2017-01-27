@@ -24,8 +24,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var btn_VouchersDropDown: NiceButton!
     @IBOutlet private weak var btn_TypesDropDown: NiceButton!
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
-    @IBOutlet weak var view_TopView: UIView!
-    @IBOutlet weak var lbl_Title: UILabel!
+    @IBOutlet private weak var view_TopView: UIView!
+    @IBOutlet private weak var lbl_Title: UILabel!
     
     //=========MARK: PROPERTIES=========
     
@@ -54,24 +54,25 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     private var modelHandleBookingGeneral = ModelHandleBookingGeneral()
     
-    private func handleLanguageChange() {
+    private func handleLanguageChanged() {
         self.language = UserDefaults.standard.string(forKey: "lang")
         
         lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized(lang: self.language)
+        slideBtn_Next.delegate = self
+        slideBtn_Next.reset()
         slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
-        self.slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        
+        btn_VouchersDropDown.setTitle("DROPDOWN_VOUCHER_TITLE".localized(lang: self.language), for: .normal)
+        btn_TypesDropDown.setTitle("DROPDOWN_TYPE_TITLE".localized(lang: self.language), for: .normal)
     }
     
 //=========VIEW DID LOAD FUNC=========
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//=========DELEGATING slideBtn_Next=========
-        
-        self.slideBtn_Next.delegate  = self
-        self.slideBtn_Next.buttonText = "Tiếp tục"
-        self.slideBtn_Next.reset()
+    
+        handleLanguageChanged()
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
 

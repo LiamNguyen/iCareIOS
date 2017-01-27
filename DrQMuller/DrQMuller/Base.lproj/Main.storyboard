@@ -616,7 +616,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thông tin khách hàng" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pnj-CZ-xP4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thông tin" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pnj-CZ-xP4">
                                 <rect key="frame" x="0.0" y="20" width="320" height="49"/>
                                 <color key="backgroundColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -1611,7 +1611,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="btn_ConfirmBooking_OnClick:" destination="rI9-M0-Ata" eventType="touchUpInside" id="dCd-Gp-vQE"/>
+                                            <action selector="btn_ConfirmBooking_OnClick:" destination="rI9-M0-Ata" eventType="touchUpInside" id="ooE-PR-kqo"/>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thông tin lịch hẹn" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNN-SK-MoO">
@@ -1793,6 +1793,7 @@
                     <connections>
                         <outlet property="btn_Back" destination="zKY-zv-c0S" id="IXv-W7-cZu"/>
                         <outlet property="btn_ClearAllCartItems" destination="r6H-Ss-Xwl" id="6VJ-Ny-IY6"/>
+                        <outlet property="btn_ConfirmBooking" destination="U9u-nt-tJq" id="LxZ-Zb-ncd"/>
                         <outlet property="btn_DropDownDaysOfWeek" destination="iwr-W3-F45" id="OEX-Dc-cXV"/>
                         <outlet property="btn_ShowCart" destination="xXy-c9-a6G" id="v7F-Ui-oTP"/>
                         <outlet property="constraint_CartOrderTableView_Height" destination="Akn-zu-oqd" id="jiK-sg-bnk"/>
@@ -1803,7 +1804,7 @@
                         <outlet property="lbl_Notification" destination="xGj-AD-CDi" id="KK2-0E-iPb"/>
                         <outlet property="lbl_StartDate" destination="5Fu-Pm-Fbs" id="xLc-67-did"/>
                         <outlet property="lbl_StartDateHeader" destination="peJ-NI-9gf" id="ov4-DE-Bf4"/>
-                        <outlet property="lbl_Title" destination="FNN-SK-MoO" id="fsS-1z-ALk"/>
+                        <outlet property="lbl_Title" destination="FNN-SK-MoO" id="hY1-HH-T2L"/>
                         <outlet property="lbl_Type" destination="nbu-1w-RGR" id="jiB-RS-aHI"/>
                         <outlet property="lbl_TypeTitle" destination="4ae-zo-T05" id="s3h-0c-U1h"/>
                         <outlet property="lbl_Voucher" destination="l4g-fV-zqB" id="O5Y-dZ-czQ"/>
@@ -1886,9 +1887,9 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="B6B-Of-tMD"/>
-        <segue reference="mIe-MO-60a"/>
-        <segue reference="hCt-e9-enO"/>
         <segue reference="sE2-L0-Rza"/>
+        <segue reference="hCt-e9-enO"/>
         <segue reference="G0p-To-aUJ"/>
+        <segue reference="mIe-MO-60a"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -31,7 +31,8 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     
     private func handleLanguageChanged() {
         self.language = UserDefaults.standard.string(forKey: "lang")
-        
+        print(self.language)
+
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized(lang: self.language)
         btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
         btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
@@ -84,7 +85,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
 //=========DELEGATING slideBtn_Next=========
         
-        self.slideBtn_Next.delegate  = self
+        self.slideBtn_Next.delegate = self
         self.slideBtn_Next.reset()
     }
     
