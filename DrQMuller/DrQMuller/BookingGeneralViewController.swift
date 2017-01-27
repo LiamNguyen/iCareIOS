@@ -142,13 +142,13 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
         if dropDown_Vouchers.selectedItem == nil {
-            ToastManager.alert(view: view_TopView, msg: "Xin vui lòng chọn Vouchers")
+            ToastManager.alert(view: view_TopView, msg: "DROPDOWN_VOUCHER_EMPTY_MESSAGE".localized(lang: self.language))
             slideBtn_Next.reset()
             return
         }
         
         if dropDown_Types.selectedItem == nil {
-            ToastManager.alert(view: view_TopView, msg: "Xin vui lòng chọn Loại Dịch Vụ")
+            ToastManager.alert(view: view_TopView, msg: "DROPDOWN_TYPE_EMPTY_MESSAGE".localized(lang: self.language))
             slideBtn_Next.reset()
             return
         }
@@ -167,7 +167,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     @IBAction func btn_CountriesDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
             return
         }
         dropDown_Countries.show()
@@ -177,7 +177,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_CitiesDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
             return
         }
         dropDown_Cities.show()
@@ -187,7 +187,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_DistrictsDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
             return
         }
         dropDown_Districts.show()
@@ -197,7 +197,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_LocationsDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
             return
         }
         dropDown_Locations.show()

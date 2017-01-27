@@ -64,7 +64,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        UserDefaults.standard.set("vi", forKey: "lang")
+        UserDefaults.standard.set("en", forKey: "lang")
         handleLanguageChanged()
     }
     
@@ -267,7 +267,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
                     self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
                 } else {
                     print("Login Failed")
-                    ToastManager.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
+                    ToastManager.alert(view: loginView, msg: "CREDENTIAL_INVALID".localized(lang: self.language))
                 }
             }
         }
@@ -289,12 +289,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private func frontValidationPassed() -> Bool {
         if let username = txt_Username.text, let password = txt_Password.text {
             if username.isEmpty {
-                ToastManager.alert(view: loginView, msg: "Tên đăng nhập trống")
+                ToastManager.alert(view: loginView, msg: "USERNAME_EMPTY_MESSAGE".localized(lang: self.language))
                 return false
             }
             
             if password.isEmpty {
-                ToastManager.alert(view: loginView, msg: "Mật khẩu trống")
+                ToastManager.alert(view: loginView, msg: "PASSWORD_EMPTY_MESSAGE".localized(lang: self.language))
                 return false
             }
             return true

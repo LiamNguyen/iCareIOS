@@ -48,15 +48,11 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
         slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        handleLanguageChanged()
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        handleLanguageChanged()
         
 //=========PREPARE UI BASE ON LOGIC OF DTOBookingInformation=========
         
