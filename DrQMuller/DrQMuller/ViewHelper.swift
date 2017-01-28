@@ -78,13 +78,13 @@ struct ToastManager {
 struct DialogManager {
     //=========CREATE POP UP CONFIRM DIALOG=========
     
-    static func confirmLogout(sender: UIViewController) {
+    static func confirmLogout(sender: UIViewController, segueIdentifier: String) {
         let language = UserDefaults.standard.string(forKey: "lang")!
         
         let confirmDialog = UIAlertController(title: "CONFIRM_LOGOUT_TITLE".localized(lang: language), message: "CONFIRM_LOGOUT_MESSAGE".localized(lang: language), preferredStyle: UIAlertControllerStyle.alert)
         
         confirmDialog.addAction(UIAlertAction(title: "LOGOUT_EXECUTE_TITLE".localized(lang: language), style: .default, handler: { (action: UIAlertAction!) in
-            sender.performSegue(withIdentifier: "segue_CustomerInformationToLogin", sender: sender)
+            sender.performSegue(withIdentifier: segueIdentifier, sender: sender)
         }))
         confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(lang: language), style: .cancel, handler: { (action: UIAlertAction!) in
             

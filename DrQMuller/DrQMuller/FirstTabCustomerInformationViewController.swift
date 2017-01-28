@@ -41,6 +41,10 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         btn_Next.setTitle("BTN_NEXT_TITLE".localized(lang: self.language), for: .normal)
     }
     
+    private struct Storyboard {
+        static let SEGUE_TO_LOGIN = "segue_CustomerInformationToLogin"
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -81,7 +85,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========POP UP CONFIRM DIALOG=========
 
-        DialogManager.confirmLogout(sender: self)
+        DialogManager.confirmLogout(sender: self, segueIdentifier: Storyboard.SEGUE_TO_LOGIN)
     }
 
     

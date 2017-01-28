@@ -40,6 +40,10 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         btn_Next.setTitle("BTN_NEXT_TITLE".localized(lang: self.language), for: .normal)
     }
     
+    private struct StoryBoard {
+        static let SEGUE_TO_LOGIN = "segue_CustomerInformationThirdTabToLogin"
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -80,7 +84,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========POP UP CONFIRM DIALOG=========
         
-        DialogManager.confirmLogout(sender: self)
+        DialogManager.confirmLogout(sender: self, segueIdentifier: StoryBoard.SEGUE_TO_LOGIN)
         
     }
     

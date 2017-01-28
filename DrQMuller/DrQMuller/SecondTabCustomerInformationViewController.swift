@@ -31,7 +31,6 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     
     private func handleLanguageChanged() {
         self.language = UserDefaults.standard.string(forKey: "lang")
-        print(self.language)
 
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized(lang: self.language)
         btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
@@ -45,6 +44,10 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         self.slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
         
         self.slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+    }
+    
+    private struct StoryBoard {
+    static let SEGUE_TO_LOGIN = "segue_CustomerInformationSecondTabToLogin"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,7 +96,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
 //=========POP UP CONFIRM DIALOG=========
         
-        DialogManager.confirmLogout(sender: self)
+        DialogManager.confirmLogout(sender: self, segueIdentifier: StoryBoard.SEGUE_TO_LOGIN)
     }
     
 //=========TRANSITION TO FIRST INFO PAGE=========
