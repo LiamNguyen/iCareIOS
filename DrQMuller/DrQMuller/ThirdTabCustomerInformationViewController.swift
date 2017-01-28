@@ -119,12 +119,13 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "segue_CustomerInformationToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
+                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
                 tabVC.selectedIndex = 1
+                tabVC.tabBar.items?[0].isAccessibilityElement = false
             }
         }
     }
-    
-    
+
     
     
     

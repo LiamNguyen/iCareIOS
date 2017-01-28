@@ -8,6 +8,7 @@
 
 import Foundation
 import SystemConfiguration
+import UIKit
 
 struct Functionality {
     
@@ -103,7 +104,8 @@ struct Functionality {
         let formattedDate = dateFormatter.date(from: str)!
         return formattedDate
     }
-    
+   
+//LOCALIZED DATE PICKER
     
     static func getDatePickerLocale(language: String) -> String {
         let date_picker_localization: String!
@@ -115,6 +117,16 @@ struct Functionality {
         }
         
         return date_picker_localization
+    }
+
+//LOCALIZED TAB BAR ITEM
+    
+    static func tabBarItemsLocalized(language: String, tabVC: UITabBarController) {
+        if language == "en" {
+            tabVC.tabBar.items?[0].title = "News"
+            tabVC.tabBar.items?[1].title = "Booking"
+            tabVC.tabBar.items?[2].title = "User"
+        }
     }
 }
 

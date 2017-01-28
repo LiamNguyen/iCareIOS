@@ -80,8 +80,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         self.txt_Username.delegate = self
         self.txt_Password.delegate = self
         
-
-        
 //=========STYLE BUTTONS=========
         
         btn_Login.layer.cornerRadius = 10
@@ -278,6 +276,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "segue_LoginToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
+                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
+                tabVC.tabBar.items?[0].isAccessibilityElement = false
                 tabVC.selectedIndex = 1
             }
         }

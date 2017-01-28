@@ -313,6 +313,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         DispatchQueue.main.async {
                             ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_SUCCESS_MESSAGE".localized(lang: self.language))
                         }
+                        print("APP_ID: \(DTOBookingInformation.sharedInstance.appointmentID)")
                     } else {
                         DispatchQueue.main.async {
                             ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_FAIL_MESSAGE".localized(lang: self.language))
@@ -424,16 +425,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             let bookingTime = dtoBookingTime
             
             if bookingTime?.count == 3 {
-                alertMessage_ThreeBookingsRestrict()
-                
+                alertMessage(message: "FULL_BOOKING_TIME_MESSAGE".localized(lang: self.language))
                 return
             }
             
             if !(bookingTime?.isEmpty)! {
                 for item in bookingTime! {
                     if item[0] == self.tupleBookingTime.id.day_ID {
-                        let msg = "\("DUPLICATE_BOOKING_DAY_OF_WWEK_MESSAGE".localized(lang: self.language))\(self.tupleBookingTime.value.day)"
-                        ToastManager.alert(view: view_TopView, msg: msg)
+                        alertMessage(message: "\("DUPLICATE_BOOKING_DAY_OF_WWEK_MESSAGE".localized(lang: self.language))\(self.tupleBookingTime.value.day)")
                         return
                     }
                 }
@@ -604,7 +603,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             datasource.removeLast()
         }
         
-        dropDown_DaysOfWeek.dataSource = datasource
+        dropDown_DaysOfWeek.dataSource = getDaysOfWeekLocalized(datasource: datasource)
         
         if isTypeFree {
             btn_DropDownDaysOfWeek.setTitle(self.tupleBookingTime.value.day, for: .normal)
@@ -636,6 +635,22 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    //LOCALIZED DAYS OF WEEK
+    
+    private func getDaysOfWeekLocalized(datasource: [String]) -> [String] {
+        if self.language == "en" {
+            return ["Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday"]
+        } else {
+            return datasource
+        }
+    }
+    
 //=========DEFAULT DROPDOWN STYLE=========
     
     private func setupDefaultDropDown() {
@@ -648,9 +663,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
 //========CREATE MESSAGE VIEW CONTAINER=========
     
-    private func alertMessage_ThreeBookingsRestrict() {
-        let message = "FULL_BOOKING_TIME_MESSAGE".localized(lang: self.language)
-        
+    private func alertMessage(message: String) {
         if self.messageView == nil {
             self.messageView = UIFunctionality.createMessageViewContainer(parentView: self.view)
         } else {
