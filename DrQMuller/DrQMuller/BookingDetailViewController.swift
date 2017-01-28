@@ -77,8 +77,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         lbl_VoucherTitle.text = "LBL_VOUCHER_TITLE".localized(lang: self.language)
         lbl_TypeTitle.text = "LBL_TYPE_TITLE".localized(lang: self.language)
         lbl_LocationTitle.text = "LBL_LOCATION_TITLE".localized(lang: self.language)
-        lbl_StartDateHeader.text = "LBL_START_DATE".localized(lang: self.language)
-        lbl_EndDateHeader.text = "LBL_END_DATE".localized(lang: self.language)
+        lbl_BookingTime.text = "LBL_BOOKING_TIME_TITLE".localized(lang: self.language)
+        lbl_StartDateHeader.text = "LBL_START_DATE".localized(lang: self.language) + ": "
+        lbl_EndDateHeader.text = "LBL_END_DATE".localized(lang: self.language) + ": "
     }
     
     override func viewDidLoad() {
@@ -811,6 +812,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var lbl_EndDateHeader: UILabel!
     @IBOutlet weak var lbl_EndDate: UILabel!
     @IBOutlet weak var btn_ConfirmBooking: UIButton!
+    @IBOutlet weak var lbl_BookingTime: UILabel!
     
     @IBOutlet weak var tableView_BookingTimeConfirm: UITableView!
     
@@ -820,12 +822,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.lbl_Type.text = bookingInfo.type
         self.lbl_Location.text = bookingInfo.location
         if isTypeFree {
-            self.lbl_StartDateHeader.text = "\("LBL_EXACT_DATE".localized(lang: self.language)):"
+            self.lbl_StartDateHeader.text = "\("LBL_EXACT_DATE".localized(lang: self.language)): "
             self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.exactDate)?.shortDateVnFormatted
             self.lbl_EndDateHeader.isHidden = true
             self.lbl_EndDate.isHidden = true
         } else {
-            self.lbl_StartDateHeader.text = "\("LBL_START_DATE".localized(lang: self.language)):"
+            self.lbl_StartDateHeader.text = "\("LBL_START_DATE".localized(lang: self.language)): "
             self.lbl_EndDate.isHidden = false
             self.lbl_EndDateHeader.isHidden = false
             self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.startDate)?.shortDateVnFormatted

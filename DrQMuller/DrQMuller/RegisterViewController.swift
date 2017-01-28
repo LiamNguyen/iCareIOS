@@ -98,15 +98,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
 //=========DRAW LINE=========
         
-        let firstPoint = CGPoint(x: 0, y: 480)
-        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
-        
-        UIFunctionality.drawLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-        
-        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
-        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
-        
-        UIFunctionality.drawLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+//        let firstPoint = CGPoint(x: 0, y: 480)
+//        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+//        
+//        UIFunctionality.drawLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+//        
+//        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+//        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+//        
+//        UIFunctionality.drawLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
         
 
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========

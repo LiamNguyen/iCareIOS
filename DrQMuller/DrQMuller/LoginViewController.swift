@@ -277,7 +277,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         if(segue.identifier == "segue_LoginToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
                 Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
-                tabVC.tabBar.items?[0].isAccessibilityElement = false
+                tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
         }

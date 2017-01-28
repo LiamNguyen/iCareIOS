@@ -54,11 +54,12 @@
 "LBL_START_DATE" = "Start date";
 "LBL_END_DATE" = "End date";
 "LBL_EXACT_DATE" = "Date";
-"LBL_VOUCHER_TITLE" = "Vouchers";
-"LBL_TYPE_TITLE" = "Type";
+"LBL_VOUCHER_TITLE" = "Vouchers: ";
+"LBL_TYPE_TITLE" = "Type: ";
 "LBL_LOCATION_TITLE" = "Location";
 "DROPDOWN_VOUCHER_TITLE" = "Choose Voucher";
 "DROPDOWN_TYPE_TITLE" = "Choose Type";
+"LBL_BOOKING_TIME_TITLE" = "Schedule";
 "DROPDOWN_VOUCHER_EMPTY_MESSAGE" = "Please choose voucher";
 "DROPDOWN_TYPE_EMPTY_MESSAGE" = "Please choose type";
 "USERNAME_EMPTY_MESSAGE" = "Username empty";

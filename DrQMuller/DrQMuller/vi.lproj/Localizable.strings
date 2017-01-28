@@ -55,11 +55,12 @@
 "LBL_START_DATE" = "Ngày bắt đầu";
 "LBL_END_DATE" = "Ngày kết thúc";
 "LBL_EXACT_DATE" = "Ngày thực hiện";
-"LBL_VOUCHER_TITLE" = "Liệu trình";
-"LBL_TYPE_TITLE" = "Loại";
+"LBL_VOUCHER_TITLE" = "Liệu trình: ";
+"LBL_TYPE_TITLE" = "Loại: ";
 "LBL_LOCATION_TITLE" = "Trung tâm";
 "DROPDOWN_VOUCHER_TITLE" = "Chọn voucher";
 "DROPDOWN_TYPE_TITLE" = "Chọn loại dịch vụ";
+"LBL_BOOKING_TIME_TITLE" = "Giờ đặt";
 "DROPDOWN_VOUCHER_EMPTY_MESSAGE" = "Xin vui lòng chọn Voucher";
 "DROPDOWN_TYPE_EMPTY_MESSAGE" = "Xin vui lòng chọn Loại Dịch Vụ";
 "USERNAME_EMPTY_MESSAGE" = "Tên đăng nhập trống";
