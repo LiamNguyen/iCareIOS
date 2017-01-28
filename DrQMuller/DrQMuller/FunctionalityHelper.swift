@@ -103,6 +103,19 @@ struct Functionality {
         let formattedDate = dateFormatter.date(from: str)!
         return formattedDate
     }
+    
+    
+    static func getDatePickerLocale(language: String) -> String {
+        let date_picker_localization: String!
+        
+        if language == "en" {
+            date_picker_localization = "en_EN"
+        } else {
+            date_picker_localization = "vi_VI"
+        }
+        
+        return date_picker_localization
+    }
 }
 
 struct Network {

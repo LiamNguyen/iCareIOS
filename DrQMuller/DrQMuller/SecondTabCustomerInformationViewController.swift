@@ -39,7 +39,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
         picker_GenderDataSource = ["GENDER_MALE".localized(lang: self.language), "GENDER_FEMALE".localized(lang: self.language)]
         
-        //picker_Date.locale = NSLocale.localeIdentifier(fromWindowsLocaleCode: "vi")
+        picker_Date.locale = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: self.language)) as Locale
         
         self.slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
         
