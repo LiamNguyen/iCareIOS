@@ -19,6 +19,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     @IBOutlet private weak var btn_Register: UIButton!
     @IBOutlet private weak var constraint_BtnLogin_TxtConfirm: NSLayoutConstraint!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var image_Background: UIImageView!
+    @IBOutlet weak var view_BackLayer: UIView!
+    @IBOutlet weak var view_Container: UIView!
+    @IBOutlet weak var btn_LanguageDropDown: NiceButton!
+    @IBOutlet weak var btn_Confirm: UIButton!
     
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
@@ -62,15 +67,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         btn_Register.setTitle("REGISTER_BTN_TITLE".localized(lang: self.language), for: .normal)
     }
     
+    override func viewWillLayoutSubviews() {
+        UIView.animate(withDuration: 1) {
+            self.view_BackLayer.center = CGPoint(x: self.view_BackLayer.center.x - 400, y: self.view_BackLayer.center.y)
+        }
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UserDefaults.standard.set("en", forKey: "lang")
         handleLanguageChanged()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 1) {
+            self.view_BackLayer.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: self.view_BackLayer.center.y)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.image_Background.backgroundColor = UIColor.gray
         self.testReturnArr.delegate = self
 
         activityIndicator.stopAnimating()
@@ -233,6 +250,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         btn_ResetPassword.isHidden = false
     }
     
+    
+    @IBAction func btn_Confirm_OnClick(_ sender: Any) {
+        UIView.animate(withDuration: 1) { 
+            self.view_BackLayer.center = CGPoint(x: self.view_BackLayer.center.x - UIScreen.main.bounds.width, y: self.view_BackLayer.center.y)
+        }
+    }
     
     @IBAction func btn_Login_OnClick(_ sender: Any) {
         login()
