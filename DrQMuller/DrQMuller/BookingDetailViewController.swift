@@ -588,6 +588,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "segue_BookingDetailToBookingGeneral"){
             if let tabVC = segue.destination as? UITabBarController{
+                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
+                tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
         }
@@ -819,8 +821,19 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private func bindDataConfirmView() {
         let bookingInfo = DTOBookingInformation.sharedInstance
         self.lbl_Voucher.text = bookingInfo.voucher
-        self.lbl_Type.text = bookingInfo.type
         self.lbl_Location.text = bookingInfo.location
+        
+        var type = bookingInfo.type
+        
+        if self.language == "en" {
+            if type == "Cố định" {
+                type = "Fix time"
+            } else {
+                type = "Free time"
+            }
+        }
+        
+        self.lbl_Type.text = type
         if isTypeFree {
             self.lbl_StartDateHeader.text = "\("LBL_EXACT_DATE".localized(lang: self.language)): "
             self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.exactDate)?.shortDateVnFormatted

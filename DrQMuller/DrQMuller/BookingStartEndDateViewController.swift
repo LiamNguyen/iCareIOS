@@ -110,6 +110,8 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segue_BookingDateToBookingGeneral" {
             if let tabVC = segue.destination as? UITabBarController {
+                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
+                tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
         }
