@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DropDown
 
 class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDelegate {
 
@@ -19,11 +20,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     @IBOutlet private weak var btn_Register: UIButton!
     @IBOutlet private weak var constraint_BtnLogin_TxtConfirm: NSLayoutConstraint!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var image_Background: UIImageView!
-    @IBOutlet weak var view_BackLayer: UIView!
-    @IBOutlet weak var view_Container: UIView!
-    @IBOutlet weak var btn_LanguageDropDown: NiceButton!
-    @IBOutlet weak var btn_Confirm: UIButton!
+    @IBOutlet private weak var image_Background: UIImageView!
+    
+    static var view_BackLayer: UIView!
+    static var dropDown_Language = DropDown()
+    static var btn_LanguageDropDown: UIButton!
+    static var borderBottom: UIView!
     
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
@@ -67,27 +69,54 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         btn_Register.setTitle("REGISTER_BTN_TITLE".localized(lang: self.language), for: .normal)
     }
     
-    override func viewWillLayoutSubviews() {
-        UIView.animate(withDuration: 1) {
-            self.view_BackLayer.center = CGPoint(x: self.view_BackLayer.center.x - 400, y: self.view_BackLayer.center.y)
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        UserDefaults.standard.set("en", forKey: "lang")
-        handleLanguageChanged()
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
-        UIView.animate(withDuration: 1) {
-            self.view_BackLayer.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: self.view_BackLayer.center.y)
+        super.viewDidAppear(animated)
+        
+        if let viewChooseLanguage = LoginViewController.view_BackLayer {
+            UIView.animate(withDuration: 0.5) {
+                viewChooseLanguage.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: viewChooseLanguage.center.y)
+            }
         }
+    }
+    
+    func btn_LanguageDropDown_OnClick(sender: UIButton) {
+        LoginViewController.dropDown_Language.show()
+    }
+    
+    func btn_Confirm_OnClick(sender: UIButton) {
+        if LoginViewController.dropDown_Language.selectedItem == nil {
+            UIFunctionality.addShakyAnimation(elementToBeShake: LoginViewController.btn_LanguageDropDown)
+            
+            LoginViewController.borderBottom.backgroundColor = UIColor.red
+            LoginViewController.btn_LanguageDropDown.setTitleColor(UIColor.red, for: .normal)
+            
+            return
+        }
+
+        UIView.animate(withDuration: 1, animations: {
+            LoginViewController.view_BackLayer.center = CGPoint(x: LoginViewController.view_BackLayer.center.x - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 2)
+        })
+        
+        if LoginViewController.dropDown_Language.indexForSelectedRow == 0 {
+            UserDefaults.standard.set("vi", forKey: "lang")
+        } else {
+            UserDefaults.standard.set("en", forKey: "lang")
+        }
+        
+        handleLanguageChanged()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.image_Background.backgroundColor = UIColor.gray
+
+        //UserDefaults.standard.removeObject(forKey: "lang")
+        
+        if UserDefaults.standard.string(forKey: "lang") == nil {
+            UIFunctionality.createChooseLanguageView(view: self.view)
+        }
+        
+        handleLanguageChanged()
+        
         self.testReturnArr.delegate = self
 
         activityIndicator.stopAnimating()
@@ -248,13 +277,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         adjustTxtOrigin(y: initialTxtOrigin)
         constraint_BtnLogin_TxtConfirm.constant = initialConstraintConstant
         btn_ResetPassword.isHidden = false
-    }
-    
-    
-    @IBAction func btn_Confirm_OnClick(_ sender: Any) {
-        UIView.animate(withDuration: 1) { 
-            self.view_BackLayer.center = CGPoint(x: self.view_BackLayer.center.x - UIScreen.main.bounds.width, y: self.view_BackLayer.center.y)
-        }
     }
     
     @IBAction func btn_Login_OnClick(_ sender: Any) {

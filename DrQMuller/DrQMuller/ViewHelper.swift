@@ -59,6 +59,66 @@ struct UIFunctionality {
         line.lineJoin = kCALineJoinRound
         view.layer.addSublayer(line)
     }
+    
+    static func addShakyAnimation(elementToBeShake: AnyObject) {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.07
+        animation.repeatCount = 4
+        animation.autoreverses = true
+        
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x - 5, y: elementToBeShake.center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x + 5, y: elementToBeShake.center.y))
+        elementToBeShake.layer.add(animation, forKey: "position")
+    }
+    
+    static func createChooseLanguageView(view: UIView) {
+        LoginViewController.view_BackLayer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+        LoginViewController.view_BackLayer.center = CGPoint(x: LoginViewController.view_BackLayer.center.x + UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 2)
+        LoginViewController.view_BackLayer.backgroundColor = UIColor.lightGray
+        view.addSubview(LoginViewController.view_BackLayer)
+        
+        let view_Container = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 30, height: 200))
+        view_Container.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
+        view_Container.layer.cornerRadius = 5
+        view_Container.backgroundColor = UIColor.white
+        
+        LoginViewController.btn_LanguageDropDown = UIButton(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 40, height: 50))
+        LoginViewController.btn_LanguageDropDown.center = CGPoint(x: view_Container.bounds.width / 2, y: view_Container.bounds.height / 2 - 50)
+        LoginViewController.btn_LanguageDropDown.setTitle("Choose language", for: .normal)
+        LoginViewController.btn_LanguageDropDown.setTitleColor(ThemeColor, for: .normal)
+        LoginViewController.btn_LanguageDropDown.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightSemibold)
+        LoginViewController.btn_LanguageDropDown.addTarget(self, action: #selector(LoginViewController.btn_LanguageDropDown_OnClick), for: .touchUpInside)
+        LoginViewController.btn_LanguageDropDown.showsTouchWhenHighlighted = true
+        
+        LoginViewController.dropDown_Language.dataSource = ["Vietnamese - Tiếng Việt", "English - Tiếng Anh"]
+        LoginViewController.dropDown_Language.anchorView = LoginViewController.btn_LanguageDropDown
+        
+        LoginViewController.dropDown_Language.selectionAction = { (index, item) in
+            LoginViewController.btn_LanguageDropDown.setTitle(item, for: .normal)
+            
+            LoginViewController.borderBottom.backgroundColor = ThemeColor
+            LoginViewController.btn_LanguageDropDown.setTitleColor(ThemeColor, for: .normal)
+        }
+        
+        LoginViewController.borderBottom = UIView(frame: CGRect(x: 0, y: LoginViewController.btn_LanguageDropDown.bounds.height - 10, width: LoginViewController.btn_LanguageDropDown.bounds.width, height: 2.5))
+        LoginViewController.borderBottom.backgroundColor = ThemeColor
+        
+        LoginViewController.btn_LanguageDropDown.addSubview(LoginViewController.borderBottom)
+        
+        let btn_Confirm = UIButton(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 60, height: 50))
+        btn_Confirm.center = CGPoint(x: view_Container.bounds.width / 2, y: view_Container.bounds.height / 2 + 30)
+        btn_Confirm.setTitle("Confirm", for: .normal)
+        btn_Confirm.setTitleColor(UIColor.white, for: .normal)
+        btn_Confirm.titleLabel?.font = UIFont.systemFont(ofSize: 20, weight: UIFontWeightSemibold)
+        btn_Confirm.backgroundColor = ThemeColor
+        btn_Confirm.layer.cornerRadius = 10
+        btn_Confirm.addTarget(self, action: #selector(LoginViewController.btn_Confirm_OnClick), for: .touchUpInside)
+        btn_Confirm.showsTouchWhenHighlighted = true
+        
+        view_Container.addSubview(LoginViewController.btn_LanguageDropDown)
+        view_Container.addSubview(btn_Confirm)
+        LoginViewController.view_BackLayer.addSubview(view_Container)
+    }
 }
 
 //CREATE TOAST
