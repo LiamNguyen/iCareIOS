@@ -35,7 +35,7 @@ protocol SlideButtonDelegate{
         }
     }
     
-    @IBInspectable var buttonText: String = "TIẾP TỤC" {
+    @IBInspectable var buttonText: String = "Next" {
         didSet{
             setStyle()
         }
@@ -71,7 +71,7 @@ protocol SlideButtonDelegate{
         }
     }
     
-    @IBInspectable var buttonUnlockedText: String   = "GOOD"
+    @IBInspectable var buttonUnlockedText: String   = "Success"
     @IBInspectable var buttonUnlockedColor: UIColor = UIColor.black
     var buttonFont                                  = UIFont.boldSystemFont(ofSize: 17)
     

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import DropDown
 
 class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDelegate {
 
@@ -19,13 +20,19 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     @IBOutlet private weak var btn_Register: UIButton!
     @IBOutlet private weak var constraint_BtnLogin_TxtConfirm: NSLayoutConstraint!
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var image_Background: UIImageView!
+    
+    static var view_BackLayer: UIView!
+    static var dropDown_Language = DropDown()
+    static var btn_LanguageDropDown: UIButton!
+    static var borderBottom: UIView!
     
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
     private var screenHeight: CGFloat!
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
-    private var lineDrawer = LineDrawer()
+    private var language: String!
     
     var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
@@ -41,25 +48,83 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             }
         }
     }
+
+    private func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        //=========TXTFIELD PLACEHOLDER=========
+        
+        txt_Username.placeholder = "USERNAME_PLACEHOLDER".localized(lang: self.language)
+        txt_Password.placeholder = "PASSWORD_PLACEHOLDER".localized(lang: self.language)
+        
+        //=========STYLE FOR RESET PASSWORD LINK=========
+        
+        let attrString = NSAttributedString(string: "RESET_PASSWORD_LINK".localized(lang: self.language), attributes: [NSForegroundColorAttributeName:UIColor.white, NSUnderlineStyleAttributeName: 1])
+        
+        btn_ResetPassword.setAttributedTitle(attrString, for: .normal)
+        
+        //=========BUTTON TITLE=========
+        
+        btn_Login.setTitle("LOGIN_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_Register.setTitle("REGISTER_BTN_TITLE".localized(lang: self.language), for: .normal)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let viewChooseLanguage = LoginViewController.view_BackLayer {
+            UIView.animate(withDuration: 0.5) {
+                viewChooseLanguage.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: viewChooseLanguage.center.y)
+            }
+        }
+    }
+    
+    func btn_LanguageDropDown_OnClick(sender: UIButton) {
+        LoginViewController.dropDown_Language.show()
+    }
+    
+    func btn_Confirm_OnClick(sender: UIButton) {
+        if LoginViewController.dropDown_Language.selectedItem == nil {
+            UIFunctionality.addShakyAnimation(elementToBeShake: LoginViewController.btn_LanguageDropDown)
+            
+            LoginViewController.borderBottom.backgroundColor = UIColor.red
+            LoginViewController.btn_LanguageDropDown.setTitleColor(UIColor.red, for: .normal)
+            
+            return
+        }
+
+        UIView.animate(withDuration: 1, animations: {
+            LoginViewController.view_BackLayer.center = CGPoint(x: LoginViewController.view_BackLayer.center.x - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 2)
+        })
+        
+        if LoginViewController.dropDown_Language.indexForSelectedRow == 0 {
+            UserDefaults.standard.set("vi", forKey: "lang")
+        } else {
+            UserDefaults.standard.set("en", forKey: "lang")
+        }
+        
+        handleLanguageChanged()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        //UserDefaults.standard.removeObject(forKey: "lang")
+        
+        if UserDefaults.standard.string(forKey: "lang") == nil {
+            UIFunctionality.createChooseLanguageView(view: self.view)
+        }
+        
+        handleLanguageChanged()
         
         self.testReturnArr.delegate = self
 
-        
         activityIndicator.stopAnimating()
         
 //=========TXTFIELD DELEGATE=========
         
         self.txt_Username.delegate = self
         self.txt_Password.delegate = self
-        
-//=========STYLE FOR RESET PASSWORD LINK=========
-        
-        let attrString = NSAttributedString(string: "Quên mật khẩu hoặc tên đăng nhập?", attributes: [NSForegroundColorAttributeName:UIColor.white, NSUnderlineStyleAttributeName: 1])
-        
-        btn_ResetPassword.setAttributedTitle(attrString, for: .normal)
         
 //=========STYLE BUTTONS=========
         
@@ -214,7 +279,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         btn_ResetPassword.isHidden = false
     }
     
-    
     @IBAction func btn_Login_OnClick(_ sender: Any) {
         login()
         if !isIphone4 {
@@ -246,7 +310,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
                     self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
                 } else {
                     print("Login Failed")
-                    ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập và mật khẩu không hợp lệ")
+                    ToastManager.alert(view: loginView, msg: "CREDENTIAL_INVALID".localized(lang: self.language))
                 }
             }
         }
@@ -257,6 +321,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "segue_LoginToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
+                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
+                tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
         }
@@ -268,12 +334,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private func frontValidationPassed() -> Bool {
         if let username = txt_Username.text, let password = txt_Password.text {
             if username.isEmpty {
-                ToastManager.sharedInstance.alert(view: loginView, msg: "Tên đăng nhập trống")
+                ToastManager.alert(view: loginView, msg: "USERNAME_EMPTY_MESSAGE".localized(lang: self.language))
                 return false
             }
             
             if password.isEmpty {
-                ToastManager.sharedInstance.alert(view: loginView, msg: "Mật khẩu trống")
+                ToastManager.alert(view: loginView, msg: "PASSWORD_EMPTY_MESSAGE".localized(lang: self.language))
                 return false
             }
             return true
@@ -286,18 +352,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private func uiWaitingLoginResponse(isDone: Bool) {
         if !isDone {
             self.activityIndicator.startAnimating()
-            self.txt_Username.isEnabled = false
-            self.txt_Password.isEnabled = false
-            self.btn_ResetPassword.isEnabled = false
-            self.btn_Login.isEnabled = false
-            self.btn_Register.isEnabled = false
+            self.view.isUserInteractionEnabled = false
         } else {
             self.activityIndicator.stopAnimating()
-            self.txt_Username.isEnabled = true
-            self.txt_Password.isEnabled = true
-            self.btn_ResetPassword.isEnabled = true
-            self.btn_Login.isEnabled = true
-            self.btn_Register.isEnabled = true
+            self.view.isUserInteractionEnabled = true
         }
     }
     

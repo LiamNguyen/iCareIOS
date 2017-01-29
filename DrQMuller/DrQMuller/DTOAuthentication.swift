@@ -39,7 +39,7 @@ class DTOAuthentication: NSObject {
         }
     }
     
-    func returnHttpBody() -> String! {
+    func returnHttpBody() -> String? {
         if let username = _username, let password = _password {
             return "username=\(username)&password=\(password)"
         } else {

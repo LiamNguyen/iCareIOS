@@ -17,6 +17,35 @@ class DTOBookingInformation: NSObject {
         return Singleton.instance
     }
     
+    private var _customerID: String!
+    var customerID: String {
+        get {
+            return _customerID
+        }
+        
+        set (newVal) {
+            _customerID = newVal
+        }
+    }
+    
+    private var _appointmentID: String!
+    var appointmentID: String {
+        get {
+            return _appointmentID
+        }
+        
+        set(newVal) {
+            _appointmentID = newVal
+        }
+    }
+    
+    private var _verificationCode: String!
+    var verificationCode: String {
+        get {
+            return _verificationCode
+        }
+    }
+    
     private var _country: String!
     var country: String {
         get {
@@ -154,6 +183,55 @@ class DTOBookingInformation: NSObject {
         self._exactDayOfWeek = nil
         self._bookingTime = nil
     }
+    
+    func returnHttpBody() -> String? {
+        let dtoArrays = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!
+        
+        let typesDataSource = dtoArrays.dropDownTypesDataSource
+        let vouchersDataSource = dtoArrays.dropDownVouchersDataSource
+        let locationsDataSource = dtoArrays.dropDownLocationsDataSource
+
+        var result = ""
+        
+        if _type == "Tự do" {
+            if let exactDate = _exactDate {
+                result += "start_date=1111-11-11&expire_date=\(exactDate)&"
+            }
+        } else {
+            if let startDate = _startDate, let endDate = _endDate {
+                result += "start_date=\(startDate)&expire_date=\(endDate)&"
+            }
+        }
+
+        if let type = _type, let customerID = _customerID, let location = _location, let voucher = _voucher, let bookingTime = _bookingTime {
+            self._verificationCode = generateVerificationCode(length: 10)
+            result += "type_id=\(Functionality.findKeyFromValue(dictionary: typesDataSource, value: type))&" +
+                        "customer_id=\(customerID)&" +
+                        "location_id=\(Functionality.findKeyFromValue(dictionary: locationsDataSource, value: location))&" +
+                        "voucher_id=\(Functionality.findKeyFromValue(dictionary: vouchersDataSource, value: voucher))&" +
+                        "bookingTime=\(Functionality.jsonStringify(obj: bookingTime as AnyObject))&" +
+                        "code=\(self._verificationCode!)"
+        }
+        
+        return result
+    }
+    
+    func generateVerificationCode(length: Int) -> String {
+        
+        let letters : NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let len = UInt32(letters.length)
+        
+        var randomString = ""
+        
+        for _ in 0 ..< length {
+            let rand = arc4random_uniform(len)
+            var nextChar = letters.character(at: Int(rand))
+            randomString += NSString(characters: &nextChar, length: 1) as String
+        }
+        
+        return randomString
+    }
+        
     
     
     

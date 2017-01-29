@@ -22,11 +22,39 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     @IBOutlet weak var picker_Gender: UIPickerView!
     @IBOutlet weak var picker_Date: UIDatePicker!
     @IBOutlet weak var slideBtn_Next: MMSlidingButton!
+    @IBOutlet weak var lbl_Title: UILabel!
     
     private var customerInformationController = CustomStyleCustomerInformation()
-    private var message = Messages()
     private var picker_GenderDataSource = [String]()
     private let datePickerRange = DatePickerRange()
+    private var language: String!
+    
+    private func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+
+        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized(lang: self.language)
+        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        
+        picker_GenderDataSource = ["GENDER_MALE".localized(lang: self.language), "GENDER_FEMALE".localized(lang: self.language)]
+        
+        picker_Date.locale = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: self.language)) as Locale
+        
+        self.slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
+        
+        self.slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+    }
+    
+    private struct StoryBoard {
+    static let SEGUE_TO_LOGIN = "segue_CustomerInformationSecondTabToLogin"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        handleLanguageChanged()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,14 +84,11 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         self.picker_Gender.dataSource = self
         self.picker_Gender.delegate = self
         
-//=========BIND DATASOURCE FOR GENDER PICKER=========
 
-        picker_GenderDataSource = ["Nam", "Nữ"]
         
 //=========DELEGATING slideBtn_Next=========
         
-        self.slideBtn_Next.delegate  = self
-        self.slideBtn_Next.buttonText = "Tiếp tục"
+        self.slideBtn_Next.delegate = self
         self.slideBtn_Next.reset()
     }
     
@@ -71,7 +96,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
 //=========POP UP CONFIRM DIALOG=========
         
-        message.confirmDialog(sender: self)
+        DialogManager.confirmLogout(sender: self, segueIdentifier: StoryBoard.SEGUE_TO_LOGIN)
     }
     
 //=========TRANSITION TO FIRST INFO PAGE=========

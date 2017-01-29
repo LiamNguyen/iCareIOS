@@ -17,6 +17,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var picker_EndDate: UIDatePicker!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var constraint_DatePickerStartHeight: NSLayoutConstraint!
+    @IBOutlet weak var btn_Back: UIButton!
     
     private var isTypeFree = false
     private var isEco = false
@@ -32,13 +33,31 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     private var datePickersValues = [Int]()
     
-    private var lineDrawer = LineDrawer()
     private var messageView: UIView!
     private var modelHandleBookingStartEnd  = ModelHandelBookingStartEnd()
     private var timer: Timer!
+    private var language: String!
+    
+    private func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        lbl_StartDate.text = "LBL_START_DATE".localized(lang: self.language)
+        lbl_EndDate.text = "LBL_END_DATE".localized(lang: self.language)
+        
+        let date_picker_localization = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: self.language)) as Locale
+        
+        picker_StartDate.locale = date_picker_localization
+        picker_EndDate.locale = date_picker_localization
+        btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(lang: self.language), for: .normal)
+        slideBtn_Next.delegate = self
+        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
+        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        handleLanguageChanged()
         
 //=========PREPARE UI BASE ON LOGIC OF DTOBookingInformation=========
         
@@ -50,8 +69,6 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         
 //=========DELEGATING SLIDE BTN=========
 
-        self.slideBtn_Next.delegate = self
-        self.slideBtn_Next.buttonText = "Tiếp tục"
         self.slideBtn_Next.reset()
         
 //=========CONSTRAINT FOR DATEPICKER START AND END=========
@@ -93,6 +110,8 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segue_BookingDateToBookingGeneral" {
             if let tabVC = segue.destination as? UITabBarController {
+                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
+                tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
         }
@@ -114,7 +133,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             }
         
             if datePickersIsEmpty {
-                ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng đợi cho ngày đã được chọn và dừng hẳn")
+                ToastManager.alert(view: view_TopView, msg: "DATE_PICKER_ONSPINNING_MESSAGE".localized(lang: self.language))
                 slideBtn_Next.reset()
                 datePickersIsEmpty = false
                 return
@@ -123,14 +142,14 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         
         if !isTypeFree {
             if (endDay - startDay) < 0 || (endMonth - startMonth) < 0 || (endYear - startYear) < 0 {
-                ToastManager.sharedInstance.alert(view: view_TopView, msg: "Ngày kết thúc không được nhỏ hơn ngày bắt đầu")
+                ToastManager.alert(view: view_TopView, msg: "END_LESS_THAN_START".localized(lang: self.language))
                 slideBtn_Next.reset()
                 return
             }
         }
         
         if isTypeFree {
-            let translatedSelectedDay = modelHandleBookingStartEnd.translateDaysOfWeek(en: picker_StartDate.date.dayOfWeek)
+            let translatedSelectedDay = Functionality.translateDaysOfWeek(en: picker_StartDate.date.dayOfWeek)
             if (translatedSelectedDay == "Thứ bảy" || translatedSelectedDay == "Chủ nhật") && isEco {
 
                 alertMessage_WeekendRestrict()
@@ -153,7 +172,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     private func prepareUI() {
         if DTOBookingInformation.sharedInstance.type == "Tự do" { //TYPE OF FREE DATE
-            lbl_StartDate.text = "Ngày thực hiện"
+            lbl_StartDate.text = "LBL_EXACT_DATE".localized(lang: self.language)
             lbl_EndDate.isHidden = true
             picker_EndDate.isHidden = true
             constraint_DatePickerStartHeight.constant = 290
@@ -176,19 +195,18 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
 //========CREATE MESSAGE VIEW CONTAINER=========
     
-    func alertMessage_WeekendRestrict() {
-        let message = "Hiện tại đối với Voucher ECO Booking, quý khách chỉ có thể sử dụng dịch vụ vào các ngày trong tuần, ngoại trừ Thứ Bảy và Chủ Nhật. Xin vui lòng liên hệ Trung Tâm Dr.Q-Muller để biết thêm chi tiết qua số điện thoại: [phone_number_waiting]"
+    private func alertMessage_WeekendRestrict() {
+        let message = "ECO_WEEKEND_RESTRICTION_MESSAGE".localized(lang: self.language)
         if self.messageView == nil {
-            let messageViewContainer = MessageViewContainer()
-            self.messageView = messageViewContainer.createMessageViewContainer(parentView: self.view)
+            self.messageView = UIFunctionality.createMessageViewContainer(parentView: self.view)
         } else {
             if messageView.center.x == UIScreen.main.bounds.width / 2 {
                 return
             }
-            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4)
+            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 4 + 10)
         }
         
-        ToastManager.sharedInstance.message(view: self.messageView, msg: message, duration: 10)
+        ToastManager.message(view: self.messageView, msg: message, duration: 10)
         
         self.timer = Timer.scheduledTimer(timeInterval: 10.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
     }

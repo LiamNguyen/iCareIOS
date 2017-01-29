@@ -34,16 +34,18 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
         var customer_ID: String?
         if let arrayResponse = data["Select_ToAuthenticate"] as? NSArray {
             for arrayItem in arrayResponse {
-                let arrayDict = arrayItem as! NSDictionary
-                if let cus_id = arrayDict["Customer_ID"] as? String {
+                let arrayDict = arrayItem as? NSDictionary
+                if let cus_id = arrayDict?["Customer_ID"] as? String {
                     customer_ID = cus_id
                 }
-                if let result = arrayDict["Status"] as? String {
+                
+                if let result = arrayDict?["Status"] as? String {
                     if result == "1" {
                         isOk["status"] = true
                         if let cus_id = customer_ID {
                             UserDefaults.standard.set(cus_id, forKey: "Customer_ID")
                             print(UserDefaults.standard.string(forKey: "Customer_ID") ?? "Customer_ID not available")
+                            DTOBookingInformation.sharedInstance.customerID = cus_id
                         }
                     } else {
                         isOk["status"] = false
