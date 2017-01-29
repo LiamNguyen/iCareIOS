@@ -1175,6 +1175,16 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u9f-Yo-qn3">
+                                <rect key="frame" x="102" y="479" width="218" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="41" id="CJH-pl-Xtu"/>
+                                    <constraint firstAttribute="width" constant="218" id="DXz-8D-W6j"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="D09-fI-GXW" kind="embed" id="McO-a1-fkx"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.98885581359999997" green="0.92435741299999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -1187,6 +1197,7 @@
                             <constraint firstAttribute="trailing" secondItem="Ioj-Mo-ODf" secondAttribute="trailing" constant="16" id="Cxu-HM-rAc"/>
                             <constraint firstItem="Ioj-Mo-ODf" firstAttribute="top" secondItem="f7y-7k-2CO" secondAttribute="bottom" constant="17" id="Dm5-8v-F2t"/>
                             <constraint firstItem="AgT-2G-ZMB" firstAttribute="top" secondItem="yp1-wo-AcN" secondAttribute="bottom" constant="8" id="F9h-LH-4nq"/>
+                            <constraint firstAttribute="trailing" secondItem="u9f-Yo-qn3" secondAttribute="trailing" id="GzY-se-hBz"/>
                             <constraint firstItem="yp1-wo-AcN" firstAttribute="top" secondItem="8d5-Pl-buM" secondAttribute="bottom" constant="20" id="H6K-Pd-WPc"/>
                             <constraint firstItem="f7y-7k-2CO" firstAttribute="top" secondItem="yp1-wo-AcN" secondAttribute="bottom" constant="17" id="IBw-ek-k9F"/>
                             <constraint firstAttribute="trailing" secondItem="uGx-F8-eki" secondAttribute="trailing" constant="16" id="Ibi-Ym-e8b"/>
@@ -1213,6 +1224,7 @@
                             <constraint firstItem="V8T-nu-J3C" firstAttribute="top" secondItem="8d5-Pl-buM" secondAttribute="bottom" constant="29" id="dgM-vK-Hv1"/>
                             <constraint firstItem="qUQ-tW-CTN" firstAttribute="trailing" secondItem="q0g-dY-fZg" secondAttribute="trailingMargin" id="f3M-W9-8Ru"/>
                             <constraint firstItem="qUQ-tW-CTN" firstAttribute="top" secondItem="6CG-sc-rGc" secondAttribute="bottom" constant="17" id="fxy-iF-VSI"/>
+                            <constraint firstAttribute="bottom" secondItem="u9f-Yo-qn3" secondAttribute="bottom" constant="48" id="hfr-vM-cYK"/>
                             <constraint firstItem="6CG-sc-rGc" firstAttribute="top" secondItem="6zK-bh-mdS" secondAttribute="bottom" constant="17" id="ia2-bc-HIY"/>
                             <constraint firstItem="Qbp-fw-dOj" firstAttribute="top" secondItem="Ioj-Mo-ODf" secondAttribute="bottom" constant="17" id="o9Y-TX-p7m"/>
                             <constraint firstItem="6zK-bh-mdS" firstAttribute="trailing" secondItem="q0g-dY-fZg" secondAttribute="trailingMargin" id="oWo-j6-ILG"/>
@@ -1230,8 +1242,10 @@
                         <outlet property="btn_LocationsDropDown" destination="6CG-sc-rGc" id="GqM-kC-NkQ"/>
                         <outlet property="btn_TypesDropDown" destination="8Jf-Yq-mUQ" id="BmK-St-yeK"/>
                         <outlet property="btn_VouchersDropDown" destination="uGx-F8-eki" id="Gl7-TG-MPI"/>
+                        <outlet property="constraints_ViewContainerHeight" destination="CJH-pl-Xtu" id="S5J-ZI-JuA"/>
                         <outlet property="lbl_Title" destination="EfR-pY-uXM" id="ddH-em-l7e"/>
                         <outlet property="slideBtn_Next" destination="SsW-LW-5Uc" id="sGr-8H-Jcq"/>
+                        <outlet property="view_HelpContainer" destination="u9f-Yo-qn3" id="5FT-yp-SEt"/>
                         <outlet property="view_TopView" destination="8d5-Pl-buM" id="afi-gF-S73"/>
                         <segue destination="dGw-41-sbb" kind="presentation" identifier="segue_BookingGeneralToStartEnDate" id="Qzw-y1-yFF"/>
                     </connections>
@@ -1466,7 +1480,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1525,7 +1539,7 @@
                                         <rect key="frame" x="0.0" y="28" width="223" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="223" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="223" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -1632,7 +1646,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="250" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YPq-Ty-icK" id="i1a-c2-P1O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hON-Vy-TFd">
@@ -1885,6 +1899,20 @@
             </objects>
             <point key="canvasLocation" x="4089" y="88"/>
         </scene>
+        <!--Help Service View Controller-->
+        <scene sceneID="xH6-xC-YPU">
+            <objects>
+                <viewController id="D09-fI-GXW" customClass="HelpServiceViewController" customModule="DrQMuller" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="inZ-H3-MKG">
+                        <rect key="frame" x="0.0" y="0.0" width="218" height="41"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dB5-JP-d9f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6094" y="560"/>
+        </scene>
     </scenes>
     <resources>
         <image name="IOSwallpaper" width="640" height="1138"/>
@@ -1911,10 +1939,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rf-7u-S8A"/>
+        <segue reference="B6B-Of-tMD"/>
+        <segue reference="sE2-L0-Rza"/>
         <segue reference="25N-BX-oeo"/>
         <segue reference="mIe-MO-60a"/>
-        <segue reference="sE2-L0-Rza"/>
         <segue reference="G0p-To-aUJ"/>
     </inferredMetricsTieBreakers>
 </document>

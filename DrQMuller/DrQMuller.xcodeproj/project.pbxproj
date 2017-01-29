@@ -41,6 +41,7 @@
 		ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */; };
 		ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */; };
 		EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */; };
+		EDB0A7951E3E6E64000162EA /* HelpServiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB0A7941E3E6E64000162EA /* HelpServiceViewController.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
 		EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338971DE9D86300DE940B /* LoginViewController.swift */; };
 		EDB3389B1DE9D86300DE940B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB338991DE9D86300DE940B /* Main.storyboard */; };
@@ -121,6 +122,7 @@
 		ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMSlidingButton.swift; sourceTree = "<group>"; };
 		ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingStartEnd.swift; sourceTree = "<group>"; };
 		EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleReleaseTime.swift; sourceTree = "<group>"; };
+		EDB0A7941E3E6E64000162EA /* HelpServiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpServiceViewController.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338951DE9D86300DE940B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDB338971DE9D86300DE940B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */,
 				ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */,
 				ED939FE51E0D52FA00A1164F /* BookingStartEndDateViewController.swift */,
+				EDB0A7941E3E6E64000162EA /* HelpServiceViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -585,6 +588,7 @@
 				ED03CEB41E369F9B00C9EBFB /* ViewHelper.swift in Sources */,
 				ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */,
 				ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */,
+				EDB0A7951E3E6E64000162EA /* HelpServiceViewController.swift in Sources */,
 				ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */,
 				ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */,
 				ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */,

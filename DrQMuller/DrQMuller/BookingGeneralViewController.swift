@@ -26,6 +26,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var lbl_Title: UILabel!
+    @IBOutlet private weak var view_HelpContainer: UIView!
+    @IBOutlet weak var constraints_ViewContainerHeight: NSLayoutConstraint!
     
     //=========MARK: PROPERTIES=========
     
@@ -39,7 +41,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private let firstPhaseWithOneLocation = true
     private var activityIndicator: UIActivityIndicatorView!
     private var language: String!
-    
+    private var _constraint_ViewContainerHeight: CGFloat!
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -65,6 +67,15 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         btn_VouchersDropDown.setTitle("DROPDOWN_VOUCHER_TITLE".localized(lang: self.language), for: .normal)
         btn_TypesDropDown.setTitle("DROPDOWN_TYPE_TITLE".localized(lang: self.language), for: .normal)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if UIScreen.main.bounds.height >= 667 {
+            constraints_ViewContainerHeight.constant = 50
+            UserDefaults.standard.set(constraints_ViewContainerHeight.constant, forKey: "containerHeight")
+        } else {
+            UserDefaults.standard.removeObject(forKey: "containerHeight")
+        }
     }
     
 //=========VIEW DID LOAD FUNC=========
