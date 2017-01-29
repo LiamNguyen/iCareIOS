@@ -1,0 +1,72 @@
+/* 
+  Localizable.strings
+  DrQMuller
+
+  Created by Cao Do Nguyen on /25/01/2017.
+  Copyright © 2017 LetsDev. All rights reserved.
+*/
+
+"CONFIRM_LOGOUT_TITLE" = "You want to logout?";
+"CONFIRM_LOGOUT_MESSAGE" = "Information which is not saved will be lost";
+"LOGOUT_EXECUTE_TITLE" = "Logout";
+"CONFIRM_TITLE" = "Confirm";
+"CONFIRM_DELETE_MESSAGE" = "You want to clear all items in cart?";
+"CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART" = "You want to clear ";
+"CONFIRM_DELETE_EACH_ITEM_MESSAGE_2ND_PART" = " off the cart?";
+"DELETE_SUCCESS_MESSAGE" = "Delete successfully";
+"DELETE_FAIL_MESSAGE" = "Delete failed. Please try again";
+"ECO_WEEKEND_RESTRICTION_MESSAGE" = "ECO Booking can only be applied on weekdays. Please contact DrQMuller FBT Shop for more information. Phone number: [phone_number_waiting]";
+"END_LESS_THAN_START" = "End date is smaller than start date";
+"DELETE_EXECUTE_TITLE" = "Delete";
+"DIALOG_CANCEL_TITLE" = "Cancel";
+"BTN_NEXT_TITLE" = "Next";
+"BTN_FINISH_TITLE" = "Finish";
+"SLIDE_BTN_UNLOCKED_TITLE" = "Success";
+"USERNAME_PLACEHOLDER" = "Username";
+"PASSWORD_PLACEHOLDER" = "Password";
+"CONFIRM_PASSWORD_PLACEHOLDER" = "Confirm password";
+"FULLNAME_PLACEHOLDER" = "Your full name";
+"ADDRESS_PLACEHOLDER" = "Your address";
+"EMAIL_PLACEHOLDER" = "Your email";
+"PHONE_PLACEHOLDER" = "Your phone number";
+"RESET_PASSWORD_LINK" = "You forgot username or password?";
+"LOGIN_BTN_TITLE" = "Sign in";
+"REGISTER_BTN_TITLE" = "Register";
+"FIRST_TAB_BTN_TITLE" = "Basics";
+"SECOND_TAB_BTN_TITLE" = "Necessaries";
+"THIRD_TAB_BTN_TITLE" = "Important";
+"GENDER_MALE" = "Male";
+"GENDER_FEMALE" = "Female";
+"CUSTOMER_INFO_PAGE_TITLE" = "Customer information";
+"BOOKING_INFO_PAGE_TITLE" = "Booking information";
+"BTN_DROPDOWN_DAY_OF_WEEK" = "Choose day of week";
+"BTN_CLEAR_ALL_CART_ITEM" = "Clear all";
+"BOOKING_TIME_HAS_EXISTED_MESSAGE" = "This time has been booked. Please choose another time";
+"BOOKING_TIME_SUCCESS_MESSAGE" = "Time booked successfully";
+"BOOKING_SUCCESS_MESSAGE" = "You have booked one appointment successfully";
+"BOOKING_FAIL_MESSAGE" = "Booking failed. Please try again";
+"DUPLICATE_BOOKING_DAY_OF_WWEK_MESSAGE" = "You can only book one time in a day.\nYou have booked ";
+"DELETE_EACH_CART_ITEM_MESSAGE" = "Please swipe right to left on the cart item to delete";
+"REQUIRE_BOOK_ATLEAST_ONE_TIME_MESSAGE" = "Please choose at least one time";
+"FULL_BOOKING_TIME_MESSAGE" = "You have booked 3 times in a week.\nPlease continue to finish booking procedure";
+"CART_ORDER_EMPTY_MESSAGE" = "No time has been chosen";
+"RETRY_MESSAGE" = "Please try again";
+"LBL_START_DATE" = "Start date";
+"LBL_END_DATE" = "End date";
+"LBL_EXACT_DATE" = "Date";
+"LBL_VOUCHER_TITLE" = "Vouchers: ";
+"LBL_TYPE_TITLE" = "Type: ";
+"LBL_LOCATION_TITLE" = "Location";
+"DROPDOWN_VOUCHER_TITLE" = "Choose Voucher";
+"DROPDOWN_TYPE_TITLE" = "Choose Type";
+"LBL_BOOKING_TIME_TITLE" = "Schedule";
+"DROPDOWN_VOUCHER_EMPTY_MESSAGE" = "Please choose voucher";
+"DROPDOWN_TYPE_EMPTY_MESSAGE" = "Please choose type";
+"USERNAME_EMPTY_MESSAGE" = "Username empty";
+"PASSWORD_EMPTY_MESSAGE" = "Passwod empty";
+"CONFIRM_PASSWORD_EMPTY_MESSAGE" = "Confirm password empty";
+"CREDENTIAL_INVALID" = "Invalid username or password";
+"ONE_LOCATION_MESSAGE" = "Currently there is only one DrQMuller FBT Shop at district 3, Viet Nam";
+
+
+

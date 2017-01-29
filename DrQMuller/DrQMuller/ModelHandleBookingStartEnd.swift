@@ -9,16 +9,5 @@
 import Foundation
 
 class ModelHandelBookingStartEnd {
-    //=========TRANSLATE DAYS OF WEEK=========
-    
-    func translateDaysOfWeek(en: String) -> String {
-        var daysOfWeek = ["Monday":"Thứ hai",
-                          "Tuesday":"Thứ ba",
-                          "Wednesday":"Thứ tư",
-                          "Thursday":"Thứ năm",
-                          "Friday":"Thứ sáu",
-                          "Saturday":"Thứ bảy",
-                          "Sunday":"Chủ nhật"]
-        return daysOfWeek[en]!
-    }
+
 }

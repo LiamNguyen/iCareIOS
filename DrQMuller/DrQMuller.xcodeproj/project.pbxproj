@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		D9C9F96E3FA0149EBF20A8A4 /* Pods_DrQMuller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F58401B7A7C57AC9EFB8729C /* Pods_DrQMuller.framework */; };
+		ED03CEB21E36983D00C9EBFB /* FunctionalityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03CEB11E36983D00C9EBFB /* FunctionalityHelper.swift */; };
+		ED03CEB41E369F9B00C9EBFB /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03CEB31E369F9B00C9EBFB /* ViewHelper.swift */; };
 		ED040F491E0C7808003166FD /* NiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED040F481E0C7808003166FD /* NiceButton.swift */; };
 		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
 		ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */; };
-		ED1A48481E27616F0034857A /* MessageViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A48471E27616F0034857A /* MessageViewContainer.swift */; };
 		ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */; };
-		ED3011E01E1928A90037F020 /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3011DF1E1928A90037F020 /* ToastManager.swift */; };
 		ED3011E21E192D790037F020 /* DTOBookingInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3011E11E192D790037F020 /* DTOBookingInformation.swift */; };
 		ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3011E31E19877C0037F020 /* DateExtensions.swift */; };
 		ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */; };
@@ -24,22 +24,23 @@
 		ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */; };
 		ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */; };
 		ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */; };
+		ED522D5E1E38F65800E53403 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED522D601E38F65800E53403 /* Localizable.strings */; };
+		ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED522D621E38F84C00E53403 /* StringExtension.swift */; };
+		ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */; };
 		ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */; };
 		ED6986961E12E14000932E93 /* ModelHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6986951E12E14000932E93 /* ModelHandleLogin.swift */; };
-		ED6986981E12E8E700932E93 /* Messages.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6986971E12E8E700932E93 /* Messages.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
 		ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */; };
 		ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED939FE31E0D248F00A1164F /* DatePickerRange.swift */; };
 		ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED939FE51E0D52FA00A1164F /* BookingStartEndDateViewController.swift */; };
 		ED9558921E10F4DC004893DA /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9558911E10F4DC004893DA /* HTTPClient.swift */; };
 		ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9558951E10F5B8004893DA /* ServiceURL.swift */; };
-		ED9558981E10FFF7004893DA /* NetworkConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9558971E10FFF7004893DA /* NetworkConnectivity.swift */; };
 		ED95589B1E1172F1004893DA /* DTOAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589A1E1172F1004893DA /* DTOAuthentication.swift */; };
 		ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589C1E118529004893DA /* PMHandleLogin.swift */; };
 		ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589E1E11867A004893DA /* APIHandleLogin.swift */; };
 		ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */; };
-		ED9CC8231E222FB10025E78F /* ActivityIndicatorViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9CC8221E222FB10025E78F /* ActivityIndicatorViewContainer.swift */; };
 		ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */; };
+		EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
 		EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338971DE9D86300DE940B /* LoginViewController.swift */; };
 		EDB3389B1DE9D86300DE940B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB338991DE9D86300DE940B /* Main.storyboard */; };
@@ -47,9 +48,8 @@
 		EDB338A01DE9D86300DE940B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDB3389E1DE9D86300DE940B /* LaunchScreen.storyboard */; };
 		EDB338AB1DE9D86300DE940B /* DrQMullerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338AA1DE9D86300DE940B /* DrQMullerTests.swift */; };
 		EDB338B61DE9D86300DE940B /* DrQMullerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338B51DE9D86300DE940B /* DrQMullerUITests.swift */; };
-		EDE41FDA1E08CE66006CCE99 /* CustomStyleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */; };
+		EDCE22CE1E309F490022F0C8 /* APIHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE22CD1E309F490022F0C8 /* APIHandleReleaseTime.swift */; };
 		EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */; };
-		EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */; };
 		EDEAC1661E1D3DAC002FF282 /* ModelHandleBookingDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEAC1651E1D3DAC002FF282 /* ModelHandleBookingDetail.swift */; };
 /* End PBXBuildFile section */
 
@@ -85,12 +85,12 @@
 
 /* Begin PBXFileReference section */
 		D24D7C745172B076A94BEB0C /* Pods-DrQMuller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrQMuller.release.xcconfig"; path = "Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller.release.xcconfig"; sourceTree = "<group>"; };
+		ED03CEB11E36983D00C9EBFB /* FunctionalityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalityHelper.swift; sourceTree = "<group>"; };
+		ED03CEB31E369F9B00C9EBFB /* ViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
 		ED040F481E0C7808003166FD /* NiceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceButton.swift; sourceTree = "<group>"; };
 		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
-		ED1A48471E27616F0034857A /* MessageViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewContainer.swift; sourceTree = "<group>"; };
 		ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartOrderTableViewCell.swift; sourceTree = "<group>"; };
-		ED3011DF1E1928A90037F020 /* ToastManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
 		ED3011E11E192D790037F020 /* DTOBookingInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOBookingInformation.swift; sourceTree = "<group>"; };
 		ED3011E31E19877C0037F020 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
@@ -101,22 +101,26 @@
 		ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOStaticArrayDataSource.swift; sourceTree = "<group>"; };
 		ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingDetailViewController.swift; sourceTree = "<group>"; };
 		ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingGeneralViewController.swift; sourceTree = "<group>"; };
+		ED522D5A1E38F5DA00E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
+		ED522D5B1E38F5DA00E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		ED522D5F1E38F65800E53403 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ED522D611E38F66200E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		ED522D621E38F84C00E53403 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartOrderConfirmTableViewCell.swift; sourceTree = "<group>"; };
 		ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
 		ED6986951E12E14000932E93 /* ModelHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleLogin.swift; sourceTree = "<group>"; };
-		ED6986971E12E8E700932E93 /* Messages.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Messages.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 		ED939FE31E0D248F00A1164F /* DatePickerRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerRange.swift; sourceTree = "<group>"; };
 		ED939FE51E0D52FA00A1164F /* BookingStartEndDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingStartEndDateViewController.swift; sourceTree = "<group>"; };
 		ED9558911E10F4DC004893DA /* HTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		ED9558951E10F5B8004893DA /* ServiceURL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceURL.swift; sourceTree = "<group>"; };
-		ED9558971E10FFF7004893DA /* NetworkConnectivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConnectivity.swift; sourceTree = "<group>"; };
 		ED95589A1E1172F1004893DA /* DTOAuthentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOAuthentication.swift; sourceTree = "<group>"; };
 		ED95589C1E118529004893DA /* PMHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleLogin.swift; sourceTree = "<group>"; };
 		ED95589E1E11867A004893DA /* APIHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleLogin.swift; sourceTree = "<group>"; };
 		ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMSlidingButton.swift; sourceTree = "<group>"; };
-		ED9CC8221E222FB10025E78F /* ActivityIndicatorViewContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorViewContainer.swift; sourceTree = "<group>"; };
 		ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingStartEnd.swift; sourceTree = "<group>"; };
+		EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleReleaseTime.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338951DE9D86300DE940B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EDB338971DE9D86300DE940B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -130,9 +134,8 @@
 		EDB338B11DE9D86300DE940B /* DrQMullerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DrQMullerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338B51DE9D86300DE940B /* DrQMullerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrQMullerUITests.swift; sourceTree = "<group>"; };
 		EDB338B71DE9D86300DE940B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStyleCustomerInformation.swift; sourceTree = "<group>"; };
+		EDCE22CD1E309F490022F0C8 /* APIHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleReleaseTime.swift; sourceTree = "<group>"; };
 		EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
-		EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineDrawer.swift; sourceTree = "<group>"; };
 		EDEAC1651E1D3DAC002FF282 /* ModelHandleBookingDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingDetail.swift; sourceTree = "<group>"; };
 		F4CDD90B0CF1F864033543A5 /* Pods-DrQMuller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrQMuller.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller.debug.xcconfig"; sourceTree = "<group>"; };
 		F58401B7A7C57AC9EFB8729C /* Pods_DrQMuller.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DrQMuller.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +184,23 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		ED03CEB01E36981A00C9EBFB /* Resusable */ = {
+			isa = PBXGroup;
+			children = (
+				ED03CEB11E36983D00C9EBFB /* FunctionalityHelper.swift */,
+				ED522D621E38F84C00E53403 /* StringExtension.swift */,
+			);
+			name = Resusable;
+			sourceTree = "<group>";
+		};
+		ED03CEB51E369FA100C9EBFB /* Reusable */ = {
+			isa = PBXGroup;
+			children = (
+				ED03CEB31E369F9B00C9EBFB /* ViewHelper.swift */,
+			);
+			name = Reusable;
+			sourceTree = "<group>";
+		};
 		ED3BEBD31E0845AA00CAA173 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +219,8 @@
 		ED3BEBD41E0845B500CAA173 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ED522D641E390F3A00E53403 /* Locale */,
+				ED03CEB01E36981A00C9EBFB /* Resusable */,
 				ED939FE31E0D248F00A1164F /* DatePickerRange.swift */,
 				ED6986951E12E14000932E93 /* ModelHandleLogin.swift */,
 				ED41DF3C1E163EC900803A14 /* ModelHandleBookingGeneral.swift */,
@@ -221,21 +243,24 @@
 		ED3BEBD61E08460700CAA173 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				ED03CEB51E369FA100C9EBFB /* Reusable */,
 				ED92AB591E1E076300989D03 /* TableCell */,
 				ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */,
 				ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */,
 				ED040F481E0C7808003166FD /* NiceButton.swift */,
 				ED40875C1E03DCAF00950D4C /* CustomTxtField.swift */,
-				EDE41FD91E08CE66006CCE99 /* CustomStyleCustomerInformation.swift */,
 				EDE41FDB1E08D4A6006CCE99 /* ColorExtensions.swift */,
-				EDE41FDD1E08D87C006CCE99 /* LineDrawer.swift */,
-				ED6986971E12E8E700932E93 /* Messages.swift */,
-				ED3011DF1E1928A90037F020 /* ToastManager.swift */,
 				ED3011E31E19877C0037F020 /* DateExtensions.swift */,
-				ED9CC8221E222FB10025E78F /* ActivityIndicatorViewContainer.swift */,
-				ED1A48471E27616F0034857A /* MessageViewContainer.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		ED522D641E390F3A00E53403 /* Locale */ = {
+			isa = PBXGroup;
+			children = (
+				ED522D601E38F65800E53403 /* Localizable.strings */,
+			);
+			name = Locale;
 			sourceTree = "<group>";
 		};
 		ED92AB591E1E076300989D03 /* TableCell */ = {
@@ -243,6 +268,7 @@
 			children = (
 				ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */,
 				ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */,
+				ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */,
 			);
 			name = TableCell;
 			sourceTree = "<group>";
@@ -252,6 +278,7 @@
 			children = (
 				ED95589E1E11867A004893DA /* APIHandleLogin.swift */,
 				ED41DF3E1E164CC000803A14 /* APIHandleBooking.swift */,
+				EDCE22CD1E309F490022F0C8 /* APIHandleReleaseTime.swift */,
 			);
 			name = LibraryAPI;
 			sourceTree = "<group>";
@@ -261,9 +288,9 @@
 			children = (
 				ED9558911E10F4DC004893DA /* HTTPClient.swift */,
 				ED9558951E10F5B8004893DA /* ServiceURL.swift */,
-				ED9558971E10FFF7004893DA /* NetworkConnectivity.swift */,
 				ED95589C1E118529004893DA /* PMHandleLogin.swift */,
 				ED41DF401E164D0C00803A14 /* PMHandleBooking.swift */,
+				EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */,
 			);
 			name = PersistencyManager;
 			sourceTree = "<group>";
@@ -430,6 +457,7 @@
 			knownRegions = (
 				en,
 				Base,
+				vi,
 			);
 			mainGroup = EDB338891DE9D86300DE940B;
 			productRefGroup = EDB338931DE9D86300DE940B /* Products */;
@@ -449,6 +477,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDB338A01DE9D86300DE940B /* LaunchScreen.storyboard in Resources */,
+				ED522D5E1E38F65800E53403 /* Localizable.strings in Resources */,
 				EDB3389D1DE9D86300DE940B /* Assets.xcassets in Resources */,
 				EDB3389B1DE9D86300DE940B /* Main.storyboard in Resources */,
 			);
@@ -524,27 +553,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */,
-				ED6986981E12E8E700932E93 /* Messages.swift in Sources */,
 				ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */,
+				ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */,
+				ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */,
 				ED41DF3F1E164CC000803A14 /* APIHandleBooking.swift in Sources */,
+				EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */,
 				ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */,
 				ED3011E21E192D790037F020 /* DTOBookingInformation.swift in Sources */,
 				ED95589B1E1172F1004893DA /* DTOAuthentication.swift in Sources */,
-				EDE41FDE1E08D87C006CCE99 /* LineDrawer.swift in Sources */,
 				ED9558921E10F4DC004893DA /* HTTPClient.swift in Sources */,
 				ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */,
-				ED1A48481E27616F0034857A /* MessageViewContainer.swift in Sources */,
 				EDEAC1661E1D3DAC002FF282 /* ModelHandleBookingDetail.swift in Sources */,
-				ED9CC8231E222FB10025E78F /* ActivityIndicatorViewContainer.swift in Sources */,
 				ED040F491E0C7808003166FD /* NiceButton.swift in Sources */,
 				ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */,
 				ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,
 				ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */,
-				ED9558981E10FFF7004893DA /* NetworkConnectivity.swift in Sources */,
+				EDCE22CE1E309F490022F0C8 /* APIHandleReleaseTime.swift in Sources */,
 				ED6986961E12E14000932E93 /* ModelHandleLogin.swift in Sources */,
 				ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */,
-				ED3011E01E1928A90037F020 /* ToastManager.swift in Sources */,
 				ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */,
 				ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */,
 				EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */,
@@ -552,11 +579,12 @@
 				ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */,
 				ED41DF3D1E163EC900803A14 /* ModelHandleBookingGeneral.swift in Sources */,
 				ED41DF411E164D0C00803A14 /* PMHandleBooking.swift in Sources */,
+				ED03CEB21E36983D00C9EBFB /* FunctionalityHelper.swift in Sources */,
 				ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */,
 				EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */,
+				ED03CEB41E369F9B00C9EBFB /* ViewHelper.swift in Sources */,
 				ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */,
 				ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */,
-				EDE41FDA1E08CE66006CCE99 /* CustomStyleCustomerInformation.swift in Sources */,
 				ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */,
 				ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */,
 				ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */,
@@ -596,10 +624,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		ED522D601E38F65800E53403 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				ED522D5F1E38F65800E53403 /* en */,
+				ED522D611E38F66200E53403 /* vi */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		EDB338991DE9D86300DE940B /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				EDB3389A1DE9D86300DE940B /* Base */,
+				ED522D5A1E38F5DA00E53403 /* vi */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -608,6 +646,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				EDB3389F1DE9D86300DE940B /* Base */,
+				ED522D5B1E38F5DA00E53403 /* vi */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -619,6 +658,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -673,6 +713,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
