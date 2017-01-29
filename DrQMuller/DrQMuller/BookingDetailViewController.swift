@@ -10,7 +10,7 @@ import UIKit
 import QuartzCore
 import DropDown
 
-class BookingDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SlideButtonDelegate {
+class BookingDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, SlideButtonDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet private weak var lbl_Notification: UILabel!
     @IBOutlet private weak var btn_ShowCart: UIImageView!
@@ -62,6 +62,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var deletedTime: String!
     private var hasFinishedInThisPage = false
     private var language: String!
+    private var addToCartAnimation_StartPosition: CGFloat!
+    private var flyingView: UIView!
     
     func handleLanguageChanged() {
         self.language = UserDefaults.standard.string(forKey: "lang")
@@ -298,6 +300,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         ToastManager.alert(view: self.view_TopView, msg: msg)
                         
                         self.activityIndicator.stopAnimating()
+                        self.flyingView = UIFunctionality.createFlyingView(parentView: self.view, startPosition: self.addToCartAnimation_StartPosition)
+                        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.viewSelfDestroy), userInfo: nil, repeats: false)
                         self.tableView_BookingTime.isUserInteractionEnabled = true
                     }
                 }
@@ -423,6 +427,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == self.tableView_BookingTime {
+            
             let bookingTime = dtoBookingTime
             
             if bookingTime?.count == 3 {
@@ -438,6 +443,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     }
                 }
             }
+            
+            let rectForCell = tableView.rectForRow(at: indexPath)
+            addToCartAnimation_StartPosition = tableView.convert(rectForCell, to: self.view).origin.y
             
             self.activityIndicator.startAnimating()
             self.tableView_BookingTime.isUserInteractionEnabled = false
@@ -850,6 +858,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBAction func btn_ConfirmBooking_OnClick(_ sender: Any) {
         modelHandelBookingDetail.insertNewAppointment()
+    }
+    
+    @objc private func viewSelfDestroy() {
+        if let flyingView = self.flyingView {
+            flyingView.removeFromSuperview()
+        }
     }
 }
 
