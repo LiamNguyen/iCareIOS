@@ -119,6 +119,36 @@ struct UIFunctionality {
         view_Container.addSubview(btn_Confirm)
         LoginViewController.view_BackLayer.addSubview(view_Container)
     }
+    
+    static func createFlyingView(parentView: UIView, startPosition: CGFloat) -> UIView {
+        let flyingView = UIView(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
+        flyingView.center = CGPoint(x: UIScreen.main.bounds.width - 15, y: 25)
+        //self.flyingView.backgroundColor = UIColor(patternImage: image)
+        flyingView.layer.contents = UIImage(named: "planeIcon")?.cgImage
+        parentView.addSubview(flyingView)
+        
+        let path = UIBezierPath()
+        let startPoint = CGPoint(x: 15, y: startPosition)
+        path.move(to: startPoint)
+        path.addCurve(to: CGPoint(x: UIScreen.main.bounds.width - 15, y: 25), controlPoint1: CGPoint(x: UIScreen.main.bounds.width / 2 + 150, y: startPosition - 20), controlPoint2: CGPoint(x: UIScreen.main.bounds.width / 2 + 200, y: startPosition - 50))
+        
+        // create a new CAKeyframeAnimation that animates the objects position
+        let anim = CAKeyframeAnimation(keyPath: "position")
+        
+        // set the animations path to our bezier curve
+        anim.path = path.cgPath
+        
+        // set some more parameters for the animation
+        // this rotation mode means that our object will rotate so that it's parallel to whatever point it is currently on the curve
+        anim.rotationMode = kCAAnimationRotateAuto
+        anim.repeatCount = 0
+        anim.duration = 1
+        
+        // we add the animation to the squares 'layer' property
+        flyingView.layer.add(anim, forKey: "animate position along path")
+        
+        return flyingView
+    }
 }
 
 //CREATE TOAST
