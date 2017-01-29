@@ -21,9 +21,34 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
     @IBOutlet weak var txt_Email: UITextField!
     @IBOutlet weak var txt_Phone: UITextField!
+    @IBOutlet weak var lbl_Title: UILabel!
+    @IBOutlet weak var btn_Next: UIButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
-    private var message = Messages()
+    private var language: String!
+    
+    func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized(lang: self.language)
+        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        
+        txt_Email.placeholder = "EMAIL_PLACEHOLDER".localized(lang: self.language)
+        txt_Phone.placeholder = "PHONE_PLACEHOLDER".localized(lang: self.language)
+        btn_Next.setTitle("BTN_NEXT_TITLE".localized(lang: self.language), for: .normal)
+    }
+    
+    private struct StoryBoard {
+        static let SEGUE_TO_LOGIN = "segue_CustomerInformationThirdTabToLogin"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        handleLanguageChanged()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,7 +84,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========POP UP CONFIRM DIALOG=========
         
-        message.confirmDialog(sender: self)
+        DialogManager.confirmLogout(sender: self, segueIdentifier: StoryBoard.SEGUE_TO_LOGIN)
         
     }
     
@@ -94,12 +119,13 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "segue_CustomerInformationToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
+                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
                 tabVC.selectedIndex = 1
+                tabVC.tabBar.items?[0].isEnabled = false
             }
         }
     }
-    
-    
+
     
     
     

@@ -20,10 +20,10 @@ class APIHandleLogin: NSObject {
     }
     
     override init() {
-        persistencyManager = PMHandleLogin()
+        self.persistencyManager = PMHandleLogin()
     }
     
     func handleLogin(username: String, password: String) {
-        persistencyManager.handleLogin(username: username, password: password)
+        self.persistencyManager.handleLogin(username: username, password: password)
     }
 }

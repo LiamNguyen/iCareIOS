@@ -12,6 +12,7 @@ import DropDown
 
 let ToastColor = UIColor(netHex: 0xE89D00)
 let ThemeColor = UIColor(netHex: 0x8F00B3)
+let ThemeBackGroundColor = UIColor(netHex: 0xFCECFF)
 let ToastColorAlert = UIColor.red
 
 class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
@@ -23,7 +24,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var btn_VouchersDropDown: NiceButton!
     @IBOutlet private weak var btn_TypesDropDown: NiceButton!
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
-    @IBOutlet weak var view_TopView: UIView!
+    @IBOutlet private weak var view_TopView: UIView!
+    @IBOutlet private weak var lbl_Title: UILabel!
     
     //=========MARK: PROPERTIES=========
     
@@ -35,8 +37,9 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private let dropDown_Types = DropDown()
     
     private let firstPhaseWithOneLocation = true
+    private var activityIndicator: UIActivityIndicatorView!
+    private var language: String!
     
-    private let lineDrawer = LineDrawer()
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -51,16 +54,25 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     private var modelHandleBookingGeneral = ModelHandleBookingGeneral()
     
+    private func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized(lang: self.language)
+        slideBtn_Next.delegate = self
+        slideBtn_Next.reset()
+        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
+        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        
+        btn_VouchersDropDown.setTitle("DROPDOWN_VOUCHER_TITLE".localized(lang: self.language), for: .normal)
+        btn_TypesDropDown.setTitle("DROPDOWN_TYPE_TITLE".localized(lang: self.language), for: .normal)
+    }
+    
 //=========VIEW DID LOAD FUNC=========
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//=========DELEGATING slideBtn_Next=========
-        
-        self.slideBtn_Next.delegate  = self
-        self.slideBtn_Next.buttonText = "Tiếp tục"
-        self.slideBtn_Next.reset()
+    
+        handleLanguageChanged()
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
 
@@ -80,7 +92,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         UIView.hr_setToastThemeColor(color: ToastColor)
 
-        
+        self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
+        self.activityIndicator.startAnimating()
     }
     
     deinit {
@@ -109,9 +122,19 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     func handleReceivedNotificationData(notification: Notification, userInfoKey: String) {
         if let userInfo = notification.userInfo {
-            let dtoArrays = userInfo[userInfoKey] as? DTOStaticArrayDataSource
-            
-            dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, cities: (dtoArrays?.dropDownCitiesDataSource)!, districts: (dtoArrays?.dropDownDistrictsDataSource)!, locations: (dtoArrays?.dropDownLocationsDataSource)!, vouchers: (dtoArrays?.dropDownVouchersDataSource)!, types: (dtoArrays?.dropDownTypesDataSource)!)
+            DispatchQueue.global(qos: .userInteractive).async {
+                let dtoArrays = userInfo[userInfoKey] as? DTOStaticArrayDataSource
+                
+                let locationsDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownLocationsDataSource, isReturnValue: true)
+                let vouchersDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownVouchersDataSource, isReturnValue: true)
+                let typesDisplayArray = Functionality.returnArrayFromDictionary(dictionary: dtoArrays?.dropDownTypesDataSource, isReturnValue: true)
+
+                self.dropDownAllWiredUp(countries: (dtoArrays?.dropDownCountriesDataSource)!, cities: (dtoArrays?.dropDownCitiesDataSource)!, districts: (dtoArrays?.dropDownDistrictsDataSource)!, locations: locationsDisplayArray, vouchers: vouchersDisplayArray, types: typesDisplayArray)
+                DispatchQueue.main.async {
+                    self.activityIndicator.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
+                    self.activityIndicator.stopAnimating()
+                }
+            }
         }
     }
     
@@ -119,13 +142,13 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
         if dropDown_Vouchers.selectedItem == nil {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Vouchers")
+            ToastManager.alert(view: view_TopView, msg: "DROPDOWN_VOUCHER_EMPTY_MESSAGE".localized(lang: self.language))
             slideBtn_Next.reset()
             return
         }
         
         if dropDown_Types.selectedItem == nil {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Xin vui lòng chọn Loại Dịch Vụ")
+            ToastManager.alert(view: view_TopView, msg: "DROPDOWN_TYPE_EMPTY_MESSAGE".localized(lang: self.language))
             slideBtn_Next.reset()
             return
         }
@@ -135,7 +158,18 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         DTOBookingInformation.sharedInstance.district = dropDown_Districts.selectedItem!
         DTOBookingInformation.sharedInstance.location = dropDown_Locations.selectedItem!
         DTOBookingInformation.sharedInstance.voucher = dropDown_Vouchers.selectedItem!
-        DTOBookingInformation.sharedInstance.type = dropDown_Types.selectedItem!
+        
+        var chosenType = dropDown_Types.selectedItem!
+        
+        if self.language == "en" {
+            if chosenType == "Fix time" {
+                chosenType = "Cố định"
+            } else {
+                chosenType = "Tự do"
+            }
+        }
+        
+        DTOBookingInformation.sharedInstance.type = chosenType
         
         self.performSegue(withIdentifier: "segue_BookingGeneralToStartEnDate", sender: self)
     }
@@ -144,7 +178,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     @IBAction func btn_CountriesDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
             return
         }
         dropDown_Countries.show()
@@ -154,7 +188,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_CitiesDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
             return
         }
         dropDown_Cities.show()
@@ -164,7 +198,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_DistrictsDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
             return
         }
         dropDown_Districts.show()
@@ -174,7 +208,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_LocationsDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.sharedInstance.alert(view: view_TopView, msg: "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam")
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
             return
         }
         dropDown_Locations.show()
@@ -195,18 +229,20 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 //=========WIRED UP ALL DROPDOWNS=========
     
     private func dropDownAllWiredUp(countries: [String], cities: [String], districts: [String], locations: [String], vouchers: [String], types: [String]) {
-        dropDownCountriesWiredUp(dataSource: countries)
-        dropDownCitiesWiredUp(dataSource: cities)
-        dropDownDistrictsWiredUp(dataSource: districts)
-        dropDownLocationsWiredUp(dataSource: locations)
-        dropDownVouchersWiredUp(dataSource: vouchers)
-        dropDownTypesWiredUp(dataSource: types)
-        
-        DispatchQueue.main.async {
-            self.btn_CountriesDropDown.setTitle(self.dropDown_Countries.selectedItem, for: .normal)
-            self.btn_CitiesDropDown.setTitle(self.dropDown_Cities.selectedItem, for: .normal)
-            self.btn_DistrictsDropDown.setTitle(self.dropDown_Districts.selectedItem, for: .normal)
-            self.btn_LocationsDropDown.setTitle(self.dropDown_Locations.selectedItem, for: .normal)
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.dropDownCountriesWiredUp(dataSource: countries)
+            self.dropDownCitiesWiredUp(dataSource: cities)
+            self.dropDownDistrictsWiredUp(dataSource: districts)
+            self.dropDownLocationsWiredUp(dataSource: locations)
+            self.dropDownVouchersWiredUp(dataSource: vouchers)
+            self.dropDownTypesWiredUp(dataSource: types)
+            
+            DispatchQueue.main.async {
+                self.btn_CountriesDropDown.setTitle(self.dropDown_Countries.selectedItem, for: .normal)
+                self.btn_CitiesDropDown.setTitle(self.dropDown_Cities.selectedItem, for: .normal)
+                self.btn_DistrictsDropDown.setTitle(self.dropDown_Districts.selectedItem, for: .normal)
+                self.btn_LocationsDropDown.setTitle(self.dropDown_Locations.selectedItem, for: .normal)
+            }
         }
     }
     
@@ -241,7 +277,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private func dropDownDistrictsWiredUp(dataSource: [String]) {
         dropDown_Districts.anchorView = btn_DistrictsDropDown
         
-        dropDown_Districts.dataSource = dataSource
+        dropDown_Districts.dataSource = getDistrictLocale(datasource: dataSource)
         dropDown_Districts.selectRow(at: 7)
         
         dropDown_Districts.selectionAction = { [unowned self] (index, item) in
@@ -249,6 +285,22 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         }
     }
     
+//=========LOCALIZED DISTRICT DATASOURCE==========
+    
+    private func getDistrictLocale(datasource: [String]) -> [String] {
+        var datasourceLocalized = [String]()
+        
+        for item in datasource {
+            if self.language == "en" && item.contains("Quận") {
+                let itemLocalized = item.replacingOccurrences(of: "Quận", with: "District")
+                datasourceLocalized.append(itemLocalized)
+            } else {
+                datasourceLocalized.append(item)
+            }
+        }
+        
+        return datasourceLocalized
+    }
     
 //=========WIRED UP dropDown_Locations=========
     
@@ -280,13 +332,19 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private func dropDownTypesWiredUp(dataSource: [String]) {
         dropDown_Types.anchorView = btn_TypesDropDown
         
-        dropDown_Types.dataSource = dataSource
+        dropDown_Types.dataSource = getTypeLocale(datasource: dataSource)
         
         dropDown_Types.selectionAction = { [unowned self] (index, item) in
             self.btn_TypesDropDown.setTitle(item, for: .normal)
         }
     }
-    
+
+    private func getTypeLocale(datasource: [String]) -> [String] {
+        if self.language == "en" {
+            return ["Fix time", "Free time"]
+        }
+        return datasource
+    }
     
 //=========DEFAULT DROPDOWN STYLE=========
     

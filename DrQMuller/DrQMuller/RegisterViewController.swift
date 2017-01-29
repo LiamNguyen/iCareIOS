@@ -29,7 +29,27 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var screenWidth: CGFloat!
     private var screenHeight: CGFloat!
     private var isIphone4 = false
-    private var lineDrawer = LineDrawer()
+    private var language: String!
+    
+    private func handleLanguageChanged() {
+        self.language = UserDefaults.standard.string(forKey: "lang")
+        
+        //=========TXTFIELD PLACEHOLDER=========
+        
+        txt_Username.placeholder = "USERNAME_PLACEHOLDER".localized(lang: self.language)
+        txt_Password.placeholder = "PASSWORD_PLACEHOLDER".localized(lang: self.language)
+        txt_ConfirmPassword.placeholder = "CONFIRM_PASSWORD_PLACEHOLDER".localized(lang: self.language)
+        
+        //=========BUTTON TITLE=========
+        
+        btn_Register.setTitle("REGISTER_BTN_TITLE".localized(lang: self.language), for: .normal)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        handleLanguageChanged()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,17 +96,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(swipeRight)
         
-        //=========DRAW LINE=========
+//=========DRAW LINE=========
         
-        let firstPoint = CGPoint(x: 0, y: 480)
-        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
-        
-        lineDrawer.addLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-        
-        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
-        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
-        
-        lineDrawer.addLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+//        let firstPoint = CGPoint(x: 0, y: 480)
+//        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+//        
+//        UIFunctionality.drawLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+//        
+//        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+//        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+//        
+//        UIFunctionality.drawLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
         
 
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========

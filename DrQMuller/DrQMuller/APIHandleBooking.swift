@@ -20,22 +20,26 @@ class APIHandleBooking: NSObject {
     
     override init() {
 
-        persistencyManager = PMHandleBooking()
+        self.persistencyManager = PMHandleBooking()
     }
     
     func getDropDownsDataSource() {
-        persistencyManager.getDropDownsDataSource()
+        self.persistencyManager.getDropDownsDataSource()
     }
     
     func pulledStaticArrayFromUserDefaults() -> DTOStaticArrayDataSource? {
-        return persistencyManager.pulledStaticArrayFromUserDefaults() as! DTOStaticArrayDataSource?
+        return self.persistencyManager.pulledStaticArrayFromUserDefaults() as! DTOStaticArrayDataSource?
     }
     
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
-        persistencyManager.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
+        self.persistencyManager.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
     }
     
     func checkBookingTime(day_ID: String, time_ID: String) {
-        persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
+        self.persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
+    }
+    
+    func insertNewAppointment() {
+        self.persistencyManager.insertNewAppointment()
     }
 }
