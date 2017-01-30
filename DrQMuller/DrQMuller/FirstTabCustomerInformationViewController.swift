@@ -25,20 +25,17 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet weak var btn_Next: UIButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
-    private var language: String!
 
-    private func handleLanguageChanged() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
+    private func updateUI() {
+        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
+        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(), for: .normal)
+        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(), for: .normal)
+        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(), for: .normal)
         
-        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized(lang: self.language)
-        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
-        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
-        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+        txt_Name.placeholder = "FULLNAME_PLACEHOLDER".localized()
+        txt_Address.placeholder = "ADDRESS_PLACEHOLDER".localized()
         
-        txt_Name.placeholder = "FULLNAME_PLACEHOLDER".localized(lang: self.language)
-        txt_Address.placeholder = "ADDRESS_PLACEHOLDER".localized(lang: self.language)
-        
-        btn_Next.setTitle("BTN_NEXT_TITLE".localized(lang: self.language), for: .normal)
+        btn_Next.setTitle("BTN_NEXT_TITLE".localized(), for: .normal)
     }
     
     private struct Storyboard {
@@ -48,7 +45,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        handleLanguageChanged()
+        updateUI()
     }
     
     override func viewDidLoad() {

@@ -36,22 +36,19 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var messageView: UIView!
     private var modelHandleBookingStartEnd  = ModelHandelBookingStartEnd()
     private var timer: Timer!
-    private var language: String!
     
     private func handleLanguageChanged() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
+        lbl_StartDate.text = "LBL_START_DATE".localized()
+        lbl_EndDate.text = "LBL_END_DATE".localized()
         
-        lbl_StartDate.text = "LBL_START_DATE".localized(lang: self.language)
-        lbl_EndDate.text = "LBL_END_DATE".localized(lang: self.language)
-        
-        let date_picker_localization = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: self.language)) as Locale
+        let date_picker_localization = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: UserDefaults.standard.string(forKey: "lang") ?? "vi")) as Locale
         
         picker_StartDate.locale = date_picker_localization
         picker_EndDate.locale = date_picker_localization
-        btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(lang: self.language), for: .normal)
+        btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(), for: .normal)
         slideBtn_Next.delegate = self
-        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
-        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized()
+        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized()
     }
 
     override func viewDidLoad() {
@@ -110,7 +107,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segue_BookingDateToBookingGeneral" {
             if let tabVC = segue.destination as? UITabBarController {
-                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
                 tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
@@ -133,7 +130,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             }
         
             if datePickersIsEmpty {
-                ToastManager.alert(view: view_TopView, msg: "DATE_PICKER_ONSPINNING_MESSAGE".localized(lang: self.language))
+                ToastManager.alert(view: view_TopView, msg: "DATE_PICKER_ONSPINNING_MESSAGE".localized())
                 slideBtn_Next.reset()
                 datePickersIsEmpty = false
                 return
@@ -142,7 +139,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         
         if !isTypeFree {
             if (endDay - startDay) < 0 || (endMonth - startMonth) < 0 || (endYear - startYear) < 0 {
-                ToastManager.alert(view: view_TopView, msg: "END_LESS_THAN_START".localized(lang: self.language))
+                ToastManager.alert(view: view_TopView, msg: "END_LESS_THAN_START".localized())
                 slideBtn_Next.reset()
                 return
             }
@@ -172,7 +169,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     
     private func prepareUI() {
         if DTOBookingInformation.sharedInstance.type == "Tự do" { //TYPE OF FREE DATE
-            lbl_StartDate.text = "LBL_EXACT_DATE".localized(lang: self.language)
+            lbl_StartDate.text = "LBL_EXACT_DATE".localized()
             lbl_EndDate.isHidden = true
             picker_EndDate.isHidden = true
             constraint_DatePickerStartHeight.constant = 290
@@ -196,7 +193,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
 //========CREATE MESSAGE VIEW CONTAINER=========
     
     private func alertMessage_WeekendRestrict() {
-        let message = "ECO_WEEKEND_RESTRICTION_MESSAGE".localized(lang: self.language)
+        let message = "ECO_WEEKEND_RESTRICTION_MESSAGE".localized()
         if self.messageView == nil {
             self.messageView = UIFunctionality.createMessageViewContainer(parentView: self.view)
         } else {

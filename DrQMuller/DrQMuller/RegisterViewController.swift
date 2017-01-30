@@ -29,26 +29,24 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var screenWidth: CGFloat!
     private var screenHeight: CGFloat!
     private var isIphone4 = false
-    private var language: String!
     
-    private func handleLanguageChanged() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
+    private func updateUI() {
         
         //=========TXTFIELD PLACEHOLDER=========
         
-        txt_Username.placeholder = "USERNAME_PLACEHOLDER".localized(lang: self.language)
-        txt_Password.placeholder = "PASSWORD_PLACEHOLDER".localized(lang: self.language)
-        txt_ConfirmPassword.placeholder = "CONFIRM_PASSWORD_PLACEHOLDER".localized(lang: self.language)
+        txt_Username.placeholder = "USERNAME_PLACEHOLDER".localized()
+        txt_Password.placeholder = "PASSWORD_PLACEHOLDER".localized()
+        txt_ConfirmPassword.placeholder = "CONFIRM_PASSWORD_PLACEHOLDER".localized()
         
         //=========BUTTON TITLE=========
         
-        btn_Register.setTitle("REGISTER_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_Register.setTitle("REGISTER_BTN_TITLE".localized(), for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        handleLanguageChanged()
+        updateUI()
     }
     
     override func viewDidLoad() {
