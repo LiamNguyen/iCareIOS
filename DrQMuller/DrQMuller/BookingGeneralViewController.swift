@@ -41,7 +41,6 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private let firstPhaseWithOneLocation = true
     private var activityIndicator: UIActivityIndicatorView!
     private var language: String!
-    private var _constraint_ViewContainerHeight: CGFloat!
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
