@@ -53,14 +53,14 @@ class HelpServiceViewController: UIViewController {
     }
     
     func createButtonMessage() {
-        self.view_BtnMessageContainer = UIView(frame: CGRect(x: 0, y: 0, width: viewHeight - 10, height: viewHeight - 10))
+        self.view_BtnMessageContainer = UIView(frame: CGRect(x: 0, y: 0, width: self.btn_Language.frame.width, height: self.btn_Language.frame.height))
         let radius = min(self.view_BtnMessageContainer.frame.size.width, self.view_BtnMessageContainer.frame.size.height) / 2.0
 
-        self.view_BtnMessageContainer.center = CGPoint(x: self.btn_Language.center.x + (viewHeight - 10) * 2, y: viewHeight / 2)
+        self.view_BtnMessageContainer.center = CGPoint(x: self.btn_Language.center.x + (viewHeight - 10) + 10, y: viewHeight / 2)
         self.view_BtnMessageContainer.backgroundColor = UIColor.white
         self.view_BtnMessageContainer.layer.cornerRadius = radius
         
-        let btn_Message = UIButton(frame: CGRect(x: 0, y: 0, width: viewHeight - 25, height: viewHeight - 25))
+        let btn_Message = UIButton(frame: CGRect(x: 0, y: 0, width: self.view_BtnMessageContainer.frame.width - 15, height: self.view_BtnMessageContainer.frame.height - 15))
         btn_Message.center = CGPoint(x: self.view_BtnMessageContainer.frame.width / 2, y: self.view_BtnMessageContainer.frame.height / 2)
         btn_Message.layer.contents = UIImage(named: "messageIcon")?.cgImage
         btn_Message.addTarget(self, action: #selector(view_BtnMessageContainer_OnClick), for: .touchUpInside)
