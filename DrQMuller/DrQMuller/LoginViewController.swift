@@ -32,7 +32,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private var screenHeight: CGFloat!
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
-    private var language: String!
     
     var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
@@ -49,24 +48,22 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         }
     }
 
-    private func handleLanguageChanged() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
-        
+    private func updateUI() {
         //=========TXTFIELD PLACEHOLDER=========
         
-        txt_Username.placeholder = "USERNAME_PLACEHOLDER".localized(lang: self.language)
-        txt_Password.placeholder = "PASSWORD_PLACEHOLDER".localized(lang: self.language)
+        txt_Username.placeholder = "USERNAME_PLACEHOLDER".localized()
+        txt_Password.placeholder = "PASSWORD_PLACEHOLDER".localized()
         
         //=========STYLE FOR RESET PASSWORD LINK=========
         
-        let attrString = NSAttributedString(string: "RESET_PASSWORD_LINK".localized(lang: self.language), attributes: [NSForegroundColorAttributeName:UIColor.white, NSUnderlineStyleAttributeName: 1])
+        let attrString = NSAttributedString(string: "RESET_PASSWORD_LINK".localized(), attributes: [NSForegroundColorAttributeName:UIColor.white, NSUnderlineStyleAttributeName: 1])
         
         btn_ResetPassword.setAttributedTitle(attrString, for: .normal)
         
         //=========BUTTON TITLE=========
         
-        btn_Login.setTitle("LOGIN_BTN_TITLE".localized(lang: self.language), for: .normal)
-        btn_Register.setTitle("REGISTER_BTN_TITLE".localized(lang: self.language), for: .normal)
+        btn_Login.setTitle("LOGIN_BTN_TITLE".localized(), for: .normal)
+        btn_Register.setTitle("REGISTER_BTN_TITLE".localized(), for: .normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -103,7 +100,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             UserDefaults.standard.set("en", forKey: "lang")
         }
         
-        handleLanguageChanged()
+        updateUI()
     }
     
     override func viewDidLoad() {
@@ -115,7 +112,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             UIFunctionality.createChooseLanguageView(view: self.view)
         }
         
-        handleLanguageChanged()
+        updateUI()
         
         self.testReturnArr.delegate = self
 
@@ -310,7 +307,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
                     self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
                 } else {
                     print("Login Failed")
-                    ToastManager.alert(view: loginView, msg: "CREDENTIAL_INVALID".localized(lang: self.language))
+                    ToastManager.alert(view: loginView, msg: "CREDENTIAL_INVALID".localized())
                 }
             }
         }
@@ -321,7 +318,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "segue_LoginToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
-                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
                 tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
@@ -334,12 +331,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private func frontValidationPassed() -> Bool {
         if let username = txt_Username.text, let password = txt_Password.text {
             if username.isEmpty {
-                ToastManager.alert(view: loginView, msg: "USERNAME_EMPTY_MESSAGE".localized(lang: self.language))
+                ToastManager.alert(view: loginView, msg: "USERNAME_EMPTY_MESSAGE".localized())
                 return false
             }
             
             if password.isEmpty {
-                ToastManager.alert(view: loginView, msg: "PASSWORD_EMPTY_MESSAGE".localized(lang: self.language))
+                ToastManager.alert(view: loginView, msg: "PASSWORD_EMPTY_MESSAGE".localized())
                 return false
             }
             return true
