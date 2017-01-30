@@ -54,17 +54,17 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     private var modelHandleBookingGeneral = ModelHandleBookingGeneral()
     
-    private func handleLanguageChanged() {
+    private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
         
-        lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized(lang: self.language)
+        lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized()
         slideBtn_Next.delegate = self
         slideBtn_Next.reset()
-        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
-        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized()
+        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized()
         
-        btn_VouchersDropDown.setTitle("DROPDOWN_VOUCHER_TITLE".localized(lang: self.language), for: .normal)
-        btn_TypesDropDown.setTitle("DROPDOWN_TYPE_TITLE".localized(lang: self.language), for: .normal)
+        btn_VouchersDropDown.setTitle("DROPDOWN_VOUCHER_TITLE".localized(), for: .normal)
+        btn_TypesDropDown.setTitle("DROPDOWN_TYPE_TITLE".localized(), for: .normal)
     }
     
 //=========VIEW DID LOAD FUNC=========
@@ -72,7 +72,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        handleLanguageChanged()
+        updateUI()
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
 
@@ -142,13 +142,13 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
         if dropDown_Vouchers.selectedItem == nil {
-            ToastManager.alert(view: view_TopView, msg: "DROPDOWN_VOUCHER_EMPTY_MESSAGE".localized(lang: self.language))
+            ToastManager.alert(view: view_TopView, msg: "DROPDOWN_VOUCHER_EMPTY_MESSAGE".localized())
             slideBtn_Next.reset()
             return
         }
         
         if dropDown_Types.selectedItem == nil {
-            ToastManager.alert(view: view_TopView, msg: "DROPDOWN_TYPE_EMPTY_MESSAGE".localized(lang: self.language))
+            ToastManager.alert(view: view_TopView, msg: "DROPDOWN_TYPE_EMPTY_MESSAGE".localized())
             slideBtn_Next.reset()
             return
         }
@@ -178,7 +178,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
     @IBAction func btn_CountriesDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized())
             return
         }
         dropDown_Countries.show()
@@ -188,7 +188,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_CitiesDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized())
             return
         }
         dropDown_Cities.show()
@@ -198,7 +198,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_DistrictsDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized())
             return
         }
         dropDown_Districts.show()
@@ -208,7 +208,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     @IBAction func btn_LocationsDropDown_OnClick(_ sender: Any) {
         if firstPhaseWithOneLocation {
-            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized(lang: self.language))
+            ToastManager.alert(view: view_TopView, msg: "ONE_LOCATION_MESSAGE".localized())
             return
         }
         dropDown_Locations.show()

@@ -25,19 +25,16 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet weak var btn_Next: UIButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
-    private var language: String!
     
-    func handleLanguageChanged() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
+    func updateUI() {
+        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
+        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(), for: .normal)
+        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(), for: .normal)
+        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(), for: .normal)
         
-        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized(lang: self.language)
-        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
-        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
-        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
-        
-        txt_Email.placeholder = "EMAIL_PLACEHOLDER".localized(lang: self.language)
-        txt_Phone.placeholder = "PHONE_PLACEHOLDER".localized(lang: self.language)
-        btn_Next.setTitle("BTN_NEXT_TITLE".localized(lang: self.language), for: .normal)
+        txt_Email.placeholder = "EMAIL_PLACEHOLDER".localized()
+        txt_Phone.placeholder = "PHONE_PLACEHOLDER".localized()
+        btn_Next.setTitle("BTN_NEXT_TITLE".localized(), for: .normal)
     }
     
     private struct StoryBoard {
@@ -47,7 +44,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        handleLanguageChanged()
+        updateUI()
     }
     
     override func viewDidLoad() {
@@ -119,7 +116,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "segue_CustomerInformationToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
-                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
                 tabVC.selectedIndex = 1
                 tabVC.tabBar.items?[0].isEnabled = false
             }
