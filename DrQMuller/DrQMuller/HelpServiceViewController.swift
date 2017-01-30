@@ -9,6 +9,10 @@
 import UIKit
 
 class HelpServiceViewController: UIViewController {
+    
+    private var viewHeight: CGFloat!
+    private var btn_Language: UIButton!
+    private var view_BtnMessageContainer: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,10 +22,13 @@ class HelpServiceViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        getViewHeight()
+        
         self.view.layer.cornerRadius = 30
         self.view.backgroundColor = ThemeColor
         
         createButtonLanguage()
+        createButtonMessage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,32 +37,55 @@ class HelpServiceViewController: UIViewController {
     }
     
     func createButtonLanguage() {
-        let viewHeight: CGFloat!
-        let receiveHeight = UserDefaults.standard.float(forKey: "containerHeight")
+        self.btn_Language = UIButton(frame: CGRect(x: 0, y: 0, width: viewHeight - 10, height: viewHeight - 10))
+        let radius = min(self.btn_Language.frame.size.width, self.btn_Language.frame.size.height) / 2.0
         
-        if receiveHeight == 0 {
-            viewHeight = self.view.frame.height
-        } else {
-            viewHeight = CGFloat(receiveHeight)
-        }
-            
-        let btn_Language = UIButton(frame: CGRect(x: 0, y: 0, width: viewHeight - 10, height: viewHeight - 10))
-        let radius = min(btn_Language.frame.size.width, btn_Language.frame.size.height) / 2.0
+        self.btn_Language.center = CGPoint(x: 70, y: viewHeight / 2)
+        self.btn_Language.backgroundColor = UIColor.white
+        self.btn_Language.setTitleColor(ThemeColor, for: .normal)
+        self.btn_Language.setTitle("VI", for: .normal)
+        self.btn_Language.layer.cornerRadius = radius
+        self.btn_Language.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightSemibold)
+        self.btn_Language.showsTouchWhenHighlighted = true
+        self.btn_Language.addTarget(self, action: #selector(btn_Language_OnClick), for: .touchUpInside)
         
-        btn_Language.center = CGPoint(x: 70, y: viewHeight / 2)
-        btn_Language.backgroundColor = UIColor.white
-        btn_Language.setTitleColor(ThemeColor, for: .normal)
-        btn_Language.setTitle("VI", for: .normal)
-        btn_Language.layer.cornerRadius = radius
-        btn_Language.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightSemibold)
-        btn_Language.showsTouchWhenHighlighted = true
-        btn_Language.addTarget(self, action: #selector(self.btn_Language_OnClick), for: .touchUpInside)
+        self.view.addSubview(self.btn_Language)
+    }
+    
+    func createButtonMessage() {
+        self.view_BtnMessageContainer = UIView(frame: CGRect(x: 0, y: 0, width: viewHeight - 10, height: viewHeight - 10))
+        let radius = min(self.view_BtnMessageContainer.frame.size.width, self.view_BtnMessageContainer.frame.size.height) / 2.0
+
+        self.view_BtnMessageContainer.center = CGPoint(x: self.btn_Language.center.x + (viewHeight - 10) * 2, y: viewHeight / 2)
+        self.view_BtnMessageContainer.backgroundColor = UIColor.white
+        self.view_BtnMessageContainer.layer.cornerRadius = radius
         
-        self.view.addSubview(btn_Language)
+        let btn_Message = UIButton(frame: CGRect(x: 0, y: 0, width: viewHeight - 25, height: viewHeight - 25))
+        btn_Message.center = CGPoint(x: self.view_BtnMessageContainer.frame.width / 2, y: self.view_BtnMessageContainer.frame.height / 2)
+        btn_Message.layer.contents = UIImage(named: "messageIcon")?.cgImage
+        btn_Message.addTarget(self, action: #selector(view_BtnMessageContainer_OnClick), for: .touchUpInside)
+        btn_Message.backgroundColor = UIColor.white
+        btn_Message.showsTouchWhenHighlighted = true
+        
+        self.view_BtnMessageContainer.addSubview(btn_Message)
+        self.view.addSubview(view_BtnMessageContainer)
     }
     
     @objc private func btn_Language_OnClick(sender: UIButton) {
         UIFunctionality.addShakyAnimation(elementToBeShake: sender)
     }
-
-   }
+    
+    @objc private func view_BtnMessageContainer_OnClick(sender: UIButton) {
+        UIFunctionality.addShakyAnimation(elementToBeShake: sender)
+    }
+    
+    func getViewHeight() {
+        let receiveHeight = UserDefaults.standard.float(forKey: "containerHeight")
+        
+        if receiveHeight == 0 {
+            self.viewHeight = self.view.frame.height
+        } else {
+            self.viewHeight = CGFloat(receiveHeight)
+        }
+    }
+}
