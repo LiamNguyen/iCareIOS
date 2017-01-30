@@ -115,8 +115,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             UIFunctionality.createChooseLanguageView(view: self.view)
         }
         
-        handleLanguageChanged()
-        
         self.testReturnArr.delegate = self
 
         activityIndicator.stopAnimating()

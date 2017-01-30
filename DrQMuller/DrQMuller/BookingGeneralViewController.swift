@@ -27,7 +27,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var lbl_Title: UILabel!
     @IBOutlet private weak var view_HelpContainer: UIView!
-    @IBOutlet weak var constraints_ViewContainerHeight: NSLayoutConstraint!
+    @IBOutlet private weak var constraints_ViewContainerHeight: NSLayoutConstraint!
     
     //=========MARK: PROPERTIES=========
     
@@ -41,6 +41,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private let firstPhaseWithOneLocation = true
     private var activityIndicator: UIActivityIndicatorView!
     private var language: String!
+    private var helpContainerIsShown = false
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -60,12 +61,28 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized(lang: self.language)
         slideBtn_Next.delegate = self
-        slideBtn_Next.reset()
-        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
+        //slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
         slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        slideBtn_Next.reset()
         
         btn_VouchersDropDown.setTitle("DROPDOWN_VOUCHER_TITLE".localized(lang: self.language), for: .normal)
         btn_TypesDropDown.setTitle("DROPDOWN_TYPE_TITLE".localized(lang: self.language), for: .normal)
+    }
+    
+    func onRequireUpdateUIFromNotification(notification: Notification) {
+        if UserDefaults.standard.string(forKey: "lang") == "en" {
+            UserDefaults.standard.set("vi", forKey: "lang")
+        } else {
+            UserDefaults.standard.set("en", forKey: "lang")
+        }
+        if helpContainerIsShown {
+            UIView.animate(withDuration: 0.5) {
+                self.view_HelpContainer.center = CGPoint(x: self.view_HelpContainer.center.x + self.view_HelpContainer.frame.width - 50, y: self.view_HelpContainer.center.y)
+            }
+            helpContainerIsShown = false
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "helpContainerRequireClose"), object: nil)
+        }
+        handleLanguageChanged()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,6 +92,10 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         } else {
             UserDefaults.standard.removeObject(forKey: "containerHeight")
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        self.view_HelpContainer.center = CGPoint(x: self.view_HelpContainer.center.x + self.view_HelpContainer.frame.width - 50, y: self.view_HelpContainer.center.y)
     }
     
 //=========VIEW DID LOAD FUNC=========
@@ -93,6 +114,16 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil, queue: nil, using: bindDataSourceOffline)
+        
+//=========OBSERVING NOTIFICATION FROM HelpServiceViewController==========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "onTriggerHelpService"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "onTriggerHelpService"), object: nil, queue: nil, using: onButtonTriggerHelpServiceClicked)
+        
+//=========OBSERVING NOTIFICATION FROM HelpServiceViewController==========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "requireChangeLanguage"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "requireChangeLanguage"), object: nil, queue: nil, using: onRequireUpdateUIFromNotification)
         
 //=========SEND REQUEST TO GET DROPDOWNS DATASOURCE=========
         
@@ -115,6 +146,35 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         NotificationCenter.default.removeObserver(self)
     }
+    
+    func onButtonTriggerHelpServiceClicked(notification: Notification) {
+        if !helpContainerIsShown {
+            UIView.animate(withDuration: 0.5) {
+                self.view_HelpContainer.center = CGPoint(x: self.view_HelpContainer.center.x - self.view_HelpContainer.frame.width + 50, y: self.view_HelpContainer.center.y)
+            }
+            helpContainerIsShown = true
+        } else {
+            UIView.animate(withDuration: 0.5) {
+                self.view_HelpContainer.center = CGPoint(x: self.view_HelpContainer.center.x + self.view_HelpContainer.frame.width - 50, y: self.view_HelpContainer.center.y)
+            }
+            helpContainerIsShown = false
+        }
+    }
+    
+//    private func createCoverLayerView() {
+//        self.coverView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+//        self.coverView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
+//        self.coverView.backgroundColor = UIColor.lightGray
+//        self.coverView.alpha = 0.7
+//        
+//        self.view.addSubview(coverView)
+//    }
+//    
+//    private func coverLayerViewSelfDestroy() {
+//        if let view = self.coverView {
+//            view.removeFromSuperview()
+//        }
+//    }
     
 //=========BINDING DATASOURCE FOR DROPDOWNS==========
     
@@ -368,6 +428,16 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         dropDowns.forEach { $0.dismissMode = .automatic }
         dropDowns.forEach { $0.direction = .any }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if helpContainerIsShown {
+            UIView.animate(withDuration: 0.5) {
+                self.view_HelpContainer.center = CGPoint(x: self.view_HelpContainer.center.x + self.view_HelpContainer.frame.width - 50, y: self.view_HelpContainer.center.y)
+            }
+            helpContainerIsShown = false
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "helpContainerRequireClose"), object: nil)
+        }
     }
 }
 

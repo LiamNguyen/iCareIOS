@@ -15,10 +15,19 @@ class HelpServiceViewController: UIViewController {
     private var btn_Language: UIButton!
     private var view_BtnMessageContainer: UIView!
     private var view_BtnPhoneContainer: UIView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "helpContainerRequireClose"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "helpContainerRequireClose"), object: nil, queue: nil, using: updateTriggerButton)
+
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,7 +52,7 @@ class HelpServiceViewController: UIViewController {
     func createButtonTriggerHelpService() {
         self.btn_TriggerHelpService = UIButton(frame: CGRect(x: 0, y: 0, width: viewHeight - 20, height: viewHeight - 10))
         
-        self.btn_TriggerHelpService.center = CGPoint(x: 15, y: viewHeight / 2)
+        self.btn_TriggerHelpService.center = CGPoint(x: 25, y: viewHeight / 2)
         self.btn_TriggerHelpService.showsTouchWhenHighlighted = true
         self.btn_TriggerHelpService.addTarget(self, action: #selector(btn_TriggerHelpService_OnClick), for: .touchUpInside)
         self.btn_TriggerHelpService.layer.contents = UIImage(named: "backBtnIcon")?.cgImage
@@ -58,7 +67,7 @@ class HelpServiceViewController: UIViewController {
         self.btn_Language.center = CGPoint(x: 70, y: viewHeight / 2)
         self.btn_Language.backgroundColor = UIColor.white
         self.btn_Language.setTitleColor(ThemeColor, for: .normal)
-        self.btn_Language.setTitle("VI", for: .normal)
+        self.btn_Language.setTitle(UserDefaults.standard.string(forKey: "lang")?.uppercased(), for: .normal)
         self.btn_Language.layer.cornerRadius = radius
         self.btn_Language.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: UIFontWeightSemibold)
         self.btn_Language.showsTouchWhenHighlighted = true
@@ -106,11 +115,16 @@ class HelpServiceViewController: UIViewController {
     }
     
     @objc private func btn_TriggerHelpService_OnClick(sender: UIButton) {
-        print("Clicked")
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "onTriggerHelpService"), object: nil)
+        UIView.animate(withDuration: 0.5) { 
+            self.btn_TriggerHelpService.transform = self.btn_TriggerHelpService.transform.rotated(by: CGFloat(M_PI))
+        }
     }
     
     @objc private func btn_Language_OnClick(sender: UIButton) {
         UIFunctionality.addShakyAnimation(elementToBeShake: sender)
+        NotificationCenter.default.post(name: Notification.Name(rawValue: "requireChangeLanguage"), object: nil)
+        self.btn_Language.setTitle(UserDefaults.standard.string(forKey: "lang")?.uppercased(), for: .normal)
     }
     
     @objc private func view_BtnMessageContainer_OnClick(sender: UIButton) {
@@ -121,13 +135,19 @@ class HelpServiceViewController: UIViewController {
         UIFunctionality.addShakyAnimation(elementToBeShake: sender)
     }
     
-    func getViewHeight() {
+    private func getViewHeight() {
         let receiveHeight = UserDefaults.standard.float(forKey: "containerHeight")
         
         if receiveHeight == 0 {
             self.viewHeight = self.view.frame.height
         } else {
             self.viewHeight = CGFloat(receiveHeight)
+        }
+    }
+    
+    private func updateTriggerButton(notification: Notification) {
+        UIView.animate(withDuration: 0.5) {
+            self.btn_TriggerHelpService.transform = self.btn_TriggerHelpService.transform.rotated(by: CGFloat(M_PI))
         }
     }
 }
