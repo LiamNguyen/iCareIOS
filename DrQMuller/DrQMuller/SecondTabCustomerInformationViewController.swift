@@ -27,23 +27,20 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     private var customerInformationController = CustomStyleCustomerInformation()
     private var picker_GenderDataSource = [String]()
     private let datePickerRange = DatePickerRange()
-    private var language: String!
     
-    private func handleLanguageChanged() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
-
-        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized(lang: self.language)
-        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
-        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
-        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(lang: self.language), for: .normal)
+    private func updateUI() {
+        lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
+        btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(), for: .normal)
+        btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(), for: .normal)
+        btn_ThirdTab.setTitle("THIRD_TAB_BTN_TITLE".localized(), for: .normal)
         
-        picker_GenderDataSource = ["GENDER_MALE".localized(lang: self.language), "GENDER_FEMALE".localized(lang: self.language)]
+        picker_GenderDataSource = ["GENDER_MALE".localized(), "GENDER_FEMALE".localized()]
         
-        picker_Date.locale = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: self.language)) as Locale
+        picker_Date.locale = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: UserDefaults.standard.string(forKey: "lang") ?? "vi")) as Locale
         
-        self.slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized(lang: self.language)
+        self.slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized()
         
-        self.slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized(lang: self.language)
+        self.slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized()
     }
     
     private struct StoryBoard {
@@ -53,7 +50,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        handleLanguageChanged()
+        updateUI()
     }
     
     override func viewDidLoad() {
