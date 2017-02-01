@@ -573,15 +573,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========SLIDE BUTTON_ONSLIDE=========
     
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
+        self.slideBtn.reset()
         if self.tupleBookingTime_Array.isEmpty {
-            self.slideBtn.reset()
             ToastManager.alert(view: view_TopView, msg: "REQUIRE_BOOK_ATLEAST_ONE_TIME_MESSAGE".localized())
             return
         }
         self.view_TopView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5) {
             self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x - 400, y: self.view_ConfirmView.center.y)
-            self.view.backgroundColor = UIColor.gray
         }
     }
     
