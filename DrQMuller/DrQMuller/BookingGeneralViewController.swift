@@ -23,6 +23,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var btn_LocationsDropDown: NiceButton!
     @IBOutlet private weak var btn_VouchersDropDown: NiceButton!
     @IBOutlet private weak var btn_TypesDropDown: NiceButton!
+    @IBOutlet private weak var icon_Type: UIImageView!
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
     @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var lbl_Title: UILabel!
@@ -94,6 +95,9 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
         self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
         self.activityIndicator.startAnimating()
+        
+        self.btn_TypesDropDown.isHidden = true
+        self.icon_Type.isHidden = true
     }
     
     deinit {
@@ -333,6 +337,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Types.anchorView = btn_TypesDropDown
         
         dropDown_Types.dataSource = getTypeLocale(datasource: dataSource)
+        
+        dropDown_Types.selectRow(at: 1)
         
         dropDown_Types.selectionAction = { [unowned self] (index, item) in
             self.btn_TypesDropDown.setTitle(item, for: .normal)
