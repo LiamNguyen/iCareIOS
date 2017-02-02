@@ -72,8 +72,8 @@ class ModelHandleBookingDetail {
     
 //MAKE GET REQUEST FOR SELECTED TIME DATASOURCE TO HANDLE IN MODEL AND RETURN FREE TIME DATASOURCE
     
-    func bindFreeTimeDataSource(selectedDayOfWeek_ID: String) {
-        APIHandleBooking.sharedInstace.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
+    func bindFreeTimeDataSource(selectedDayOfWeek_ID: String, location_ID: String, machine_ID: String) {
+        APIHandleBooking.sharedInstace.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID, location_ID: location_ID, machine_ID: machine_ID)
         self.dataHasReturn = false
     }
     

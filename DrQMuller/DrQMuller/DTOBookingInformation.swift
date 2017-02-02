@@ -112,14 +112,14 @@ class DTOBookingInformation: NSObject {
         }
     }
     
-    private var _machineDataSource: [String: String]!
-    var machineDataSource: [String: String] {
+    private var _machinesDataSource: [String: String]!
+    var machinesDataSource: [String: String] {
         get {
-            return _machineDataSource
+            return _machinesDataSource
         }
         
         set (newVal) {
-            _machineDataSource = newVal
+            _machinesDataSource = newVal
         }
     }
     

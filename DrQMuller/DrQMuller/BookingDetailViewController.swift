@@ -186,13 +186,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========SET TYPE=========
         
         if DTOBookingInformation.sharedInstance.type == "Tự do" {
-            self.activityIndicator.startAnimating()
             self.isTypeFree = true
             
             self.tupleBookingTime.value.day = DTOBookingInformation.sharedInstance.exactDayOfWeek
             self.tupleBookingTime.id.day_ID = modelHandelBookingDetail.returnPreSelectedDayIDForTypeFree()
-            
-            modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: self.tupleBookingTime.id.day_ID)
         }
         
 //=========RETRIEVE MACHINES DATASOURCE=========
@@ -676,13 +673,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             if self.tupleBookingTime.value.day == item && self.dropDownSelectedRowIndex != nil {
                 return
-            }
+            } 
             
             self.tableView_BookingTime.isHidden = true
             self.activityIndicator.startAnimating()
             let day_ID = String(self.dropDown_DaysOfWeek.indexForSelectedRow! + 1)
             //OBSERVING NOTIFICATION FROM ModelHandleBookingDetail
-            self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
+            //self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
             
             self.tupleBookingTime.id.day_ID = day_ID
             self.tupleBookingTime.value.day = item
@@ -700,6 +697,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.dropDown_Machines.anchorView = btn_DropDownMachines
         self.dropDown_Machines.selectionAction = { [unowned self] (index, item) in
             self.btn_DropDownMachines.setTitle(item, for: .normal)
+            self.tableView_BookingTime.isHidden = true
+            self.activityIndicator.startAnimating()
+            
+            let day_ID = self.tupleBookingTime.id.day_ID
+            let location_ID = Functionality.findKeyFromValue(dictionary: APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!.dropDownLocationsDataSource, value: DTOBookingInformation.sharedInstance.location)
+            let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: item)
+            
+            self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID, location_ID: location_ID, machine_ID: machine_ID)
         }
     }
     

@@ -173,6 +173,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                 let dictItem = arrayItem as! NSDictionary
                 machinesDataSource[dictItem["MACHINE_ID"] as! String] = (dictItem["MACHINE_NAME"] as! String)
             }
+            DTOBookingInformation.sharedInstance.machinesDataSource = machinesDataSource
             
             var returnArrayDataSource = [String: Any]()
             returnArrayDataSource["returnArrayDataSource"] = machinesDataSource
@@ -226,8 +227,8 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
  
 //MAKE GET REQUEST FOR SELECTED TIME
 
-    func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
-        httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)")
+    func getSelectedTimeDataSource(selectedDayOfWeek_ID: String, location_ID: String, machine_ID: String) {
+        httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)&location_id=\(location_ID)&machine_id=\(machine_ID)")
     }
     
 //MAKE GET REQUEST FOR MACHINES DATASOURCE
