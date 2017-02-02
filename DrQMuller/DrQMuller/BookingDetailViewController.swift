@@ -99,7 +99,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: updateTable)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: onReceiveFreeTimeDataSource)
         
 //=========OBSERING NOTIFICATION FROM PMHandleBooking FOR CHECKING BOOKING TIME EXISTENCY RESULT=========
         
@@ -237,7 +237,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
 //=========UPDATE FREE TIME LIST WHEN RECEIVING RESPONSE FROM SERVER=========
     
-    func updateTable(notification: Notification) {
+    func onReceiveFreeTimeDataSource(notification: Notification) {
         if dataHasReceive {
             return
         }
@@ -346,6 +346,32 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_FAIL_MESSAGE".localized())
                         }
                     }
+                }
+            }
+        }
+    }
+    
+//=========RECEVING RELEASE TIME RESPONSE=========
+    
+    func onReceiveReleaseTimeResponse(notification: Notification) {
+        self.activityIndicator.stopAnimating()
+        self.view.isUserInteractionEnabled = true
+        
+        if let userInfo = notification.userInfo {
+            if let isOk = userInfo["status"] as? Bool {
+                if isOk {
+                    if self.isRequiredClearAllCartItems {
+                        self.resetBookingTime()
+                        self.isRequiredClearAllCartItems = false
+                    } else {
+                        updateLocalWhenDeleteOneItem()
+                    }
+                    if self.hasFinishedInThisPage {
+                        return
+                    }
+                    ToastManager.alert(view: view_TopView, msg: "DELETE_SUCCESS_MESSAGE".localized())
+                } else {
+                    ToastManager.alert(view: view_TopView, msg: "DELETE_FAIL_MESSAGE".localized())
                 }
             }
         }
@@ -552,30 +578,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.deletedTime = self.tupleBookingTime_Array[indexPath.row].value.time
         } else {
             print("indexPath is nil")
-        }
-    }
-    
-    func onReceiveReleaseTimeResponse(notification: Notification) {
-        self.activityIndicator.stopAnimating()
-        self.view.isUserInteractionEnabled = true
-        
-        if let userInfo = notification.userInfo {
-            if let isOk = userInfo["status"] as? Bool {
-                if isOk {
-                    if self.isRequiredClearAllCartItems {
-                        self.resetBookingTime()
-                        self.isRequiredClearAllCartItems = false
-                    } else {
-                        updateLocalWhenDeleteOneItem()
-                    }
-                    if self.hasFinishedInThisPage {
-                        return
-                    }
-                    ToastManager.alert(view: view_TopView, msg: "DELETE_SUCCESS_MESSAGE".localized())
-                } else {
-                    ToastManager.alert(view: view_TopView, msg: "DELETE_FAIL_MESSAGE".localized())
-                }
-            }
         }
     }
     
