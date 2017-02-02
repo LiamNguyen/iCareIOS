@@ -22,10 +22,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private weak var tableView_CartOrder: UITableView!
     
     @IBOutlet private weak var btn_DropDownDaysOfWeek: NiceButton!
+    @IBOutlet private weak var btn_DropDownMachines: NiceButton!
+    
     @IBOutlet private weak var slideBtn: MMSlidingButton!
     @IBOutlet private weak var btn_ClearAllCartItems: UIButton!
     @IBOutlet private weak var constraint_CartOrderTableView_Height: NSLayoutConstraint!
-    @IBOutlet weak var btn_Back: UIButton!
+    @IBOutlet private weak var btn_Back: UIButton!
     
     @IBOutlet private weak var lbl_Title: UILabel!
     @IBOutlet private weak var lbl_VoucherTitle: UILabel!
@@ -36,10 +38,15 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
     private var freeTimeDataSource = [String]()
+    
     private let dropDown_DaysOfWeek = DropDown()
+    private let dropDown_Machines = DropDown()
+    
     private var staticArrayFromUserDefaults: DTOStaticArrayDataSource!
     private var daysOfWeekDataSource: [String]!
     //private var daysOfWeekDataSouceWithID: [String: String]! //Dictionary
+    private var machinesDataSource: [String]?
+    
     private var isEco = false
     private var isTypeFree = false
     private var dataHasReceive = false
@@ -65,7 +72,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var addToCartAnimation_StartPosition: CGFloat!
     private var flyingView: UIView!
     
-    func updateUI() {
+    private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
         
         btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(), for: .normal)
@@ -123,6 +130,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil, queue: nil, using: onReceiveInsertAppointmentResponse)
+        
+//=========OBSERING NOTIFICATION FROM PMHandleBooking FOR MACHINES DATASOURCE=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "machinesDataSource"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "machinesDataSource"), object: nil, queue: nil, using: onReceiveMachinesDataSource)
         
 //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
@@ -182,6 +194,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: self.tupleBookingTime.id.day_ID)
         }
+        
+//=========RETRIEVE MACHINES DATASOURCE=========
+        
+        if !self.activityIndicator.isAnimating {
+            self.activityIndicator.startAnimating()
+        }
+        
+        modelHandelBookingDetail.bindMachinesDataSource()
         
 //=========RETRIEVE DAYS OF WEEK DATASOURCE=========
         
@@ -309,6 +329,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+//=========RECEVING INSERT APPOINTMENT RESPONSE=========
+    
     func onReceiveInsertAppointmentResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
             
@@ -329,6 +351,23 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+//=========RECEVING MACHINES DATA SOURCE=========
+    
+    func onReceiveMachinesDataSource(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            
+            DispatchQueue.global(qos: .userInteractive).async {
+                if let returnArrayDataSource = userInfo["returnArrayDataSource"] as? [String: String] {
+                    let dataSource = Functionality.returnArrayFromDictionary(dictionary: returnArrayDataSource, isReturnValue: true)
+                    self.dropDownMachinesWiredUp(dataSource: dataSource)
+                }
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                }
+            }
+        }
+    }
+    
     @IBAction func btn_DropDownDaysOfWeek_OnClick(_ sender: Any) {
         if isTypeFree {
             return
@@ -338,6 +377,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tableView_CartOrder.isHidden = true
         }
         dropDown_DaysOfWeek.show()
+    }
+    
+    @IBAction func btn_DropDownMachines_OnClick(_ sender: Any) {
+        if self.tableView_CartOrder.isHidden == false {
+            self.tableView_CartOrder.isHidden = true
+        }
+        dropDown_Machines.show()
     }
     
     @IBAction func btn_ClearAllCartItem_OnClick(_ sender: Any) {
@@ -642,6 +688,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.dropDownSelectedRowIndex = self.dropDown_DaysOfWeek.indexForSelectedRow
         
             self.dataHasReceive = false
+        }
+    }
+    
+//=========WIRED UP MACHINES DROPDOWN=========
+    
+    private func dropDownMachinesWiredUp(dataSource: [String]) {
+        self.dropDown_Machines.dataSource = dataSource
+        self.dropDown_Machines.anchorView = btn_DropDownMachines
+        self.dropDown_Machines.selectionAction = { [unowned self] (index, item) in
+            self.btn_DropDownMachines.setTitle(item, for: .normal)
         }
     }
     

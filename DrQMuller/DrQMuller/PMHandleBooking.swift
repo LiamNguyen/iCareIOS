@@ -164,6 +164,20 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             
             NotificationCenter.default.post(name: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil, userInfo: isOk)
         }
+        
+//HANDLE RESPONSE OF GET MACHINES DATASOURCE
+        
+        var machinesDataSource = [String: String]()
+        if let arrayResponse = data["Select_Machines"]! as? NSArray {
+            for arrayItem in arrayResponse {
+                let dictItem = arrayItem as! NSDictionary
+                machinesDataSource[dictItem["MACHINE_ID"] as! String] = (dictItem["MACHINE_NAME"] as! String)
+            }
+            
+            var returnArrayDataSource = [String: Any]()
+            returnArrayDataSource["returnArrayDataSource"] = machinesDataSource
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "machinesDataSource"), object: nil, userInfo: returnArrayDataSource)
+        }
     
 //PASS AND SAVE STATIC ARRAY DATASOURCE
         
@@ -214,6 +228,12 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
 
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
         httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)")
+    }
+    
+//MAKE GET REQUEST FOR MACHINES DATASOURCE
+    
+    func getMachinesByLocationID(locationID: String) {
+        httpClient.getRequest(url: "Select_Machines", parameter: "?location_id=\(locationID)")
     }
     
 //MAKE GET REQUEST FOR CHECKING EXISTENCE OF BOOKING TIME

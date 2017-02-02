@@ -13,7 +13,7 @@ protocol HTTPClientDelegate {
 }
 
 public class HTTPClient {
-    private var serviceURL = ServiceURL(environment: .UAT)
+    private var serviceURL = ServiceURL(environment: .LOCAL)
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
@@ -21,8 +21,8 @@ public class HTTPClient {
         if !Network.hasNetworkConnection() {
             return
         }
-
         let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
+        print("url: \(URL)")
         var request = URLRequest(url: URL as! URL)
         request.httpMethod = "GET"
         

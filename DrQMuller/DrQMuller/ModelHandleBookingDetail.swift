@@ -198,4 +198,13 @@ class ModelHandleBookingDetail {
         APIHandleReleaseTime.sharedInstace.releaseTime(timeObj: timeObj)
     }
     
+//BIND MACHINES DATASOURCE
+    
+    func bindMachinesDataSource() {
+        let dictionary_Location = (APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()?.dropDownLocationsDataSource)!
+        let locationID = Functionality.findKeyFromValue(dictionary: dictionary_Location, value: DTOBookingInformation.sharedInstance.location)
+        
+        APIHandleBooking.sharedInstace.getMachinesByLocationID(locationID: locationID)
+    }
+    
 }

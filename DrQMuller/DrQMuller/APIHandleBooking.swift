@@ -42,4 +42,8 @@ class APIHandleBooking: NSObject {
     func insertNewAppointment() {
         self.persistencyManager.insertNewAppointment()
     }
+    
+    func getMachinesByLocationID(locationID: String) {
+        self.persistencyManager.getMachinesByLocationID(locationID: locationID)
+    }
 }

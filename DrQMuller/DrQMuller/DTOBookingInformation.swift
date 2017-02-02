@@ -112,6 +112,28 @@ class DTOBookingInformation: NSObject {
         }
     }
     
+    private var _machineDataSource: [String: String]!
+    var machineDataSource: [String: String] {
+        get {
+            return _machineDataSource
+        }
+        
+        set (newVal) {
+            _machineDataSource = newVal
+        }
+    }
+    
+    private var _machine: String!
+    var machine: String {
+        get {
+            return _machine
+        }
+        
+        set (newVal) {
+            _machine = newVal
+        }
+    }
+    
     private var _startDate: String!
     var startDate: String {
         get {
