@@ -152,13 +152,13 @@ class ModelHandleBookingDetail {
     
 //MAKE GET REQUEST FOR CHECKING BOOKING TIME EXISTENCY
     
-    func checkBookingTime(day_ID: String, chosenTime: String) {
+    func checkBookingTime(day_ID: String, chosenTime: String, chosenMachineID: String) {
         let time_ID = returnTimeID(chosenTime: chosenTime)
         if time_ID.isEmpty {
             NotificationCenter.default.post(name: Notification.Name(rawValue: "timeIDIsNil"), object: nil)
             return
         }
-        APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
+        APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID, chosenMachineID: chosenMachineID)
     }
     
 //INSERT NEW APPOINTMENT

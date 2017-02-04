@@ -212,6 +212,8 @@ class DTOBookingInformation: NSObject {
         let typesDataSource = dtoArrays.dropDownTypesDataSource
         let vouchersDataSource = dtoArrays.dropDownVouchersDataSource
         let locationsDataSource = dtoArrays.dropDownLocationsDataSource
+        
+        let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: DTOBookingInformation.sharedInstance.machine)
 
         var result = ""
         
@@ -232,7 +234,10 @@ class DTOBookingInformation: NSObject {
                         "location_id=\(Functionality.findKeyFromValue(dictionary: locationsDataSource, value: location))&" +
                         "voucher_id=\(Functionality.findKeyFromValue(dictionary: vouchersDataSource, value: voucher))&" +
                         "bookingTime=\(Functionality.jsonStringify(obj: bookingTime as AnyObject))&" +
-                        "code=\(self._verificationCode!)"
+                        "code=\(self._verificationCode!)&" +
+                        "machine_id=\(machine_ID)"
+        } else {
+            return ""
         }
         
         return result

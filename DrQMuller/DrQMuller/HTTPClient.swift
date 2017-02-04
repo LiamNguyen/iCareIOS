@@ -13,7 +13,7 @@ protocol HTTPClientDelegate {
 }
 
 public class HTTPClient {
-    private var serviceURL = ServiceURL(environment: .LOCAL)
+    private var serviceURL = ServiceURL(environment: .UAT)
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
@@ -22,15 +22,15 @@ public class HTTPClient {
             return
         }
         let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
-        print("url: \(URL)")
         var request = URLRequest(url: URL as! URL)
         request.httpMethod = "GET"
-        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if data?.count != 0 {
-                let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
+            if data?.count != 0 && data != nil {
+                let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? NSDictionary
                 print("GET: \(URL!)")
-                self.delegate?.onReceiveRequestResponse(data: JSONResponse)
+                self.delegate?.onReceiveRequestResponse(data: JSONResponse!)
+            } else {
+                print("Check server connectivity")
             }
         
         }

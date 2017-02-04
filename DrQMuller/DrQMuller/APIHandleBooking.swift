@@ -35,8 +35,8 @@ class APIHandleBooking: NSObject {
         self.persistencyManager.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID, location_ID: location_ID, machine_ID: machine_ID)
     }
     
-    func checkBookingTime(day_ID: String, time_ID: String) {
-        self.persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
+    func checkBookingTime(day_ID: String, time_ID: String, chosenMachineID: String) {
+        self.persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID, chosenMachineID: chosenMachineID)
     }
     
     func insertNewAppointment() {

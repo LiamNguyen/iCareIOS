@@ -161,7 +161,6 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                     }
                 }
             }
-            
             NotificationCenter.default.post(name: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil, userInfo: isOk)
         }
         
@@ -239,8 +238,10 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
 //MAKE GET REQUEST FOR CHECKING EXISTENCE OF BOOKING TIME
     
-    func checkBookingTime(day_ID: String, time_ID: String) {
-        httpClient.getRequest(url: "BookingTransaction", parameter: "?day_id=\(day_ID)&time_id=\(time_ID)")
+    func checkBookingTime(day_ID: String, time_ID: String, chosenMachineID: String) {
+        let location_ID = Functionality.findKeyFromValue(dictionary: APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!.dropDownLocationsDataSource, value: DTOBookingInformation.sharedInstance.location)
+        
+        httpClient.postRequest(url: "BookingTransaction", body: "day_id=\(day_ID)&time_id=\(time_ID)&location_id=\(location_ID)&machine_id=\(chosenMachineID)")
     }
     
 //INSERT NEW APPOINTMENT
