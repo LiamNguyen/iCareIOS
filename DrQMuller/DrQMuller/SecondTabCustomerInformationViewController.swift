@@ -27,6 +27,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     private var customerInformationController = CustomStyleCustomerInformation()
     private var picker_GenderDataSource = [String]()
     private let datePickerRange = DatePickerRange()
+    private var networkViewManager = NetworkViewManager()
     
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -80,13 +81,20 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
         self.picker_Gender.dataSource = self
         self.picker_Gender.delegate = self
-        
 
         
 //=========DELEGATING slideBtn_Next=========
         
         self.slideBtn_Next.delegate = self
         self.slideBtn_Next.reset()
+        
+        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {

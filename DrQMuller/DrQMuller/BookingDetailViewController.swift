@@ -74,6 +74,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var addToCartAnimation_StartPosition: CGFloat!
     private var flyingView: UIView!
     
+    private var networkViewManager = NetworkViewManager()
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
         
@@ -218,10 +219,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dtoBookingTime = [[String]]()
         
         bindDataConfirmView()
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+        
+        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
     }
     
     override func viewDidLayoutSubviews() {

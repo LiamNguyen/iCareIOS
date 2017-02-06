@@ -41,6 +41,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private var activityIndicator: UIActivityIndicatorView!
     private var language: String!
     
+    private var networkViewManager = NetworkViewManager()
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -98,10 +99,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         self.btn_TypesDropDown.isHidden = true
         self.icon_Type.isHidden = true
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+        
+        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

@@ -36,6 +36,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
     private var hasReceiveLoginResponse = false
+    private var networkViewManager = NetworkViewManager()
     
     func onReceiveRequestResponse(data: AnyObject) {
         if let arrayResponse = data["Select_AllTime"] as? NSArray {
@@ -109,6 +110,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         //UserDefaults.standard.removeObject(forKey: "lang")
         
         if UserDefaults.standard.string(forKey: "lang") == nil {
+            UserDefaults.standard.set("en", forKey: "lang")
             UIFunctionality.createChooseLanguageView(view: self.view)
         }
         
@@ -175,6 +177,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
 //=========TOAST SET UP COLOR=========
         
         UIView.hr_setToastThemeColor(color: ToastColorAlert)
+        
+        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

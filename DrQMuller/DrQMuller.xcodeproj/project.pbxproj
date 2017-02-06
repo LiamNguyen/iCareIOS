@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		D9C9F96E3FA0149EBF20A8A4 /* Pods_DrQMuller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F58401B7A7C57AC9EFB8729C /* Pods_DrQMuller.framework */; };
-		ED03CEB21E36983D00C9EBFB /* FunctionalityHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03CEB11E36983D00C9EBFB /* FunctionalityHelper.swift */; };
-		ED03CEB41E369F9B00C9EBFB /* ViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03CEB31E369F9B00C9EBFB /* ViewHelper.swift */; };
+		ED03CEB21E36983D00C9EBFB /* Functionality.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03CEB11E36983D00C9EBFB /* Functionality.swift */; };
+		ED03CEB41E369F9B00C9EBFB /* UIFunctionality.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03CEB31E369F9B00C9EBFB /* UIFunctionality.swift */; };
 		ED040F491E0C7808003166FD /* NiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED040F481E0C7808003166FD /* NiceButton.swift */; };
 		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
 		ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */; };
@@ -29,6 +29,12 @@
 		ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */; };
 		ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */; };
 		ED6986961E12E14000932E93 /* ModelHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6986951E12E14000932E93 /* ModelHandleLogin.swift */; };
+		ED6A68581E490E5D00776B6B /* NetworkViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A68571E490E5D00776B6B /* NetworkViewManager.swift */; };
+		ED6A685A1E492CEA00776B6B /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A68591E492CEA00776B6B /* Reachability.swift */; };
+		ED6A685C1E492D6A00776B6B /* ToastManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A685B1E492D6A00776B6B /* ToastManager.swift */; };
+		ED6A685E1E492D9C00776B6B /* DialogManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A685D1E492D9C00776B6B /* DialogManager.swift */; };
+		ED6A68601E492DCA00776B6B /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A685F1E492DCA00776B6B /* AnimationManager.swift */; };
+		ED6A68621E492DF800776B6B /* CustomStyleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A68611E492DF800776B6B /* CustomStyleCustomerInformation.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
 		ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */; };
 		ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED939FE31E0D248F00A1164F /* DatePickerRange.swift */; };
@@ -85,8 +91,8 @@
 
 /* Begin PBXFileReference section */
 		D24D7C745172B076A94BEB0C /* Pods-DrQMuller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DrQMuller.release.xcconfig"; path = "Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller.release.xcconfig"; sourceTree = "<group>"; };
-		ED03CEB11E36983D00C9EBFB /* FunctionalityHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FunctionalityHelper.swift; sourceTree = "<group>"; };
-		ED03CEB31E369F9B00C9EBFB /* ViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewHelper.swift; sourceTree = "<group>"; };
+		ED03CEB11E36983D00C9EBFB /* Functionality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functionality.swift; sourceTree = "<group>"; };
+		ED03CEB31E369F9B00C9EBFB /* UIFunctionality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFunctionality.swift; sourceTree = "<group>"; };
 		ED040F481E0C7808003166FD /* NiceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceButton.swift; sourceTree = "<group>"; };
 		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +115,12 @@
 		ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartOrderConfirmTableViewCell.swift; sourceTree = "<group>"; };
 		ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
 		ED6986951E12E14000932E93 /* ModelHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleLogin.swift; sourceTree = "<group>"; };
+		ED6A68571E490E5D00776B6B /* NetworkViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkViewManager.swift; sourceTree = "<group>"; };
+		ED6A68591E492CEA00776B6B /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		ED6A685B1E492D6A00776B6B /* ToastManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToastManager.swift; sourceTree = "<group>"; };
+		ED6A685D1E492D9C00776B6B /* DialogManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DialogManager.swift; sourceTree = "<group>"; };
+		ED6A685F1E492DCA00776B6B /* AnimationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
+		ED6A68611E492DF800776B6B /* CustomStyleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStyleCustomerInformation.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 		ED939FE31E0D248F00A1164F /* DatePickerRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerRange.swift; sourceTree = "<group>"; };
@@ -187,8 +199,9 @@
 		ED03CEB01E36981A00C9EBFB /* Resusable */ = {
 			isa = PBXGroup;
 			children = (
-				ED03CEB11E36983D00C9EBFB /* FunctionalityHelper.swift */,
+				ED03CEB11E36983D00C9EBFB /* Functionality.swift */,
 				ED522D621E38F84C00E53403 /* StringExtension.swift */,
+				ED6A68591E492CEA00776B6B /* Reachability.swift */,
 			);
 			name = Resusable;
 			sourceTree = "<group>";
@@ -196,7 +209,12 @@
 		ED03CEB51E369FA100C9EBFB /* Reusable */ = {
 			isa = PBXGroup;
 			children = (
-				ED03CEB31E369F9B00C9EBFB /* ViewHelper.swift */,
+				ED03CEB31E369F9B00C9EBFB /* UIFunctionality.swift */,
+				ED6A68571E490E5D00776B6B /* NetworkViewManager.swift */,
+				ED6A685B1E492D6A00776B6B /* ToastManager.swift */,
+				ED6A685D1E492D9C00776B6B /* DialogManager.swift */,
+				ED6A685F1E492DCA00776B6B /* AnimationManager.swift */,
+				ED6A68611E492DF800776B6B /* CustomStyleCustomerInformation.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -566,10 +584,12 @@
 				EDEAC1661E1D3DAC002FF282 /* ModelHandleBookingDetail.swift in Sources */,
 				ED040F491E0C7808003166FD /* NiceButton.swift in Sources */,
 				ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */,
+				ED6A68621E492DF800776B6B /* CustomStyleCustomerInformation.swift in Sources */,
 				ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,
 				ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */,
 				EDCE22CE1E309F490022F0C8 /* APIHandleReleaseTime.swift in Sources */,
+				ED6A68601E492DCA00776B6B /* AnimationManager.swift in Sources */,
 				ED6986961E12E14000932E93 /* ModelHandleLogin.swift in Sources */,
 				ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */,
 				ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */,
@@ -579,16 +599,20 @@
 				ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */,
 				ED41DF3D1E163EC900803A14 /* ModelHandleBookingGeneral.swift in Sources */,
 				ED41DF411E164D0C00803A14 /* PMHandleBooking.swift in Sources */,
-				ED03CEB21E36983D00C9EBFB /* FunctionalityHelper.swift in Sources */,
+				ED6A685E1E492D9C00776B6B /* DialogManager.swift in Sources */,
+				ED03CEB21E36983D00C9EBFB /* Functionality.swift in Sources */,
 				ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */,
 				EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */,
-				ED03CEB41E369F9B00C9EBFB /* ViewHelper.swift in Sources */,
+				ED03CEB41E369F9B00C9EBFB /* UIFunctionality.swift in Sources */,
+				ED6A68581E490E5D00776B6B /* NetworkViewManager.swift in Sources */,
 				ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */,
 				ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */,
 				ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */,
+				ED6A685C1E492D6A00776B6B /* ToastManager.swift in Sources */,
 				ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */,
 				ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */,
 				EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */,
+				ED6A685A1E492CEA00776B6B /* Reachability.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

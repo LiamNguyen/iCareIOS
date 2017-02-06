@@ -22,9 +22,10 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var txt_Name: UITextField!
     @IBOutlet private weak var txt_Address: UITextField!
     @IBOutlet private weak var lbl_Title: UILabel!
-    @IBOutlet weak var btn_Next: UIButton!
+    @IBOutlet private weak var btn_Next: UIButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
+    private var networkViewManager = NetworkViewManager()
 
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -76,6 +77,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 
         txt_Name.becomeFirstResponder()
         
+        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
