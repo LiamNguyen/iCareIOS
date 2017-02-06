@@ -38,6 +38,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var timer: Timer!
     
     private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
     
     private func handleLanguageChanged() {
         lbl_StartDate.text = "LBL_START_DATE".localized()
@@ -81,13 +82,16 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             isEco = true
         }
         
-        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
 
     @IBAction func lbl_Back_OnClick(_ sender: Any) {

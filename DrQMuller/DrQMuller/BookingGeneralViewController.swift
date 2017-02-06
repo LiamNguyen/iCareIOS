@@ -42,6 +42,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private var language: String!
     
     private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -100,13 +101,16 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         self.btn_TypesDropDown.isHidden = true
         self.icon_Type.isHidden = true
         
-        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
     
 //=========BINDING DATASOURCE FOR DROPDOWNS==========

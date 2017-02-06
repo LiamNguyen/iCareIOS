@@ -26,6 +26,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     private var customerInformationController = CustomStyleCustomerInformation()
     private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
 
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -77,7 +78,16 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 
         txt_Name.becomeFirstResponder()
         
-        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {

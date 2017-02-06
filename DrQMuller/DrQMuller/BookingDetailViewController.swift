@@ -75,6 +75,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var flyingView: UIView!
     
     private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
+    
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
         
@@ -220,16 +222,23 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         bindDataConfirmView()
         
-        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
         self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x + 400, y: self.view_ConfirmView.center.y)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         NotificationCenter.default.removeObserver(self)
         modelHandelBookingDetail.releaseTime(timeObj: dtoBookingTime)
+        networkCheckInRealTime.invalidate()
     }
     
     

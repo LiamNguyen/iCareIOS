@@ -34,11 +34,11 @@ struct Reachability {
         return (isReachable && !needsConnection)
     }
     
-    static func detectNetworkReachabilityObserver(parentView: UIView) -> NetworkViewManager {
+    static func detectNetworkReachabilityObserver(parentView: UIView) -> (network: NetworkViewManager, timer: Timer) {
         let viewManager = NetworkViewManager()
         viewManager.createNetworkMessage(parentView: parentView)
         
-        //=========OBSERVING NOTIFICATION FROM AppDelegate FOR NETWORK CONNECTION=========
+//=========OBSERVING NOTIFICATION FROM AppDelegate FOR NETWORK CONNECTION=========
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "network"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "network"), object: nil, queue: nil) { (Notification) in
@@ -46,15 +46,28 @@ struct Reachability {
                 if let isConnected = userInfo["isConnectedToNetwork"] as? Bool {
                     if isConnected {
                         viewManager.updateNetworkMessage(isConnected: true)
-                        viewManager.dismissNetworkMessage()
                     } else {
                         viewManager.updateNetworkMessage(isConnected: false)
-                        viewManager.showNetworkMessage()
                     }
                 }
             }
         }
+
+//=========REALTIME CHECKING FOR NETWORK CONNECTIVITY=========
+
+        var timer = Timer()
+        if #available(iOS 10.0, *) {
+            timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true, block: { (Timer) in
+                if Reachability.isConnectedToNetwork() {
+                    viewManager.updateNetworkMessage(isConnected: true)
+                } else {
+                    viewManager.updateNetworkMessage(isConnected: false)
+                }
+            })
+        } else {
+            // Fallback on earlier versions
+        }
         
-        return viewManager
+        return (viewManager, timer)
     }
 }

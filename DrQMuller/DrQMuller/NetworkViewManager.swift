@@ -10,13 +10,14 @@ import Foundation
 import UIKit
 
 class NetworkViewManager: UIView {
+    private var parentView: UIView!
     private var messageView: UIView!
     private var messageLabel: UILabel!
     private var isConnected = true
     
     func createNetworkMessage(parentView: UIView) {
         messageView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
-        messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -20)
+        messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -30)
         
         messageView.layer.shadowColor = UIColor.black.cgColor
         messageView.layer.shadowOffset = CGSize.zero
@@ -31,6 +32,7 @@ class NetworkViewManager: UIView {
         
         messageView.addSubview(messageLabel)
         parentView.addSubview(messageView)
+        self.parentView = parentView
     }
     
     func showNetworkMessage() {
@@ -49,9 +51,13 @@ class NetworkViewManager: UIView {
         if isConnected {
             messageView.backgroundColor = UIColor.green
             messageLabel.text = "NETWORK_REACHED".localized()
+            self.parentView.isUserInteractionEnabled = true
+            dismissNetworkMessage()
         } else {
             messageView.backgroundColor = UIColor.red
             messageLabel.text = "NETWORK_UNREACHED".localized()
+            self.parentView.isUserInteractionEnabled = false
+            showNetworkMessage()
         }
         self.isConnected = isConnected
     }

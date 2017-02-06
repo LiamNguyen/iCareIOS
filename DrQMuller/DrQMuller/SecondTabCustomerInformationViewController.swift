@@ -28,6 +28,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     private var picker_GenderDataSource = [String]()
     private let datePickerRange = DatePickerRange()
     private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
     
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -88,13 +89,16 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         self.slideBtn_Next.delegate = self
         self.slideBtn_Next.reset()
         
-        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {

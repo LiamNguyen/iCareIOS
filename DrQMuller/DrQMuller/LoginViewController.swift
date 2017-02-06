@@ -36,7 +36,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
     private var hasReceiveLoginResponse = false
+    
     private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
     
     func onReceiveRequestResponse(data: AnyObject) {
         if let arrayResponse = data["Select_AllTime"] as? NSArray {
@@ -178,11 +180,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         
         UIView.hr_setToastThemeColor(color: ToastColorAlert)
         
-        networkViewManager = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
+        
+        self.networkCheckInRealTime.invalidate()
     }
     
 //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========
