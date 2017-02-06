@@ -19,14 +19,16 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var view_FirstTabContainer: UIView!
     @IBOutlet private weak var view_SecondTabContainer: UIView!
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
-    @IBOutlet weak var txt_Email: UITextField!
-    @IBOutlet weak var txt_Phone: UITextField!
-    @IBOutlet weak var lbl_Title: UILabel!
-    @IBOutlet weak var btn_Next: UIButton!
+    @IBOutlet private weak var txt_Email: UITextField!
+    @IBOutlet private weak var txt_Phone: UITextField!
+    @IBOutlet private weak var lbl_Title: UILabel!
+    @IBOutlet private weak var btn_Next: UIButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
+    private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
     
-    func updateUI() {
+    private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
         btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(), for: .normal)
         btn_SecondTab.setTitle("SECOND_TAB_BTN_TITLE".localized(), for: .normal)
@@ -75,6 +77,16 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
         txt_Email.becomeFirstResponder()
         
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {

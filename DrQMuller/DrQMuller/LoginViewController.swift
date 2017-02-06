@@ -37,6 +37,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private var modelHandleLogin = ModelHandleLogin()
     private var hasReceiveLoginResponse = false
     
+    private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
+    
     func onReceiveRequestResponse(data: AnyObject) {
         if let arrayResponse = data["Select_AllTime"] as? NSArray {
             for arrayItem in arrayResponse {
@@ -109,6 +112,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         //UserDefaults.standard.removeObject(forKey: "lang")
         
         if UserDefaults.standard.string(forKey: "lang") == nil {
+            UserDefaults.standard.set("en", forKey: "lang")
             UIFunctionality.createChooseLanguageView(view: self.view)
         }
         
@@ -175,10 +179,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
 //=========TOAST SET UP COLOR=========
         
         UIView.hr_setToastThemeColor(color: ToastColorAlert)
+        
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
+        
+        self.networkCheckInRealTime.invalidate()
     }
     
 //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========

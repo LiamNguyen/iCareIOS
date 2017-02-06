@@ -67,6 +67,8 @@
 "CONFIRM_PASSWORD_EMPTY_MESSAGE" = "Confirm password empty";
 "CREDENTIAL_INVALID" = "Invalid username or password";
 "ONE_LOCATION_MESSAGE" = "Currently there is only one DrQMuller FBT Shop at district 3, Viet Nam";
+"NETWORK_REACHED" = "Network Connected";
+"NETWORK_UNREACHED" = "No Internet Connection";
 
 
 

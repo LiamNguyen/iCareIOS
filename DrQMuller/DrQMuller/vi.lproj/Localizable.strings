@@ -68,6 +68,8 @@
 "CONFIRM_PASSWORD_EMPTY_MESSAGE" = "Xác nhận mật khẩu trống";
 "CREDENTIAL_INVALID" = "Tên đăng nhập và mật khẩu không hợp lệ";
 "ONE_LOCATION_MESSAGE" = "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam";
+"NETWORK_REACHED" = "Đã kết nối mạng";
+"NETWORK_UNREACHED" = "Không có kết nối mạng";
 
 
 

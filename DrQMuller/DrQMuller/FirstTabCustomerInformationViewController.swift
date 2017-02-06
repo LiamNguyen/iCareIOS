@@ -22,9 +22,11 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var txt_Name: UITextField!
     @IBOutlet private weak var txt_Address: UITextField!
     @IBOutlet private weak var lbl_Title: UILabel!
-    @IBOutlet weak var btn_Next: UIButton!
+    @IBOutlet private weak var btn_Next: UIButton!
     
     private var customerInformationController = CustomStyleCustomerInformation()
+    private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
 
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -76,6 +78,16 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 
         txt_Name.becomeFirstResponder()
         
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {

@@ -37,6 +37,9 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var modelHandleBookingStartEnd  = ModelHandelBookingStartEnd()
     private var timer: Timer!
     
+    private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
+    
     private func handleLanguageChanged() {
         lbl_StartDate.text = "LBL_START_DATE".localized()
         lbl_EndDate.text = "LBL_END_DATE".localized()
@@ -78,6 +81,17 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
             isEco = true
         }
+        
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
 
     @IBAction func lbl_Back_OnClick(_ sender: Any) {

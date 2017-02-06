@@ -30,6 +30,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var screenHeight: CGFloat!
     private var isIphone4 = false
     
+    private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
+    
     private func updateUI() {
         
         //=========TXTFIELD PLACEHOLDER=========
@@ -112,6 +115,17 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         txt_Username.becomeFirstResponder()
 
         self.activityIndicator.stopAnimating()
+        
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
