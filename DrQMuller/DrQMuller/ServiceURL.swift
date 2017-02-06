@@ -34,6 +34,7 @@ public class ServiceURL {
             prdURL["Select_EcoTime"] = "http://210.211.109.180/drmuller/Select_EcoTime.php"
             prdURL["Select_DaysOfWeek"] = "http://210.211.109.180/drmuller/Select_DaysOfWeek.php"
             prdURL["Select_SelectedTime"] = "http://210.211.109.180/drmuller/Select_SelectedTime.php"
+            prdURL["Select_Machines"] = "http://210.211.109.180/drmuller/Select_Machines.php"
             prdURL["Insert_NewCustomer"] = "http://210.211.109.180/drmuller/Insert_NewCustomer.php"
             prdURL["Insert_NewAppointment"] = "http://210.211.109.180/drmuller/Insert_NewAppointment.php"
             prdURL["Insert_NewBookingTime"] = "http://210.211.109.180/drmuller/Insert_NewBookingTime.php"
@@ -89,6 +90,7 @@ public class ServiceURL {
             localURL["Select_EcoTime"] = "http://localhost/drmuller/Select_EcoTime.php"
             localURL["Select_DaysOfWeek"] = "http://localhost/drmuller/Select_DaysOfWeek.php"
             localURL["Select_SelectedTime"] = "http://localhost/drmuller/Select_SelectedTime.php"
+            localURL["Select_Machines"] = "http://localhost/drmuller/Select_Machines.php"
             localURL["Insert_NewCustomer"] = "http://localhost/drmuller/Insert_NewCustomer.php"
             localURL["Insert_NewAppointment"] = "http://localhost/drmuller/Insert_NewAppointment.php"
             localURL["Insert_NewBookingTime"] = "http://localhost/drmuller/Insert_NewBookingTime.php"
@@ -116,6 +118,7 @@ public class ServiceURL {
             uatURL["Select_EcoTime"] = "http://drqmuller.com/drmuller/Select_EcoTime.php"
             uatURL["Select_DaysOfWeek"] = "http://drqmuller.com/drmuller/Select_DaysOfWeek.php"
             uatURL["Select_SelectedTime"] = "http://drqmuller.com/drmuller/Select_SelectedTime.php"
+            uatURL["Select_Machines"] = "http://drqmuller.com/drmuller/Select_Machines.php"
             uatURL["Insert_NewCustomer"] = "http://drqmuller.com/drmuller/Insert_NewCustomer.php"
             uatURL["Insert_NewAppointment"] = "http://drqmuller.com/drmuller/Insert_NewAppointment.php"
             uatURL["Insert_NewBookingTime"] = "http://drqmuller.com/drmuller/Insert_NewBookingTime.php"
@@ -146,7 +149,7 @@ public class ServiceURL {
                 return "Can't find URL"
             }
         case .LOCAL:
-            if let url = prdURL[serviceURL] {
+            if let url = localURL[serviceURL] {
                 return url
             } else {
                 return "Can't find URL"

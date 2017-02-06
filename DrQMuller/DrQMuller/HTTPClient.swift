@@ -21,16 +21,16 @@ public class HTTPClient {
         if !Network.hasNetworkConnection() {
             return
         }
-
         let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
         var request = URLRequest(url: URL as! URL)
         request.httpMethod = "GET"
-        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if data?.count != 0 {
-                let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
+            if data?.count != 0 && data != nil {
+                let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? NSDictionary
                 print("GET: \(URL!)")
-                self.delegate?.onReceiveRequestResponse(data: JSONResponse)
+                self.delegate?.onReceiveRequestResponse(data: JSONResponse!)
+            } else {
+                print("Check server connectivity")
             }
         
         }

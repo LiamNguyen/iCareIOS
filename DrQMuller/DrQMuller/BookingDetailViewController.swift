@@ -22,10 +22,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private weak var tableView_CartOrder: UITableView!
     
     @IBOutlet private weak var btn_DropDownDaysOfWeek: NiceButton!
+    @IBOutlet private weak var btn_DropDownMachines: NiceButton!
+    
     @IBOutlet private weak var slideBtn: MMSlidingButton!
     @IBOutlet private weak var btn_ClearAllCartItems: UIButton!
     @IBOutlet private weak var constraint_CartOrderTableView_Height: NSLayoutConstraint!
-    @IBOutlet weak var btn_Back: UIButton!
+    @IBOutlet private weak var btn_Back: UIButton!
     
     @IBOutlet private weak var lbl_Title: UILabel!
     @IBOutlet private weak var lbl_VoucherTitle: UILabel!
@@ -36,10 +38,15 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
     private var freeTimeDataSource = [String]()
+    
     private let dropDown_DaysOfWeek = DropDown()
+    private let dropDown_Machines = DropDown()
+    
     private var staticArrayFromUserDefaults: DTOStaticArrayDataSource!
     private var daysOfWeekDataSource: [String]!
     //private var daysOfWeekDataSouceWithID: [String: String]! //Dictionary
+    private var machinesDataSource: [String]!
+    
     private var isEco = false
     private var isTypeFree = false
     private var dataHasReceive = false
@@ -47,6 +54,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var tupleBookingTime_Array = [(id: (day_ID: String, time_ID: String), value: (day: String, time: String))]()
     
     private var tupleBookingTime: (id: (day_ID: String, time_ID: String), value: (day: String, time: String))!
+    
+    private var tupleBookingMachine: (id: String?, value: String?)
     
     private var presentWindow : UIWindow?
     private var messageView: UIView!
@@ -65,7 +74,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var addToCartAnimation_StartPosition: CGFloat!
     private var flyingView: UIView!
     
-    func updateUI() {
+    private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
         
         btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(), for: .normal)
@@ -92,7 +101,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: updateTable)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: onReceiveFreeTimeDataSource)
         
 //=========OBSERING NOTIFICATION FROM PMHandleBooking FOR CHECKING BOOKING TIME EXISTENCY RESULT=========
         
@@ -123,6 +132,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil, queue: nil, using: onReceiveInsertAppointmentResponse)
+        
+//=========OBSERING NOTIFICATION FROM PMHandleBooking FOR MACHINES DATASOURCE=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "machinesDataSource"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "machinesDataSource"), object: nil, queue: nil, using: onReceiveMachinesDataSource)
         
 //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
@@ -174,14 +188,19 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========SET TYPE=========
         
         if DTOBookingInformation.sharedInstance.type == "Tự do" {
-            self.activityIndicator.startAnimating()
             self.isTypeFree = true
             
             self.tupleBookingTime.value.day = DTOBookingInformation.sharedInstance.exactDayOfWeek
             self.tupleBookingTime.id.day_ID = modelHandelBookingDetail.returnPreSelectedDayIDForTypeFree()
-            
-            modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: self.tupleBookingTime.id.day_ID)
         }
+        
+//=========RETRIEVE MACHINES DATASOURCE=========
+        
+        if !self.activityIndicator.isAnimating {
+            self.activityIndicator.startAnimating()
+        }
+        
+        modelHandelBookingDetail.bindMachinesDataSource()
         
 //=========RETRIEVE DAYS OF WEEK DATASOURCE=========
         
@@ -217,7 +236,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
 //=========UPDATE FREE TIME LIST WHEN RECEIVING RESPONSE FROM SERVER=========
     
-    func updateTable(notification: Notification) {
+    func onReceiveFreeTimeDataSource(notification: Notification) {
         if dataHasReceive {
             return
         }
@@ -233,6 +252,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     
                     self.activityIndicator.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
                     self.activityIndicator.stopAnimating()
+                    self.view.isUserInteractionEnabled = true
                     
                     self.tableView_BookingTime.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
                     self.tableView_BookingTime.isHidden = false
@@ -260,6 +280,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     let bookingTime = [self.tupleBookingTime.id.day_ID, self.tupleBookingTime.id.time_ID]
                     self.dtoBookingTime.insert(bookingTime, at: self.dtoBookingTime.count)
                     DTOBookingInformation.sharedInstance.bookingTime = self.dtoBookingTime
+                    if let machine = self.tupleBookingMachine.value {
+                        DTOBookingInformation.sharedInstance.machine = machine
+                    }
+                    print(DTOBookingInformation.sharedInstance.machine)
                     
                     self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
                     
@@ -284,6 +308,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             }
                             self.tableView_BookingTime.reloadData()
                         }
+                        
                         self.tableView_CartOrder.reloadData()
                         self.tableView_BookingTimeConfirm.reloadData()
                         
@@ -294,20 +319,25 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         if notificationNumber == 1 {
                             self.lbl_Notification.isHidden = false
                         }
+
+                        self.activityIndicator.stopAnimating()
+                        
+                        self.flyingView = UIFunctionality.createFlyingView(parentView: self.view, startPosition: self.addToCartAnimation_StartPosition)
+                        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.viewSelfDestroy), userInfo: nil, repeats: false)
+                        
+                        self.tableView_BookingTime.isUserInteractionEnabled = true
                         
                         let msg = ("\("BOOKING_TIME_SUCCESS_MESSAGE".localized())\n\(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.day) - \(self.tupleBookingTime_Array[self.tupleBookingTime_Array.count - 1].value.time)")
                         
                         ToastManager.alert(view: self.view_TopView, msg: msg)
                         
-                        self.activityIndicator.stopAnimating()
-                        self.flyingView = UIFunctionality.createFlyingView(parentView: self.view, startPosition: self.addToCartAnimation_StartPosition)
-                        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.viewSelfDestroy), userInfo: nil, repeats: false)
-                        self.tableView_BookingTime.isUserInteractionEnabled = true
                     }
                 }
             }
         }
     }
+    
+//=========RECEVING INSERT APPOINTMENT RESPONSE=========
     
     func onReceiveInsertAppointmentResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
@@ -318,12 +348,60 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         DispatchQueue.main.async {
                             ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_SUCCESS_MESSAGE".localized())
                         }
-                        print("APP_ID: \(DTOBookingInformation.sharedInstance.appointmentID)")
                     } else {
                         DispatchQueue.main.async {
                             ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_FAIL_MESSAGE".localized())
                         }
                     }
+                }
+            }
+        }
+    }
+    
+//=========RECEVING RELEASE TIME RESPONSE=========
+    
+    func onReceiveReleaseTimeResponse(notification: Notification) {
+        
+        if let userInfo = notification.userInfo {
+            if let isOk = userInfo["status"] as? Bool {
+                if isOk {
+                    if self.isRequiredClearAllCartItems {
+                        self.resetBookingTime()
+                        self.isRequiredClearAllCartItems = false
+                    } else {
+                        updateLocalWhenDeleteOneItem()
+                    }
+                    
+                    if self.tupleBookingMachine.value == DTOBookingInformation.sharedInstance.machine {
+                        self.getFreeTimeDataSource()
+                    } else {
+                        self.activityIndicator.stopAnimating()
+                        self.view.isUserInteractionEnabled = true
+                    }
+                    
+                    if self.hasFinishedInThisPage {
+                        return
+                    }
+                    ToastManager.alert(view: view_TopView, msg: "DELETE_SUCCESS_MESSAGE".localized())
+                } else {
+                    ToastManager.alert(view: view_TopView, msg: "DELETE_FAIL_MESSAGE".localized())
+                }
+            }
+        }
+    }
+    
+//=========RECEVING MACHINES DATA SOURCE=========
+    
+    func onReceiveMachinesDataSource(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            
+            DispatchQueue.global(qos: .userInteractive).async {
+                if let returnArrayDataSource = userInfo["returnArrayDataSource"] as? [String: String] {
+                    let dataSource = Functionality.returnArrayFromDictionary(dictionary: returnArrayDataSource, isReturnValue: true)
+                    self.dropDownMachinesWiredUp(dataSource: dataSource)
+                }
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
                 }
             }
         }
@@ -338,6 +416,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tableView_CartOrder.isHidden = true
         }
         dropDown_DaysOfWeek.show()
+    }
+    
+    @IBAction func btn_DropDownMachines_OnClick(_ sender: Any) {
+        if self.tableView_CartOrder.isHidden == false {
+            self.tableView_CartOrder.isHidden = true
+        }
+        dropDown_Machines.show()
     }
     
     @IBAction func btn_ClearAllCartItem_OnClick(_ sender: Any) {
@@ -450,8 +535,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.activityIndicator.startAnimating()
             self.tableView_BookingTime.isUserInteractionEnabled = false
             
-            modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row])
-            
+            if let machine_ID = self.tupleBookingMachine.id {
+                modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row], chosenMachineID: machine_ID)
+            }
+                
             let time_ID = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
             
             self.tupleBookingTime.id.time_ID = time_ID
@@ -509,30 +596,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func onReceiveReleaseTimeResponse(notification: Notification) {
-        self.activityIndicator.stopAnimating()
-        self.view.isUserInteractionEnabled = true
-        
-        if let userInfo = notification.userInfo {
-            if let isOk = userInfo["status"] as? Bool {
-                if isOk {
-                    if self.isRequiredClearAllCartItems {
-                        self.resetBookingTime()
-                        self.isRequiredClearAllCartItems = false
-                    } else {
-                        updateLocalWhenDeleteOneItem()
-                    }
-                    if self.hasFinishedInThisPage {
-                        return
-                    }
-                    ToastManager.alert(view: view_TopView, msg: "DELETE_SUCCESS_MESSAGE".localized())
-                } else {
-                    ToastManager.alert(view: view_TopView, msg: "DELETE_FAIL_MESSAGE".localized())
-                }
-            }
-        }
-    }
-    
     private func updateLocalWhenDeleteOneItem() {
         if let indexPath = deleteCartOrderItemIndexPath {
             
@@ -546,9 +609,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.tableView_CartOrder.endUpdates()
             
-            self.freeTimeDataSource.append(self.deletedTime ?? "")
-            self.freeTimeDataSource.sort()
-            self.tableView_BookingTime.reloadData()
+//            self.freeTimeDataSource.append(self.deletedTime ?? "")
+//            self.freeTimeDataSource.sort()
+//            self.tableView_BookingTime.reloadData()
+
             self.tableView_BookingTimeConfirm.reloadData()
             
             self.lbl_Notification.text = String(Int(self.lbl_Notification.text!)! - 1)
@@ -628,13 +692,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             if self.tupleBookingTime.value.day == item && self.dropDownSelectedRowIndex != nil {
                 return
-            }
+            } 
             
             self.tableView_BookingTime.isHidden = true
             self.activityIndicator.startAnimating()
             let day_ID = String(self.dropDown_DaysOfWeek.indexForSelectedRow! + 1)
             //OBSERVING NOTIFICATION FROM ModelHandleBookingDetail
-            self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
+            //self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
             
             self.tupleBookingTime.id.day_ID = day_ID
             self.tupleBookingTime.value.day = item
@@ -643,6 +707,35 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
             self.dataHasReceive = false
         }
+    }
+    
+//=========WIRED UP MACHINES DROPDOWN=========
+    
+    private func dropDownMachinesWiredUp(dataSource: [String]) {
+        self.dropDown_Machines.dataSource = dataSource.sorted()
+        self.dropDown_Machines.anchorView = btn_DropDownMachines
+        self.dropDown_Machines.selectionAction = { [unowned self] (index, item) in
+            self.btn_DropDownMachines.setTitle(item, for: .normal)
+            
+            let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: item)
+            self.tupleBookingMachine.id = machine_ID
+            self.tupleBookingMachine.value = item
+            
+            self.getFreeTimeDataSource()
+        }
+    }
+    
+    private func getFreeTimeDataSource() {
+        self.tableView_BookingTime.isHidden = true
+        self.activityIndicator.startAnimating()
+        
+        let day_ID = self.tupleBookingTime.id.day_ID
+        let location_ID = Functionality.findKeyFromValue(dictionary: APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!.dropDownLocationsDataSource, value: DTOBookingInformation.sharedInstance.location)
+        if let machine_ID = self.tupleBookingMachine.id {
+            self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID, location_ID: location_ID, machine_ID: machine_ID)
+        }
+        
+        self.dataHasReceive = false
     }
     
     //LOCALIZED DAYS OF WEEK
@@ -760,9 +853,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         if isTypeFree {
             self.tableView_BookingTime.isHidden = false
-            self.freeTimeDataSource.append(self.tupleBookingTime_Array[0].value.time)
-            self.freeTimeDataSource.sort()
-            self.tableView_BookingTime.reloadData()
+//            self.freeTimeDataSource.append(self.tupleBookingTime_Array[0].value.time)
+//            self.freeTimeDataSource.sort()
+//            self.tableView_BookingTime.reloadData()
         } else {
             self.tableView_BookingTime.isHidden = true
             self.btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(), for: .normal)

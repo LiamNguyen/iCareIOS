@@ -161,8 +161,22 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                     }
                 }
             }
-            
             NotificationCenter.default.post(name: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil, userInfo: isOk)
+        }
+        
+//HANDLE RESPONSE OF GET MACHINES DATASOURCE
+        
+        var machinesDataSource = [String: String]()
+        if let arrayResponse = data["Select_Machines"]! as? NSArray {
+            for arrayItem in arrayResponse {
+                let dictItem = arrayItem as! NSDictionary
+                machinesDataSource[dictItem["MACHINE_ID"] as! String] = (dictItem["MACHINE_NAME"] as! String)
+            }
+            DTOBookingInformation.sharedInstance.machinesDataSource = machinesDataSource
+            
+            var returnArrayDataSource = [String: Any]()
+            returnArrayDataSource["returnArrayDataSource"] = machinesDataSource
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "machinesDataSource"), object: nil, userInfo: returnArrayDataSource)
         }
     
 //PASS AND SAVE STATIC ARRAY DATASOURCE
@@ -212,14 +226,22 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
  
 //MAKE GET REQUEST FOR SELECTED TIME
 
-    func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
-        httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)")
+    func getSelectedTimeDataSource(selectedDayOfWeek_ID: String, location_ID: String, machine_ID: String) {
+        httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)&location_id=\(location_ID)&machine_id=\(machine_ID)")
+    }
+    
+//MAKE GET REQUEST FOR MACHINES DATASOURCE
+    
+    func getMachinesByLocationID(locationID: String) {
+        httpClient.getRequest(url: "Select_Machines", parameter: "?location_id=\(locationID)")
     }
     
 //MAKE GET REQUEST FOR CHECKING EXISTENCE OF BOOKING TIME
     
-    func checkBookingTime(day_ID: String, time_ID: String) {
-        httpClient.getRequest(url: "BookingTransaction", parameter: "?day_id=\(day_ID)&time_id=\(time_ID)")
+    func checkBookingTime(day_ID: String, time_ID: String, chosenMachineID: String) {
+        let location_ID = Functionality.findKeyFromValue(dictionary: APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!.dropDownLocationsDataSource, value: DTOBookingInformation.sharedInstance.location)
+        
+        httpClient.postRequest(url: "BookingTransaction", body: "day_id=\(day_ID)&time_id=\(time_ID)&location_id=\(location_ID)&machine_id=\(chosenMachineID)")
     }
     
 //INSERT NEW APPOINTMENT
