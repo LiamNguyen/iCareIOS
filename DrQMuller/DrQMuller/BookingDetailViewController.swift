@@ -237,7 +237,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        modelHandelBookingDetail.releaseTime(timeObj: dtoBookingTime)
+        if !dtoBookingTime.isEmpty {
+            modelHandelBookingDetail.releaseTime(timeObj: dtoBookingTime)
+        }
         networkCheckInRealTime.invalidate()
     }
     
@@ -958,6 +960,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBAction func btn_ConfirmBooking_OnClick(_ sender: Any) {
         modelHandelBookingDetail.insertNewAppointment()
+        resetBookingTime()
     }
     
     @objc private func viewSelfDestroy() {
