@@ -25,14 +25,23 @@ public class HTTPClient {
         var request = URLRequest(url: URL as! URL)
         request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if data?.count != 0 && data != nil {
-                let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as? NSDictionary
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error=\(error)")
+                return
+            }
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \(response)")
+                //                postCompleted(false, "http status receives error: \(error)_Status code: \(httpStatus.statusCode)")
+            }
+            
+            if data.count != 0 {
+                let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                print("Response from server: \(JSONResponse)")
                 print("GET: \(URL!)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse!)
-            } else {
-                print("Check server connectivity")
             }
-        
         }
         
         task.resume()
