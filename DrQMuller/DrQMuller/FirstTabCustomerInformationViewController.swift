@@ -19,6 +19,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var view_FirstTabContainer: UIView!
     @IBOutlet private weak var view_SecondTabContainer: UIView!
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
+    @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var txt_Name: UITextField!
     @IBOutlet private weak var txt_Address: UITextField!
     @IBOutlet private weak var lbl_Title: UILabel!
@@ -42,6 +43,8 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     private struct Storyboard {
         static let SEGUE_TO_LOGIN = "segue_CustomerInformationToLogin"
+        static let SEGUE_TO_SECOND_TAB = "segue_CustomerInformationFirstTabToSecondTab"
+        static let SEGUE_TO_THIRD_TAB = "segue_CustomerInformationFirstTabToThirdTab"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -96,18 +99,28 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 
         DialogManager.confirmLogout(sender: self, segueIdentifier: Storyboard.SEGUE_TO_LOGIN)
     }
+    
+//=========BUTTON NEXT ON CLICK=========
 
+    @IBAction func btn_Next_OnClick(_ sender: Any) {
+        if !frontValidationPassed() {
+            return
+        }
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["name"] = txt_Name.text!
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["address"] = txt_Address.text!
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
+    }
     
 //=========TRANSITION TO SECOND INFO PAGE=========
     
     @IBAction func btn_SecondTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationFirstTabToSecondTab", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
     }
     
 //=========TRANSITION TO THIRD INFO PAGE=========
     
     @IBAction func btn_ThirdTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationFirstTabToThirdTab", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_THIRD_TAB, sender: self)
     }
     
 //=========TOUCH OUTSIDE CLOSE KEYBOARD=========
@@ -126,10 +139,20 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         return true
     }
     
-    
-    
-    
-    
-    
-    
+    private func frontValidationPassed() -> Bool {
+        if let customerName = txt_Name.text, let address = txt_Address.text {
+            if customerName.isEmpty {
+                ToastManager.alert(view: view_TopView, msg: "CUSTOMER_NAME_EMPTY_MESSAGE".localized())
+                return false
+            }
+            
+            if address.isEmpty {
+                ToastManager.alert(view: view_TopView, msg: "ADDRESS_EMPTY_MESSAGE".localized())
+                return false
+            }
+            return true
+        } else {
+            return false
+        }
+    }
 }

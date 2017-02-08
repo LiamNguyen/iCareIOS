@@ -45,6 +45,10 @@
 		ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589C1E118529004893DA /* PMHandleLogin.swift */; };
 		ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589E1E11867A004893DA /* APIHandleLogin.swift */; };
 		ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */; };
+		ED9A5C941E4AF01300CE34C5 /* PMHandleRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C931E4AF01300CE34C5 /* PMHandleRegister.swift */; };
+		ED9A5C961E4B79C600CE34C5 /* ModelHandleRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C951E4B79C600CE34C5 /* ModelHandleRegister.swift */; };
+		ED9A5C981E4B7A6600CE34C5 /* APIHandleRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */; };
+		ED9A5C9A1E4BA0A200CE34C5 /* DTOCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */; };
 		ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */; };
 		EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
@@ -131,6 +135,10 @@
 		ED95589C1E118529004893DA /* PMHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleLogin.swift; sourceTree = "<group>"; };
 		ED95589E1E11867A004893DA /* APIHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleLogin.swift; sourceTree = "<group>"; };
 		ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMSlidingButton.swift; sourceTree = "<group>"; };
+		ED9A5C931E4AF01300CE34C5 /* PMHandleRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleRegister.swift; sourceTree = "<group>"; };
+		ED9A5C951E4B79C600CE34C5 /* ModelHandleRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleRegister.swift; sourceTree = "<group>"; };
+		ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleRegister.swift; sourceTree = "<group>"; };
+		ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOCustomerInformation.swift; sourceTree = "<group>"; };
 		ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingStartEnd.swift; sourceTree = "<group>"; };
 		EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleReleaseTime.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -244,6 +252,7 @@
 				ED41DF3C1E163EC900803A14 /* ModelHandleBookingGeneral.swift */,
 				EDEAC1651E1D3DAC002FF282 /* ModelHandleBookingDetail.swift */,
 				ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */,
+				ED9A5C951E4B79C600CE34C5 /* ModelHandleRegister.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -297,6 +306,7 @@
 				ED95589E1E11867A004893DA /* APIHandleLogin.swift */,
 				ED41DF3E1E164CC000803A14 /* APIHandleBooking.swift */,
 				EDCE22CD1E309F490022F0C8 /* APIHandleReleaseTime.swift */,
+				ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */,
 			);
 			name = LibraryAPI;
 			sourceTree = "<group>";
@@ -309,6 +319,7 @@
 				ED95589C1E118529004893DA /* PMHandleLogin.swift */,
 				ED41DF401E164D0C00803A14 /* PMHandleBooking.swift */,
 				EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */,
+				ED9A5C931E4AF01300CE34C5 /* PMHandleRegister.swift */,
 			);
 			name = PersistencyManager;
 			sourceTree = "<group>";
@@ -319,6 +330,7 @@
 				ED95589A1E1172F1004893DA /* DTOAuthentication.swift */,
 				ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */,
 				ED3011E11E192D790037F020 /* DTOBookingInformation.swift */,
+				ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */,
 			);
 			name = DTO;
 			sourceTree = "<group>";
@@ -573,6 +585,7 @@
 				ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */,
 				ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */,
 				ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */,
+				ED9A5C981E4B7A6600CE34C5 /* APIHandleRegister.swift in Sources */,
 				ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */,
 				ED41DF3F1E164CC000803A14 /* APIHandleBooking.swift in Sources */,
 				EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */,
@@ -587,6 +600,7 @@
 				ED6A68621E492DF800776B6B /* CustomStyleCustomerInformation.swift in Sources */,
 				ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,
+				ED9A5C961E4B79C600CE34C5 /* ModelHandleRegister.swift in Sources */,
 				ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */,
 				EDCE22CE1E309F490022F0C8 /* APIHandleReleaseTime.swift in Sources */,
 				ED6A68601E492DCA00776B6B /* AnimationManager.swift in Sources */,
@@ -608,11 +622,13 @@
 				ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */,
 				ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */,
 				ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */,
+				ED9A5C9A1E4BA0A200CE34C5 /* DTOCustomerInformation.swift in Sources */,
 				ED6A685C1E492D6A00776B6B /* ToastManager.swift in Sources */,
 				ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */,
 				ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */,
 				EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */,
 				ED6A685A1E492CEA00776B6B /* Reachability.swift in Sources */,
+				ED9A5C941E4AF01300CE34C5 /* PMHandleRegister.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

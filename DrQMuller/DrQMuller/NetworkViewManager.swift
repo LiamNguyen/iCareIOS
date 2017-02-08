@@ -17,7 +17,7 @@ class NetworkViewManager: UIView {
     
     func createNetworkMessage(parentView: UIView) {
         messageView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 60))
-        messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -30)
+        messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -60)
         
         messageView.layer.shadowColor = UIColor.black.cgColor
         messageView.layer.shadowOffset = CGSize.zero

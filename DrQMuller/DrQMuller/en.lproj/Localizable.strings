@@ -64,11 +64,19 @@
 "DROPDOWN_TYPE_EMPTY_MESSAGE" = "Please choose type";
 "USERNAME_EMPTY_MESSAGE" = "Username empty";
 "PASSWORD_EMPTY_MESSAGE" = "Passwod empty";
-"CONFIRM_PASSWORD_EMPTY_MESSAGE" = "Confirm password empty";
+"CONFIRM_PASSWORD_EMPTY_MESSAGE" = "Confirm passwod empty";
+"CONFIRM_PASSWORD_UNMATCH_MESSAGE" = "Confirm password do not match";
 "CREDENTIAL_INVALID" = "Invalid username or password";
+"REGISTER_FAILED_MESSAGE" = "Register failed";
+"USERNAME_EXISTED_MESSAGE" = "Username has already existed";
 "ONE_LOCATION_MESSAGE" = "Currently there is only one DrQMuller FBT Shop at district 3, Viet Nam";
 "NETWORK_REACHED" = "Network Connected";
 "NETWORK_UNREACHED" = "No Internet Connection";
+"CUSTOMER_NAME_EMPTY_MESSAGE" = "Full name empty";
+"ADDRESS_EMPTY_MESSAGE" = "Address empty";
+"EMAIL_EMPTY_MESSAGE" = "Email empty";
+"PHONE_EMPTY_MESSAGE" = "Phone empty";
+"EMAIL_INVALID_FORMAT" = "Email is invalid";
 
 
 

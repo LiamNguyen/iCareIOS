@@ -19,10 +19,11 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     @IBOutlet private weak var view_FirstTabContainer: UIView!
     @IBOutlet private weak var view_SecondTabContainer: UIView!
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
-    @IBOutlet weak var picker_Gender: UIPickerView!
-    @IBOutlet weak var picker_Date: UIDatePicker!
-    @IBOutlet weak var slideBtn_Next: MMSlidingButton!
-    @IBOutlet weak var lbl_Title: UILabel!
+    @IBOutlet private weak var view_TopView: UIView!
+    @IBOutlet private weak var picker_Gender: UIPickerView!
+    @IBOutlet private weak var picker_Date: UIDatePicker!
+    @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
+    @IBOutlet private weak var lbl_Title: UILabel!
     
     private var customerInformationController = CustomStyleCustomerInformation()
     private var picker_GenderDataSource = [String]()
@@ -46,7 +47,9 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     }
     
     private struct StoryBoard {
-    static let SEGUE_TO_LOGIN = "segue_CustomerInformationSecondTabToLogin"
+        static let SEGUE_TO_LOGIN = "segue_CustomerInformationSecondTabToLogin"
+        static let SEGUE_TO_FIRST_TAB = "segue_CustomerInformationSecondTabToFirstTab"
+        static let SEGUE_TO_THIRD_TAB = "segue_CustomerInformationSecondTabToThirdTab"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,14 +114,14 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
 //=========TRANSITION TO FIRST INFO PAGE=========
     
     @IBAction func btn_FirstTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationSecondTabToFirstTab", sender: self)
+        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_FIRST_TAB, sender: self)
     }
     
     
 //=========TRANSITION TO THIRD INFO PAGE=========
 
     @IBAction func btn_ThirdTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationSecondTabToThirdTab", sender: self)
+        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
     }
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -136,7 +139,9 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
 //=========TRANSITION TO THIRD INFO PAGE WITH slideBtn_Next=========
     
     func buttonStatus(_ status:String, sender:MMSlidingButton) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationSecondTabToThirdTab", sender: self)
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["dob"] = picker_Date.date.shortDate
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["gender"] = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
+        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
     }
     
 //=========TOUCH OUTSIDE CLOSE KEYBOARD=========

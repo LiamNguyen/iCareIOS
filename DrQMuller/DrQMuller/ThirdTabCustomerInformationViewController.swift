@@ -19,6 +19,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var view_FirstTabContainer: UIView!
     @IBOutlet private weak var view_SecondTabContainer: UIView!
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
+    @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var txt_Email: UITextField!
     @IBOutlet private weak var txt_Phone: UITextField!
     @IBOutlet private weak var lbl_Title: UILabel!
@@ -41,6 +42,9 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     private struct StoryBoard {
         static let SEGUE_TO_LOGIN = "segue_CustomerInformationThirdTabToLogin"
+        static let SEGUE_TO_FIRST_TAB = "segue_CustomerInformationThirdTabToFirstTab"
+        static let SEGUE_TO_SECOND_TAB = "segue_CustomerInformationThirdTabToSecondTab"
+        static let SEGUE_TO_BOOKING_VC = "segue_CustomerInformationToBookingTabViewController"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,13 +104,13 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
 //=========TRANSITION TO FIRST INFO PAGE=========
     
     @IBAction func btn_FirstTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationThirdTabToFirstTab", sender: self)
+        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_FIRST_TAB, sender: self)
     }
     
 //=========TRANSITION TO SECOND INFO PAGE=========
     
     @IBAction func btn_SecondTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationThirdTabToSecondTab", sender: self)
+        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_SECOND_TAB, sender: self)
     }
     
 //=========TOUCH OUTSIDE CLOSE KEYBOARD=========
@@ -126,7 +130,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "segue_CustomerInformationToBookingTabViewController"){
+        if(segue.identifier == StoryBoard.SEGUE_TO_BOOKING_VC){
             if let tabVC = segue.destination as? UITabBarController{
                 Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
                 tabVC.selectedIndex = 1
@@ -134,7 +138,28 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
             }
         }
     }
-
+    
+    func frontValidationPassed() -> Bool {
+        if let email = txt_Email.text, let phone = txt_Phone.text {
+            if email.isEmpty {
+                ToastManager.alert(view: view_TopView, msg: "EMAIL_EMPTY_MESSAGE".localized())
+                return false
+            }
+            
+            if !email.contains("@") {
+                ToastManager.alert(view: view_TopView, msg: "EMAIL_INVALID_FORMAT".localized())
+                return false
+            }
+            
+            if phone.isEmpty {
+                ToastManager.alert(view: view_TopView, msg: "PHONE_EMPTY_MESSAGE".localized())
+                return false
+            }
+            return true
+        } else {
+            return false
+        }
+    }
     
     
     

@@ -12,13 +12,29 @@ import UIKit
 
 struct Functionality {
     
-//CONVERT OBJ TO JSON STRING - PROJECT PUBLIC FUNC
+//CONVERT OBJ TO JSON STRING
     
     static func jsonStringify(obj: AnyObject) -> String {
+        let jsonValidObj = JSONSerialization.isValidJSONObject(obj)
+        if !jsonValidObj {
+            return ""
+        }
+        
         let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
         let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
         
         return jsonString
+    }
+    
+//CONVERT JSON TO DICTIONARY
+    
+    static func jsonDictionarify(json: String) -> NSDictionary {
+        if let dictionaryFromJson = try! JSONSerialization.jsonObject(with: json.data(using: .utf8)!, options: .allowFragments) as? NSDictionary {
+            return dictionaryFromJson
+        } else {
+            return [String: String]() as NSDictionary
+        }
+        
     }
     
 //SORT DICTIONARY KEYS OR VALUES AND RETURN ARRAY
@@ -128,5 +144,18 @@ struct Functionality {
             tabVC.tabBar.items?[2].title = "User"
         }
     }
+    
+//=========DRAW LINE TO ESTIMATE IPHONE 4 KEYBOARD=========
+    
+//    let firstPoint = CGPoint(x: 0, y: 480)
+//    let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+//    
+//    UIFunctionality.drawLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+//    
+//    let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+//    let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+//    
+//    UIFunctionality.drawLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+
 }
 
