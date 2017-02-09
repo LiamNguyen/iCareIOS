@@ -36,6 +36,9 @@
 		ED6A68601E492DCA00776B6B /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A685F1E492DCA00776B6B /* AnimationManager.swift */; };
 		ED6A68621E492DF800776B6B /* CustomStyleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A68611E492DF800776B6B /* CustomStyleCustomerInformation.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
+		ED808FCA1E4C4B9F005563F0 /* JWTDecode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; };
+		ED808FCB1E4C4B9F005563F0 /* JWTDecode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */; };
 		ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */; };
 		ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED939FE31E0D248F00A1164F /* DatePickerRange.swift */; };
 		ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED939FE51E0D52FA00A1164F /* BookingStartEndDateViewController.swift */; };
@@ -87,8 +90,19 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				ED808FCB1E4C4B9F005563F0 /* JWTDecode.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED808FCC1E4C4BC9005563F0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -126,6 +140,8 @@
 		ED6A685F1E492DCA00776B6B /* AnimationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
 		ED6A68611E492DF800776B6B /* CustomStyleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStyleCustomerInformation.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWTDecode.framework; path = Carthage/Build/iOS/JWTDecode.framework; sourceTree = "<group>"; };
+		ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = JWTDecode.framework.dSYM; path = Carthage/Build/iOS/JWTDecode.framework.dSYM; sourceTree = "<group>"; };
 		ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 		ED939FE31E0D248F00A1164F /* DatePickerRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerRange.swift; sourceTree = "<group>"; };
 		ED939FE51E0D52FA00A1164F /* BookingStartEndDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingStartEndDateViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +182,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED808FCA1E4C4B9F005563F0 /* JWTDecode.framework in Frameworks */,
 				D9C9F96E3FA0149EBF20A8A4 /* Pods_DrQMuller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,6 +355,8 @@
 		EDB338891DE9D86300DE940B = {
 			isa = PBXGroup;
 			children = (
+				ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */,
+				ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */,
 				EDB338941DE9D86300DE940B /* DrQMuller */,
 				EDB338A91DE9D86300DE940B /* DrQMullerTests */,
 				EDB338B41DE9D86300DE940B /* DrQMullerUITests */,
@@ -405,6 +424,8 @@
 				ED040F471E0C7633003166FD /* Embed Frameworks */,
 				FFBAC8A689BEF35EC8C826A9 /* [CP] Embed Pods Frameworks */,
 				EC8AF07438CBC33CA6DFAD08 /* [CP] Copy Pods Resources */,
+				ED808FCC1E4C4BC9005563F0 /* CopyFiles */,
+				ED808FCF1E4C4C9F005563F0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -559,6 +580,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		ED808FCF1E4C4C9F005563F0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n/Users/DoNguyen/Documents/LiamNguyen/iCareProject/DrQMuller-IOSProject/DrQMuller/Carthage/Build/iOS/JWTDecode.framework";
 		};
 		FFBAC8A689BEF35EC8C826A9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -805,6 +839,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 86M37DGEMQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DrQMuller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = vn.letsdev.DrQMuller;
@@ -823,6 +861,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 86M37DGEMQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DrQMuller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = vn.letsdev.DrQMuller;
