@@ -31,6 +31,8 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     private var networkViewManager = NetworkViewManager()
     private var networkCheckInRealTime: Timer!
     
+    private var modelHandelCustomerInformation = ModelHandleCustomerInformation()
+    
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
         btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(), for: .normal)
@@ -95,6 +97,21 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        
+//=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "necessaryInfoResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "necessaryInfoResponse"), object: nil, queue: nil) { (Notification) in
+            if let userInfo = Notification.userInfo {
+                if let isSuccess = userInfo["status"] as? Bool {
+                    if isSuccess {
+                        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
+                    } else {
+                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -139,8 +156,14 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
 //=========TRANSITION TO THIRD INFO PAGE WITH slideBtn_Next=========
     
     func buttonStatus(_ status:String, sender:MMSlidingButton) {
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["dob"] = picker_Date.date.shortDate
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["gender"] = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
+        let step = "necessary"
+        
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userDob"] = picker_Date.date.shortDate
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userGender"] = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = step
+        
+        modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
+        
         self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
     }
     

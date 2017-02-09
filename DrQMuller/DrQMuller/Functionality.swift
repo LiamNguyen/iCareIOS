@@ -162,6 +162,15 @@ struct Functionality {
         }
     }
     
+//GET CURRENT DATE TIME
+    
+    static func getCurrentDateTime() -> String {
+        let date = NSDate()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd hh:MM:ss"
+        return "\(dateFormatter.string(from: date as Date))"
+    }
+    
 //=========DRAW LINE TO ESTIMATE IPHONE 4 KEYBOARD=========
     
 //    let firstPoint = CGPoint(x: 0, y: 480)

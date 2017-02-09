@@ -108,7 +108,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        print(Functionality.getCurrentDateTime())
+        
         //UserDefaults.standard.removeObject(forKey: "lang")
         
         if UserDefaults.standard.string(forKey: "lang") == nil {

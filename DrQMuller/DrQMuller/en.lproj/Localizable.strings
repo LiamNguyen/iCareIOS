@@ -77,6 +77,8 @@
 "EMAIL_EMPTY_MESSAGE" = "Email empty";
 "PHONE_EMPTY_MESSAGE" = "Phone empty";
 "EMAIL_INVALID_FORMAT" = "Email is invalid";
+"UPDATE_SUCCESS_MESSAGE" = "Contact information updated successfully";
+"UPDATE_FAIL_MESSAGE" = "Save information unsuccesfully. Please try again";
 
 
 

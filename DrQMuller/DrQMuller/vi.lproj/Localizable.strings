@@ -78,6 +78,8 @@
 "EMAIL_EMPTY_MESSAGE" = "Email trống";
 "PHONE_EMPTY_MESSAGE" = "Số điện thoại trống";
 "EMAIL_INVALID_FORMAT" = "Email không hợp lệ";
+"UPDATE_SUCCESS_MESSAGE" = "Cập nhật thành công";
+"UPDATE_FAIL_MESSAGE" = "Cập nhật không thành công. Xin vui lòng thử lại";
 
 
 

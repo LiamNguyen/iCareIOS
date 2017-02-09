@@ -29,6 +29,8 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     private var networkViewManager = NetworkViewManager()
     private var networkCheckInRealTime: Timer!
     
+    private var modelHandleCustomerInformation = ModelHandleCustomerInformation()
+    
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
         btn_FirstTab.setTitle("FIRST_TAB_BTN_TITLE".localized(), for: .normal)
@@ -84,6 +86,21 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        
+//=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "importantInfoResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "importantInfoResponse"), object: nil, queue: nil) { (Notification) in
+            if let userInfo = Notification.userInfo {
+                if let isSuccess = userInfo["status"] as? Bool {
+                    if isSuccess {
+                        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_BOOKING_VC, sender: self)
+                    } else {
+                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -91,6 +108,21 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
         NotificationCenter.default.removeObserver(self)
         networkCheckInRealTime.invalidate()
+    }
+    
+//=========BUTTON NEXT ONCLICK=========
+    
+    @IBAction func btn_Next_OnClick(_ sender: Any) {
+        if !frontValidationPassed() {
+            return
+        }
+        let step = "important"
+        
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userEmail"] = txt_Email.text
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userPhone"] = txt_Phone.text
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = step
+        
+        modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
@@ -142,6 +174,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     func frontValidationPassed() -> Bool {
         if let email = txt_Email.text, let phone = txt_Phone.text {
             if email.isEmpty {
+                UIFunctionality.addShakyAnimation(elementToBeShake: txt_Email)
                 ToastManager.alert(view: view_TopView, msg: "EMAIL_EMPTY_MESSAGE".localized())
                 return false
             }
@@ -152,6 +185,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
             }
             
             if phone.isEmpty {
+                UIFunctionality.addShakyAnimation(elementToBeShake: txt_Phone)
                 ToastManager.alert(view: view_TopView, msg: "PHONE_EMPTY_MESSAGE".localized())
                 return false
             }

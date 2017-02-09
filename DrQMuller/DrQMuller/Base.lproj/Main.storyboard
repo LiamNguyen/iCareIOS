@@ -825,10 +825,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="INr-Ik-r4u">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="INr-Ik-r4u">
                                 <rect key="frame" x="0.0" y="72" width="102" height="47"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CSQ-CE-yPX">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CSQ-CE-yPX">
                                         <rect key="frame" x="21" y="8" width="58" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Cơ bản">
@@ -846,10 +846,10 @@
                                     <constraint firstAttribute="height" constant="47" id="txB-Cr-AoB"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Syk-7U-9YX">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Syk-7U-9YX">
                                 <rect key="frame" x="110" y="72" width="100" height="47"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qBB-Jc-amT">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qBB-Jc-amT">
                                         <rect key="frame" x="13" y="8" width="74" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Cần thiết">
@@ -867,10 +867,10 @@
                                     <constraint firstItem="qBB-Jc-amT" firstAttribute="top" secondItem="Syk-7U-9YX" secondAttribute="top" constant="8" id="wWa-aV-HYn"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3js-UJ-rK3">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3js-UJ-rK3">
                                 <rect key="frame" x="218" y="72" width="102" height="47"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qO8-nO-bYO">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qO8-nO-bYO">
                                         <rect key="frame" x="6" y="9" width="91" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Quan trọng">
@@ -885,7 +885,7 @@
                                     <constraint firstAttribute="width" constant="102" id="wmU-gx-z2H"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email của bạn" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1A7-mF-PmF">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email của bạn" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1A7-mF-PmF">
                                 <rect key="frame" x="46" y="141" width="258" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="WY4-Nl-OlC"/>
@@ -894,7 +894,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Số điện thoại của bạn" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jhL-Rk-YbK">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Số điện thoại của bạn" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jhL-Rk-YbK">
                                 <rect key="frame" x="46" y="212" width="258" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="XzQ-86-0Ma"/>
@@ -903,21 +903,21 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="emailIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Z4H-kw-WwH">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emailIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Z4H-kw-WwH">
                                 <rect key="frame" x="8" y="149" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="U2G-Ec-Vcr"/>
                                     <constraint firstAttribute="height" constant="30" id="i7o-gu-ZRH"/>
                                 </constraints>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="phoneIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aSM-KQ-PNN">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phoneIcon" translatesAutoresizingMaskIntoConstraints="NO" id="aSM-KQ-PNN">
                                 <rect key="frame" x="8" y="220" width="30" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="5Jq-5w-0GB"/>
                                     <constraint firstAttribute="width" constant="30" id="qKf-eU-mcs"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyh-9V-xuh">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yyh-9V-xuh">
                                 <rect key="frame" x="29" y="286" width="263" height="50"/>
                                 <color key="backgroundColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -928,6 +928,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="btn_Next_OnClick:" destination="ioB-WT-TZj" eventType="touchUpInside" id="HTM-jR-APu"/>
                                     <segue destination="715-Lq-BFk" kind="show" identifier="segue_CustomerInformationToBookingTabViewController" id="5rf-7u-S8A"/>
                                 </connections>
                             </button>
@@ -979,12 +980,15 @@
                             <constraint firstItem="Yyh-9V-xuh" firstAttribute="leading" secondItem="oP8-Kk-dpt" secondAttribute="leadingMargin" constant="13" id="Ptn-QV-SaI"/>
                             <constraint firstItem="Z4H-kw-WwH" firstAttribute="top" secondItem="INr-Ik-r4u" secondAttribute="bottom" constant="30" id="Q7d-rp-AWj"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Yyh-9V-xuh" secondAttribute="trailing" constant="12" id="XWq-U4-6OU"/>
+                            <constraint firstItem="Syk-7U-9YX" firstAttribute="top" secondItem="PpP-9U-rBQ" secondAttribute="bottom" constant="3" id="ZKS-tr-0tk"/>
                             <constraint firstAttribute="trailing" secondItem="PpP-9U-rBQ" secondAttribute="trailing" id="cKo-hE-jzW"/>
                             <constraint firstItem="Z4H-kw-WwH" firstAttribute="leading" secondItem="oP8-Kk-dpt" secondAttribute="leading" constant="8" id="d5k-dd-Wpa"/>
                             <constraint firstItem="PpP-9U-rBQ" firstAttribute="top" secondItem="p9h-Oi-zNR" secondAttribute="bottom" id="iAt-ir-MPQ"/>
                             <constraint firstItem="1A7-mF-PmF" firstAttribute="top" secondItem="3js-UJ-rK3" secondAttribute="bottom" constant="22" id="mVO-zd-QWV"/>
                             <constraint firstItem="Yyh-9V-xuh" firstAttribute="top" secondItem="jhL-Rk-YbK" secondAttribute="bottom" constant="28" id="ngC-cq-ZEF"/>
+                            <constraint firstItem="INr-Ik-r4u" firstAttribute="top" secondItem="PpP-9U-rBQ" secondAttribute="bottom" constant="3" id="qFv-zM-o8E"/>
                             <constraint firstItem="PpP-9U-rBQ" firstAttribute="leading" secondItem="oP8-Kk-dpt" secondAttribute="leading" id="rkG-pZ-7Kf"/>
+                            <constraint firstItem="3js-UJ-rK3" firstAttribute="top" secondItem="PpP-9U-rBQ" secondAttribute="bottom" constant="3" id="tmc-SQ-Tom"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1958,10 +1962,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sE2-L0-Rza"/>
-        <segue reference="hCt-e9-enO"/>
-        <segue reference="mIe-MO-60a"/>
         <segue reference="5rf-7u-S8A"/>
+        <segue reference="hCt-e9-enO"/>
+        <segue reference="sE2-L0-Rza"/>
         <segue reference="G0p-To-aUJ"/>
+        <segue reference="mIe-MO-60a"/>
     </inferredMetricsTieBreakers>
 </document>

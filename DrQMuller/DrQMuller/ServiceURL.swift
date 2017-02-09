@@ -47,6 +47,9 @@ public class ServiceURL {
             prdURL["SendMail_VerifyAcc"] = "http://210.211.109.180/drmuller/SendMail_VerifyAcc.php"
             prdURL["SendMail_ResetPassword"] = "http://210.211.109.180/drmuller/SendMail_ResetPassword.php"
             prdURL["BookingTransaction"] = "http://210.211.109.180/drmuller/BookingTransaction.php"
+            prdURL["Update_BasicInfo"] = "http://210.211.109.180/drmuller/Update_BasicInfo.php"
+            prdURL["Update_NecessaryInfo"] = "http://210.211.109.180/drmuller/Update_NecessaryInfo.php"
+            prdURL["Update_ImportantInfo"] = "http://210.211.109.180/drmuller/Update_ImportantInfo.php"
         case .BETA:
             betaURL["Select_ToAuthenticate"] = "http://210.211.109.180/drmuller_test/Select_ToAuthenticate.php"
             betaURL["Select_CheckUserExistence"] = "http://210.211.109.180/drmuller_test/Select_CheckUserExistence.php"
@@ -74,6 +77,9 @@ public class ServiceURL {
             betaURL["SendMail_VerifyAcc"] = "http://210.211.109.180/drmuller_test/SendMail_VerifyAcc.php"
             betaURL["SendMail_ResetPassword"] = "http://210.211.109.180/drmuller_test/SendMail_ResetPassword.php"
             betaURL["BookingTransaction"] = "http://210.211.109.180/drmuller_test/BookingTransaction.php"
+            betaURL["Update_BasicInfo"] = "http://210.211.109.180/drmuller_test/Update_BasicInfo.php"
+            betaURL["Update_NecessaryInfo"] = "http://210.211.109.180/drmuller_test/Update_NecessaryInfo.php"
+            betaURL["Update_ImportantInfo"] = "http://210.211.109.180/drmuller_test/Update_ImportantInfo.php"
 
         case .LOCAL:
 //===============IF THIS IS LOCAL ENVIRONMENTS================
@@ -103,6 +109,9 @@ public class ServiceURL {
             localURL["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
             localURL["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
             localURL["BookingTransaction"] = "http://localhost/drmuller/BookingTransaction.php"
+            localURL["Update_BasicInfo"] = "http://localhost/drmuller/Update_BasicInfo.php"
+            localURL["Update_NecessaryInfo"] = "http://localhost/drmuller/Update_NecessaryInfo.php"
+            localURL["Update_ImportantInfo"] = "http://localhost/drmuller/Update_ImportantInfo.php"
 //===============IF THIS IS UAT ENVIRONMENTS================
         default:
             uatURL["Select_ToAuthenticate"] = "http://drqmuller.com/drmuller/Select_ToAuthenticate.php"
@@ -131,6 +140,9 @@ public class ServiceURL {
             uatURL["SendMail_VerifyAcc"] = "http://drqmuller.com/drmuller/SendMail_VerifyAcc.php"
             uatURL["SendMail_ResetPassword"] = "http://drqmuller.com/drmuller/SendMail_ResetPassword.php"
             uatURL["BookingTransaction"] = "http://drqmuller.com/drmuller/BookingTransaction.php"
+            uatURL["Update_BasicInfo"] = "http://drqmuller.com/drmuller/Update_BasicInfo.php"
+            uatURL["Update_NecessaryInfo"] = "http://drqmuller.com/drmuller/Update_NecessaryInfo.php"
+            uatURL["Update_ImportantInfo"] = "http://drqmuller.com/drmuller/Update_ImportantInfo.php"
         }
     }
     

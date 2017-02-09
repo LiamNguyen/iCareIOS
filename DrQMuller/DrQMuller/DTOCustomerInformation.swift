@@ -27,9 +27,28 @@ class DTOCustomerInformation: NSObject {
         }
     }
     
-    func returnHttpBody() -> String? {
+    func returnHttpBody(step: String) -> String? {
         if let customerInformationDictionary = _customerInformationDictionary {
-            return Functionality.jsonStringify(obj: customerInformationDictionary as AnyObject)
+            var tempDict = [String: String]()
+            
+            tempDict["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"]
+            //tempDict["updatedAt"] =
+            
+            switch step {
+            case "basic":
+                tempDict["userName"] = customerInformationDictionary["userName"]
+                tempDict["userAddress"] = customerInformationDictionary["userAddress"]
+                
+            case "necessary":
+                tempDict["userDob"] = customerInformationDictionary["userDob"]
+                tempDict["userGender"] = customerInformationDictionary["userGender"]
+                
+            default:
+                tempDict["userEmail"] = customerInformationDictionary["userEmail"]
+                tempDict["userPhone"] = customerInformationDictionary["userPhone"]
+            }
+            
+            return Functionality.jsonStringify(obj: tempDict as AnyObject)
         } else {
             return nil
         }

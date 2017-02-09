@@ -28,6 +28,8 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     private var customerInformationController = CustomStyleCustomerInformation()
     private var networkViewManager = NetworkViewManager()
     private var networkCheckInRealTime: Timer!
+    
+    private var modelHandleCustomerInformation = ModelHandleCustomerInformation()
 
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -84,6 +86,21 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        
+//=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
+
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "basicInfoResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "basicInfoResponse"), object: nil, queue: nil) { (Notification) in
+            if let userInfo = Notification.userInfo {
+                if let isSuccess = userInfo["status"] as? Bool {
+                    if isSuccess {
+                        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
+                    } else {
+                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -106,9 +123,14 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         if !frontValidationPassed() {
             return
         }
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["name"] = txt_Name.text!
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["address"] = txt_Address.text!
-        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
+        
+        let step = "basic"
+        
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] = txt_Name.text!
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userAddress"] = txt_Address.text!
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = step
+        
+        modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
     
 //=========TRANSITION TO SECOND INFO PAGE=========
@@ -142,11 +164,13 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     private func frontValidationPassed() -> Bool {
         if let customerName = txt_Name.text, let address = txt_Address.text {
             if customerName.isEmpty {
+                UIFunctionality.addShakyAnimation(elementToBeShake: txt_Name)
                 ToastManager.alert(view: view_TopView, msg: "CUSTOMER_NAME_EMPTY_MESSAGE".localized())
                 return false
             }
             
             if address.isEmpty {
+                UIFunctionality.addShakyAnimation(elementToBeShake: txt_Address)
                 ToastManager.alert(view: view_TopView, msg: "ADDRESS_EMPTY_MESSAGE".localized())
                 return false
             }
