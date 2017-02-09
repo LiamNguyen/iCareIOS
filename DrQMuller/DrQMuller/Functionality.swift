@@ -9,6 +9,7 @@
 import Foundation
 import SystemConfiguration
 import UIKit
+import JWTDecode
 
 struct Functionality {
     
@@ -35,6 +36,22 @@ struct Functionality {
             return [String: String]() as NSDictionary
         }
         
+    }
+    
+//CONVERT JWT TO DICTIONARY
+    
+    static func jwtDictionarify(token: String) -> NSDictionary {
+        do {
+            let jwt = try decode(jwt: token)
+            if let customerInformationDict = jwt.body["data"]! as? NSDictionary {
+                return customerInformationDict
+            } else {
+                return [String: String]() as NSDictionary
+            }
+        } catch let error as NSError {
+            print("Error message when decode JWT: \(error.localizedDescription)")
+            return [String: String]() as NSDictionary
+        }
     }
     
 //SORT DICTIONARY KEYS OR VALUES AND RETURN ARRAY
