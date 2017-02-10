@@ -37,6 +37,7 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
                 
                 if let token = arrayDict?["jwt"] as? String {
                     UserDefaults.standard.set(token, forKey: "CustomerInformation")
+                    DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: token)
                 }
                 
                 if let result = arrayDict?["Status"] as? String {

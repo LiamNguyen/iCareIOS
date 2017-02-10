@@ -105,7 +105,12 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
             if let userInfo = Notification.userInfo {
                 if let isSuccess = userInfo["status"] as? Bool {
                     if isSuccess {
-                        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "necessary"
+                            DispatchQueue.main.async {
+                                self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
+                            }
+                        }
                     } else {
                         ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
                     }
@@ -160,7 +165,6 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userDob"] = picker_Date.date.shortDate
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userGender"] = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = step
         
         modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
         

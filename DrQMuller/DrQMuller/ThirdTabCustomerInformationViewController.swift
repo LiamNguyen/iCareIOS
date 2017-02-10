@@ -94,7 +94,12 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
             if let userInfo = Notification.userInfo {
                 if let isSuccess = userInfo["status"] as? Bool {
                     if isSuccess {
-                        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_BOOKING_VC, sender: self)
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "important"
+                            DispatchQueue.main.async {
+                                self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_BOOKING_VC, sender: self)
+                            }
+                        }
                     } else {
                         ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
                     }
@@ -120,7 +125,6 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userEmail"] = txt_Email.text
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userPhone"] = txt_Phone.text
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = step
         
         modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }

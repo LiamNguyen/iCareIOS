@@ -40,17 +40,17 @@ struct Functionality {
     
 //CONVERT JWT TO DICTIONARY
     
-    static func jwtDictionarify(token: String) -> NSDictionary {
+    static func jwtDictionarify(token: String) -> [String: Any] {
         do {
             let jwt = try decode(jwt: token)
             if let customerInformationDict = jwt.body["data"]! as? NSDictionary {
-                return customerInformationDict
+                return customerInformationDict as! [String: Any]
             } else {
-                return [String: String]() as NSDictionary
+                return [String: Any]()
             }
         } catch let error as NSError {
             print("Error message when decode JWT: \(error.localizedDescription)")
-            return [String: String]() as NSDictionary
+            return [String: Any]()
         }
     }
     

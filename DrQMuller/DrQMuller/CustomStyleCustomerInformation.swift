@@ -37,7 +37,7 @@ class CustomStyleCustomerInformation {
     //=========ENABLE TAB HEADERS BASE ON UIFILLSTEP=========
     
     func enableTab(firstTab: UIButton, secondTab: UIButton, thirdTab: UIButton) {
-        if let step = DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] {
+        if let step = DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] as? String {
             
             switch step {
             case "none":

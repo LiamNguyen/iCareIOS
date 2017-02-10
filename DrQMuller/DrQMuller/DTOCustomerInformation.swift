@@ -16,8 +16,8 @@ class DTOCustomerInformation: NSObject {
         return Singleton.instance
     }
     
-    private var _customerInformationDictionary: [String: String]!
-    var customerInformationDictionary: [String: String] {
+    private var _customerInformationDictionary: [String: Any]!
+    var customerInformationDictionary: [String: Any] {
         get {
             return _customerInformationDictionary
         }
@@ -29,10 +29,10 @@ class DTOCustomerInformation: NSObject {
     
     func returnHttpBody(step: String) -> String? {
         if let customerInformationDictionary = _customerInformationDictionary {
-            var tempDict = [String: String]()
+            var tempDict = [String: Any]()
             
             tempDict["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"]
-            //tempDict["updatedAt"] =
+            tempDict["updatedAt"] = Functionality.getCurrentDateTime()
             
             switch step {
             case "basic":
