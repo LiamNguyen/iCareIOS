@@ -22,6 +22,9 @@
 		ED41DF3F1E164CC000803A14 /* APIHandleBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF3E1E164CC000803A14 /* APIHandleBooking.swift */; };
 		ED41DF411E164D0C00803A14 /* PMHandleBooking.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF401E164D0C00803A14 /* PMHandleBooking.swift */; };
 		ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */; };
+		ED4687941E4D0885002C4FC6 /* PMHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687931E4D0885002C4FC6 /* PMHandleCustomerInformation.swift */; };
+		ED4687961E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687951E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift */; };
+		ED4687981E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687971E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift */; };
 		ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */; };
 		ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */; };
 		ED522D5E1E38F65800E53403 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED522D601E38F65800E53403 /* Localizable.strings */; };
@@ -36,6 +39,9 @@
 		ED6A68601E492DCA00776B6B /* AnimationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A685F1E492DCA00776B6B /* AnimationManager.swift */; };
 		ED6A68621E492DF800776B6B /* CustomStyleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A68611E492DF800776B6B /* CustomStyleCustomerInformation.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
+		ED808FCA1E4C4B9F005563F0 /* JWTDecode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; };
+		ED808FCB1E4C4B9F005563F0 /* JWTDecode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */; };
 		ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */; };
 		ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED939FE31E0D248F00A1164F /* DatePickerRange.swift */; };
 		ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED939FE51E0D52FA00A1164F /* BookingStartEndDateViewController.swift */; };
@@ -45,6 +51,10 @@
 		ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589C1E118529004893DA /* PMHandleLogin.swift */; };
 		ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED95589E1E11867A004893DA /* APIHandleLogin.swift */; };
 		ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */; };
+		ED9A5C941E4AF01300CE34C5 /* PMHandleRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C931E4AF01300CE34C5 /* PMHandleRegister.swift */; };
+		ED9A5C961E4B79C600CE34C5 /* ModelHandleRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C951E4B79C600CE34C5 /* ModelHandleRegister.swift */; };
+		ED9A5C981E4B7A6600CE34C5 /* APIHandleRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */; };
+		ED9A5C9A1E4BA0A200CE34C5 /* DTOCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */; };
 		ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */; };
 		EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
@@ -83,8 +93,19 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				ED808FCB1E4C4B9F005563F0 /* JWTDecode.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED808FCC1E4C4BC9005563F0 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -105,6 +126,9 @@
 		ED41DF3E1E164CC000803A14 /* APIHandleBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleBooking.swift; sourceTree = "<group>"; };
 		ED41DF401E164D0C00803A14 /* PMHandleBooking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleBooking.swift; sourceTree = "<group>"; };
 		ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOStaticArrayDataSource.swift; sourceTree = "<group>"; };
+		ED4687931E4D0885002C4FC6 /* PMHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleCustomerInformation.swift; sourceTree = "<group>"; };
+		ED4687951E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleCustomerInformation.swift; sourceTree = "<group>"; };
+		ED4687971E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleCustomerInformation.swift; sourceTree = "<group>"; };
 		ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingDetailViewController.swift; sourceTree = "<group>"; };
 		ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingGeneralViewController.swift; sourceTree = "<group>"; };
 		ED522D5A1E38F5DA00E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
@@ -122,6 +146,8 @@
 		ED6A685F1E492DCA00776B6B /* AnimationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationManager.swift; sourceTree = "<group>"; };
 		ED6A68611E492DF800776B6B /* CustomStyleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomStyleCustomerInformation.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWTDecode.framework; path = Carthage/Build/iOS/JWTDecode.framework; sourceTree = "<group>"; };
+		ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = JWTDecode.framework.dSYM; path = Carthage/Build/iOS/JWTDecode.framework.dSYM; sourceTree = "<group>"; };
 		ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 		ED939FE31E0D248F00A1164F /* DatePickerRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerRange.swift; sourceTree = "<group>"; };
 		ED939FE51E0D52FA00A1164F /* BookingStartEndDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingStartEndDateViewController.swift; sourceTree = "<group>"; };
@@ -131,6 +157,10 @@
 		ED95589C1E118529004893DA /* PMHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleLogin.swift; sourceTree = "<group>"; };
 		ED95589E1E11867A004893DA /* APIHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleLogin.swift; sourceTree = "<group>"; };
 		ED96A4F71E0DD1E500AA22D0 /* MMSlidingButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMSlidingButton.swift; sourceTree = "<group>"; };
+		ED9A5C931E4AF01300CE34C5 /* PMHandleRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleRegister.swift; sourceTree = "<group>"; };
+		ED9A5C951E4B79C600CE34C5 /* ModelHandleRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleRegister.swift; sourceTree = "<group>"; };
+		ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleRegister.swift; sourceTree = "<group>"; };
+		ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOCustomerInformation.swift; sourceTree = "<group>"; };
 		ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingStartEnd.swift; sourceTree = "<group>"; };
 		EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleReleaseTime.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,6 +188,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED808FCA1E4C4B9F005563F0 /* JWTDecode.framework in Frameworks */,
 				D9C9F96E3FA0149EBF20A8A4 /* Pods_DrQMuller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -244,6 +275,8 @@
 				ED41DF3C1E163EC900803A14 /* ModelHandleBookingGeneral.swift */,
 				EDEAC1651E1D3DAC002FF282 /* ModelHandleBookingDetail.swift */,
 				ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */,
+				ED9A5C951E4B79C600CE34C5 /* ModelHandleRegister.swift */,
+				ED4687971E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -297,6 +330,8 @@
 				ED95589E1E11867A004893DA /* APIHandleLogin.swift */,
 				ED41DF3E1E164CC000803A14 /* APIHandleBooking.swift */,
 				EDCE22CD1E309F490022F0C8 /* APIHandleReleaseTime.swift */,
+				ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */,
+				ED4687951E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift */,
 			);
 			name = LibraryAPI;
 			sourceTree = "<group>";
@@ -309,6 +344,8 @@
 				ED95589C1E118529004893DA /* PMHandleLogin.swift */,
 				ED41DF401E164D0C00803A14 /* PMHandleBooking.swift */,
 				EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */,
+				ED9A5C931E4AF01300CE34C5 /* PMHandleRegister.swift */,
+				ED4687931E4D0885002C4FC6 /* PMHandleCustomerInformation.swift */,
 			);
 			name = PersistencyManager;
 			sourceTree = "<group>";
@@ -319,6 +356,7 @@
 				ED95589A1E1172F1004893DA /* DTOAuthentication.swift */,
 				ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */,
 				ED3011E11E192D790037F020 /* DTOBookingInformation.swift */,
+				ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */,
 			);
 			name = DTO;
 			sourceTree = "<group>";
@@ -326,6 +364,8 @@
 		EDB338891DE9D86300DE940B = {
 			isa = PBXGroup;
 			children = (
+				ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */,
+				ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */,
 				EDB338941DE9D86300DE940B /* DrQMuller */,
 				EDB338A91DE9D86300DE940B /* DrQMullerTests */,
 				EDB338B41DE9D86300DE940B /* DrQMullerUITests */,
@@ -393,6 +433,8 @@
 				ED040F471E0C7633003166FD /* Embed Frameworks */,
 				FFBAC8A689BEF35EC8C826A9 /* [CP] Embed Pods Frameworks */,
 				EC8AF07438CBC33CA6DFAD08 /* [CP] Copy Pods Resources */,
+				ED808FCC1E4C4BC9005563F0 /* CopyFiles */,
+				ED808FCF1E4C4C9F005563F0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -548,6 +590,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DrQMuller/Pods-DrQMuller-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		ED808FCF1E4C4C9F005563F0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n/Users/DoNguyen/Documents/LiamNguyen/iCareProject/DrQMuller-IOSProject/DrQMuller/Carthage/Build/iOS/JWTDecode.framework";
+		};
 		FFBAC8A689BEF35EC8C826A9 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -573,9 +628,12 @@
 				ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */,
 				ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */,
 				ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */,
+				ED9A5C981E4B7A6600CE34C5 /* APIHandleRegister.swift in Sources */,
+				ED4687961E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift in Sources */,
 				ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */,
 				ED41DF3F1E164CC000803A14 /* APIHandleBooking.swift in Sources */,
 				EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */,
+				ED4687941E4D0885002C4FC6 /* PMHandleCustomerInformation.swift in Sources */,
 				ED95589D1E118529004893DA /* PMHandleLogin.swift in Sources */,
 				ED3011E21E192D790037F020 /* DTOBookingInformation.swift in Sources */,
 				ED95589B1E1172F1004893DA /* DTOAuthentication.swift in Sources */,
@@ -584,9 +642,11 @@
 				EDEAC1661E1D3DAC002FF282 /* ModelHandleBookingDetail.swift in Sources */,
 				ED040F491E0C7808003166FD /* NiceButton.swift in Sources */,
 				ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */,
+				ED4687981E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift in Sources */,
 				ED6A68621E492DF800776B6B /* CustomStyleCustomerInformation.swift in Sources */,
 				ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,
+				ED9A5C961E4B79C600CE34C5 /* ModelHandleRegister.swift in Sources */,
 				ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */,
 				EDCE22CE1E309F490022F0C8 /* APIHandleReleaseTime.swift in Sources */,
 				ED6A68601E492DCA00776B6B /* AnimationManager.swift in Sources */,
@@ -608,11 +668,13 @@
 				ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */,
 				ED939FE61E0D52FA00A1164F /* BookingStartEndDateViewController.swift in Sources */,
 				ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */,
+				ED9A5C9A1E4BA0A200CE34C5 /* DTOCustomerInformation.swift in Sources */,
 				ED6A685C1E492D6A00776B6B /* ToastManager.swift in Sources */,
 				ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */,
 				ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */,
 				EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */,
 				ED6A685A1E492CEA00776B6B /* Reachability.swift in Sources */,
+				ED9A5C941E4AF01300CE34C5 /* PMHandleRegister.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +851,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 86M37DGEMQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DrQMuller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = vn.letsdev.DrQMuller;
@@ -807,6 +873,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 86M37DGEMQ;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = DrQMuller/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = vn.letsdev.DrQMuller;

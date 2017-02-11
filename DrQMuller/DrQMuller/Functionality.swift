@@ -9,16 +9,49 @@
 import Foundation
 import SystemConfiguration
 import UIKit
+import JWTDecode
 
 struct Functionality {
     
-//CONVERT OBJ TO JSON STRING - PROJECT PUBLIC FUNC
+//CONVERT OBJ TO JSON STRING
     
     static func jsonStringify(obj: AnyObject) -> String {
+        let jsonValidObj = JSONSerialization.isValidJSONObject(obj)
+        if !jsonValidObj {
+            return ""
+        }
+        
         let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
         let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
         
         return jsonString
+    }
+    
+//CONVERT JSON TO DICTIONARY
+    
+    static func jsonDictionarify(json: String) -> NSDictionary {
+        if let dictionaryFromJson = try! JSONSerialization.jsonObject(with: json.data(using: .utf8)!, options: .allowFragments) as? NSDictionary {
+            return dictionaryFromJson
+        } else {
+            return [String: String]() as NSDictionary
+        }
+        
+    }
+    
+//CONVERT JWT TO DICTIONARY
+    
+    static func jwtDictionarify(token: String) -> [String: Any] {
+        do {
+            let jwt = try decode(jwt: token)
+            if let customerInformationDict = jwt.body["data"]! as? NSDictionary {
+                return customerInformationDict as! [String: Any]
+            } else {
+                return [String: Any]()
+            }
+        } catch let error as NSError {
+            print("Error message when decode JWT: \(error.localizedDescription)")
+            return [String: Any]()
+        }
     }
     
 //SORT DICTIONARY KEYS OR VALUES AND RETURN ARRAY
@@ -59,6 +92,29 @@ struct Functionality {
                           "Saturday":"Thứ bảy",
                           "Sunday":"Chủ nhật"]
         return daysOfWeek[en]!
+    }
+    
+    static func translateGender(tranlate: String, to: language) -> String {
+        var gender = ["Nam": "Male",
+                      "Nữ": "Female"]
+        var translated = ""
+        
+        if to == .VI {
+            for item in gender {
+                if item.value == tranlate {
+                    translated = item.key
+                }
+            }
+        } else {
+            translated = gender[tranlate]!
+        }
+        
+        return translated
+    }
+    
+    enum language {
+        case VI
+        case EN
     }
     
 //RETURN ARRAY FROM DICTIONARY
@@ -128,5 +184,27 @@ struct Functionality {
             tabVC.tabBar.items?[2].title = "User"
         }
     }
+    
+//GET CURRENT DATE TIME
+    
+    static func getCurrentDateTime() -> String {
+        let date = NSDate()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd hh:MM:ss"
+        return "\(dateFormatter.string(from: date as Date))"
+    }
+    
+//=========DRAW LINE TO ESTIMATE IPHONE 4 KEYBOARD=========
+    
+//    let firstPoint = CGPoint(x: 0, y: 480)
+//    let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
+//    
+//    UIFunctionality.drawLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+//    
+//    let thirdPoint = CGPoint(x: 0, y: 480 - 216)
+//    let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
+//    
+//    UIFunctionality.drawLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
+
 }
 

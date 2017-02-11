@@ -19,6 +19,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var view_FirstTabContainer: UIView!
     @IBOutlet private weak var view_SecondTabContainer: UIView!
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
+    @IBOutlet private weak var view_TopView: UIView!
     @IBOutlet private weak var txt_Name: UITextField!
     @IBOutlet private weak var txt_Address: UITextField!
     @IBOutlet private weak var lbl_Title: UILabel!
@@ -27,6 +28,8 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     private var customerInformationController = CustomStyleCustomerInformation()
     private var networkViewManager = NetworkViewManager()
     private var networkCheckInRealTime: Timer!
+    
+    private var modelHandleCustomerInformation = ModelHandleCustomerInformation()
 
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -42,6 +45,8 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     private struct Storyboard {
         static let SEGUE_TO_LOGIN = "segue_CustomerInformationToLogin"
+        static let SEGUE_TO_SECOND_TAB = "segue_CustomerInformationFirstTabToSecondTab"
+        static let SEGUE_TO_THIRD_TAB = "segue_CustomerInformationFirstTabToThirdTab"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -74,6 +79,10 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 
         customerInformationController.translateTabHeaderUnderline(view: self.view, view_TabContainer: view_FirstTabContainer)
         
+//=========FILL CHOSEN INFORMATION=========
+        
+        fillInformation()
+        
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
 
         txt_Name.becomeFirstResponder()
@@ -81,6 +90,30 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        
+//=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
+
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "basicInfoResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "basicInfoResponse"), object: nil, queue: nil) { (Notification) in
+            if let userInfo = Notification.userInfo {
+                if let isSuccess = userInfo["status"] as? Bool {
+                    if isSuccess {
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+                            
+                            if customerInformation["step"] as! String == "none" {
+                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "basic"
+                            }
+                            DispatchQueue.main.async {
+                                self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
+                            }
+                        }
+                    } else {
+                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -96,18 +129,32 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 
         DialogManager.confirmLogout(sender: self, segueIdentifier: Storyboard.SEGUE_TO_LOGIN)
     }
+    
+//=========BUTTON NEXT ON CLICK=========
 
+    @IBAction func btn_Next_OnClick(_ sender: Any) {
+        if !frontValidationPassed() {
+            return
+        }
+        
+        let step = "basic"
+        
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] = txt_Name.text!
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userAddress"] = txt_Address.text!
+
+        modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
+    }
     
 //=========TRANSITION TO SECOND INFO PAGE=========
     
     @IBAction func btn_SecondTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationFirstTabToSecondTab", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
     }
     
 //=========TRANSITION TO THIRD INFO PAGE=========
     
     @IBAction func btn_ThirdTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationFirstTabToThirdTab", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_THIRD_TAB, sender: self)
     }
     
 //=========TOUCH OUTSIDE CLOSE KEYBOARD=========
@@ -126,10 +173,37 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         return true
     }
     
+    private func frontValidationPassed() -> Bool {
+        if let customerName = txt_Name.text, let address = txt_Address.text {
+            if customerName.isEmpty {
+                UIFunctionality.addShakyAnimation(elementToBeShake: txt_Name)
+                ToastManager.alert(view: view_TopView, msg: "CUSTOMER_NAME_EMPTY_MESSAGE".localized())
+                return false
+            }
+            
+            if address.isEmpty {
+                UIFunctionality.addShakyAnimation(elementToBeShake: txt_Address)
+                ToastManager.alert(view: view_TopView, msg: "ADDRESS_EMPTY_MESSAGE".localized())
+                return false
+            }
+            return true
+        } else {
+            return false
+        }
+    }
     
-    
-    
-    
-    
-    
+    private func fillInformation() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+            
+            if let _ = customerInformation["userName"] as? NSNull, let _ = customerInformation["userAddress"] as? NSNull {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.txt_Name.text = customerInformation["userName"] as! String?
+                self.txt_Address.text = customerInformation["userAddress"] as! String?
+            }
+        }
+    }
 }

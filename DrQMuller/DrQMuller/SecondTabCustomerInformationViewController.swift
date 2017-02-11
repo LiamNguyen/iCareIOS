@@ -19,16 +19,19 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     @IBOutlet private weak var view_FirstTabContainer: UIView!
     @IBOutlet private weak var view_SecondTabContainer: UIView!
     @IBOutlet private weak var view_ThirdTabContainer: UIView!
-    @IBOutlet weak var picker_Gender: UIPickerView!
-    @IBOutlet weak var picker_Date: UIDatePicker!
-    @IBOutlet weak var slideBtn_Next: MMSlidingButton!
-    @IBOutlet weak var lbl_Title: UILabel!
+    @IBOutlet private weak var view_TopView: UIView!
+    @IBOutlet private weak var picker_Gender: UIPickerView!
+    @IBOutlet private weak var picker_Date: UIDatePicker!
+    @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
+    @IBOutlet private weak var lbl_Title: UILabel!
     
     private var customerInformationController = CustomStyleCustomerInformation()
     private var picker_GenderDataSource = [String]()
     private let datePickerRange = DatePickerRange()
     private var networkViewManager = NetworkViewManager()
     private var networkCheckInRealTime: Timer!
+    
+    private var modelHandelCustomerInformation = ModelHandleCustomerInformation()
     
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -46,7 +49,9 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     }
     
     private struct StoryBoard {
-    static let SEGUE_TO_LOGIN = "segue_CustomerInformationSecondTabToLogin"
+        static let SEGUE_TO_LOGIN = "segue_CustomerInformationSecondTabToLogin"
+        static let SEGUE_TO_FIRST_TAB = "segue_CustomerInformationSecondTabToFirstTab"
+        static let SEGUE_TO_THIRD_TAB = "segue_CustomerInformationSecondTabToThirdTab"
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -89,9 +94,36 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         self.slideBtn_Next.delegate = self
         self.slideBtn_Next.reset()
         
+//=========FILL CHOSEN INFORMATION=========
+        
+        fillInformation()
+        
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        
+//=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "necessaryInfoResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "necessaryInfoResponse"), object: nil, queue: nil) { (Notification) in
+            if let userInfo = Notification.userInfo {
+                if let isSuccess = userInfo["status"] as? Bool {
+                    if isSuccess {
+                        DispatchQueue.global(qos: .userInteractive).async {
+                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+                            if customerInformation["step"] as! String == "basic" {
+                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "necessary"
+                            }
+                            DispatchQueue.main.async {
+                                self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
+                            }
+                        }
+                    } else {
+                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                    }
+                }
+            }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -111,14 +143,14 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
 //=========TRANSITION TO FIRST INFO PAGE=========
     
     @IBAction func btn_FirstTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationSecondTabToFirstTab", sender: self)
+        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_FIRST_TAB, sender: self)
     }
     
     
 //=========TRANSITION TO THIRD INFO PAGE=========
 
     @IBAction func btn_ThirdTab_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationSecondTabToThirdTab", sender: self)
+        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
     }
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -136,7 +168,19 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
 //=========TRANSITION TO THIRD INFO PAGE WITH slideBtn_Next=========
     
     func buttonStatus(_ status:String, sender:MMSlidingButton) {
-        self.performSegue(withIdentifier: "segue_CustomerInformationSecondTabToThirdTab", sender: self)
+        let step = "necessary"
+        var gender = ""
+        
+        if UserDefaults.standard.string(forKey: "lang") == "vi" {
+            gender = Functionality.translateGender(tranlate: picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)], to: .EN)
+        } else  {
+            gender = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
+        }
+        
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userDob"] = picker_Date.date.shortDate
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userGender"] = gender
+        
+        modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)        
     }
     
 //=========TOUCH OUTSIDE CLOSE KEYBOARD=========
@@ -152,7 +196,28 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         return true
     }
 
-
+    private func fillInformation() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+            
+            if let _ = customerInformation["userDob"] as? NSNull, let _ = customerInformation["userGender"] as? NSNull {
+                return
+            }
+            
+            let chosenDob = Functionality.convertDateFormatFromStringToDate(str: customerInformation["userDob"] as! String)!
+            var gender = ""
+            if UserDefaults.standard.string(forKey: "lang") == "vi" {
+                gender = Functionality.translateGender(tranlate: customerInformation["userGender"] as! String, to: .VI)
+            } else {
+                gender = customerInformation["userGender"] as! String
+            }
+            
+            DispatchQueue.main.async {
+                self.picker_Gender.selectRow(self.picker_GenderDataSource.index(of: gender)!, inComponent: 0, animated: true)
+                self.picker_Date.setDate(chosenDob, animated: true)
+            }
+        }
+    }
     
     
     

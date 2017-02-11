@@ -37,18 +37,20 @@ class CustomStyleCustomerInformation {
     //=========ENABLE TAB HEADERS BASE ON UIFILLSTEP=========
     
     func enableTab(firstTab: UIButton, secondTab: UIButton, thirdTab: UIButton) {
-        let uiFillStep = 3
-        
-        switch uiFillStep {
-        case 1:
-            applyActiveStyle(button: firstTab)
-        case 2:
-            applyActiveStyle(button: firstTab)
-            applyActiveStyle(button: secondTab)
-        default:
-            applyActiveStyle(button: firstTab)
-            applyActiveStyle(button: secondTab)
-            applyActiveStyle(button: thirdTab)
+        if let step = DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] as? String {
+            switch step {
+            case "none":
+                applyActiveStyle(button: firstTab)
+            case "basic":
+                applyActiveStyle(button: firstTab)
+                applyActiveStyle(button: secondTab)
+            case "necessary":
+                applyActiveStyle(button: firstTab)
+                applyActiveStyle(button: secondTab)
+                applyActiveStyle(button: thirdTab)
+            default:
+                return
+            }
         }
     }
     

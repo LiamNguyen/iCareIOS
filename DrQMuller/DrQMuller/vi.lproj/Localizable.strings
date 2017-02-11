@@ -66,10 +66,20 @@
 "USERNAME_EMPTY_MESSAGE" = "Tên đăng nhập trống";
 "PASSWORD_EMPTY_MESSAGE" = "Mật khẩu trống";
 "CONFIRM_PASSWORD_EMPTY_MESSAGE" = "Xác nhận mật khẩu trống";
+"CONFIRM_PASSWORD_UNMATCH_MESSAGE" = "Xác nhận mật khẩu không trùng khớp";
 "CREDENTIAL_INVALID" = "Tên đăng nhập và mật khẩu không hợp lệ";
+"REGISTER_FAILED_MESSAGE" = "Đăng ký không thành công";
+"USERNAME_EXISTED_MESSAGE" = "Tên đăng nhập đã được sử dụng";
 "ONE_LOCATION_MESSAGE" = "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam";
 "NETWORK_REACHED" = "Đã kết nối mạng";
 "NETWORK_UNREACHED" = "Không có kết nối mạng";
+"CUSTOMER_NAME_EMPTY_MESSAGE" = "Họ và tên trống";
+"ADDRESS_EMPTY_MESSAGE" = "Địa chỉ trống";
+"EMAIL_EMPTY_MESSAGE" = "Email trống";
+"PHONE_EMPTY_MESSAGE" = "Số điện thoại trống";
+"EMAIL_INVALID_FORMAT" = "Email không hợp lệ";
+"UPDATE_SUCCESS_MESSAGE" = "Cập nhật thành công";
+"UPDATE_FAIL_MESSAGE" = "Cập nhật không thành công. Xin vui lòng thử lại";
 
 
 

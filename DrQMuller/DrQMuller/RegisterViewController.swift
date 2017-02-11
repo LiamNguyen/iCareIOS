@@ -30,8 +30,11 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var screenHeight: CGFloat!
     private var isIphone4 = false
     
+    private var hasReceiveRegisterResponse = false
+    
     private var networkViewManager = NetworkViewManager()
     private var networkCheckInRealTime: Timer!
+    private var modelHandleRegister = ModelHandleRegister()
     
     private func updateUI() {
         
@@ -97,18 +100,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(swipeRight)
         
-//=========DRAW LINE=========
-        
-//        let firstPoint = CGPoint(x: 0, y: 480)
-//        let secondPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480)
-//        
-//        UIFunctionality.drawLine(fromPoint: firstPoint, toPoint: secondPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-//        
-//        let thirdPoint = CGPoint(x: 0, y: 480 - 216)
-//        let fourthPoint = CGPoint(x: UIScreen.main.bounds.width, y: 480 - 216)
-//        
-//        UIFunctionality.drawLine(fromPoint: thirdPoint, toPoint: fourthPoint, lineWidth: 2, color: UIColor.red, view: self.view)
-        
+//=========OBSERVE FOR NOTIFICATION FROM PMHandleRegister=========
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "registerResponse"), object: nil)
+        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "registerResponse"), object: nil, queue: nil, using: onReceiveRegisterResponse)
 
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
         
@@ -176,12 +170,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
 
-//=========IPHONE 6 AND HIGHER=========
-        
-        if screenHeight >= 667 {
-            return true
-        }
-        
         switch textField {
         case txt_Username:
             txt_Password.becomeFirstResponder()
@@ -192,8 +180,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             if !isIphone4 && textField == txt_ConfirmPassword {
                 adjustViewOrigin(y: initialViewOrigin)
                 adjustTxtOrigin(y: initialTxtOrigin)
+                register()
                 return true
             }
+        }
+        
+        //=========IPHONE 6 AND HIGHER=========
+        
+        if screenHeight >= 667 {
+            return true
         }
         
         if textField != txt_ConfirmPassword {
@@ -256,7 +251,6 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
-                print("swipe right")
                 self.performSegue(withIdentifier: "segue_RegisterToLogin", sender: self)
             default:
                 break
@@ -265,12 +259,84 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func btn_Register_OnClick(_ sender: Any) {
-        let registerSuccess = true
-        
-        if (registerSuccess) {
-            self.performSegue(withIdentifier: "segue_RegisterToContactInformation", sender: self)
+        register()
+        if !isIphone4 {
+            adjustViewOrigin(y: initialViewOrigin)
+            return
+        }
+        updateTxtFieldFocusStyleForIphone4()
+    }
+    
+    private func register() {
+        if !frontValidationPassed() {
+            return
+        }
+        uiWaitingRegisterResponse(isDone: false)
+        modelHandleRegister.handleRegister(username: txt_Username.text!, password: txt_Password.text!)
+        self.hasReceiveRegisterResponse = false
+    }
+    
+//=========HANDLE REGISTER RESPONSE=========
+    
+    func onReceiveRegisterResponse(notification: Notification) {
+        if hasReceiveRegisterResponse {
+            return
+        }
+        if let userInfo = notification.userInfo {
+            if let status = userInfo["status"] as? String {
+                if status == "1" {
+                    print("Register Success")
+                    self.performSegue(withIdentifier: "segue_RegisterToContactInformation", sender: self)
+                } else if status == "2" {
+                    print("Register Duplicated")
+                    ToastManager.alert(view: loginView, msg: "USERNAME_EXISTED_MESSAGE".localized())
+                } else {
+                    print("Register Failed")
+                    ToastManager.alert(view: loginView, msg: "CREDENTIAL_INVALID".localized())
+                }
+            }
+        }
+        uiWaitingRegisterResponse(isDone: true)
+        self.hasReceiveRegisterResponse = true
+    }
+    
+//=========VALIDATE TEXTFIELD=========
+    
+    private func frontValidationPassed() -> Bool {
+        if let username = txt_Username.text, let password = txt_Password.text, let confirmPassword = txt_ConfirmPassword.text {
+            if username.isEmpty {
+                ToastManager.alert(view: loginView, msg: "USERNAME_EMPTY_MESSAGE".localized())
+                return false
+            }
+            
+            if password.isEmpty {
+                ToastManager.alert(view: loginView, msg: "PASSWORD_EMPTY_MESSAGE".localized())
+                return false
+            }
+            
+            if confirmPassword.isEmpty {
+                ToastManager.alert(view: loginView, msg: "CONFIRM_PASSWORD_EMPTY_MESSAGE".localized())
+                return false
+            }
+            
+            if confirmPassword != password {
+                ToastManager.alert(view: loginView, msg: "CONFIRM_PASSWORD_UNMATCH_MESSAGE".localized())
+                return false
+            }
+            return true
+        }
+        return false
+    }
+    
+//=========LOCK UI ELEMENTS WAITING REGISTER RESPONSE=========
+    
+    private func uiWaitingRegisterResponse(isDone: Bool) {
+        if !isDone {
+            self.activityIndicator.startAnimating()
+            self.view.isUserInteractionEnabled = false
         } else {
-
+            self.activityIndicator.stopAnimating()
+            self.view.isUserInteractionEnabled = true
         }
     }
     
