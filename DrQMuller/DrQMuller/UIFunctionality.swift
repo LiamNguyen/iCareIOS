@@ -61,14 +61,16 @@ struct UIFunctionality {
     }
     
     static func addShakyAnimation(elementToBeShake: AnyObject) {
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.07
-        animation.repeatCount = 4
-        animation.autoreverses = true
-        
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x - 5, y: elementToBeShake.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x + 5, y: elementToBeShake.center.y))
-        elementToBeShake.layer.add(animation, forKey: "position")
+        DispatchQueue.main.async {
+            let animation = CABasicAnimation(keyPath: "position")
+            animation.duration = 0.07
+            animation.repeatCount = 4
+            animation.autoreverses = true
+            
+            animation.fromValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x - 5, y: elementToBeShake.center.y))
+            animation.toValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x + 5, y: elementToBeShake.center.y))
+            elementToBeShake.layer.add(animation, forKey: "position")
+        }
     }
     
     static func createChooseLanguageView(view: UIView) {
