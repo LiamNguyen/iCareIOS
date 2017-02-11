@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DTOBookingInformation: NSObject {
+class DTOBookingInformation: NSObject, NSCoding {
     
     class var sharedInstance: DTOBookingInformation {
         struct Singleton {
@@ -249,9 +249,48 @@ class DTOBookingInformation: NSObject {
         
         return randomString
     }
+    
+    override init() {
         
+    }
     
+    required init?(coder aDecoder: NSCoder) {
+        super.init()
+        
+        self._appointmentID = aDecoder.decodeObject(forKey: "appointmentID") as? String ?? ""
+        self._verificationCode = aDecoder.decodeObject(forKey: "veriCode") as? String ?? ""
+        self._country = aDecoder.decodeObject(forKey: "country") as? String ?? ""
+        self._city = aDecoder.decodeObject(forKey: "city") as? String ?? ""
+        self._district = aDecoder.decodeObject(forKey: "district") as? String ?? ""
+        self._location = aDecoder.decodeObject(forKey: "location") as? String ?? ""
+        self._voucher = aDecoder.decodeObject(forKey: "voucher") as? String ?? ""
+        self._type = aDecoder.decodeObject(forKey: "type") as? String ?? ""
+        self._machinesDataSource = aDecoder.decodeObject(forKey: "machinesDS") as? [String: String] ?? [String: String]()
+        self._machine = aDecoder.decodeObject(forKey: "machine") as? String ?? ""
+        self._startDate = aDecoder.decodeObject(forKey: "startDate") as? String ?? ""
+        self._endDate = aDecoder.decodeObject(forKey: "endDate") as? String ?? ""
+        self._exactDate = aDecoder.decodeObject(forKey: "exactDate") as? String ?? ""
+        self._exactDayOfWeek = aDecoder.decodeObject(forKey: "exactDayOfWeed") as? String ?? ""
+        self._bookingTime = aDecoder.decodeObject(forKey: "bookingTime") as? [[String]] ?? [[String]]()
+    }
     
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(_appointmentID, forKey: "appointmentID")
+        aCoder.encode(_verificationCode, forKey: "veriCode")
+        aCoder.encode(_country, forKey: "country")
+        aCoder.encode(_city, forKey: "city")
+        aCoder.encode(_district, forKey: "district")
+        aCoder.encode(_location, forKey: "location")
+        aCoder.encode(_voucher, forKey: "voucher")
+        aCoder.encode(_type, forKey: "type")
+        aCoder.encode(_machinesDataSource, forKey: "machinesDS")
+        aCoder.encode(_machine, forKey: "machine")
+        aCoder.encode(_startDate, forKey: "startDate")
+        aCoder.encode(_endDate, forKey: "endDate")
+        aCoder.encode(_exactDate, forKey: "exactDate")
+        aCoder.encode(_exactDayOfWeek, forKey: "exactDayOfWeed")
+        aCoder.encode(_bookingTime, forKey: "bookingTime")
+    }
     
     
     

@@ -80,6 +80,7 @@
 "EMAIL_INVALID_FORMAT" = "Email không hợp lệ";
 "UPDATE_SUCCESS_MESSAGE" = "Cập nhật thành công";
 "UPDATE_FAIL_MESSAGE" = "Cập nhật không thành công. Xin vui lòng thử lại";
+"NO_APPOINTMENT_MESSAGE" = "Hiện tại quý khách chưa có lịch hẹn đã đặt.\nĐặt lịch hẹn mới bằng cách chọn dấu \"+\"";
 
 
 

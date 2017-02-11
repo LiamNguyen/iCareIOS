@@ -74,7 +74,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+
         updateUI()
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========

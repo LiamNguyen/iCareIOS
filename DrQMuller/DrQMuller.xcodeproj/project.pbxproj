@@ -11,6 +11,8 @@
 		ED03CEB21E36983D00C9EBFB /* Functionality.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03CEB11E36983D00C9EBFB /* Functionality.swift */; };
 		ED03CEB41E369F9B00C9EBFB /* UIFunctionality.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED03CEB31E369F9B00C9EBFB /* UIFunctionality.swift */; };
 		ED040F491E0C7808003166FD /* NiceButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED040F481E0C7808003166FD /* NiceButton.swift */; };
+		ED04C9911E4F40AA0076BF6E /* BookingManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04C9901E4F40AA0076BF6E /* BookingManagerViewController.swift */; };
+		ED04C9931E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04C9921E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift */; };
 		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
 		ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */; };
 		ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */; };
@@ -115,6 +117,8 @@
 		ED03CEB11E36983D00C9EBFB /* Functionality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functionality.swift; sourceTree = "<group>"; };
 		ED03CEB31E369F9B00C9EBFB /* UIFunctionality.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFunctionality.swift; sourceTree = "<group>"; };
 		ED040F481E0C7808003166FD /* NiceButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NiceButton.swift; sourceTree = "<group>"; };
+		ED04C9901E4F40AA0076BF6E /* BookingManagerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingManagerViewController.swift; sourceTree = "<group>"; };
+		ED04C9921E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartBookingInfoTableViewCell.swift; sourceTree = "<group>"; };
 		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartOrderTableViewCell.swift; sourceTree = "<group>"; };
@@ -261,6 +265,7 @@
 				ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */,
 				ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */,
 				ED939FE51E0D52FA00A1164F /* BookingStartEndDateViewController.swift */,
+				ED04C9901E4F40AA0076BF6E /* BookingManagerViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -320,6 +325,7 @@
 				ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */,
 				ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */,
 				ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */,
+				ED04C9921E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift */,
 			);
 			name = TableCell;
 			sourceTree = "<group>";
@@ -644,6 +650,7 @@
 				ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */,
 				ED4687981E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift in Sources */,
 				ED6A68621E492DF800776B6B /* CustomStyleCustomerInformation.swift in Sources */,
+				ED04C9911E4F40AA0076BF6E /* BookingManagerViewController.swift in Sources */,
 				ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */,
 				ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */,
 				ED9A5C961E4B79C600CE34C5 /* ModelHandleRegister.swift in Sources */,
@@ -655,6 +662,7 @@
 				ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */,
 				ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */,
 				EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */,
+				ED04C9931E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift in Sources */,
 				ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */,
 				ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */,
 				ED41DF3D1E163EC900803A14 /* ModelHandleBookingGeneral.swift in Sources */,

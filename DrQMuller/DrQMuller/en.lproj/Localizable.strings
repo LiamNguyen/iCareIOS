@@ -79,6 +79,7 @@
 "EMAIL_INVALID_FORMAT" = "Email is invalid";
 "UPDATE_SUCCESS_MESSAGE" = "Contact information updated successfully";
 "UPDATE_FAIL_MESSAGE" = "Save information unsuccesfully. Please try again";
+"NO_APPOINTMENT_MESSAGE" = "You haven't had appointment yet.\nStart to book a new appointment by clicking \"+\" sign";
 
 
 

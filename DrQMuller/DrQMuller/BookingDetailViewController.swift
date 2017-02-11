@@ -98,7 +98,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         updateUI()
         
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
@@ -480,6 +479,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========TABLE VIEW DELEGATE METHODS=========
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let selectedCell = tableView.cellForRow(at: indexPath)!
+        selectedCell.contentView.backgroundColor = UIColor(netHex: 0xFEDEFF)
+        
         if tableView == self.tableView_BookingTime {
         //FREE TIME TABLE VIEW
             let cellIdentifier = "TimeTableViewCell"
