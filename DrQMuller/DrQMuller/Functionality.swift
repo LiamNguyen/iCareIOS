@@ -168,7 +168,7 @@ struct Functionality {
     static func pulledStaticArrayFromUserDefaults(forKey: String) -> Any? {
         let userDefaults = UserDefaults.standard
         
-        if userDefaults.object(forKey: "arrayDataSourceOffline") == nil {
+        if userDefaults.object(forKey: forKey) == nil {
             return nil
         }
         
