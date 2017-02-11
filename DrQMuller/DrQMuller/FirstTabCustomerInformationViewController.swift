@@ -53,6 +53,10 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         super.viewWillAppear(animated)
         
         updateUI()
+        
+        //=========FILL CHOSEN INFORMATION=========
+        
+        fillInformation()
     }
     
     override func viewDidLoad() {
@@ -78,10 +82,6 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 //=========APPLY TAB HEADERS UNDERLINE=========
 
         customerInformationController.translateTabHeaderUnderline(view: self.view, view_TabContainer: view_FirstTabContainer)
-        
-//=========FILL CHOSEN INFORMATION=========
-        
-        fillInformation()
         
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
 
