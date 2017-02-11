@@ -87,7 +87,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             
             return
         }
-
+        
         UIView.animate(withDuration: 1, animations: {
             LoginViewController.view_BackLayer.center = CGPoint(x: LoginViewController.view_BackLayer.center.x - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 2)
         })
@@ -103,9 +103,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        print(Functionality.getCurrentDateTime())
-        
+                
         //UserDefaults.standard.removeObject(forKey: "lang")
         
         if UserDefaults.standard.string(forKey: "lang") == nil {

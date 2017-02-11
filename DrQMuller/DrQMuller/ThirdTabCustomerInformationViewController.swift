@@ -79,6 +79,10 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
         customerInformationController.translateTabHeaderUnderline(view: self.view, view_TabContainer: view_ThirdTabContainer)
         
+//=========FILL CHOSEN INFORMATION=========
+        
+        fillInformation()
+        
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
         
         txt_Email.becomeFirstResponder()
@@ -95,7 +99,11 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
                 if let isSuccess = userInfo["status"] as? Bool {
                     if isSuccess {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "important"
+                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+                            
+                            if customerInformation["step"] as! String == "necessary" {
+                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "important"
+                            }
                             DispatchQueue.main.async {
                                 self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_BOOKING_VC, sender: self)
                             }
@@ -199,7 +207,19 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         }
     }
     
-    
-    
+    private func fillInformation() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+            
+            if let _ = customerInformation["userEmail"] as? NSNull, let _ = customerInformation["userPhone"] as? NSNull {
+                return
+            }
+            
+            DispatchQueue.global(qos: .userInteractive).async {
+                self.txt_Email.text = customerInformation["userEmail"] as! String?
+                self.txt_Phone.text = customerInformation["userPhone"] as! String?
+            }
+        }
+    }
     
 }

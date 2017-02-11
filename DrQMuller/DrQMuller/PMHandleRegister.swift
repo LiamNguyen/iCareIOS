@@ -31,25 +31,17 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
     
     func onReceiveRequestResponse(data: AnyObject) {
         var status = [String: String]()
-        var customer_ID: String?
         if let arrayResponse = data["Insert_NewCustomer"] as? NSArray {
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as? NSDictionary
-                if let cus_id = arrayDict?["Customer_ID"] as? String {
-                    customer_ID = cus_id
+
+                if let token = arrayDict?["jwt"] as? String {
+                    UserDefaults.standard.set(token, forKey: "CustomerInformation")
+                    DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: token)
                 }
                 
                 if let result = arrayDict?["Status"] as? String {
                     status["status"] = result
-                    
-                    if result == "1" {
-                        status["status"] = result
-                        if let cus_id = customer_ID {
-                            UserDefaults.standard.set(cus_id, forKey: "Customer_ID")
-                            print(UserDefaults.standard.string(forKey: "Customer_ID") ?? "Customer_ID not available")
-                            DTOBookingInformation.sharedInstance.customerID = cus_id
-                        }
-                    }
                 }
             }
         }

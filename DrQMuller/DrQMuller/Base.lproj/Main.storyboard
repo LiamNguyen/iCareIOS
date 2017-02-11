@@ -487,23 +487,23 @@
                                     <constraint firstItem="hGe-UD-s9k" firstAttribute="centerX" secondItem="V50-6c-qf0" secondAttribute="centerX" id="e0P-C1-q0m"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Họ và tên của bạn" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="RfV-kd-qLS">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Họ và tên của bạn" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="RfV-kd-qLS">
                                 <rect key="frame" x="46" y="139" width="258" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="EPA-el-cFn"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Địa chỉ của bạn" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Fd9-gj-ufi">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Địa chỉ của bạn" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Fd9-gj-ufi">
                                 <rect key="frame" x="46" y="210" width="258" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="53R-1P-8c7"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="userIcon" translatesAutoresizingMaskIntoConstraints="NO" id="njy-Sf-W4z">
                                 <rect key="frame" x="8" y="147" width="30" height="30"/>
@@ -789,6 +789,7 @@
                             <constraint firstItem="TI6-LQ-dOl" firstAttribute="top" secondItem="V7c-IS-ZCr" secondAttribute="bottom" constant="28" id="sCU-5g-2Qy"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="zId-QQ-Qvu"/>
                     <connections>
                         <outlet property="btn_FirstTab" destination="AV8-bO-gRB" id="95s-aV-Jtc"/>
                         <outlet property="btn_SecondTab" destination="kzT-vS-2iB" id="tFC-4M-9QH"/>
@@ -885,23 +886,23 @@
                                     <constraint firstAttribute="width" constant="102" id="wmU-gx-z2H"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email của bạn" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1A7-mF-PmF">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email của bạn" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1A7-mF-PmF">
                                 <rect key="frame" x="46" y="141" width="258" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="WY4-Nl-OlC"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next" enablesReturnKeyAutomatically="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Số điện thoại của bạn" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jhL-Rk-YbK">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Số điện thoại của bạn" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="jhL-Rk-YbK">
                                 <rect key="frame" x="46" y="212" width="258" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="XzQ-86-0Ma"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad"/>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emailIcon" translatesAutoresizingMaskIntoConstraints="NO" id="Z4H-kw-WwH">
                                 <rect key="frame" x="8" y="149" width="30" height="30"/>
@@ -929,7 +930,6 @@
                                 </state>
                                 <connections>
                                     <action selector="btn_Next_OnClick:" destination="ioB-WT-TZj" eventType="touchUpInside" id="HTM-jR-APu"/>
-                                    <segue destination="715-Lq-BFk" kind="show" identifier="segue_CustomerInformationToBookingTabViewController" id="5rf-7u-S8A"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PpP-9U-rBQ">
@@ -991,6 +991,7 @@
                             <constraint firstItem="3js-UJ-rK3" firstAttribute="top" secondItem="PpP-9U-rBQ" secondAttribute="bottom" constant="3" id="tmc-SQ-Tom"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="1h4-M6-RNv"/>
                     <connections>
                         <outlet property="btn_FirstTab" destination="CSQ-CE-yPX" id="BjE-c6-77R"/>
                         <outlet property="btn_Next" destination="Yyh-9V-xuh" id="2Zs-2g-OyH"/>
@@ -1009,6 +1010,7 @@
                         <segue destination="os0-hg-hVA" kind="presentation" identifier="segue_CustomerInformationThirdTabToSecondTab" modalTransitionStyle="flipHorizontal" id="sE2-L0-Rza"/>
                         <segue destination="uw5-Ou-aKy" kind="presentation" identifier="segue_CustomerInformationThirdTabToFirstTab" modalTransitionStyle="flipHorizontal" id="G0p-To-aUJ"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="segue_CustomerInformationThirdTabToLogin" id="mIe-MO-60a"/>
+                        <segue destination="715-Lq-BFk" kind="show" identifier="segue_CustomerInformationToBookingTabViewController" id="4fp-eZ-ZIh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M05-Dn-3p8" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1495,7 +1497,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1581,7 +1583,7 @@
                                         <rect key="frame" x="0.0" y="28" width="223" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="223" height="44.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="223" height="45"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -1676,7 +1678,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="250" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YPq-Ty-icK" id="i1a-c2-P1O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hON-Vy-TFd">
@@ -1962,10 +1964,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="5rf-7u-S8A"/>
-        <segue reference="hCt-e9-enO"/>
-        <segue reference="sE2-L0-Rza"/>
+        <segue reference="4fp-eZ-ZIh"/>
+        <segue reference="bED-hu-lQ7"/>
         <segue reference="G0p-To-aUJ"/>
-        <segue reference="mIe-MO-60a"/>
+        <segue reference="5Jd-1u-Qxt"/>
+        <segue reference="LG0-4y-V3J"/>
     </inferredMetricsTieBreakers>
 </document>

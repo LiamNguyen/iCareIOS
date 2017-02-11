@@ -38,17 +38,18 @@ class CustomStyleCustomerInformation {
     
     func enableTab(firstTab: UIButton, secondTab: UIButton, thirdTab: UIButton) {
         if let step = DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] as? String {
-            
             switch step {
             case "none":
                 applyActiveStyle(button: firstTab)
             case "basic":
                 applyActiveStyle(button: firstTab)
                 applyActiveStyle(button: secondTab)
-            default:
+            case "necessary":
                 applyActiveStyle(button: firstTab)
                 applyActiveStyle(button: secondTab)
                 applyActiveStyle(button: thirdTab)
+            default:
+                return
             }
         }
     }

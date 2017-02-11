@@ -17,17 +17,6 @@ class DTOBookingInformation: NSObject {
         return Singleton.instance
     }
     
-    private var _customerID: String!
-    var customerID: String {
-        get {
-            return _customerID
-        }
-        
-        set (newVal) {
-            _customerID = newVal
-        }
-    }
-    
     private var _appointmentID: String!
     var appointmentID: String {
         get {
@@ -214,6 +203,8 @@ class DTOBookingInformation: NSObject {
         let locationsDataSource = dtoArrays.dropDownLocationsDataSource
         
         let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: DTOBookingInformation.sharedInstance.machine)
+        
+        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
 
         var result = ""
         
@@ -227,7 +218,7 @@ class DTOBookingInformation: NSObject {
             }
         }
 
-        if let type = _type, let customerID = _customerID, let location = _location, let voucher = _voucher, let bookingTime = _bookingTime {
+        if let type = _type, let customerID = customerInformation["userId"], let location = _location, let voucher = _voucher, let bookingTime = _bookingTime {
             self._verificationCode = generateVerificationCode(length: 10)
             result += "type_id=\(Functionality.findKeyFromValue(dictionary: typesDataSource, value: type))&" +
                         "customer_id=\(customerID)&" +

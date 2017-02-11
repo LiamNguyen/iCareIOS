@@ -79,6 +79,10 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 
         customerInformationController.translateTabHeaderUnderline(view: self.view, view_TabContainer: view_FirstTabContainer)
         
+//=========FILL CHOSEN INFORMATION=========
+        
+        fillInformation()
+        
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
 
         txt_Name.becomeFirstResponder()
@@ -95,7 +99,11 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
                 if let isSuccess = userInfo["status"] as? Bool {
                     if isSuccess {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "basic"
+                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+                            
+                            if customerInformation["step"] as! String == "none" {
+                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "basic"
+                            }
                             DispatchQueue.main.async {
                                 self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
                             }
@@ -134,7 +142,6 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] = txt_Name.text!
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userAddress"] = txt_Address.text!
 
-        print(DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
         modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
     
@@ -182,6 +189,21 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
             return true
         } else {
             return false
+        }
+    }
+    
+    private func fillInformation() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+            
+            if let _ = customerInformation["userName"] as? NSNull, let _ = customerInformation["userAddress"] as? NSNull {
+                return
+            }
+            
+            DispatchQueue.main.async {
+                self.txt_Name.text = customerInformation["userName"] as! String?
+                self.txt_Address.text = customerInformation["userAddress"] as! String?
+            }
         }
     }
 }

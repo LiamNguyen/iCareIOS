@@ -94,6 +94,29 @@ struct Functionality {
         return daysOfWeek[en]!
     }
     
+    static func translateGender(tranlate: String, to: language) -> String {
+        var gender = ["Nam": "Male",
+                      "Nữ": "Female"]
+        var translated = ""
+        
+        if to == .VI {
+            for item in gender {
+                if item.value == tranlate {
+                    translated = item.key
+                }
+            }
+        } else {
+            translated = gender[tranlate]!
+        }
+        
+        return translated
+    }
+    
+    enum language {
+        case VI
+        case EN
+    }
+    
 //RETURN ARRAY FROM DICTIONARY
 
     static func returnArrayFromDictionary(dictionary: [String: String]!, isReturnValue: Bool) -> [String] {

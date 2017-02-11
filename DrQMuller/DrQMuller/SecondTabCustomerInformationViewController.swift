@@ -94,6 +94,10 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         self.slideBtn_Next.delegate = self
         self.slideBtn_Next.reset()
         
+//=========FILL CHOSEN INFORMATION=========
+        
+        fillInformation()
+        
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
@@ -106,7 +110,10 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
                 if let isSuccess = userInfo["status"] as? Bool {
                     if isSuccess {
                         DispatchQueue.global(qos: .userInteractive).async {
-                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "necessary"
+                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+                            if customerInformation["step"] as! String == "basic" {
+                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "necessary"
+                            }
                             DispatchQueue.main.async {
                                 self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
                             }
@@ -162,13 +169,18 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     
     func buttonStatus(_ status:String, sender:MMSlidingButton) {
         let step = "necessary"
+        var gender = ""
+        
+        if UserDefaults.standard.string(forKey: "lang") == "vi" {
+            gender = Functionality.translateGender(tranlate: picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)], to: .EN)
+        } else  {
+            gender = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
+        }
         
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userDob"] = picker_Date.date.shortDate
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userGender"] = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userGender"] = gender
         
-        modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
-        
-        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
+        modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)        
     }
     
 //=========TOUCH OUTSIDE CLOSE KEYBOARD=========
@@ -184,7 +196,28 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         return true
     }
 
-
+    private func fillInformation() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+            
+            if let _ = customerInformation["userDob"] as? NSNull, let _ = customerInformation["userGender"] as? NSNull {
+                return
+            }
+            
+            let chosenDob = Functionality.convertDateFormatFromStringToDate(str: customerInformation["userDob"] as! String)!
+            var gender = ""
+            if UserDefaults.standard.string(forKey: "lang") == "vi" {
+                gender = Functionality.translateGender(tranlate: customerInformation["userGender"] as! String, to: .VI)
+            } else {
+                gender = customerInformation["userGender"] as! String
+            }
+            
+            DispatchQueue.main.async {
+                self.picker_Gender.selectRow(self.picker_GenderDataSource.index(of: gender)!, inComponent: 0, animated: true)
+                self.picker_Date.setDate(chosenDob, animated: true)
+            }
+        }
+    }
     
     
     
