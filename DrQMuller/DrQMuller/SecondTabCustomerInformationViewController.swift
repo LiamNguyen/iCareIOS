@@ -58,6 +58,10 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         super.viewWillAppear(animated)
         
         updateUI()
+        
+        //=========FILL CHOSEN INFORMATION=========
+        
+        fillInformation()
     }
     
     override func viewDidLoad() {
@@ -93,10 +97,6 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
         self.slideBtn_Next.delegate = self
         self.slideBtn_Next.reset()
-        
-//=========FILL CHOSEN INFORMATION=========
-        
-        fillInformation()
         
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
@@ -211,7 +211,6 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
             } else {
                 gender = customerInformation["userGender"] as! String
             }
-            
             DispatchQueue.main.async {
                 self.picker_Gender.selectRow(self.picker_GenderDataSource.index(of: gender)!, inComponent: 0, animated: true)
                 self.picker_Date.setDate(chosenDob, animated: true)

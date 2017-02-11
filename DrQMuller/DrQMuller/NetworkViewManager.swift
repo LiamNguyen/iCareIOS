@@ -43,7 +43,7 @@ class NetworkViewManager: UIView {
     
     func dismissNetworkMessage() {
         UIView.animate(withDuration: 0.8) {
-            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -30)
+            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -60)
         }
     }
     
