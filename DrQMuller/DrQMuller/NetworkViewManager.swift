@@ -36,14 +36,18 @@ class NetworkViewManager: UIView {
     }
     
     func showNetworkMessage() {
-        UIView.animate(withDuration: 0.8) {
-            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: 30)
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.8) {
+                self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: 30)
+            }
         }
     }
     
     func dismissNetworkMessage() {
-        UIView.animate(withDuration: 0.8) {
-            self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -60)
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.8) {
+                self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -60)
+            }
         }
     }
     
