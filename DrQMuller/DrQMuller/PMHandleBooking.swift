@@ -185,7 +185,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var returnArrayDataSource = [String: DTOStaticArrayDataSource]()
             returnArrayDataSource["returnArrayDataSource"] = DTOStaticArrayDataSource.sharedInstance
             NotificationCenter.default.post(name: Notification.Name(rawValue: "arrayDataSource"), object: nil, userInfo: returnArrayDataSource)
-            pushToUserDefaults(arrayDataSourceObj: DTOStaticArrayDataSource.sharedInstance)
+            Functionality.pushToUserDefaults(arrayDataSourceObj: DTOStaticArrayDataSource.sharedInstance, forKey: "arrayDataSourceOffline")
         }
         
 //HANDLE CHECKING BOOKING TIME EXISTENCY
@@ -253,7 +253,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
 //CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT
     
     private func staticArrayDataSourceHasExisted() -> Bool {
-        let pulledDtoArrays = pulledStaticArrayFromUserDefaults() as? DTOStaticArrayDataSource
+        let pulledDtoArrays = Functionality.pulledStaticArrayFromUserDefaults(forKey: "arrayDataSourceOffline") as? DTOStaticArrayDataSource
         
         if pulledDtoArrays != nil {
             var returnArrayDataSourceOffline = [String: DTOStaticArrayDataSource]()
@@ -263,31 +263,6 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         } else {
             return false
         }
-    }
-    
-//=========PUSH STATIC ARRAY DATASOURCE TO USER DEFAULT==========
-    
-    private func pushToUserDefaults(arrayDataSourceObj: Any) {
-        let userDefaults = UserDefaults.standard
-        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: arrayDataSourceObj)
-        userDefaults.set(encodedData, forKey: "arrayDataSourceOffline")
-        if userDefaults.synchronize() {
-            print("Array DataSource Stored")
-        }
-    }
-    
-//=========PULL STATIC ARRAY DATASOURCE TO USER DEFAULT==========
-    
-    func pulledStaticArrayFromUserDefaults() -> Any? {
-        let userDefaults = UserDefaults.standard
-        
-        if userDefaults.object(forKey: "arrayDataSourceOffline") == nil {
-            return nil
-        }
-        
-        let decodedData = userDefaults.object(forKey: "arrayDataSourceOffline") as! Data
-        let pulledDtoArrays = NSKeyedUnarchiver.unarchiveObject(with: decodedData) as! DTOStaticArrayDataSource
-        return pulledDtoArrays
     }
     
 //=========CHECK IF ALL STATIC ARRAY DATASOURCE IS COMPLETELY SET==========

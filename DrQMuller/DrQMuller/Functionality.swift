@@ -152,6 +152,31 @@ struct Functionality {
         return returnKey
     }
     
+//=========PUSH STATIC ARRAY DATASOURCE TO USER DEFAULT==========
+    
+    static func pushToUserDefaults(arrayDataSourceObj: Any, forKey: String) {
+        let userDefaults = UserDefaults.standard
+        let encodedData: Data = NSKeyedArchiver.archivedData(withRootObject: arrayDataSourceObj)
+        userDefaults.set(encodedData, forKey: forKey)
+        if userDefaults.synchronize() {
+            print("Array DataSource Stored")
+        }
+    }
+    
+//=========PULL STATIC ARRAY DATASOURCE TO USER DEFAULT==========
+    
+    static func pulledStaticArrayFromUserDefaults(forKey: String) -> Any? {
+        let userDefaults = UserDefaults.standard
+        
+        if userDefaults.object(forKey: "arrayDataSourceOffline") == nil {
+            return nil
+        }
+        
+        let decodedData = userDefaults.object(forKey: forKey) as! Data
+        let pulledDtoArrays = NSKeyedUnarchiver.unarchiveObject(with: decodedData)
+        return pulledDtoArrays
+    }
+    
 //CONVERT DATE FORMAT FROM A DATE TYPE OF STRING
     
     static func convertDateFormatFromStringToDate(str: String) -> Date? {

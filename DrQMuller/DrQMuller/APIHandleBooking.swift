@@ -28,7 +28,7 @@ class APIHandleBooking: NSObject {
     }
     
     func pulledStaticArrayFromUserDefaults() -> DTOStaticArrayDataSource? {
-        return self.persistencyManager.pulledStaticArrayFromUserDefaults() as! DTOStaticArrayDataSource?
+        return Functionality.pulledStaticArrayFromUserDefaults(forKey: "arrayDataSourceOffline") as! DTOStaticArrayDataSource?
     }
     
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String, location_ID: String, machine_ID: String) {
