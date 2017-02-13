@@ -181,6 +181,17 @@ class DTOBookingInformation: NSObject, NSCoding {
         }
     }
     
+    private var _isConfirmed: String!
+    var isConfirmed: String {
+        get {
+            return _isConfirmed
+        }
+        
+        set (newVal) {
+            _isConfirmed = newVal
+        }
+    }
+    
     func clearAllDTOBookingInfo() {
         self._country = nil
         self._city = nil
@@ -193,6 +204,7 @@ class DTOBookingInformation: NSObject, NSCoding {
         self._exactDate = nil
         self._exactDayOfWeek = nil
         self._bookingTime = nil
+        self._isConfirmed = nil
     }
     
     func returnHttpBody() -> String? {
@@ -251,7 +263,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     }
     
     override init() {
-        
+        self._isConfirmed = "0"
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -272,6 +284,7 @@ class DTOBookingInformation: NSObject, NSCoding {
         self._exactDate = aDecoder.decodeObject(forKey: "exactDate") as? String ?? ""
         self._exactDayOfWeek = aDecoder.decodeObject(forKey: "exactDayOfWeed") as? String ?? ""
         self._bookingTime = aDecoder.decodeObject(forKey: "bookingTime") as? [[String]] ?? [[String]]()
+        self._isConfirmed = aDecoder.decodeObject(forKey: "isConfirmed") as? String ?? ""
     }
     
     func encode(with aCoder: NSCoder) {
@@ -290,6 +303,7 @@ class DTOBookingInformation: NSObject, NSCoding {
         aCoder.encode(_exactDate, forKey: "exactDate")
         aCoder.encode(_exactDayOfWeek, forKey: "exactDayOfWeed")
         aCoder.encode(_bookingTime, forKey: "bookingTime")
+        aCoder.encode(_isConfirmed, forKey: "isConfirmed")
     }
     
     

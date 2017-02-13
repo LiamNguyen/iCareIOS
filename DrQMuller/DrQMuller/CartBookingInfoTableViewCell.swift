@@ -13,15 +13,18 @@ class CartBookingInfoTableViewCell: UITableViewCell {
     @IBOutlet weak var lbl_Location: UILabel!
     @IBOutlet weak var lbl_StartDate: UILabel!
     @IBOutlet weak var lbl_EndDate: UILabel!
+    @IBOutlet weak var lbl_Status: UILabel!
     @IBOutlet weak var view_TableRow: UIView!
+    
+    @IBOutlet weak var lbl_Voucher_Title: UILabel!
+    @IBOutlet weak var lbl_Location_Title: UILabel!
+    @IBOutlet weak var lbl_StartDate_Title: UILabel!
+    @IBOutlet weak var lbl_EndDate_Title: UILabel!
+    @IBOutlet weak var lbl_Status_Title: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        view_TableRow.layer.shadowColor = UIColor.black.cgColor
-        view_TableRow.layer.shadowOffset = CGSize.zero
-        view_TableRow.layer.shadowOpacity = 0.7
-        view_TableRow.layer.shadowRadius = 10
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

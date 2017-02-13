@@ -22,8 +22,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
     func onReceiveRequestResponse(data: AnyObject) {
 //HANDLE COUNTRIES DATASOURCE
-        var dropDownCountriesDataSource = [String]()
+        
         if let arrayDataSource = data["Select_Countries"]! as? NSArray {
+            var dropDownCountriesDataSource = [String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownCountriesDataSource.append(dictItem["COUNTRY"]! as! String)
@@ -32,8 +33,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE CITIES DATASOURCE
-        var dropDownCitiesDataSource = [String]()
+        
         if let arrayDataSource = data["Select_Cities"]! as? NSArray {
+            var dropDownCitiesDataSource = [String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownCitiesDataSource.append(dictItem["CITY"]! as! String)
@@ -42,8 +44,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE DISTRICTS DATASOURCE
-        var dropDownDistrictsDataSource = [String]()
+        
         if let arrayDataSource = data["Select_Districts"]! as? NSArray {
+            var dropDownDistrictsDataSource = [String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownDistrictsDataSource.append(dictItem["DISTRICT"]! as! String)
@@ -52,8 +55,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE LOCATIONS DATASOURCE
-        var dropDownLocationsDataSource = [String: String]()
+
         if let arrayDataSource = data["Select_Locations"]! as? NSArray {
+            var dropDownLocationsDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownLocationsDataSource[(dictItem["LOCATION_ID"] as? String)!] = (dictItem["ADDRESS"] as? String)!
@@ -62,8 +66,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE VOUCHERS DATASOURCE
-        var dropDownVouchersDataSource = [String: String]()
+
         if let arrayDataSource = data["Select_Vouchers"]! as? NSArray {
+            var dropDownVouchersDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownVouchersDataSource[(dictItem["VOUCHER_ID"] as? String)!] = (dictItem["VOUCHER"] as? String)!
@@ -72,8 +77,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE TYPES DATASOURCE
-        var dropDownTypesDataSource = [String: String]()
+
         if let arrayDataSource = data["Select_Types"]! as? NSArray {
+            var dropDownTypesDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 dropDownTypesDataSource[(dictItem["TYPE_ID"] as? String)!] = (dictItem["TYPE"] as? String)!
@@ -82,9 +88,11 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE ALL TIME DATASOURCE
-        var allTimeDataSource = Dictionary<String, String>()
-        var allTimeDisplayArray = [String]()
+        
         if let arrayDataSource = data["Select_AllTime"]! as? NSArray {
+            var allTimeDataSource = Dictionary<String, String>()
+            var allTimeDisplayArray = [String]()
+            
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 allTimeDisplayArray.append((dictItem["TIME"] as? String)!)
@@ -97,9 +105,11 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE ECO TIME DATASOURCE
-        var ecoTimeDataSource = Dictionary<String, String>()
-        var ecoTimeDisplayArray = [String]()
+        
         if let arrayDataSource = data["Select_EcoTime"]! as? NSArray {
+            var ecoTimeDataSource = Dictionary<String, String>()
+            var ecoTimeDisplayArray = [String]()
+            
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 ecoTimeDisplayArray.append((dictItem["TIME"] as? String)!)
@@ -113,9 +123,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         
 //HANDLE DAYS OF WEEK DATASOURCE
 
-        //var daysOfWeekDataSource = Dictionary<String, String>()
-        var daysOfWeekDisplayArray = [String]()
         if let arrayDataSource = data["Select_DaysOfWeek"]! as? NSArray {
+            //var daysOfWeekDataSource = Dictionary<String, String>()
+            var daysOfWeekDisplayArray = [String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 //daysOfWeekDataSource[(dictItem["DAY_ID"] as? String)!] = dictItem["DAY"]! as? String
@@ -126,8 +136,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         }
         
 //HANDLE SELECTED TIME DATASOURCE
-        var selectedTimeDataSource = Dictionary<String, String>()
+        
         if let arrayDataSource = data["Select_SelectedTime"]! as? NSArray {
+            var selectedTimeDataSource = Dictionary<String, String>()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 selectedTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
@@ -141,9 +152,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         
 //HANDLE REPONSE OF NEW APPOINTMENT'S INSERTION
         
-        var isOk = [String: Bool]()
-        var appointment_ID: String?
         if let arrayResponse = data["Insert_NewAppointment"]! as? NSArray {
+            var isOk = [String: Bool]()
+            var appointment_ID: String?
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as? NSDictionary
                 if let app_ID = arrayDict?["Appointment_ID"] as? String {
@@ -164,10 +175,46 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             NotificationCenter.default.post(name: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil, userInfo: isOk)
         }
         
+//HANDLE REPONSE OF VALIDATING VERIFICATION CODE
+        
+        if let arrayResponse = data["Update_Appointment"]! as? NSArray {
+            var isOk = [String: Bool]()
+            for arrayItem in arrayResponse {
+                let arrayDict = arrayItem as? NSDictionary
+                
+                if let result = arrayDict?["Status"] as? String {
+                    if result == "1" {
+                        isOk["status"] = true
+                    } else {
+                        isOk["status"] = false
+                    }
+                }
+            }
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "validateCode"), object: nil, userInfo: isOk)
+        }
+        
+//HANDLE REPONSE OF CANCELING APPOINTMENT
+        
+        if let arrayResponse = data["Update_CancelAppointment"]! as? NSArray {
+            var isOk = [String: Bool]()
+            for arrayItem in arrayResponse {
+                let arrayDict = arrayItem as? NSDictionary
+                
+                if let result = arrayDict?["Status"] as? String {
+                    if result == "1" {
+                        isOk["status"] = true
+                    } else {
+                        isOk["status"] = false
+                    }
+                }
+            }
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "cancelAppointment"), object: nil, userInfo: isOk)
+        }
+        
 //HANDLE RESPONSE OF GET MACHINES DATASOURCE
         
-        var machinesDataSource = [String: String]()
         if let arrayResponse = data["Select_Machines"]! as? NSArray {
+            var machinesDataSource = [String: String]()
             for arrayItem in arrayResponse {
                 let dictItem = arrayItem as! NSDictionary
                 machinesDataSource[dictItem["MACHINE_ID"] as! String] = (dictItem["MACHINE_NAME"] as! String)
@@ -190,9 +237,10 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         
 //HANDLE CHECKING BOOKING TIME EXISTENCY
 
-        var returnExistencyResult = [String: String]()
-        var existency: String!
         if let arrayDataSource = data["BookingTransaction"]! as? NSArray {
+            var returnExistencyResult = [String: String]()
+            var existency: String!
+            
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 existency = dictItem["existency"]! as! String
@@ -248,6 +296,18 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
     func insertNewAppointment() {
         httpClient.postRequest(url: "Insert_NewAppointment", body: DTOBookingInformation.sharedInstance.returnHttpBody()!)
+    }
+    
+//CHECK VERIFICATION CODE
+    
+    func validateCode() {
+        httpClient.postRequest(url: "Update_Appointment", body: "appointmentId=\(DTOBookingInformation.sharedInstance.appointmentID)")
+    }
+    
+//CANCEL APPOINTMENT
+    
+    func cancelAppointment(appointment_ID: String) {
+        httpClient.postRequest(url: "Update_CancelAppointment", body: "appointmentId=\(appointment_ID)")
     }
     
 //CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT

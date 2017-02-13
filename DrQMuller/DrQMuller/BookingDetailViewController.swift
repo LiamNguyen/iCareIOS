@@ -96,6 +96,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         lbl_EndDateHeader.text = "LBL_END_DATE".localized() + ": "
     }
     
+    private struct Storyboard {
+        static let SEGUE_TO_BOOKING_VERIFICATION = "segue_BookingDetailToBookingVerification"
+        static let SEGUE_TO_BOOKING_GENERAL = "segue_BookingDetailToBookingGeneral"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -355,7 +360,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 if let isOk = userInfo["status"] as? Bool {
                     if isOk {
                         DispatchQueue.main.async {
-                            ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_SUCCESS_MESSAGE".localized())
+                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_VERIFICATION, sender: self)
                         }
                     } else {
                         DispatchQueue.main.async {
@@ -479,9 +484,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========TABLE VIEW DELEGATE METHODS=========
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let selectedCell = tableView.cellForRow(at: indexPath)!
-        selectedCell.contentView.backgroundColor = UIColor(netHex: 0xFEDEFF)
-        
         if tableView == self.tableView_BookingTime {
         //FREE TIME TABLE VIEW
             let cellIdentifier = "TimeTableViewCell"
@@ -499,7 +501,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CartOrderConfirmTableViewCell
             
-            let itemDay = self.tupleBookingTime_Array[indexPath.row]
+            var itemDay = self.tupleBookingTime_Array[indexPath.row]
+            
+            if self.language == "en" {
+                itemDay.value.day = Functionality.translateDaysOfWeek(translate: itemDay.value.day, to: .EN)
+            }
             
             cell.lbl_DayOfWeek.text = itemDay.value.day
             cell.lbl_Time.text = itemDay.value.time
@@ -511,7 +517,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CartOrderTableViewCell
             
-            let itemDay = self.tupleBookingTime_Array[indexPath.row]
+            var itemDay = self.tupleBookingTime_Array[indexPath.row]
+            
+            if self.language == "en" {
+                itemDay.value.day = Functionality.translateDaysOfWeek(translate: itemDay.value.day, to: .EN)
+            }
             
             cell.lbl_DayOfWeek.text = itemDay.value.day
             cell.lbl_BookingTime.text = itemDay.value.time
@@ -523,6 +533,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========TABLE VIEW DELEGATE METHODS=========
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)!
+            selectedCell.contentView.backgroundColor = UIColor(netHex: 0xFEDEFF)
+            
         if tableView == self.tableView_BookingTime {
             
             let bookingTime = dtoBookingTime
@@ -663,21 +676,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_BookingDetailToBookingGeneral", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_BookingDetailToBookingGeneral", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "segue_BookingDetailToBookingGeneral"){
-            if let tabVC = segue.destination as? UITabBarController{
-                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
-                tabVC.tabBar.items?[0].isEnabled = false
-                tabVC.selectedIndex = 1
-            }
-        }
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
     }
     
 //=========WIRED UP DAYS OF WEEK DROPDOWN=========
@@ -883,7 +886,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         DTOBookingInformation.sharedInstance.bookingTime.removeAll()
         
     }
-     
+    
     private func decorateCartOrderTableView() {
         self.tableView_CartOrder.layer.shadowColor = UIColor.black.cgColor
         self.tableView_CartOrder.layer.shadowOffset = CGSize.zero

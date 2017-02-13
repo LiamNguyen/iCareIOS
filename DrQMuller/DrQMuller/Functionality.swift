@@ -83,7 +83,7 @@ struct Functionality {
     
 //TRANSLATE DAYS OF WEEK
     
-    static func translateDaysOfWeek(en: String) -> String {
+    static func translateDaysOfWeek(translate: String, to: language) -> String {
         var daysOfWeek = ["Monday":"Thứ hai",
                           "Tuesday":"Thứ ba",
                           "Wednesday":"Thứ tư",
@@ -91,7 +91,19 @@ struct Functionality {
                           "Friday":"Thứ sáu",
                           "Saturday":"Thứ bảy",
                           "Sunday":"Chủ nhật"]
-        return daysOfWeek[en]!
+        var translated = ""
+        
+        if to == .EN {
+            for item in daysOfWeek {
+                if item.value == translate {
+                    translated = item.key
+                }
+            }
+        } else {
+            translated = daysOfWeek[translate]!
+        }
+        
+        return translated
     }
     
     static func translateGender(tranlate: String, to: language) -> String {
@@ -213,10 +225,18 @@ struct Functionality {
 //GET CURRENT DATE TIME
     
     static func getCurrentDateTime() -> String {
-        let date = NSDate()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd hh:MM:ss"
-        return "\(dateFormatter.string(from: date as Date))"
+        let date = Date()
+        let calendar = Calendar.current
+        
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        
+        let hour = calendar.component(.hour, from: date)
+        let minute = calendar.component(.minute, from: date)
+        let sec = calendar.component(.second, from: date)
+        
+        return "\(year)-\(month)-\(day) \(hour):\(minute):\(sec)"
     }
     
 //=========DRAW LINE TO ESTIMATE IPHONE 4 KEYBOARD=========

@@ -11,11 +11,23 @@ import UIKit
 class BookingManagerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView_Appointments: UITableView!
     @IBOutlet weak var constraint_TableViewHeight: NSLayoutConstraint!
-
+    @IBOutlet weak var lbl_Title: UILabel!
+    @IBOutlet weak var view_TopView: UIView!
+    
     private var appoinmentDataSource = [DTOBookingInformation]()
+    
+    private func updateUI() {
+        lbl_Title.text = "BOOKING_MANAGER_PAGE_TITLE".localized()
+    }
+    
+    private struct Storyboard {
+        static let CELL_IDENTIFIER_APPOINTMENT_TBLVIEW = "AppointmentTableViewCell"
+        static let SEGUE_TO_BOOKING_MANAGER_DETAIL = "segue_BookingManagerToBookingManagerDetail"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateUI()
         
         tableView_Appointments.delegate = self
         tableView_Appointments.dataSource = self
@@ -29,99 +41,73 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "AppointmentTableViewCell"
+        let cellIdentifier = Storyboard.CELL_IDENTIFIER_APPOINTMENT_TBLVIEW
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CartBookingInfoTableViewCell
         
         let item = self.appoinmentDataSource[indexPath.row]
         
+        cell.lbl_Voucher_Title.text = "LBL_VOUCHER_TITLE".localized()
+        cell.lbl_Location_Title.text = "LBL_LOCATION_TITLE".localized() + ": "
+        cell.lbl_StartDate_Title.text = "LBL_START_DATE".localized() + ": "
+        cell.lbl_EndDate_Title.text = "LBL_END_DATE".localized() + ": "
+        cell.lbl_Status_Title.text = "LBL_STATUS_TITLE".localized()
+        
         cell.lbl_Voucher.text = item.voucher
         cell.lbl_Location.text = item.location
-        cell.lbl_StartDate.text = item.startDate
-        cell.lbl_EndDate.text = item.endDate
+        cell.lbl_Status.text = returnDisplayValueForStatus(isConfirmed: item.isConfirmed)
         
+        if !item.startDate.isEmpty {
+            cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.startDate)?.shortDateVnFormatted
+            cell.lbl_EndDate.text = Functionality.convertDateFormatFromStringToDate(str: item.endDate)?.shortDateVnFormatted
+        } else {
+            cell.lbl_StartDate_Title.text = "LBL_EXACT_DATE".localized()
+            cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.exactDate)?.shortDateVnFormatted
+            cell.lbl_EndDate_Title.isHidden = true
+            cell.lbl_EndDate.isHidden = true
+        }
+            
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedCell = tableView.cellForRow(at: indexPath)!
+        let selectedCell = tableView.cellForRow(at: indexPath)! as! CartBookingInfoTableViewCell
         selectedCell.contentView.backgroundColor = UIColor(netHex: 0xFEDEFF)
+        
+        let dtoBookingInfo = self.appoinmentDataSource[indexPath.row]
+        
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER_DETAIL, sender: dtoBookingInfo)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Storyboard.SEGUE_TO_BOOKING_MANAGER_DETAIL {
+            let bookingManagerDetail = segue.destination as! BookingManagerDetailViewController
+            let data = sender as! DTOBookingInformation
+            bookingManagerDetail.dtoBookingInformation = data
+        }
     }
     
     private func bindAppointmentDataSource() {
-//        var customerAppointment = [String: DTOBookingInformation]()
-//        
-//        let firstAppointment = DTOBookingInformation()
-//        
-//        firstAppointment.voucher = "ECO Booking1"
-//        firstAppointment.location = "Trần Quang Diệu"
-//        firstAppointment.startDate = "12/02/2016"
-//        firstAppointment.endDate = "12/03/2016"
-//        customerAppointment["Appointment 1"] = firstAppointment
-//        
-//        let secondAppointment = DTOBookingInformation()
-//        
-//        secondAppointment.voucher = "VIP Booking2"
-//        secondAppointment.location = "Trần Quang Diệu"
-//        secondAppointment.startDate = "21/02/2017"
-//        secondAppointment.endDate = "12/03/2017"
-//        customerAppointment["Appointment 2"] = secondAppointment
-//        
-//        let thirdAppointment = DTOBookingInformation()
-//        
-//        thirdAppointment.voucher = "VIP Booking3"
-//        thirdAppointment.location = "Trần Quang Diệu"
-//        thirdAppointment.startDate = "21/02/2017"
-//        thirdAppointment.endDate = "12/03/2017"
-//        customerAppointment["Appointment 3"] = thirdAppointment
-//        
-//        let fourthAppointment = DTOBookingInformation()
-//        
-//        fourthAppointment.voucher = "ECO Booking4"
-//        fourthAppointment.location = "Trần Quang Diệu"
-//        fourthAppointment.startDate = "12/02/2016"
-//        fourthAppointment.endDate = "12/03/2016"
-//        customerAppointment["Appointment 4"] = fourthAppointment
-//        
-//        DTOCustomerInformation.sharedInstance.customerAppointmentsDictionary = customerAppointment
-//        
-//        Functionality.pushToUserDefaults(arrayDataSourceObj: DTOCustomerInformation.sharedInstance, forKey: "1")
-        
-        if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: "1") as? DTOCustomerInformation {
-            var keyArray = Array(appointments.customerAppointmentsDictionary.keys)
-            keyArray = keyArray.sorted {$0 > $1}
-            
-            for item in keyArray {
-                self.appoinmentDataSource.append(appointments.customerAppointmentsDictionary[item]!)
-            }
-        } else {
-            DispatchQueue.main.async {
-                self.addLabelForEmptyAppointment()
+        if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String) as? DTOCustomerInformation {
+
+            if appointments.customerAppointmentsDictionary.count > 0 {
+                var keyArray = Array(appointments.customerAppointmentsDictionary.keys)
+                keyArray = keyArray.sorted {$0 > $1}
+                
+                for item in keyArray {
+                    self.appoinmentDataSource.append(appointments.customerAppointmentsDictionary[item]!)
+                }
+                DispatchQueue.main.async {
+                    self.tableView_Appointments.isHidden = false
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.addLabelForEmptyAppointment()
+                    self.tableView_Appointments.isHidden = true
+                }
             }
         }
 
-        updateAppointmentTableViewHeight()
-    }
-    
-    private func updateAppointmentTableViewHeight() {
-        let numberOfRows: CGFloat!
-        let expectedTableViewHeight: CGFloat!
-        
-        if UIScreen.main.bounds.height == 480 && self.appoinmentDataSource.count > 2 {
-            return
-        }
-        
-        let rowHeight = self.tableView_Appointments.rowHeight
-
-        if self.appoinmentDataSource.count > 3 {
-            numberOfRows = 3
-            expectedTableViewHeight = (rowHeight * numberOfRows) + 20
-        } else {
-            numberOfRows = CGFloat(self.appoinmentDataSource.count)
-            expectedTableViewHeight = (rowHeight * numberOfRows)
-        }
-        
-        self.constraint_TableViewHeight.constant = expectedTableViewHeight
     }
     
     private func addLabelForEmptyAppointment() {
@@ -134,5 +120,13 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         label.numberOfLines = 5
         
         self.view.addSubview(label)
+    }
+    
+    private func returnDisplayValueForStatus(isConfirmed: String) -> String {
+        if isConfirmed == "1" {
+            return "IS_CONFIRMED".localized()
+        } else {
+            return "IS_NOT_CONFIRMED".localized()
+        }
     }
 }

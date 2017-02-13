@@ -70,6 +70,11 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         btn_TypesDropDown.setTitle("DROPDOWN_TYPE_TITLE".localized(), for: .normal)
     }
     
+    private struct Storyboard {
+        static let SEGUE_TO_BOOKING_MANAGER = "segue_BookingGeneralToBookingManager"
+        static let SEGUE_TO_BOOKING_DATE = "segue_BookingGeneralToStartEnDate"
+    }
+    
 //=========VIEW DID LOAD FUNC=========
     
     override func viewDidLoad() {
@@ -178,7 +183,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         DTOBookingInformation.sharedInstance.type = chosenType
         
-        self.performSegue(withIdentifier: "segue_BookingGeneralToStartEnDate", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_DATE, sender: self)
     }
 
 //=========btn_CountriesDropDown DROPDOWN=========
@@ -340,9 +345,13 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Types.anchorView = btn_TypesDropDown
         
         dropDown_Types.dataSource = getTypeLocale(datasource: dataSource)
-        
-        dropDown_Types.selectRow(at: 1)
-        
+
+        if self.language == "vi" {
+            dropDown_Types.selectRow(at: getTypeLocale(datasource: dataSource).index(of: "Tự do"))
+        } else {
+            dropDown_Types.selectRow(at: getTypeLocale(datasource: dataSource).index(of: "Free time"))
+        }
+
         dropDown_Types.selectionAction = { [unowned self] (index, item) in
             self.btn_TypesDropDown.setTitle(item, for: .normal)
         }
@@ -367,6 +376,16 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         dropDowns.forEach { $0.dismissMode = .automatic }
         dropDowns.forEach { $0.direction = .any }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Storyboard.SEGUE_TO_BOOKING_MANAGER {
+            if let tabVC = segue.destination as? UITabBarController {
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
+                tabVC.tabBar.items?[0].isEnabled = false
+                tabVC.selectedIndex = 1
+            }
+        }
     }
 }
 

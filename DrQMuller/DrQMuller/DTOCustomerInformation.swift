@@ -62,7 +62,7 @@ class DTOCustomerInformation: NSObject, NSCoding {
     }
     
     override init() {
-        
+    
     }
     
     required init(coder decoder: NSCoder) {

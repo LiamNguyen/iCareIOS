@@ -58,6 +58,7 @@
 "LBL_VOUCHER_TITLE" = "Liệu trình: ";
 "LBL_TYPE_TITLE" = "Loại: ";
 "LBL_LOCATION_TITLE" = "Trung tâm";
+"LBL_STATUS_TITLE" = "Trạng thái: ";
 "DROPDOWN_VOUCHER_TITLE" = "Chọn voucher";
 "DROPDOWN_TYPE_TITLE" = "Chọn loại dịch vụ";
 "LBL_BOOKING_TIME_TITLE" = "Giờ đặt";
@@ -81,7 +82,23 @@
 "UPDATE_SUCCESS_MESSAGE" = "Cập nhật thành công";
 "UPDATE_FAIL_MESSAGE" = "Cập nhật không thành công. Xin vui lòng thử lại";
 "NO_APPOINTMENT_MESSAGE" = "Hiện tại quý khách chưa có lịch hẹn đã đặt.\nĐặt lịch hẹn mới bằng cách chọn dấu \"+\"";
-
+"BOOKING_MANAGER_PAGE_TITLE" = "Quản lý lịch hẹn";
+"IS_CONFIRMED" = "Đã xác nhận";
+"IS_NOT_CONFIRMED" = "Chưa xác nhận";
+"INVALID_VERIFICATION_CODE" = "Mã xác nhận không hợp lệ";
+"BOOKING_VERIFICATION_PAGE_TITLE" = "Xác nhận lịch hẹn";
+"VERIFICATION_MESSAGE" = "Xin quý khách vui lòng chờ nhân viên của trung tâm DrQMuller liên lạc qua điện thoại để nhận mã xác nhận lịch hẹn";
+"CODE_PLACEHOLDER" = "Mã xác nhận";
+"VALIDATE_CODE_FAIL_MESSAGE" = "Xác nhận không thành công, xin vui lòng liên lạc với trung tâm DrQMuller qua số điện thoại [PHONE_NUMBER_WAITING]";
+"INFORMATION_TITLE" = "Thông báo";
+"VERIFY_BOOKING_SUCCESS_MESSAGE" = "Quý khách đã đặt lịch hẹn thành công";
+"WARNING_BOOKING_UNVERIFIED" = "Lịch hẹn của quý khách chưa được xác nhận. Xin vui lòng chờ trung tâm DrQMuller liên lạc qua điện thoại để nhận mã xác nhận. Quý khách có thể xác nhận lịch hẹn tại trang Quản lý lịch hẹn";
+"LEAVE_EXECUTE_TITLE" = "Rời trang";
+"CANCEL_APPOINTMENT_FAIL_MESSAGE" = "Huỷ lịch hẹn không thành công. Xin vui lòng thử lại";
+"CANCEL_APPOINTMENT_SUCCESS_MESSAGE" = "Xoá lịch hẹn thành công";
+"RETURN_TITLE" = "Quay lại";
+"WARNING_TITLE" = "Lưu ý";
+"CANCEL_APPOINTMENT_CONFIRMATION_MESSAGE" = "Quý khách xác nhận huỷ bỏ lịch hẹn này?";
 
 
 
