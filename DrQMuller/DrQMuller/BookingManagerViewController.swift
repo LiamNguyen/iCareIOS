@@ -23,6 +23,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     private struct Storyboard {
         static let CELL_IDENTIFIER_APPOINTMENT_TBLVIEW = "AppointmentTableViewCell"
         static let SEGUE_TO_BOOKING_MANAGER_DETAIL = "segue_BookingManagerToBookingManagerDetail"
+        static let SEGUE_TO_BOOKING_VERIFICATION = "segue_BookingManagerToBookingVerification"
     }
     
     override func viewDidLoad() {
@@ -75,8 +76,12 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         selectedCell.contentView.backgroundColor = UIColor(netHex: 0xFEDEFF)
         
         let dtoBookingInfo = self.appoinmentDataSource[indexPath.row]
-        
-        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER_DETAIL, sender: dtoBookingInfo)
+        print("Sending appointment_ID: \(dtoBookingInfo.appointmentID)")
+        if selectedCell.lbl_Status.text == "Confirmed" || selectedCell.lbl_Status.text == "Đã xác nhận" {
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER_DETAIL, sender: dtoBookingInfo)
+        } else {
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_VERIFICATION, sender: dtoBookingInfo)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -84,6 +89,10 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
             let bookingManagerDetail = segue.destination as! BookingManagerDetailViewController
             let data = sender as! DTOBookingInformation
             bookingManagerDetail.dtoBookingInformation = data
+        } else if segue.identifier == Storyboard.SEGUE_TO_BOOKING_VERIFICATION {
+            let bookingVerification = segue.destination as! BookingVerificationViewController
+            let data = sender as! DTOBookingInformation
+            bookingVerification.dtoBookingInformation = data
         }
     }
     
@@ -93,7 +102,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
             if appointments.customerAppointmentsDictionary.count > 0 {
                 var keyArray = Array(appointments.customerAppointmentsDictionary.keys)
                 keyArray = keyArray.sorted {$0 > $1}
-                
+                print(keyArray)
                 for item in keyArray {
                     self.appoinmentDataSource.append(appointments.customerAppointmentsDictionary[item]!)
                 }

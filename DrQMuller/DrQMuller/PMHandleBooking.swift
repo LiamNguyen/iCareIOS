@@ -300,8 +300,8 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
 //CHECK VERIFICATION CODE
     
-    func validateCode() {
-        httpClient.postRequest(url: "Update_Appointment", body: "appointmentId=\(DTOBookingInformation.sharedInstance.appointmentID)")
+    func validateCode(appointment_ID: String) {
+        httpClient.postRequest(url: "Update_Appointment", body: "appointmentId=\(appointment_ID)")
     }
     
 //CANCEL APPOINTMENT

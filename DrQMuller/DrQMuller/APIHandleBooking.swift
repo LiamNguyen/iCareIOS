@@ -47,8 +47,8 @@ class APIHandleBooking: NSObject {
         self.persistencyManager.getMachinesByLocationID(locationID: locationID)
     }
     
-    func validateCode() {
-        self.persistencyManager.validateCode()
+    func validateCode(appointment_ID: String) {
+        self.persistencyManager.validateCode(appointment_ID: appointment_ID)
     }
     
     func cancelAppointment(appointment_ID: String) {

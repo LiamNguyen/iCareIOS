@@ -18,6 +18,7 @@ class BookingVerificationViewController: UIViewController {
 
     private var borderBottom: UIView!
     private var modelHandleBookingVerification = ModelHandleBookingVerification()
+    var dtoBookingInformation: DTOBookingInformation!
     
     private var activityIndicator: UIActivityIndicatorView!
     
@@ -43,6 +44,7 @@ class BookingVerificationViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+        print("Booking Verify: \(DTOBookingInformation.sharedInstance.bookingTime)")
 
         UIView.hr_setToastThemeColor(color: UIColor.red)
         
@@ -63,17 +65,19 @@ class BookingVerificationViewController: UIViewController {
                     self.view.isUserInteractionEnabled = true
                 }
                 if isOk {
-                    DispatchQueue.main.async {
-                        DTOBookingInformation.sharedInstance.isConfirmed = "1"
-                        self.modelHandleBookingVerification.saveAppointmentToUserDefault()
-                        
-                        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
-                        
-                        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
-                        }))
-                        
-                        self.present(confirmDialog, animated: true, completion: nil)
+                    DispatchQueue.global(qos: .userInitiated).async {
+                        DispatchQueue.main.async {
+                            self.dtoBookingInformation.isConfirmed = "1"
+                            self.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: self.dtoBookingInformation)
+                            
+                            let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
+                            
+                            confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                                self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+                            }))
+                            
+                            self.present(confirmDialog, animated: true, completion: nil)
+                        }
                     }
                 } else {
                     ToastManager.alert(view: view_TopView, msg: "VALIDATE_CODE_FAIL_MESSAGE".localized())
@@ -86,8 +90,8 @@ class BookingVerificationViewController: UIViewController {
         let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "WARNING_BOOKING_UNVERIFIED".localized(), preferredStyle: UIAlertControllerStyle.alert)
         
         confirmDialog.addAction(UIAlertAction(title: "LEAVE_EXECUTE_TITLE".localized(), style: .default, handler: { (action: UIAlertAction!) in
-            DTOBookingInformation.sharedInstance.isConfirmed = "0"
-            self.modelHandleBookingVerification.saveAppointmentToUserDefault()
+            self.dtoBookingInformation.isConfirmed = "0"
+            self.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: self.dtoBookingInformation)
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
         }))
         confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in
@@ -108,13 +112,13 @@ class BookingVerificationViewController: UIViewController {
             return
         }
         
-        if txt_VerificationCode.text != DTOBookingInformation.sharedInstance.verificationCode {
+        if txt_VerificationCode.text != dtoBookingInformation.verificationCode {
             ToastManager.alert(view: view_TopView, msg: "INVALID_VERIFICATION_CODE".localized())
             return
         }
         self.activityIndicator.startAnimating()
         self.view.isUserInteractionEnabled = false
-        modelHandleBookingVerification.validateCode()
+        modelHandleBookingVerification.validateCode(appointment_ID: dtoBookingInformation.appointmentID)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -139,7 +143,7 @@ class BookingVerificationViewController: UIViewController {
         }
     }
     
-    func createTxtFieldBorder() {
+    private func createTxtFieldBorder() {
         self.borderBottom = UIView(frame: CGRect(x: 0, y: self.txt_VerificationCode.bounds.height - 10, width: UIScreen.main.bounds.width - 56, height: 2.5))
         self.borderBottom.backgroundColor = ThemeColor
         

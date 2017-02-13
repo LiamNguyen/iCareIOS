@@ -24,7 +24,7 @@ class ModelHandleBookingManagerDetail: NSObject {
             savedAppointments = savedUserInfo.customerAppointmentsDictionary
         }
         //Bind new appointment to the list
-        
+    
         savedAppointments.removeValue(forKey: appointment_ID)
         DTOCustomerInformation.sharedInstance.customerAppointmentsDictionary = savedAppointments
         

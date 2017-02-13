@@ -9,14 +9,13 @@
 import UIKit
 
 class ModelHandleBookingVerification: NSObject {
-    func validateCode() {
-        APIHandleBooking.sharedInstace.validateCode()
+    func validateCode(appointment_ID: String) {
+        APIHandleBooking.sharedInstace.validateCode(appointment_ID: appointment_ID)
     }
-    
     
     //=========SAVE APPOINTMENT INFORMATION TO USER DEFAULT=========
     
-    func saveAppointmentToUserDefault() {
+    func saveAppointmentToUserDefault(dtoBookingInformation: DTOBookingInformation) {
         
         let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String
         var savedAppointments = [String: DTOBookingInformation]()
@@ -29,9 +28,7 @@ class ModelHandleBookingVerification: NSObject {
         
         //Bind new appointment to the list
         
-        let appointmentId = DTOBookingInformation.sharedInstance.appointmentID
-        
-        savedAppointments[appointmentId] = DTOBookingInformation.sharedInstance
+        savedAppointments[dtoBookingInformation.appointmentID] = dtoBookingInformation
         DTOCustomerInformation.sharedInstance.customerAppointmentsDictionary = savedAppointments
         
         //Push to user default latest appointments

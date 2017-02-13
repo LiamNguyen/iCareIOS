@@ -69,7 +69,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var isRequiredClearAllCartItems = false
     
     private var deletedTime: String!
-    private var hasFinishedInThisPage = false
+    private var hasSuccessfullyInsertedAppointment = false
     private var language: String!
     private var addToCartAnimation_StartPosition: CGFloat?
     private var flyingView: UIView!
@@ -241,7 +241,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        if !dtoBookingTime.isEmpty {
+        if !dtoBookingTime.isEmpty && !hasSuccessfullyInsertedAppointment {
             modelHandelBookingDetail.releaseTime(timeObj: dtoBookingTime)
         }
         networkCheckInRealTime.invalidate()
@@ -297,7 +297,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     if let machine = self.tupleBookingMachine.value {
                         DTOBookingInformation.sharedInstance.machine = machine
                     }
-                    print(DTOBookingInformation.sharedInstance.machine)
                     
                     self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
                     
@@ -359,8 +358,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             DispatchQueue.global(qos: .userInteractive).async {
                 if let isOk = userInfo["status"] as? Bool {
                     if isOk {
+                        self.hasSuccessfullyInsertedAppointment = true
                         DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_VERIFICATION, sender: self)
+                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_VERIFICATION, sender: DTOBookingInformation.sharedInstance)
+                            //DTOBookingInformation.sharedInstance.clearAllDTOBookingInfo()
                         }
                     } else {
                         DispatchQueue.main.async {
@@ -393,7 +394,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         self.view.isUserInteractionEnabled = true
                     }
                     
-                    if self.hasFinishedInThisPage {
+                    if self.hasSuccessfullyInsertedAppointment {
                         return
                     }
                     ToastManager.alert(view: view_TopView, msg: "DELETE_SUCCESS_MESSAGE".localized())
@@ -921,6 +922,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
         self.timer_bookingExpire?.invalidate()
         print("Clear all cart items")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Storyboard.SEGUE_TO_BOOKING_VERIFICATION {
+            let bookingVerificationVC = segue.destination as! BookingVerificationViewController
+            let data = sender as! DTOBookingInformation
+            bookingVerificationVC.dtoBookingInformation = data
+        }
     }
     
     @IBOutlet weak var lbl_Voucher: UILabel!
