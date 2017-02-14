@@ -55,6 +55,9 @@ class BookingVerificationViewController: UIViewController {
         
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "validateCode"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "validateCode"), object: nil, queue: nil, using: onReceiveVerifificationCodeResponse)
+        
+        print("Booking Verifification VC OnLoad: \n")
+        dtoBookingInformation.printBookingInfo()
     }
     
     func onReceiveVerifificationCodeResponse(notification: Notification) {
@@ -69,6 +72,9 @@ class BookingVerificationViewController: UIViewController {
                         DispatchQueue.main.async {
                             self.dtoBookingInformation.isConfirmed = "1"
                             self.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: self.dtoBookingInformation)
+                            
+                            print("Booking Detail After clear dtoBooking: \n")
+                            DTOBookingInformation.sharedInstance.printBookingInfo()
                             
                             let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
                             

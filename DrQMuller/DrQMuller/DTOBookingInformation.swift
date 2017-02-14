@@ -20,6 +20,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _appointmentID: String!
     var appointmentID: String {
         get {
+            if _appointmentID == nil {
+                return ""
+            }
             return _appointmentID
         }
         
@@ -38,6 +41,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _country: String!
     var country: String {
         get {
+            if _country == nil {
+                return ""
+            }
             return _country
         }
         
@@ -49,6 +55,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _city: String!
     var city: String {
         get {
+            if _city == nil {
+                return ""
+            }
             return _city
         }
         
@@ -60,6 +69,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _district: String!
     var district: String {
         get {
+            if _district == nil {
+                return ""
+            }
             return _district
         }
         
@@ -71,6 +83,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _location: String!
     var location: String {
         get {
+            if _location == nil {
+                return ""
+            }
             return _location
         }
         
@@ -82,6 +97,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _voucher: String!
     var voucher: String {
         get {
+            if _voucher == nil {
+                return ""
+            }
             return _voucher
         }
         
@@ -93,6 +111,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _type: String!
     var type: String {
         get {
+            if _type == nil {
+                return ""
+            }
             return _type
         }
         
@@ -104,6 +125,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _machinesDataSource: [String: String]!
     var machinesDataSource: [String: String] {
         get {
+            if _machinesDataSource == nil {
+                return [String: String]()
+            }
             return _machinesDataSource
         }
         
@@ -115,6 +139,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _machine: String!
     var machine: String {
         get {
+            if _machine == nil {
+                return ""
+            }
             return _machine
         }
         
@@ -126,6 +153,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _startDate: String!
     var startDate: String {
         get {
+            if _startDate == nil {
+                return ""
+            }
             return _startDate
         }
         
@@ -137,6 +167,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _endDate: String!
     var endDate: String {
         get {
+            if _endDate == nil {
+                return ""
+            }
             return _endDate
         }
         
@@ -148,6 +181,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _exactDate: String!
     var exactDate: String {
         get {
+            if _exactDate == nil {
+                return ""
+            }
             return _exactDate
         }
         
@@ -159,6 +195,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _exactDayOfWeek: String!
     var exactDayOfWeek: String {
         get {
+            if _exactDayOfWeek == nil {
+                return ""
+            }
             return _exactDayOfWeek
         }
         
@@ -184,6 +223,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _isConfirmed: String!
     var isConfirmed: String {
         get {
+            if _isConfirmed == nil {
+                return ""
+            }
             return _isConfirmed
         }
         
@@ -205,6 +247,10 @@ class DTOBookingInformation: NSObject, NSCoding {
         self._exactDayOfWeek = nil
         self._bookingTime = nil
         self._isConfirmed = nil
+    }
+    
+    func printBookingInfo() {
+        print("Country: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nStatus: \(self.isConfirmed)")
     }
     
     func returnHttpBody() -> String? {

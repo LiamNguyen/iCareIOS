@@ -229,6 +229,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        
+        print("Booking Detail VC OnLoad: ")
+        DTOBookingInformation.sharedInstance.printBookingInfo()
+        print("Start date: \(DTOBookingInformation.sharedInstance.startDate)")
     }
     
     override func viewDidLayoutSubviews() {
@@ -361,7 +365,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         self.hasSuccessfullyInsertedAppointment = true
                         DispatchQueue.main.async {
                             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_VERIFICATION, sender: DTOBookingInformation.sharedInstance)
-                            //DTOBookingInformation.sharedInstance.clearAllDTOBookingInfo()
                         }
                     } else {
                         DispatchQueue.main.async {

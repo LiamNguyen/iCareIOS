@@ -35,6 +35,9 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         tableView_Appointments.separatorColor = ThemeColor
         
         bindAppointmentDataSource()
+        
+        print("Booking Manager: \n")
+        DTOBookingInformation.sharedInstance.printBookingInfo()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,6 +103,10 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String) as? DTOCustomerInformation {
 
             if appointments.customerAppointmentsDictionary.count > 0 {
+                                
+//                let model = ModelHandleBookingManagerDetail()
+//                model.removeAppointmentFromUserDefault(appointment_ID: "357")
+                
                 var keyArray = Array(appointments.customerAppointmentsDictionary.keys)
                 keyArray = keyArray.sorted {$0 > $1}
                 print(keyArray)
