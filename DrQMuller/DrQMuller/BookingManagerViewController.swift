@@ -120,6 +120,9 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
                 self.addLabelForEmptyAppointment()
                 self.tableView_Appointments.isHidden = true
             }
+        } else {
+            self.addLabelForEmptyAppointment()
+            self.tableView_Appointments.isHidden = true
         }
 
     }
