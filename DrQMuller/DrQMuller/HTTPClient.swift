@@ -38,7 +38,7 @@ public class HTTPClient {
             
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                print("GET: \(URL!)")
+                print("\nGET: \(URL!)\n")
                 print("Response from server: \n\(JSONResponse)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse!)
             }
@@ -73,7 +73,7 @@ public class HTTPClient {
             
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
-                print("POST: \(URL!)")
+                print("\nPOST: \(URL!)\n")
                 print("Response from server: \n\(JSONResponse)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse)
             }
