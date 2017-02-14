@@ -304,6 +304,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
                     
                     DispatchQueue.main.async {
+                        
+                        print("LUKA CHECK THIS OUT!!")
+                        
                         if self.dtoBookingTime.count == 1 {
                             self.timer_bookingExpire = Timer.scheduledTimer(timeInterval: 15 * 60, target: self, selector: #selector(self.onBookingTimeExpire), userInfo: nil, repeats: false)
                         }
