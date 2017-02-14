@@ -36,7 +36,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         
         bindAppointmentDataSource()
         
-        print("Booking Manager: \n")
+        print("\nBooking Manager VC ONLOAD: ")
         DTOBookingInformation.sharedInstance.printBookingInfo()
     }
 
@@ -105,22 +105,20 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
             if appointments.customerAppointmentsDictionary.count > 0 {
                                 
 //                let model = ModelHandleBookingManagerDetail()
-//                model.removeAppointmentFromUserDefault(appointment_ID: "357")
+//                model.removeAppointmentFromUserDefault(appointment_ID: "364")
                 
                 var keyArray = Array(appointments.customerAppointmentsDictionary.keys)
                 keyArray = keyArray.sorted {$0 > $1}
-                print(keyArray)
+                print("\nPulling from User Default: \n")
                 for item in keyArray {
                     self.appoinmentDataSource.append(appointments.customerAppointmentsDictionary[item]!)
+                    print("\n================START================\nAPPOINTMENT ID: \(item)")
+                    appointments.customerAppointmentsDictionary[item]?.printBookingInfo()
                 }
-                DispatchQueue.main.async {
-                    self.tableView_Appointments.isHidden = false
-                }
+                self.tableView_Appointments.isHidden = false
             } else {
-                DispatchQueue.main.async {
-                    self.addLabelForEmptyAppointment()
-                    self.tableView_Appointments.isHidden = true
-                }
+                self.addLabelForEmptyAppointment()
+                self.tableView_Appointments.isHidden = true
             }
         }
 

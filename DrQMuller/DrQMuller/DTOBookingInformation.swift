@@ -34,6 +34,9 @@ class DTOBookingInformation: NSObject, NSCoding {
     private var _verificationCode: String!
     var verificationCode: String {
         get {
+            if _verificationCode == nil {
+                return ""
+            }
             return _verificationCode
         }
     }
@@ -235,6 +238,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     }
     
     func clearAllDTOBookingInfo() {
+        self._appointmentID = nil
         self._country = nil
         self._city = nil
         self._district = nil
@@ -247,10 +251,11 @@ class DTOBookingInformation: NSObject, NSCoding {
         self._exactDayOfWeek = nil
         self._bookingTime = nil
         self._isConfirmed = nil
+        self._verificationCode = nil
     }
     
     func printBookingInfo() {
-        print("Country: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nStatus: \(self.isConfirmed)")
+        print("\nAppointment ID: \(self.appointmentID)\nCountry: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nStatus: \(self.isConfirmed)\nVerification Code: \(self.verificationCode)\n")
     }
     
     func returnHttpBody() -> String? {
@@ -309,7 +314,6 @@ class DTOBookingInformation: NSObject, NSCoding {
     }
     
     override init() {
-        self._isConfirmed = "0"
     }
     
     required init?(coder aDecoder: NSCoder) {

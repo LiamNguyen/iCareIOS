@@ -39,12 +39,13 @@ class BookingVerificationViewController: UIViewController {
         createTxtFieldBorder()
         
         txt_VerificationCode.becomeFirstResponder()
+        
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
-        print("Booking Verify: \(DTOBookingInformation.sharedInstance.bookingTime)")
 
         UIView.hr_setToastThemeColor(color: UIColor.red)
         
@@ -56,7 +57,7 @@ class BookingVerificationViewController: UIViewController {
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "validateCode"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "validateCode"), object: nil, queue: nil, using: onReceiveVerifificationCodeResponse)
         
-        print("Booking Verifification VC OnLoad: \n")
+        print("\nBooking Verifification VC ONLOAD: ")
         dtoBookingInformation.printBookingInfo()
     }
     
@@ -68,22 +69,17 @@ class BookingVerificationViewController: UIViewController {
                     self.view.isUserInteractionEnabled = true
                 }
                 if isOk {
-                    DispatchQueue.global(qos: .userInitiated).async {
-                        DispatchQueue.main.async {
-                            self.dtoBookingInformation.isConfirmed = "1"
-                            self.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: self.dtoBookingInformation)
-                            
-                            print("Booking Detail After clear dtoBooking: \n")
-                            DTOBookingInformation.sharedInstance.printBookingInfo()
-                            
-                            let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
-                            
-                            confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                                self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
-                            }))
-                            
-                            self.present(confirmDialog, animated: true, completion: nil)
-                        }
+                    DispatchQueue.main.async {
+                        self.dtoBookingInformation.isConfirmed = "1"
+                        self.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: self.dtoBookingInformation)
+                        
+                        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+                        }))
+                        
+                        self.present(confirmDialog, animated: true, completion: nil)
                     }
                 } else {
                     ToastManager.alert(view: view_TopView, msg: "VALIDATE_CODE_FAIL_MESSAGE".localized())

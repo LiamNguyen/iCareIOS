@@ -55,6 +55,10 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         static let SEGUE_TO_BOOKING_MANAGER = "segue_BookingManagerDetailToBookingManager"
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,7 +89,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
                     self.view.isUserInteractionEnabled = true
                 }
                 if isOk {
-                    DispatchQueue.global(qos: .userInteractive).async {
+                    DispatchQueue.main.async {
                         let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
                         
                         confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction?) in
@@ -94,9 +98,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
                             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
                         }))
     
-                        DispatchQueue.main.async {
-                            self.present(confirmDialog, animated: true, completion: nil)
-                        }
+                        self.present(confirmDialog, animated: true, completion: nil)
                     }
                 } else {
                     ToastManager.alert(view: self.view, msg: "CANCEL_APPOINTMENT_FAIL_MESSAGE".localized())

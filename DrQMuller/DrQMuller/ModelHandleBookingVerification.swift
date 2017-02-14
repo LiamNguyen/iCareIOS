@@ -16,9 +16,9 @@ class ModelHandleBookingVerification: NSObject {
     //=========SAVE APPOINTMENT INFORMATION TO USER DEFAULT=========
     
     func saveAppointmentToUserDefault(dtoBookingInformation: DTOBookingInformation) {
-        print("Before saving to User default: ")
-        
+        print("\nBefore saving to User default: ")
         dtoBookingInformation.printBookingInfo()
+        
         let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String
         var savedAppointments = [String: DTOBookingInformation]()
         

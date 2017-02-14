@@ -82,6 +82,10 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
 
         updateUI()
         
+        DTOBookingInformation.sharedInstance.clearAllDTOBookingInfo()
+        print("Booking General After clear dtoBooking:")
+        DTOBookingInformation.sharedInstance.printBookingInfo()
+        
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
 
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "arrayDataSource"), object: nil)

@@ -230,9 +230,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
         
-        print("Booking Detail VC OnLoad: ")
+        print("\nBooking Detail VC ONLOAD: ")
         DTOBookingInformation.sharedInstance.printBookingInfo()
-        print("Start date: \(DTOBookingInformation.sharedInstance.startDate)")
     }
     
     override func viewDidLayoutSubviews() {
@@ -286,7 +285,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func onReceiveExistencyResult(notification: Notification) {
         if let userInfo = notification.userInfo {
             
-            DispatchQueue.global(qos: .background).async {
+            DispatchQueue.global(qos: .userInteractive).async {
                 let existencyResult = userInfo["returnExistencyResult"] as! String
                 if existencyResult == "1" {
                     DispatchQueue.main.sync {
