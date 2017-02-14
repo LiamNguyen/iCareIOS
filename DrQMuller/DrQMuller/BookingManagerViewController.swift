@@ -14,6 +14,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     @IBOutlet weak var lbl_Title: UILabel!
     @IBOutlet weak var view_TopView: UIView!
     
+    private var modelHandleBookingManger = ModelHandleBookingManager()
     private var appoinmentDataSource = [DTOBookingInformation]()
     
     private func updateUI() {
@@ -33,6 +34,8 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         tableView_Appointments.delegate = self
         tableView_Appointments.dataSource = self
         tableView_Appointments.separatorColor = ThemeColor
+        
+        modelHandleBookingManger.validateAppointment()
         
         bindAppointmentDataSource()
         
