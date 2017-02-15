@@ -211,6 +211,22 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             NotificationCenter.default.post(name: Notification.Name(rawValue: "cancelAppointment"), object: nil, userInfo: isOk)
         }
         
+//HANDLE RESPONSE OF VALIDATING APPOINTMENT
+        
+        if let arrayResponse = data["Update_ValidateAppointment"]! as? NSArray {
+            for arrayItem in arrayResponse {
+                let arrayDict = arrayItem as? NSDictionary
+                
+                if let result = arrayDict?["Status"] as? String {
+                    if result == "1" {
+                        print("Appointment validated")
+                    } else {
+                        print("Appointment failed to be validated")
+                    }
+                }
+            }
+        }
+        
 //HANDLE RESPONSE OF GET MACHINES DATASOURCE
         
         if let arrayResponse = data["Select_Machines"]! as? NSArray {
@@ -308,6 +324,12 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
     func cancelAppointment(appointment_ID: String) {
         httpClient.postRequest(url: "Update_CancelAppointment", body: "appointmentId=\(appointment_ID)")
+    }
+    
+//VALIDATE APPOINTMENT
+
+    func validateAppointment() {
+        httpClient.postRequest(url: "Update_ValidateAppointment", body: "")
     }
     
 //CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT

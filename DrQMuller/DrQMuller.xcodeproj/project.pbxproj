@@ -47,6 +47,7 @@
 		ED808FCA1E4C4B9F005563F0 /* JWTDecode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; };
 		ED808FCB1E4C4B9F005563F0 /* JWTDecode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */; };
+		ED8B96651E53942600EDBF2B /* ModelHandleBookingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8B96641E53942600EDBF2B /* ModelHandleBookingManager.swift */; };
 		ED9035531E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9035521E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift */; };
 		ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */; };
 		ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED939FE31E0D248F00A1164F /* DatePickerRange.swift */; };
@@ -159,6 +160,7 @@
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWTDecode.framework; path = Carthage/Build/iOS/JWTDecode.framework; sourceTree = "<group>"; };
 		ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = JWTDecode.framework.dSYM; path = Carthage/Build/iOS/JWTDecode.framework.dSYM; sourceTree = "<group>"; };
+		ED8B96641E53942600EDBF2B /* ModelHandleBookingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingManager.swift; sourceTree = "<group>"; };
 		ED9035521E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingManagerDetail.swift; sourceTree = "<group>"; };
 		ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
 		ED939FE31E0D248F00A1164F /* DatePickerRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerRange.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				ED4687971E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift */,
 				ED6D3A381E50A00100DDB68B /* ModelHandleBookingVerification.swift */,
 				ED9035521E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift */,
+				ED8B96641E53942600EDBF2B /* ModelHandleBookingManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -681,6 +684,7 @@
 				ED40875D1E03DCAF00950D4C /* CustomTxtField.swift in Sources */,
 				ED41DF3D1E163EC900803A14 /* ModelHandleBookingGeneral.swift in Sources */,
 				ED41DF411E164D0C00803A14 /* PMHandleBooking.swift in Sources */,
+				ED8B96651E53942600EDBF2B /* ModelHandleBookingManager.swift in Sources */,
 				ED6D3A3B1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift in Sources */,
 				ED6A685E1E492D9C00776B6B /* DialogManager.swift in Sources */,
 				ED03CEB21E36983D00C9EBFB /* Functionality.swift in Sources */,

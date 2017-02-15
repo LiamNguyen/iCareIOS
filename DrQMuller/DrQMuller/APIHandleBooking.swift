@@ -54,4 +54,8 @@ class APIHandleBooking: NSObject {
     func cancelAppointment(appointment_ID: String) {
         self.persistencyManager.cancelAppointment(appointment_ID: appointment_ID)
     }
+    
+    func validateAppointment() {
+        self.persistencyManager.validateAppointment()
+    }
 }
