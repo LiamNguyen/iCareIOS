@@ -53,6 +53,11 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized()
         slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized()
     }
+    
+    private struct Storyboard {
+        static let SEGUE_TO_BOOKING_GENERAL = "segue_BookingDateToBookingGeneral"
+        static let SEGUE_TO_BOOKING_DETAIL = "segue_BookingStartEndToDetail"
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,11 +100,11 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     }
 
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_BookingDateToBookingGeneral", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_BookingDateToBookingGeneral", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
     }
     
     @IBAction func picker_StartDate_OnValueChanged(_ sender: Any) {
@@ -116,16 +121,6 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         endYear = picker_EndDate.date.year
         setUpDatePickersList()
         
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "segue_BookingDateToBookingGeneral" {
-            if let tabVC = segue.destination as? UITabBarController {
-                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
-                tabVC.tabBar.items?[0].isEnabled = false
-                tabVC.selectedIndex = 1
-            }
-        }
     }
     
 //=========SLIDE BUTTON ONCLICK=========
@@ -160,7 +155,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         }
         
         if isTypeFree {
-            let translatedSelectedDay = Functionality.translateDaysOfWeek(en: picker_StartDate.date.dayOfWeek)
+            let translatedSelectedDay = Functionality.translateDaysOfWeek(translate: picker_StartDate.date.dayOfWeek, to: .VI)
             if (translatedSelectedDay == "Thứ bảy" || translatedSelectedDay == "Chủ nhật") && isEco {
 
                 alertMessage_WeekendRestrict()
@@ -175,7 +170,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
             DTOBookingInformation.sharedInstance.endDate = picker_EndDate.date.shortDate
         }
         
-        self.performSegue(withIdentifier: "segue_BookingStartEndToDetail", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_DETAIL, sender: self)
         
     }
     

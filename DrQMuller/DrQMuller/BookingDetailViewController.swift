@@ -69,7 +69,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var isRequiredClearAllCartItems = false
     
     private var deletedTime: String!
-    private var hasFinishedInThisPage = false
+    private var hasSuccessfullyInsertedAppointment = false
     private var language: String!
     private var addToCartAnimation_StartPosition: CGFloat?
     private var flyingView: UIView!
@@ -96,9 +96,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         lbl_EndDateHeader.text = "LBL_END_DATE".localized() + ": "
     }
     
+    private struct Storyboard {
+        static let SEGUE_TO_BOOKING_VERIFICATION = "segue_BookingDetailToBookingVerification"
+        static let SEGUE_TO_BOOKING_GENERAL = "segue_BookingDetailToBookingGeneral"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         updateUI()
         
 //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
@@ -225,6 +229,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        
+        print("\nBooking Detail VC ONLOAD: ")
+        DTOBookingInformation.sharedInstance.printBookingInfo()
     }
     
     override func viewDidLayoutSubviews() {
@@ -237,7 +244,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        if !dtoBookingTime.isEmpty {
+        if !dtoBookingTime.isEmpty && !hasSuccessfullyInsertedAppointment {
             modelHandelBookingDetail.releaseTime(timeObj: dtoBookingTime)
         }
         networkCheckInRealTime.invalidate()
@@ -278,7 +285,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func onReceiveExistencyResult(notification: Notification) {
         if let userInfo = notification.userInfo {
             
-            DispatchQueue.global(qos: .background).async {
+            DispatchQueue.global(qos: .userInteractive).async {
                 let existencyResult = userInfo["returnExistencyResult"] as! String
                 if existencyResult == "1" {
                     DispatchQueue.main.sync {
@@ -293,11 +300,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     if let machine = self.tupleBookingMachine.value {
                         DTOBookingInformation.sharedInstance.machine = machine
                     }
-                    print(DTOBookingInformation.sharedInstance.machine)
                     
                     self.tupleBookingTime_Array.insert(self.tupleBookingTime, at: self.tupleBookingTime_Array.count)
                     
                     DispatchQueue.main.async {
+                        
+                        print("LUKA CHECK THIS OUT!!")
+                        
                         if self.dtoBookingTime.count == 1 {
                             self.timer_bookingExpire = Timer.scheduledTimer(timeInterval: 15 * 60, target: self, selector: #selector(self.onBookingTimeExpire), userInfo: nil, repeats: false)
                         }
@@ -355,8 +364,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             DispatchQueue.global(qos: .userInteractive).async {
                 if let isOk = userInfo["status"] as? Bool {
                     if isOk {
+                        self.hasSuccessfullyInsertedAppointment = true
                         DispatchQueue.main.async {
-                            ToastManager.alert(view: self.view_ConfirmView, msg: "BOOKING_SUCCESS_MESSAGE".localized())
+                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_VERIFICATION, sender: DTOBookingInformation.sharedInstance)
                         }
                     } else {
                         DispatchQueue.main.async {
@@ -389,7 +399,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         self.view.isUserInteractionEnabled = true
                     }
                     
-                    if self.hasFinishedInThisPage {
+                    if self.hasSuccessfullyInsertedAppointment {
                         return
                     }
                     ToastManager.alert(view: view_TopView, msg: "DELETE_SUCCESS_MESSAGE".localized())
@@ -497,7 +507,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CartOrderConfirmTableViewCell
             
-            let itemDay = self.tupleBookingTime_Array[indexPath.row]
+            var itemDay = self.tupleBookingTime_Array[indexPath.row]
+            
+            if self.language == "en" {
+                itemDay.value.day = Functionality.translateDaysOfWeek(translate: itemDay.value.day, to: .EN)
+            }
             
             cell.lbl_DayOfWeek.text = itemDay.value.day
             cell.lbl_Time.text = itemDay.value.time
@@ -509,7 +523,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CartOrderTableViewCell
             
-            let itemDay = self.tupleBookingTime_Array[indexPath.row]
+            var itemDay = self.tupleBookingTime_Array[indexPath.row]
+            
+            if self.language == "en" {
+                itemDay.value.day = Functionality.translateDaysOfWeek(translate: itemDay.value.day, to: .EN)
+            }
             
             cell.lbl_DayOfWeek.text = itemDay.value.day
             cell.lbl_BookingTime.text = itemDay.value.time
@@ -521,6 +539,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
 //=========TABLE VIEW DELEGATE METHODS=========
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell = tableView.cellForRow(at: indexPath)!
+            selectedCell.contentView.backgroundColor = UIColor(netHex: 0xFEDEFF)
+            
         if tableView == self.tableView_BookingTime {
             
             let bookingTime = dtoBookingTime
@@ -661,21 +682,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_BookingDetailToBookingGeneral", sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: "segue_BookingDetailToBookingGeneral", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "segue_BookingDetailToBookingGeneral"){
-            if let tabVC = segue.destination as? UITabBarController{
-                Functionality.tabBarItemsLocalized(language: self.language, tabVC: tabVC)
-                tabVC.tabBar.items?[0].isEnabled = false
-                tabVC.selectedIndex = 1
-            }
-        }
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
     }
     
 //=========WIRED UP DAYS OF WEEK DROPDOWN=========
@@ -881,7 +892,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         DTOBookingInformation.sharedInstance.bookingTime.removeAll()
         
     }
-     
+    
     private func decorateCartOrderTableView() {
         self.tableView_CartOrder.layer.shadowColor = UIColor.black.cgColor
         self.tableView_CartOrder.layer.shadowOffset = CGSize.zero
@@ -916,6 +927,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
         self.timer_bookingExpire?.invalidate()
         print("Clear all cart items")
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Storyboard.SEGUE_TO_BOOKING_VERIFICATION {
+            let bookingVerificationVC = segue.destination as! BookingVerificationViewController
+            let data = sender as! DTOBookingInformation
+            bookingVerificationVC.dtoBookingInformation = data
+        }
     }
     
     @IBOutlet weak var lbl_Voucher: UILabel!

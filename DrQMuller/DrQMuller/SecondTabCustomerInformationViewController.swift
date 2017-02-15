@@ -180,7 +180,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userDob"] = picker_Date.date.shortDate
         DTOCustomerInformation.sharedInstance.customerInformationDictionary["userGender"] = gender
         
-        modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)        
+        modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
     
 //=========TOUCH OUTSIDE CLOSE KEYBOARD=========

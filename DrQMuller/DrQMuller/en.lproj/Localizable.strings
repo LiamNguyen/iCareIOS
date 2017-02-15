@@ -57,6 +57,7 @@
 "LBL_VOUCHER_TITLE" = "Vouchers: ";
 "LBL_TYPE_TITLE" = "Type: ";
 "LBL_LOCATION_TITLE" = "Location";
+"LBL_STATUS_TITLE" = "Status: ";
 "DROPDOWN_VOUCHER_TITLE" = "Choose Voucher";
 "DROPDOWN_TYPE_TITLE" = "Choose Type";
 "LBL_BOOKING_TIME_TITLE" = "Schedule";
@@ -79,6 +80,24 @@
 "EMAIL_INVALID_FORMAT" = "Email is invalid";
 "UPDATE_SUCCESS_MESSAGE" = "Contact information updated successfully";
 "UPDATE_FAIL_MESSAGE" = "Save information unsuccesfully. Please try again";
+"NO_APPOINTMENT_MESSAGE" = "You haven't had appointment yet.\nStart to book a new appointment by clicking \"+\" sign";
+"BOOKING_MANAGER_PAGE_TITLE" = "Appointments manager";
+"IS_CONFIRMED" = "Confirmed";
+"IS_NOT_CONFIRMED" = "Not confirmed";
+"INVALID_VERIFICATION_CODE" = "Invalid verification code";
+"BOOKING_VERIFICATION_PAGE_TITLE" = "Booking verification";
+"VERIFICATION_MESSAGE" = "Please wait for the call from DrQMuller center to receive verifification code";
+"CODE_PLACEHOLDER" = "Verification code";
+"VALIDATE_CODE_FAIL_MESSAGE" = "Fail to submit verification code. Please contact DrQMuller center via phone number: [PHONE_NUMBER_WAITING]";
+"INFORMATION_TITLE" = "Information";
+"VERIFY_BOOKING_SUCCESS_MESSAGE" = "You have successfully booked an appointment";
+"WARNING_BOOKING_UNVERIFIED" = "Your appointment has not been verified. Please wait for the call from DrQMuller center to receive verification code. You can verify your appointment later in Booking manager Page";
+"LEAVE_EXECUTE_TITLE" = "Leave";
+"CANCEL_APPOINTMENT_FAIL_MESSAGE" = "Fail to cancel an appointment. Please try again";
+"CANCEL_APPOINTMENT_SUCCESS_MESSAGE" = "You have succesfully cancel an appointment";
+"RETURN_TITLE" = "Return";
+"WARNING_TITLE" = "Warning!";
+"CANCEL_APPOINTMENT_CONFIRMATION_MESSAGE" = "You are about to cancel this appointment. Are you sure?";
 
 
 

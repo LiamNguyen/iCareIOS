@@ -13,10 +13,14 @@ import UIKit
 
 struct ToastManager {
     static func alert(view: UIView, msg: String) {
-        view.makeToast(message: msg, duration: 2.5, position: HRToastPositionTop as AnyObject)
+        DispatchQueue.main.async {
+            view.makeToast(message: msg, duration: 2.5, position: HRToastPositionTop as AnyObject)
+        }
     }
     
     static func message(view: UIView, msg: String, duration: Double) {
-        view.makeToast(message: msg, duration: duration, position: HRToastPositionTop as AnyObject)
+        DispatchQueue.main.async {
+            view.makeToast(message: msg, duration: duration, position: HRToastPositionTop as AnyObject)
+        }
     }
 }
