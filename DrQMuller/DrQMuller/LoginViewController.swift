@@ -9,7 +9,7 @@
 import UIKit
 import DropDown
 
-class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet private weak var loginView: UIView!
     @IBOutlet private weak var txtView: UIView!
@@ -33,20 +33,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
     
-    var testReturnArr = HTTPClient()
     private var modelHandleLogin = ModelHandleLogin()
     private var hasReceiveLoginResponse = false
     
-    func onReceiveRequestResponse(data: AnyObject) {
-        if let arrayResponse = data["Select_AllTime"] as? NSArray {
-            for arrayItem in arrayResponse {
-                let arrayDict = arrayItem as! NSDictionary
-                if let result = arrayDict["TIME"] as? String {
-                    print(result)
-                }
-            }
-        }
-    }
+    private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
 
     private func updateUI() {
         //=========TXTFIELD PLACEHOLDER=========
@@ -64,6 +55,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         
         btn_Login.setTitle("LOGIN_BTN_TITLE".localized(), for: .normal)
         btn_Register.setTitle("REGISTER_BTN_TITLE".localized(), for: .normal)
+    }
+    
+    private struct Storyboard {
+        static let SEGUE_TO_BOOKINGVC = "segue_LoginToBookingTabViewController"
+        static let SEGUE_TO_FIRSTTAB_CUSTOMER_INFO = "segue_LoginToCustomerInformationFirstTab"
+        static let SEGUE_TO_SECONDTAB_CUSTOMER_INFO = "segue_LoginToCustomerInformationSecondTab"
+        static let SEGUE_TO_THIRDTAB_CUSTOMER_INFO = "segue_LoginToCustomerInformationThirdTab"
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -89,7 +87,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
             
             return
         }
-
+        
         UIView.animate(withDuration: 1, animations: {
             LoginViewController.view_BackLayer.center = CGPoint(x: LoginViewController.view_BackLayer.center.x - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 2)
         })
@@ -105,17 +103,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+                
         //UserDefaults.standard.removeObject(forKey: "lang")
         
         if UserDefaults.standard.string(forKey: "lang") == nil {
+            UserDefaults.standard.set("en", forKey: "lang")
             UIFunctionality.createChooseLanguageView(view: self.view)
         }
         
         updateUI()
         
-        self.testReturnArr.delegate = self
-
         activityIndicator.stopAnimating()
         
 //=========TXTFIELD DELEGATE=========
@@ -175,10 +172,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
 //=========TOAST SET UP COLOR=========
         
         UIView.hr_setToastThemeColor(color: ToastColorAlert)
+        
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
+        
+        self.networkCheckInRealTime.invalidate()
     }
     
 //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========
@@ -303,10 +306,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
         if let userInfo = notification.userInfo {
             if let isOk = userInfo["status"] as? Bool {
                 if isOk {
-                    print("Login Success")
-                    self.performSegue(withIdentifier: "segue_LoginToBookingTabViewController", sender: self)
+                    handleNavigation()
                 } else {
-                    print("Login Failed")
                     ToastManager.alert(view: loginView, msg: "CREDENTIAL_INVALID".localized())
                 }
             }
@@ -322,6 +323,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate, HTTPClientDele
                 tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
+        }
+    }
+    
+    private func handleNavigation() {
+        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+        
+        switch customerInformation["step"] as! String {
+        case "none":
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_FIRSTTAB_CUSTOMER_INFO, sender: self)
+        case "basic":
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECONDTAB_CUSTOMER_INFO, sender: self)
+        case "necessary":
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_THIRDTAB_CUSTOMER_INFO, sender: self)
+        default:
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKINGVC, sender: self)
         }
     }
 

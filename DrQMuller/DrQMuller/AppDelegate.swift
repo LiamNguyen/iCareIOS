@@ -36,6 +36,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        var isConnectedToNetwork = [String: Any]()
+        
+        if Reachability.isConnectedToNetwork() {
+            isConnectedToNetwork["isConnectedToNetwork"] = true
+        } else {
+            isConnectedToNetwork["isConnectedToNetwork"] = false
+        }
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "network"), object: nil, userInfo: isConnectedToNetwork)
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

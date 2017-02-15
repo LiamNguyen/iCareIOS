@@ -72,8 +72,8 @@ class ModelHandleBookingDetail {
     
 //MAKE GET REQUEST FOR SELECTED TIME DATASOURCE TO HANDLE IN MODEL AND RETURN FREE TIME DATASOURCE
     
-    func bindFreeTimeDataSource(selectedDayOfWeek_ID: String) {
-        APIHandleBooking.sharedInstace.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
+    func bindFreeTimeDataSource(selectedDayOfWeek_ID: String, location_ID: String, machine_ID: String) {
+        APIHandleBooking.sharedInstace.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID, location_ID: location_ID, machine_ID: machine_ID)
         self.dataHasReturn = false
     }
     
@@ -152,13 +152,13 @@ class ModelHandleBookingDetail {
     
 //MAKE GET REQUEST FOR CHECKING BOOKING TIME EXISTENCY
     
-    func checkBookingTime(day_ID: String, chosenTime: String) {
+    func checkBookingTime(day_ID: String, chosenTime: String, chosenMachineID: String) {
         let time_ID = returnTimeID(chosenTime: chosenTime)
         if time_ID.isEmpty {
             NotificationCenter.default.post(name: Notification.Name(rawValue: "timeIDIsNil"), object: nil)
             return
         }
-        APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
+        APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID, chosenMachineID: chosenMachineID)
     }
     
 //INSERT NEW APPOINTMENT
@@ -196,6 +196,15 @@ class ModelHandleBookingDetail {
     
     func releaseTime(timeObj: [[String]]) {
         APIHandleReleaseTime.sharedInstace.releaseTime(timeObj: timeObj)
+    }
+    
+//BIND MACHINES DATASOURCE
+    
+    func bindMachinesDataSource() {
+        let dictionary_Location = (APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()?.dropDownLocationsDataSource)!
+        let locationID = Functionality.findKeyFromValue(dictionary: dictionary_Location, value: DTOBookingInformation.sharedInstance.location)
+        
+        APIHandleBooking.sharedInstace.getMachinesByLocationID(locationID: locationID)
     }
     
 }

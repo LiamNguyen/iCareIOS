@@ -28,18 +28,34 @@ class APIHandleBooking: NSObject {
     }
     
     func pulledStaticArrayFromUserDefaults() -> DTOStaticArrayDataSource? {
-        return self.persistencyManager.pulledStaticArrayFromUserDefaults() as! DTOStaticArrayDataSource?
+        return Functionality.pulledStaticArrayFromUserDefaults(forKey: "arrayDataSourceOffline") as! DTOStaticArrayDataSource?
     }
     
-    func getSelectedTimeDataSource(selectedDayOfWeek_ID: String) {
-        self.persistencyManager.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID)
+    func getSelectedTimeDataSource(selectedDayOfWeek_ID: String, location_ID: String, machine_ID: String) {
+        self.persistencyManager.getSelectedTimeDataSource(selectedDayOfWeek_ID: selectedDayOfWeek_ID, location_ID: location_ID, machine_ID: machine_ID)
     }
     
-    func checkBookingTime(day_ID: String, time_ID: String) {
-        self.persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID)
+    func checkBookingTime(day_ID: String, time_ID: String, chosenMachineID: String) {
+        self.persistencyManager.checkBookingTime(day_ID: day_ID, time_ID: time_ID, chosenMachineID: chosenMachineID)
     }
     
     func insertNewAppointment() {
         self.persistencyManager.insertNewAppointment()
+    }
+    
+    func getMachinesByLocationID(locationID: String) {
+        self.persistencyManager.getMachinesByLocationID(locationID: locationID)
+    }
+    
+    func validateCode(appointment_ID: String) {
+        self.persistencyManager.validateCode(appointment_ID: appointment_ID)
+    }
+    
+    func cancelAppointment(appointment_ID: String) {
+        self.persistencyManager.cancelAppointment(appointment_ID: appointment_ID)
+    }
+    
+    func validateAppointment() {
+        self.persistencyManager.validateAppointment()
     }
 }

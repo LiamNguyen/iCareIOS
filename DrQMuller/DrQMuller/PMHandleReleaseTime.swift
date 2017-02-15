@@ -20,7 +20,12 @@ class PMHandleReleaseTime: NSObject, HTTPClientDelegate {
     
     func releaseTime(timeObj: [[String]]) {
         let jsonString = "bookingTime=\(Functionality.jsonStringify(obj: timeObj as AnyObject))"
-        httpClient.postRequest(url: "Update_UnchosenTime", body: jsonString)
+        let location_ID = Functionality.findKeyFromValue(dictionary: APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!.dropDownLocationsDataSource, value: DTOBookingInformation.sharedInstance.location)
+        let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: DTOBookingInformation.sharedInstance.machine)
+        
+        let httpBody = "\(jsonString)&location_id=\(location_ID)&machine_id=\(machine_ID)"
+        
+        httpClient.postRequest(url: "Update_UnchosenTime", body: httpBody)
     }
     
     func onReceiveRequestResponse(data: AnyObject) {
