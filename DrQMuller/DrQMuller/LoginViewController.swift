@@ -33,11 +33,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
     
-    private var modelHandleLogin = ModelHandleLogin()
-    private var hasReceiveLoginResponse = false
+    private var modelHandleLogin: ModelHandleLogin!
     
-    private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
 
     private func updateUI() {
         //=========TXTFIELD PLACEHOLDER=========
@@ -64,6 +63,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         static let SEGUE_TO_THIRDTAB_CUSTOMER_INFO = "segue_LoginToCustomerInformationThirdTab"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        txt_Username.text = ""
+        txt_Password.text = ""
+        
+        wiredUpNetworkChecking()
+        
+        //=========OBSERVE FOR NOTIFICATION FROM PMHandleLogin=========
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(LoginViewController.onReceiveLoginResponse(notification:)),
+            name: Notification.Name(rawValue: "loginResponse"),
+            object: nil
+        )
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -72,6 +89,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 viewChooseLanguage.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: viewChooseLanguage.center.y)
             }
         }
+    }
+    
+    deinit {
+        print("Login VC: Dead")
     }
     
     func btn_LanguageDropDown_OnClick(sender: UIButton) {
@@ -115,6 +136,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         activityIndicator.stopAnimating()
         
+        self.networkViewManager = NetworkViewManager()
+        self.modelHandleLogin = ModelHandleLogin()
+        
 //=========TXTFIELD DELEGATE=========
         
         self.txt_Username.delegate = self
@@ -151,10 +175,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         updateLoadStyleForIphone4()
         
-        
-//=========OBSERVE FOR NOTIFICATION FROM PMHandleLogin=========
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loginResponse"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "loginResponse"), object: nil, queue: nil, using: handleView)
 
         
 //        //=========DRAW LINE=========
@@ -172,16 +192,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //=========TOAST SET UP COLOR=========
         
         UIView.hr_setToastThemeColor(color: ToastColorAlert)
-        
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
         
-        self.networkCheckInRealTime.invalidate()
+       self.networkCheckInRealTime.invalidate()
     }
     
 //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========
@@ -294,15 +310,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         uiWaitingLoginResponse(isDone: false)
         modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!)
-        self.hasReceiveLoginResponse = false
     }
     
 //=========HANDLE LOGIN PROCEDURE=========
     
-    func handleView(notification: Notification) {
-        if hasReceiveLoginResponse {
-            return
-        }
+    func onReceiveLoginResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
             if let isOk = userInfo["status"] as? Bool {
                 if isOk {
@@ -313,7 +325,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
         uiWaitingLoginResponse(isDone: true)
-        self.hasReceiveLoginResponse = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -372,6 +383,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {}
     
 }
 

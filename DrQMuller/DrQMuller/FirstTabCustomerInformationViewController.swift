@@ -25,11 +25,11 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBOutlet private weak var lbl_Title: UILabel!
     @IBOutlet private weak var btn_Next: UIButton!
     
-    private var customerInformationController = CustomStyleCustomerInformation()
-    private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var customerInformationController: CustomStyleCustomerInformation!
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
     
-    private var modelHandleCustomerInformation = ModelHandleCustomerInformation()
+    private var modelHandleCustomerInformation: ModelHandleCustomerInformation!
 
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -57,17 +57,33 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         //=========FILL CHOSEN INFORMATION=========
         
         fillInformation()
+        
+        wiredUpNetworkChecking()
+        
+        //=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(FirstTabCustomerInformationViewController.onReceiveBasicInfoResponse(notification:)),
+            name: Notification.Name(rawValue: "basicInfoResponse"),
+            object: nil
+        )
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.modelHandleCustomerInformation = ModelHandleCustomerInformation()
+        self.networkViewManager = NetworkViewManager()
+        
 //=========DELEGATING TEXTFIELD=========
         
         self.txt_Name.delegate = self
         self.txt_Address.delegate = self
         
 //=========ENABLE TAB HEADERS=========
+        
+        self.customerInformationController = CustomStyleCustomerInformation()
 
         customerInformationController.enableTab(firstTab: btn_FirstTab, secondTab: btn_SecondTab, thirdTab: btn_ThirdTab)
         
@@ -86,34 +102,31 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
 
         txt_Name.becomeFirstResponder()
-        
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
-        
-//=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
-
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "basicInfoResponse"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "basicInfoResponse"), object: nil, queue: nil) { (Notification) in
-            if let userInfo = Notification.userInfo {
-                if let isSuccess = userInfo["status"] as? Bool {
-                    if isSuccess {
-                        DispatchQueue.global(qos: .userInteractive).async {
-                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
-                            
-                            if customerInformation["step"] as! String == "none" {
-                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "basic"
-                            }
-                            DispatchQueue.main.async {
-                                self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
-                            }
+    }
+    
+    func onReceiveBasicInfoResponse(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            if let isSuccess = userInfo["status"] as? Bool {
+                if isSuccess {
+                    DispatchQueue.global(qos: .userInteractive).async {
+                        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+                        
+                        if customerInformation["step"] as! String == "none" {
+                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "basic"
                         }
-                    } else {
-                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
+                        }
                     }
+                } else {
+                    ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
                 }
             }
         }
+    }
+    
+    deinit {
+        print("First tab VC: Dead")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -205,5 +218,11 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
                 self.txt_Address.text = customerInformation["userAddress"] as! String?
             }
         }
+    }
+    
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 }

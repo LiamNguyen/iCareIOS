@@ -22,10 +22,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" alpha="0.94999998807907104" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IOSwallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="4LI-XB-3Fz">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
                             </imageView>
                             <view alpha="0.80000001192092896" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JLJ-wL-IUr">
-                                <rect key="frame" x="16" y="89" width="289" height="471"/>
+                                <rect key="frame" x="16" y="89" width="289" height="422"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E6Y-t5-FoC">
                                         <rect key="frame" x="25" y="8" width="240" height="61"/>
@@ -215,6 +215,7 @@
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="4LI-XB-3Fz" secondAttribute="bottom" id="yck-Hn-FuY"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Qpb-PM-5zw"/>
                     <connections>
                         <outlet property="activityIndicator" destination="da1-Cb-Mkv" id="ZAp-bP-Bdm"/>
                         <outlet property="btn_Login" destination="or7-Q3-ggf" id="kq0-qL-ChR"/>
@@ -226,15 +227,15 @@
                         <outlet property="txtView" destination="E94-vc-DIs" id="OFN-3C-xwR"/>
                         <outlet property="txt_Password" destination="hUP-wI-J2T" id="hcw-B3-l8B"/>
                         <outlet property="txt_Username" destination="2FU-pK-ntI" id="CgE-aM-25o"/>
-                        <segue destination="uw5-Ou-aKy" kind="show" identifier="segue_LoginToCustomerInformationFirstTab" id="d88-TN-lRm"/>
-                        <segue destination="os0-hg-hVA" kind="show" identifier="segue_LoginToCustomerInformationSecondTab" id="Hn6-nH-Q49"/>
-                        <segue destination="ioB-WT-TZj" kind="show" identifier="segue_LoginToCustomerInformationThirdTab" id="25N-BX-oeo"/>
+                        <segue destination="os0-hg-hVA" kind="presentation" identifier="segue_LoginToCustomerInformationSecondTab" id="Hn6-nH-Q49"/>
+                        <segue destination="ioB-WT-TZj" kind="presentation" identifier="segue_LoginToCustomerInformationThirdTab" id="25N-BX-oeo"/>
                         <segue destination="715-Lq-BFk" kind="show" identifier="segue_LoginToBookingTabViewController" id="NtQ-bk-9Of"/>
+                        <segue destination="uw5-Ou-aKy" kind="presentation" identifier="segue_LoginToCustomerInformationFirstTab" id="MnH-6T-CHY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1882.5" y="-321.12676056338029"/>
+            <point key="canvasLocation" x="1444" y="-590"/>
         </scene>
         <!--Register View Controller-->
         <scene sceneID="q1Q-aY-q5j">
@@ -377,7 +378,7 @@
                                 </constraints>
                                 <state key="normal" image="backIcon"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="segue_RegisterToLogin" id="lUW-tB-BQG"/>
+                                    <action selector="btn_Back_OnClick:" destination="ElV-lj-bZP" eventType="touchUpInside" id="Stg-Jx-5pl"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -408,12 +409,14 @@
                         <outlet property="txt_ConfirmPassword" destination="BkN-R5-2uF" id="dMi-nx-jUV"/>
                         <outlet property="txt_Password" destination="bg7-se-Sqz" id="oTT-Vu-jE6"/>
                         <outlet property="txt_Username" destination="VrT-zv-g0p" id="hrk-CA-BFD"/>
-                        <segue destination="uw5-Ou-aKy" kind="show" identifier="segue_RegisterToContactInformation" id="rTw-Hr-u68"/>
+                        <segue destination="ZsU-H0-i3R" kind="unwind" identifier="segue_RegisterToLogin" unwindAction="unwindToLoginViewControllerWithSegue:" id="1kE-cV-nzX"/>
+                        <segue destination="uw5-Ou-aKy" kind="show" identifier="segue_RegisterToContactInformation" id="6yd-ew-A33"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZk-aq-va0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="ZsU-H0-i3R" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2857.5" y="-321.12676056338029"/>
+            <point key="canvasLocation" x="3653" y="-590"/>
         </scene>
         <!--First Tab Customer Information View Controller-->
         <scene sceneID="h13-6I-DDo">
@@ -594,6 +597,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="VGp-js-YYB" secondAttribute="trailing" constant="12" id="req-ey-aFt"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="l7P-oB-cte"/>
                     <connections>
                         <outlet property="btn_FirstTab" destination="flP-8e-2lF" id="GUg-D1-FDJ"/>
                         <outlet property="btn_Next" destination="VGp-js-YYB" id="XXL-yt-2FZ"/>
@@ -609,14 +613,15 @@
                         <outlet property="view_SecondTabContainer" destination="NfH-Pv-VHc" id="Qaw-oj-B6h"/>
                         <outlet property="view_ThirdTabContainer" destination="V50-6c-qf0" id="Fgd-Dt-eBw"/>
                         <outlet property="view_TopView" destination="Ogo-Qq-OvE" id="TGe-jo-8Wc"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="segue_CustomerInformationToLogin" id="D5g-Gz-UT4"/>
-                        <segue destination="os0-hg-hVA" kind="presentation" identifier="segue_CustomerInformationFirstTabToSecondTab" modalTransitionStyle="flipHorizontal" id="5Jd-1u-Qxt"/>
-                        <segue destination="ioB-WT-TZj" kind="presentation" identifier="segue_CustomerInformationFirstTabToThirdTab" modalTransitionStyle="flipHorizontal" id="bED-hu-lQ7"/>
+                        <segue destination="os0-hg-hVA" kind="presentation" identifier="segue_CustomerInformationFirstTabToSecondTab" id="5Jd-1u-Qxt"/>
+                        <segue destination="ioB-WT-TZj" kind="show" identifier="segue_CustomerInformationFirstTabToThirdTab" id="bED-hu-lQ7"/>
+                        <segue destination="aJE-LB-cSi" kind="unwind" identifier="segue_CustomerInformationToLogin" unwindAction="unwindToLoginViewControllerWithSegue:" id="fge-ER-adZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wRg-bO-d0A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="aJE-LB-cSi" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1070.625" y="459.50704225352115"/>
+            <point key="canvasLocation" x="1086" y="663"/>
         </scene>
         <!--Second Tab Customer Information View Controller-->
         <scene sceneID="Y44-MN-0gd">
@@ -807,14 +812,15 @@
                         <outlet property="view_SecondTabContainer" destination="V7c-IS-ZCr" id="Ebo-40-avC"/>
                         <outlet property="view_ThirdTabContainer" destination="HLE-ur-WAK" id="ceQ-xq-rAB"/>
                         <outlet property="view_TopView" destination="TCn-Kd-AMk" id="djp-67-Ish"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="segue_CustomerInformationSecondTabToLogin" id="LG0-4y-V3J"/>
-                        <segue destination="ioB-WT-TZj" kind="presentation" identifier="segue_CustomerInformationSecondTabToThirdTab" modalTransitionStyle="flipHorizontal" id="hCt-e9-enO"/>
-                        <segue destination="uw5-Ou-aKy" kind="presentation" identifier="segue_CustomerInformationSecondTabToFirstTab" modalTransitionStyle="flipHorizontal" id="4cF-cs-Qr8"/>
+                        <segue destination="ioB-WT-TZj" kind="presentation" identifier="segue_CustomerInformationSecondTabToThirdTab" id="hCt-e9-enO"/>
+                        <segue destination="7i9-WB-qe2" kind="unwind" identifier="segue_CustomerInformationSecondTabToLogin" unwindAction="unwindToLoginViewControllerWithSegue:" id="HFh-j8-yuj"/>
+                        <segue destination="uw5-Ou-aKy" kind="presentation" identifier="segue_CustomerInformationSecondTabToFirstTab" id="SS3-ZO-8w6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iae-Tp-9BY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="7i9-WB-qe2" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1980" y="459.50704225352115"/>
+            <point key="canvasLocation" x="2479" y="662"/>
         </scene>
         <!--Third Tab Customer Information View Controller-->
         <scene sceneID="nkE-xt-DUA">
@@ -1011,15 +1017,15 @@
                         <outlet property="view_SecondTabContainer" destination="Syk-7U-9YX" id="vYW-HW-272"/>
                         <outlet property="view_ThirdTabContainer" destination="3js-UJ-rK3" id="hfb-1J-UuQ"/>
                         <outlet property="view_TopView" destination="PpP-9U-rBQ" id="80H-Xk-fly"/>
-                        <segue destination="os0-hg-hVA" kind="presentation" identifier="segue_CustomerInformationThirdTabToSecondTab" modalTransitionStyle="flipHorizontal" id="sE2-L0-Rza"/>
-                        <segue destination="uw5-Ou-aKy" kind="presentation" identifier="segue_CustomerInformationThirdTabToFirstTab" modalTransitionStyle="flipHorizontal" id="G0p-To-aUJ"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="segue_CustomerInformationThirdTabToLogin" id="mIe-MO-60a"/>
+                        <segue destination="os0-hg-hVA" kind="presentation" identifier="segue_CustomerInformationThirdTabToSecondTab" id="sE2-L0-Rza"/>
                         <segue destination="715-Lq-BFk" kind="show" identifier="segue_CustomerInformationToBookingTabViewController" id="4fp-eZ-ZIh"/>
+                        <segue destination="Xxj-lz-Fu5" kind="unwind" identifier="segue_CustomerInformationThirdTabToLogin" unwindAction="unwindToLoginViewControllerWithSegue:" id="52W-dq-ubV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M05-Dn-3p8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Xxj-lz-Fu5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2857.5" y="459.50704225352115"/>
+            <point key="canvasLocation" x="3551" y="381"/>
         </scene>
         <!--Người dùng-->
         <scene sceneID="Zsp-uV-YWw">
@@ -1037,7 +1043,7 @@
                                 <rect key="frame" x="137" y="236" width="46" height="30"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="B1e-Gq-0DU"/>
+                                    <segue destination="wM8-Zv-2hy" kind="show" id="B1e-Gq-0DU"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1051,7 +1057,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y3H-aU-LMk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4999" y="487"/>
+            <point key="canvasLocation" x="6313" y="911"/>
         </scene>
         <!--Booking Manager Detail View Controller-->
         <scene sceneID="dnX-h7-8kI">
@@ -1071,25 +1077,25 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="60k-4l-fS0">
                                         <rect key="frame" x="0.0" y="0.0" width="144" height="120"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Liệu trình: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0l-ID-S1I">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Liệu trình: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0l-ID-S1I">
                                                 <rect key="frame" x="0.0" y="0.0" width="101" height="24"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <color key="textColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Loại: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fPu-ty-MUp">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loại: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fPu-ty-MUp">
                                                 <rect key="frame" x="0.0" y="32" width="51" height="24"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <color key="textColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Ngày bắt đầu: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-mX-4kX">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày bắt đầu: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aOX-mX-4kX">
                                                 <rect key="frame" x="0.0" y="64" width="138.5" height="24"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <color key="textColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Ngày kết thúc: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGq-TV-BSj">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ngày kết thúc: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hGq-TV-BSj">
                                                 <rect key="frame" x="0.0" y="96" width="144" height="24"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                 <color key="textColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1137,14 +1143,14 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BZc-bp-XYe">
                                                 <rect key="frame" x="0.0" y="0.0" width="136" height="53"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Trung tâm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nno-2g-9FQ">
-                                                        <rect key="frame" x="19" y="0.0" width="98.5" height="23.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trung tâm" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nno-2g-9FQ">
+                                                        <rect key="frame" x="19" y="0.0" width="98.5" height="24"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                                         <color key="textColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Trần Quang Diệu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uf-Ag-BSB">
-                                                        <rect key="frame" x="0.0" y="31.5" width="136" height="21.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Trần Quang Diệu" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7uf-Ag-BSB">
+                                                        <rect key="frame" x="0.0" y="32" width="136" height="21"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1301,7 +1307,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ocb-GR-zfr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5765.625" y="840.84507042253517"/>
+            <point key="canvasLocation" x="7251" y="892"/>
         </scene>
         <!--Đặt lịch-->
         <scene sceneID="Nty-nf-MaU">
@@ -1354,7 +1360,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5x4-ck-RQ8" id="xbt-mn-Vjp">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="155"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="154"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vmH-7U-4hH">
@@ -1488,7 +1494,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xev-4X-icA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5765.625" y="87.676056338028175"/>
+            <point key="canvasLocation" x="7760.625" y="87.676056338028175"/>
         </scene>
         <!--Thông tin lịch hẹn-->
         <scene sceneID="bwR-Y7-sMg">
@@ -1722,7 +1728,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L2l-dY-KYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6536.25" y="87.676056338028175"/>
+            <point key="canvasLocation" x="8531.25" y="87.676056338028175"/>
         </scene>
         <!--Booking Start End Date View Controller-->
         <scene sceneID="Won-C1-tuJ">
@@ -1855,7 +1861,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFv-Y1-j96" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7331" y="88"/>
+            <point key="canvasLocation" x="9324.375" y="87.676056338028175"/>
         </scene>
         <!--Booking Detail View Controller-->
         <scene sceneID="FI8-qP-5f3">
@@ -1950,7 +1956,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -2036,7 +2042,7 @@
                                         <rect key="frame" x="0.0" y="28" width="223" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="223" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="223" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -2352,7 +2358,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tP4-ZY-qPZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8154" y="88"/>
+            <point key="canvasLocation" x="10147.5" y="87.676056338028175"/>
         </scene>
         <!--Booking Verification View Controller-->
         <scene sceneID="iSg-iC-ZW5">
@@ -2471,7 +2477,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YPi-tk-ODi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9020.625" y="87.676056338028175"/>
+            <point key="canvasLocation" x="11015.625" y="87.676056338028175"/>
         </scene>
         <!--Mới-->
         <scene sceneID="sNP-59-y3B">
@@ -2490,7 +2496,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Gx-N0-vU7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4999" y="-242"/>
+            <point key="canvasLocation" x="6909" y="-480"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="CaW-Ke-uVv">
@@ -2509,7 +2515,26 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y1A-wJ-aks" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4089" y="88"/>
+            <point key="canvasLocation" x="6082.5" y="87.676056338028175"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="srk-4I-h6X">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="wM8-Zv-2hy" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zTZ-AA-7gu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="PHC-3Q-hbT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gmm-0r-h2e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2588" y="-1393"/>
         </scene>
     </scenes>
     <resources>
@@ -2540,12 +2565,11 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dgP-J4-frA"/>
+        <segue reference="NtQ-bk-9Of"/>
         <segue reference="xbJ-Nb-K3c"/>
-        <segue reference="g2r-Mm-7cY"/>
+        <segue reference="SS3-ZO-8w6"/>
         <segue reference="sE2-L0-Rza"/>
-        <segue reference="25N-BX-oeo"/>
-        <segue reference="mIe-MO-60a"/>
-        <segue reference="G0p-To-aUJ"/>
+        <segue reference="hCt-e9-enO"/>
+        <segue reference="lsA-hk-Zkm"/>
     </inferredMetricsTieBreakers>
 </document>
