@@ -46,4 +46,10 @@ extension Date {
         return Int(formatter.string(from: self as Date))!
     }
     
+    var dateTime: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd hh:MM:ss"
+        return formatter.string(from: self as Date)
+    }
+    
 }

@@ -61,14 +61,16 @@ struct UIFunctionality {
     }
     
     static func addShakyAnimation(elementToBeShake: AnyObject) {
-        let animation = CABasicAnimation(keyPath: "position")
-        animation.duration = 0.07
-        animation.repeatCount = 4
-        animation.autoreverses = true
-        
-        animation.fromValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x - 5, y: elementToBeShake.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x + 5, y: elementToBeShake.center.y))
-        elementToBeShake.layer.add(animation, forKey: "position")
+        DispatchQueue.main.async {
+            let animation = CABasicAnimation(keyPath: "position")
+            animation.duration = 0.07
+            animation.repeatCount = 4
+            animation.autoreverses = true
+            
+            animation.fromValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x - 5, y: elementToBeShake.center.y))
+            animation.toValue = NSValue(cgPoint: CGPoint(x: elementToBeShake.center.x + 5, y: elementToBeShake.center.y))
+            elementToBeShake.layer.add(animation, forKey: "position")
+        }
     }
     
     static func createChooseLanguageView(view: UIView) {
@@ -150,117 +152,3 @@ struct UIFunctionality {
         return flyingView
     }
 }
-
-//CREATE TOAST
-
-struct ToastManager {
-    static func alert(view: UIView, msg: String) {
-        view.makeToast(message: msg, duration: 2.5, position: HRToastPositionTop as AnyObject)
-    }
-    
-    static func message(view: UIView, msg: String, duration: Double) {
-        view.makeToast(message: msg, duration: duration, position: HRToastPositionTop as AnyObject)
-    }
-}
-
-//CREATE DIALOG
-
-struct DialogManager {
-    //=========CREATE POP UP CONFIRM DIALOG=========
-    
-    static func confirmLogout(sender: UIViewController, segueIdentifier: String) {
-        let confirmDialog = UIAlertController(title: "CONFIRM_LOGOUT_TITLE".localized(), message: "CONFIRM_LOGOUT_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
-        
-        confirmDialog.addAction(UIAlertAction(title: "LOGOUT_EXECUTE_TITLE".localized(), style: .default, handler: { (action: UIAlertAction!) in
-            sender.performSegue(withIdentifier: segueIdentifier, sender: sender)
-        }))
-        confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in
-            
-        }))
-        sender.present(confirmDialog, animated: true, completion: nil)
-    }
-    
-    static func errorMessage(sender: UIViewController, msg: String) {
-        let confirmDialog = UIAlertController(title: "Thông báo!", message: msg, preferredStyle: UIAlertControllerStyle.alert)
-        confirmDialog.addAction(UIAlertAction(title: "Huỷ", style: .cancel, handler: { (action: UIAlertAction!) in
-            
-        }))
-        sender.present(confirmDialog, animated: true, completion: nil)
-    }
-}
-
-struct AnimationManager {
-    static func getAnimation_Fade(duration: Float) -> CATransition {
-        let animation = CATransition()
-        animation.type = kCATransitionFade
-        animation.duration = CFTimeInterval(duration)
-        
-        return animation
-    }
-    
-    static func getAnimation_Transition(duration: Float) -> CATransition {
-        let animation = CATransition()
-        animation.type = kCATransactionAnimationDuration
-        animation.duration = CFTimeInterval(duration)
-        
-        return animation
-    }
-}
-
-class CustomStyleCustomerInformation {
-    private var updatedWidth: CGFloat!
-    
-    //=========UPDATE STYLE OF TAB HEADERS FOR DIFFERENT PHONE SIZE=========
-    
-    func tabHeadersStyleUpdate(FirstTabConstraint: NSLayoutConstraint, SecondTabConstraint: NSLayoutConstraint, ThirdTabConstraint: NSLayoutConstraint) {
-        let screenWidth = Double(UIScreen.main.bounds.width)
-        updatedWidth = CGFloat((screenWidth - 16) / 3)
-        
-        FirstTabConstraint.constant = updatedWidth
-        SecondTabConstraint.constant = updatedWidth
-        ThirdTabConstraint.constant = updatedWidth
-    }
-    
-    //=========UPDATE ORIGIN OF TAB HEADERS FOR DIFFERENT PHONE SIZE=========
-    
-    func tabHeadersOriginUpdate(view_FirstTabContainer: UIView, view_SecondTabContainer: UIView, view_ThirdTabContainer: UIView) {
-        let updatedOriginXSecondTab = updatedWidth + 8
-        let updatedOriginXThirdTab = updatedWidth * 2 + 16
-        
-        view_FirstTabContainer.frame = CGRect(x: 0, y: view_FirstTabContainer.frame.origin.y, width: updatedWidth, height: view_SecondTabContainer.frame.size.height)
-        view_SecondTabContainer.frame = CGRect(x: updatedOriginXSecondTab, y: view_SecondTabContainer.frame.origin.y, width: updatedWidth, height: view_SecondTabContainer.frame.size.height)
-        view_ThirdTabContainer.frame = CGRect(x: updatedOriginXThirdTab, y: view_ThirdTabContainer.frame.origin.y, width: updatedWidth, height: view_ThirdTabContainer.frame.size.height)
-    }
-    
-    //=========ENABLE TAB HEADERS BASE ON UIFILLSTEP=========
-    
-    func enableTab(firstTab: UIButton, secondTab: UIButton, thirdTab: UIButton) {
-        let uiFillStep = 3
-        
-        switch uiFillStep {
-        case 1:
-            applyActiveStyle(button: firstTab)
-        case 2:
-            applyActiveStyle(button: firstTab)
-            applyActiveStyle(button: secondTab)
-        default:
-            applyActiveStyle(button: firstTab)
-            applyActiveStyle(button: secondTab)
-            applyActiveStyle(button: thirdTab)
-        }
-    }
-    
-    //=========ACTIVE TAB STYLE=========
-    
-    func applyActiveStyle(button: UIButton) {
-        button.isEnabled = true
-        button.setTitleColor(UIColor(netHex: 0x8F00B3), for: .normal)
-    }
-    
-    func translateTabHeaderUnderline(view: UIView, view_TabContainer: UIView) {
-        let startPoint = CGPoint(x: view_TabContainer.frame.origin.x, y: view_TabContainer.frame.origin.y + view_TabContainer.frame.size.height)
-        let endPoint = CGPoint(x: view_TabContainer.frame.origin.x + view_TabContainer.frame.size.width, y: view_TabContainer.frame.origin.y + view_TabContainer.frame.size.height)
-        UIFunctionality.drawLine(fromPoint: startPoint, toPoint: endPoint, lineWidth: 3, color: UIColor(netHex: 0x8F00B3), view: view)
-    }
-}
-

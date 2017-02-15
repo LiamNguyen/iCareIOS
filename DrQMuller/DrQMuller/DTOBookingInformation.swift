@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DTOBookingInformation: NSObject {
+class DTOBookingInformation: NSObject, NSCoding {
     
     class var sharedInstance: DTOBookingInformation {
         struct Singleton {
@@ -17,20 +17,12 @@ class DTOBookingInformation: NSObject {
         return Singleton.instance
     }
     
-    private var _customerID: String!
-    var customerID: String {
-        get {
-            return _customerID
-        }
-        
-        set (newVal) {
-            _customerID = newVal
-        }
-    }
-    
     private var _appointmentID: String!
     var appointmentID: String {
         get {
+            if _appointmentID == nil {
+                return ""
+            }
             return _appointmentID
         }
         
@@ -42,6 +34,9 @@ class DTOBookingInformation: NSObject {
     private var _verificationCode: String!
     var verificationCode: String {
         get {
+            if _verificationCode == nil {
+                return ""
+            }
             return _verificationCode
         }
     }
@@ -49,6 +44,9 @@ class DTOBookingInformation: NSObject {
     private var _country: String!
     var country: String {
         get {
+            if _country == nil {
+                return ""
+            }
             return _country
         }
         
@@ -60,6 +58,9 @@ class DTOBookingInformation: NSObject {
     private var _city: String!
     var city: String {
         get {
+            if _city == nil {
+                return ""
+            }
             return _city
         }
         
@@ -71,6 +72,9 @@ class DTOBookingInformation: NSObject {
     private var _district: String!
     var district: String {
         get {
+            if _district == nil {
+                return ""
+            }
             return _district
         }
         
@@ -82,6 +86,9 @@ class DTOBookingInformation: NSObject {
     private var _location: String!
     var location: String {
         get {
+            if _location == nil {
+                return ""
+            }
             return _location
         }
         
@@ -93,6 +100,9 @@ class DTOBookingInformation: NSObject {
     private var _voucher: String!
     var voucher: String {
         get {
+            if _voucher == nil {
+                return ""
+            }
             return _voucher
         }
         
@@ -104,6 +114,9 @@ class DTOBookingInformation: NSObject {
     private var _type: String!
     var type: String {
         get {
+            if _type == nil {
+                return ""
+            }
             return _type
         }
         
@@ -112,9 +125,40 @@ class DTOBookingInformation: NSObject {
         }
     }
     
+    private var _machinesDataSource: [String: String]!
+    var machinesDataSource: [String: String] {
+        get {
+            if _machinesDataSource == nil {
+                return [String: String]()
+            }
+            return _machinesDataSource
+        }
+        
+        set (newVal) {
+            _machinesDataSource = newVal
+        }
+    }
+    
+    private var _machine: String!
+    var machine: String {
+        get {
+            if _machine == nil {
+                return ""
+            }
+            return _machine
+        }
+        
+        set (newVal) {
+            _machine = newVal
+        }
+    }
+    
     private var _startDate: String!
     var startDate: String {
         get {
+            if _startDate == nil {
+                return ""
+            }
             return _startDate
         }
         
@@ -126,6 +170,9 @@ class DTOBookingInformation: NSObject {
     private var _endDate: String!
     var endDate: String {
         get {
+            if _endDate == nil {
+                return ""
+            }
             return _endDate
         }
         
@@ -137,6 +184,9 @@ class DTOBookingInformation: NSObject {
     private var _exactDate: String!
     var exactDate: String {
         get {
+            if _exactDate == nil {
+                return ""
+            }
             return _exactDate
         }
         
@@ -148,6 +198,9 @@ class DTOBookingInformation: NSObject {
     private var _exactDayOfWeek: String!
     var exactDayOfWeek: String {
         get {
+            if _exactDayOfWeek == nil {
+                return ""
+            }
             return _exactDayOfWeek
         }
         
@@ -170,7 +223,22 @@ class DTOBookingInformation: NSObject {
         }
     }
     
+    private var _isConfirmed: String!
+    var isConfirmed: String {
+        get {
+            if _isConfirmed == nil {
+                return ""
+            }
+            return _isConfirmed
+        }
+        
+        set (newVal) {
+            _isConfirmed = newVal
+        }
+    }
+    
     func clearAllDTOBookingInfo() {
+        self._appointmentID = nil
         self._country = nil
         self._city = nil
         self._district = nil
@@ -182,6 +250,12 @@ class DTOBookingInformation: NSObject {
         self._exactDate = nil
         self._exactDayOfWeek = nil
         self._bookingTime = nil
+        self._isConfirmed = nil
+        self._verificationCode = nil
+    }
+    
+    func printBookingInfo() {
+        print("\nAppointment ID: \(self.appointmentID)\nCountry: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nStatus: \(self.isConfirmed)\nVerification Code: \(self.verificationCode)\n")
     }
     
     func returnHttpBody() -> String? {
@@ -190,6 +264,10 @@ class DTOBookingInformation: NSObject {
         let typesDataSource = dtoArrays.dropDownTypesDataSource
         let vouchersDataSource = dtoArrays.dropDownVouchersDataSource
         let locationsDataSource = dtoArrays.dropDownLocationsDataSource
+        
+        let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: DTOBookingInformation.sharedInstance.machine)
+        
+        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
 
         var result = ""
         
@@ -203,14 +281,17 @@ class DTOBookingInformation: NSObject {
             }
         }
 
-        if let type = _type, let customerID = _customerID, let location = _location, let voucher = _voucher, let bookingTime = _bookingTime {
+        if let type = _type, let customerID = customerInformation["userId"], let location = _location, let voucher = _voucher, let bookingTime = _bookingTime {
             self._verificationCode = generateVerificationCode(length: 10)
             result += "type_id=\(Functionality.findKeyFromValue(dictionary: typesDataSource, value: type))&" +
                         "customer_id=\(customerID)&" +
                         "location_id=\(Functionality.findKeyFromValue(dictionary: locationsDataSource, value: location))&" +
                         "voucher_id=\(Functionality.findKeyFromValue(dictionary: vouchersDataSource, value: voucher))&" +
                         "bookingTime=\(Functionality.jsonStringify(obj: bookingTime as AnyObject))&" +
-                        "code=\(self._verificationCode!)"
+                        "code=\(self._verificationCode!)&" +
+                        "machine_id=\(machine_ID)"
+        } else {
+            return ""
         }
         
         return result
@@ -231,9 +312,49 @@ class DTOBookingInformation: NSObject {
         
         return randomString
     }
+    
+    override init() {
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init()
         
+        self._appointmentID = aDecoder.decodeObject(forKey: "appointmentID") as? String ?? ""
+        self._verificationCode = aDecoder.decodeObject(forKey: "veriCode") as? String ?? ""
+        self._country = aDecoder.decodeObject(forKey: "country") as? String ?? ""
+        self._city = aDecoder.decodeObject(forKey: "city") as? String ?? ""
+        self._district = aDecoder.decodeObject(forKey: "district") as? String ?? ""
+        self._location = aDecoder.decodeObject(forKey: "location") as? String ?? ""
+        self._voucher = aDecoder.decodeObject(forKey: "voucher") as? String ?? ""
+        self._type = aDecoder.decodeObject(forKey: "type") as? String ?? ""
+        self._machinesDataSource = aDecoder.decodeObject(forKey: "machinesDS") as? [String: String] ?? [String: String]()
+        self._machine = aDecoder.decodeObject(forKey: "machine") as? String ?? ""
+        self._startDate = aDecoder.decodeObject(forKey: "startDate") as? String ?? ""
+        self._endDate = aDecoder.decodeObject(forKey: "endDate") as? String ?? ""
+        self._exactDate = aDecoder.decodeObject(forKey: "exactDate") as? String ?? ""
+        self._exactDayOfWeek = aDecoder.decodeObject(forKey: "exactDayOfWeed") as? String ?? ""
+        self._bookingTime = aDecoder.decodeObject(forKey: "bookingTime") as? [[String]] ?? [[String]]()
+        self._isConfirmed = aDecoder.decodeObject(forKey: "isConfirmed") as? String ?? ""
+    }
     
-    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(_appointmentID, forKey: "appointmentID")
+        aCoder.encode(_verificationCode, forKey: "veriCode")
+        aCoder.encode(_country, forKey: "country")
+        aCoder.encode(_city, forKey: "city")
+        aCoder.encode(_district, forKey: "district")
+        aCoder.encode(_location, forKey: "location")
+        aCoder.encode(_voucher, forKey: "voucher")
+        aCoder.encode(_type, forKey: "type")
+        aCoder.encode(_machinesDataSource, forKey: "machinesDS")
+        aCoder.encode(_machine, forKey: "machine")
+        aCoder.encode(_startDate, forKey: "startDate")
+        aCoder.encode(_endDate, forKey: "endDate")
+        aCoder.encode(_exactDate, forKey: "exactDate")
+        aCoder.encode(_exactDayOfWeek, forKey: "exactDayOfWeed")
+        aCoder.encode(_bookingTime, forKey: "bookingTime")
+        aCoder.encode(_isConfirmed, forKey: "isConfirmed")
+    }
     
     
     

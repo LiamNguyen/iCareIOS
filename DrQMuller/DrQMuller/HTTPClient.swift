@@ -18,28 +18,37 @@ public class HTTPClient {
     var delegate: HTTPClientDelegate?
     
     func getRequest(url: String, parameter: String) {
-        if !Network.hasNetworkConnection() {
+        if !Reachability.isConnectedToNetwork() {
             return
         }
-
         let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
         var request = URLRequest(url: URL as! URL)
         request.httpMethod = "GET"
-        
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            if data?.count != 0 {
-                let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary
-                print("GET: \(URL!)")
-                self.delegate?.onReceiveRequestResponse(data: JSONResponse)
+            guard let data = data, error == nil else {                                                 // check for fundamental networking error
+                print("error = \n\(error)")
+                return
             }
-        
+            
+            if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
+                print("statusCode should be 200, but is \(httpStatus.statusCode)")
+                print("response = \n\(response)")
+                //                postCompleted(false, "http status receives error: \(error)_Status code: \(httpStatus.statusCode)")
+            }
+            
+            if data.count != 0 {
+                let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
+                print("\nGET: \(URL!)\n")
+                print("Response from server: \n\(JSONResponse)")
+                self.delegate?.onReceiveRequestResponse(data: JSONResponse!)
+            }
         }
         
         task.resume()
     }
     
     func postRequest(url: String, body: String) {//, postCompleted: @escaping (_ success: Bool, _ msg: String) -> ()) {
-        if !Network.hasNetworkConnection() {
+        if !Reachability.isConnectedToNetwork() {
             return
         }
         
@@ -51,21 +60,21 @@ public class HTTPClient {
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {                                                 // check for fundamental networking error
-                print("error=\(error)")
+                print("error =\n\(error)")
 //                postCompleted(false, "JSON data receives error: \(error)")
                 return
             }
             
             if let httpStatus = response as? HTTPURLResponse, httpStatus.statusCode != 200 {           // check for http errors
                 print("statusCode should be 200, but is \(httpStatus.statusCode)")
-                print("response = \(response)")
+                print("response = \n\(response)")
 //                postCompleted(false, "http status receives error: \(error)_Status code: \(httpStatus.statusCode)")
             }
             
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
-                print("Response from server: \(JSONResponse)")
-                print("POST: \(URL!)")
+                print("\nPOST: \(URL!)\n")
+                print("Response from server: \n\(JSONResponse)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse)
             }
         }

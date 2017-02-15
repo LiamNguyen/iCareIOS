@@ -34,6 +34,7 @@ public class ServiceURL {
             prdURL["Select_EcoTime"] = "http://210.211.109.180/drmuller/Select_EcoTime.php"
             prdURL["Select_DaysOfWeek"] = "http://210.211.109.180/drmuller/Select_DaysOfWeek.php"
             prdURL["Select_SelectedTime"] = "http://210.211.109.180/drmuller/Select_SelectedTime.php"
+            prdURL["Select_Machines"] = "http://210.211.109.180/drmuller/Select_Machines.php"
             prdURL["Insert_NewCustomer"] = "http://210.211.109.180/drmuller/Insert_NewCustomer.php"
             prdURL["Insert_NewAppointment"] = "http://210.211.109.180/drmuller/Insert_NewAppointment.php"
             prdURL["Insert_NewBookingTime"] = "http://210.211.109.180/drmuller/Insert_NewBookingTime.php"
@@ -41,11 +42,15 @@ public class ServiceURL {
             prdURL["Update_CustomerInfo"] = "http://210.211.109.180/drmuller/Update_CustomerInfo.php"
             prdURL["Update_ValidateAppointment"] = "http://210.211.109.180/drmuller/Update_ValidateAppointment.php"
             prdURL["Update_Appointment"] = "http://210.211.109.180/drmuller/Update_Appointment.php"
+            prdURL["Update_CancelAppointment"] = "http://210.211.109.180/drmuller/Update_CancelAppointment.php"
             prdURL["Update_VerifyAcc"] = "http://210.211.109.180/drmuller/Update_VerifyAcc.php"
             prdURL["Update_ResetPw"] = "http://210.211.109.180/drmuller/Update_ResetPw.php"
             prdURL["SendMail_VerifyAcc"] = "http://210.211.109.180/drmuller/SendMail_VerifyAcc.php"
             prdURL["SendMail_ResetPassword"] = "http://210.211.109.180/drmuller/SendMail_ResetPassword.php"
             prdURL["BookingTransaction"] = "http://210.211.109.180/drmuller/BookingTransaction.php"
+            prdURL["Update_BasicInfo"] = "http://210.211.109.180/drmuller/Update_BasicInfo.php"
+            prdURL["Update_NecessaryInfo"] = "http://210.211.109.180/drmuller/Update_NecessaryInfo.php"
+            prdURL["Update_ImportantInfo"] = "http://210.211.109.180/drmuller/Update_ImportantInfo.php"
         case .BETA:
             betaURL["Select_ToAuthenticate"] = "http://210.211.109.180/drmuller_test/Select_ToAuthenticate.php"
             betaURL["Select_CheckUserExistence"] = "http://210.211.109.180/drmuller_test/Select_CheckUserExistence.php"
@@ -68,11 +73,15 @@ public class ServiceURL {
             betaURL["Update_CustomerInfo"] = "http://210.211.109.180/drmuller_test/Update_CustomerInfo.php"
             betaURL["Update_ValidateAppointment"] = "http://210.211.109.180/drmuller_test/Update_ValidateAppointment.php"
             betaURL["Update_Appointment"] = "http://210.211.109.180/drmuller_test/Update_Appointment.php"
+            betaURL["Update_CancelAppointment"] = "http://210.211.109.180/drmuller_test/Update_CancelAppointment.php"
             betaURL["Update_VerifyAcc"] = "http://210.211.109.180/drmuller_test/Update_VerifyAcc.php"
             betaURL["Update_ResetPw"] = "http://210.211.109.180/drmuller_test/Update_ResetPw.php"
             betaURL["SendMail_VerifyAcc"] = "http://210.211.109.180/drmuller_test/SendMail_VerifyAcc.php"
             betaURL["SendMail_ResetPassword"] = "http://210.211.109.180/drmuller_test/SendMail_ResetPassword.php"
             betaURL["BookingTransaction"] = "http://210.211.109.180/drmuller_test/BookingTransaction.php"
+            betaURL["Update_BasicInfo"] = "http://210.211.109.180/drmuller_test/Update_BasicInfo.php"
+            betaURL["Update_NecessaryInfo"] = "http://210.211.109.180/drmuller_test/Update_NecessaryInfo.php"
+            betaURL["Update_ImportantInfo"] = "http://210.211.109.180/drmuller_test/Update_ImportantInfo.php"
 
         case .LOCAL:
 //===============IF THIS IS LOCAL ENVIRONMENTS================
@@ -89,6 +98,7 @@ public class ServiceURL {
             localURL["Select_EcoTime"] = "http://localhost/drmuller/Select_EcoTime.php"
             localURL["Select_DaysOfWeek"] = "http://localhost/drmuller/Select_DaysOfWeek.php"
             localURL["Select_SelectedTime"] = "http://localhost/drmuller/Select_SelectedTime.php"
+            localURL["Select_Machines"] = "http://localhost/drmuller/Select_Machines.php"
             localURL["Insert_NewCustomer"] = "http://localhost/drmuller/Insert_NewCustomer.php"
             localURL["Insert_NewAppointment"] = "http://localhost/drmuller/Insert_NewAppointment.php"
             localURL["Insert_NewBookingTime"] = "http://localhost/drmuller/Insert_NewBookingTime.php"
@@ -96,11 +106,15 @@ public class ServiceURL {
             localURL["Update_CustomerInfo"] = "http://localhost/drmuller/Update_CustomerInfo.php"
             localURL["Update_ValidateAppointment"] = "http://localhost/drmuller/Update_ValidateAppointment.php"
             localURL["Update_Appointment"] = "http://localhost/drmuller/Update_Appointment.php"
+            localURL["Update_CancelAppointment"] = "http://localhost/drmuller/Update_CancelAppointment.php"
             localURL["Update_VerifyAcc"] = "http://localhost/drmuller/Update_VerifyAcc.php"
             localURL["Update_ResetPw"] = "http://localhost/drmuller/Update_ResetPw.php"
             localURL["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
             localURL["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
             localURL["BookingTransaction"] = "http://localhost/drmuller/BookingTransaction.php"
+            localURL["Update_BasicInfo"] = "http://localhost/drmuller/Update_BasicInfo.php"
+            localURL["Update_NecessaryInfo"] = "http://localhost/drmuller/Update_NecessaryInfo.php"
+            localURL["Update_ImportantInfo"] = "http://localhost/drmuller/Update_ImportantInfo.php"
 //===============IF THIS IS UAT ENVIRONMENTS================
         default:
             uatURL["Select_ToAuthenticate"] = "http://drqmuller.com/drmuller/Select_ToAuthenticate.php"
@@ -116,6 +130,7 @@ public class ServiceURL {
             uatURL["Select_EcoTime"] = "http://drqmuller.com/drmuller/Select_EcoTime.php"
             uatURL["Select_DaysOfWeek"] = "http://drqmuller.com/drmuller/Select_DaysOfWeek.php"
             uatURL["Select_SelectedTime"] = "http://drqmuller.com/drmuller/Select_SelectedTime.php"
+            uatURL["Select_Machines"] = "http://drqmuller.com/drmuller/Select_Machines.php"
             uatURL["Insert_NewCustomer"] = "http://drqmuller.com/drmuller/Insert_NewCustomer.php"
             uatURL["Insert_NewAppointment"] = "http://drqmuller.com/drmuller/Insert_NewAppointment.php"
             uatURL["Insert_NewBookingTime"] = "http://drqmuller.com/drmuller/Insert_NewBookingTime.php"
@@ -123,11 +138,15 @@ public class ServiceURL {
             uatURL["Update_CustomerInfo"] = "http://drqmuller.com/drmuller/Update_CustomerInfo.php"
             uatURL["Update_ValidateAppointment"] = "http://drqmuller.com/drmuller/Update_ValidateAppointment.php"
             uatURL["Update_Appointment"] = "http://drqmuller.com/drmuller/Update_Appointment.php"
+            uatURL["Update_CancelAppointment"] = "http://drqmuller.com/drmuller/Update_CancelAppointment.php"
             uatURL["Update_VerifyAcc"] = "http://drqmuller.com/drmuller/Update_VerifyAcc.php"
             uatURL["Update_ResetPw"] = "http://drqmuller.com/drmuller/Update_ResetPw.php"
             uatURL["SendMail_VerifyAcc"] = "http://drqmuller.com/drmuller/SendMail_VerifyAcc.php"
             uatURL["SendMail_ResetPassword"] = "http://drqmuller.com/drmuller/SendMail_ResetPassword.php"
             uatURL["BookingTransaction"] = "http://drqmuller.com/drmuller/BookingTransaction.php"
+            uatURL["Update_BasicInfo"] = "http://drqmuller.com/drmuller/Update_BasicInfo.php"
+            uatURL["Update_NecessaryInfo"] = "http://drqmuller.com/drmuller/Update_NecessaryInfo.php"
+            uatURL["Update_ImportantInfo"] = "http://drqmuller.com/drmuller/Update_ImportantInfo.php"
         }
     }
     
@@ -146,7 +165,7 @@ public class ServiceURL {
                 return "Can't find URL"
             }
         case .LOCAL:
-            if let url = prdURL[serviceURL] {
+            if let url = localURL[serviceURL] {
                 return url
             } else {
                 return "Can't find URL"
