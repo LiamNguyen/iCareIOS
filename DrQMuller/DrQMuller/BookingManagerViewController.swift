@@ -10,11 +10,12 @@ import UIKit
 
 class BookingManagerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView_Appointments: UITableView!
-    @IBOutlet weak var constraint_TableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var lbl_Title: UILabel!
     @IBOutlet weak var view_TopView: UIView!
     
-    private var modelHandleBookingManger = ModelHandleBookingManager()
+    private var message_NoAppointment: UILabel!
+    
+    private var modelHandleBookingManger: ModelHandleBookingManager!
     private var appoinmentDataSource = [DTOBookingInformation]()
     
     private func updateUI() {
@@ -27,6 +28,13 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         static let SEGUE_TO_BOOKING_VERIFICATION = "segue_BookingManagerToBookingVerification"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        bindAppointmentDataSource()
+        
+        print("\nBooking Manager VC ONLOAD: ")
+        DTOBookingInformation.sharedInstance.printBookingInfo()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -35,12 +43,8 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         tableView_Appointments.dataSource = self
         tableView_Appointments.separatorColor = ThemeColor
         
+        modelHandleBookingManger = ModelHandleBookingManager()
         modelHandleBookingManger.validateAppointment()
-        
-        bindAppointmentDataSource()
-        
-        print("\nBooking Manager VC ONLOAD: ")
-        DTOBookingInformation.sharedInstance.printBookingInfo()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -104,7 +108,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     
     private func bindAppointmentDataSource() {
         if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String) as? DTOCustomerInformation {
-
+            appoinmentDataSource.removeAll(keepingCapacity: false)
             if appointments.customerAppointmentsDictionary.count > 0 {
                                 
 //                let model = ModelHandleBookingManagerDetail()
@@ -118,19 +122,21 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
                     print("\n================START================\nAPPOINTMENT ID: \(item)")
                     appointments.customerAppointmentsDictionary[item]?.printBookingInfo()
                 }
+                
+                self.tableView_Appointments.reloadData()
+                if let msg_NoAppointment = self.message_NoAppointment {
+                    msg_NoAppointment.isHidden = true
+                }
                 self.tableView_Appointments.isHidden = false
             } else {
-                self.addLabelForEmptyAppointment()
-                self.tableView_Appointments.isHidden = true
+                displayLabelForEmptyAppointment()
             }
         } else {
-            self.addLabelForEmptyAppointment()
-            self.tableView_Appointments.isHidden = true
+            displayLabelForEmptyAppointment()
         }
-
     }
     
-    private func addLabelForEmptyAppointment() {
+    private func createLabelForEmptyAppointment() {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 70, height: 250))
         label.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
         
@@ -140,6 +146,16 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         label.numberOfLines = 5
         
         self.view.addSubview(label)
+        self.message_NoAppointment = label
+    }
+    
+    private func displayLabelForEmptyAppointment() {
+        if self.message_NoAppointment == nil {
+            createLabelForEmptyAppointment()
+        } else {
+            self.message_NoAppointment.isHidden = false
+        }
+        self.tableView_Appointments.isHidden = true
     }
     
     private func returnDisplayValueForStatus(isConfirmed: String) -> String {
@@ -149,4 +165,6 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
             return "IS_NOT_CONFIRMED".localized()
         }
     }
+    
+    @IBAction func unwindToBookingManager(segue: UIStoryboardSegue) {}
 }

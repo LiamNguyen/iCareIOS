@@ -98,6 +98,8 @@
 "RETURN_TITLE" = "Return";
 "WARNING_TITLE" = "Warning!";
 "CANCEL_APPOINTMENT_CONFIRMATION_MESSAGE" = "You are about to cancel this appointment. Are you sure?";
+"USER_PAGE_TITLE" = "User";
+"CANCEL_APPOINTMENT_TITLE" = "Cancel appointment";
 
 
 

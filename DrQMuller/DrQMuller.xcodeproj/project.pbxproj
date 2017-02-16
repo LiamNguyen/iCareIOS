@@ -44,6 +44,7 @@
 		ED6D3A391E50A00100DDB68B /* ModelHandleBookingVerification.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6D3A381E50A00100DDB68B /* ModelHandleBookingVerification.swift */; };
 		ED6D3A3B1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6D3A3A1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
+		ED7663EB1E560C27006BE593 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7663EA1E560C27006BE593 /* UserViewController.swift */; };
 		ED808FCA1E4C4B9F005563F0 /* JWTDecode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; };
 		ED808FCB1E4C4B9F005563F0 /* JWTDecode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */; };
@@ -158,6 +159,7 @@
 		ED6D3A381E50A00100DDB68B /* ModelHandleBookingVerification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingVerification.swift; sourceTree = "<group>"; };
 		ED6D3A3A1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingManagerDetailViewController.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		ED7663EA1E560C27006BE593 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWTDecode.framework; path = Carthage/Build/iOS/JWTDecode.framework; sourceTree = "<group>"; };
 		ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = JWTDecode.framework.dSYM; path = Carthage/Build/iOS/JWTDecode.framework.dSYM; sourceTree = "<group>"; };
 		ED8B96641E53942600EDBF2B /* ModelHandleBookingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingManager.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				ED04C9901E4F40AA0076BF6E /* BookingManagerViewController.swift */,
 				ED6D3A361E507AAF00DDB68B /* BookingVerificationViewController.swift */,
 				ED6D3A3A1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift */,
+				ED7663EA1E560C27006BE593 /* UserViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 				ED040F491E0C7808003166FD /* NiceButton.swift in Sources */,
 				ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */,
 				ED4687981E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift in Sources */,
+				ED7663EB1E560C27006BE593 /* UserViewController.swift in Sources */,
 				ED6A68621E492DF800776B6B /* CustomStyleCustomerInformation.swift in Sources */,
 				ED04C9911E4F40AA0076BF6E /* BookingManagerViewController.swift in Sources */,
 				ED9558961E10F5B8004893DA /* ServiceURL.swift in Sources */,

@@ -1026,12 +1026,12 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M05-Dn-3p8" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Xxj-lz-Fu5" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4193" y="522"/>
+            <point key="canvasLocation" x="3973" y="522"/>
         </scene>
-        <!--Người dùng-->
+        <!--User-->
         <scene sceneID="Zsp-uV-YWw">
             <objects>
-                <viewController id="Wng-yJ-Kmt" sceneMemberID="viewController">
+                <viewController id="Wng-yJ-Kmt" customClass="UserViewController" customModule="DrQMuller" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jR6-VN-IhB"/>
                         <viewControllerLayoutGuide type="bottom" id="fJF-3t-nVZ"/>
@@ -1040,25 +1040,82 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hAJ-Gc-70X">
-                                <rect key="frame" x="137" y="236" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZCo-Xo-kq8">
+                                <rect key="frame" x="0.0" y="28" width="320" height="50"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thông tin người dùng" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8I-3G-LtG">
+                                        <rect key="frame" x="62" y="14" width="196" height="23"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="2Dw-Gn-edV"/>
+                                    <constraint firstItem="l8I-3G-LtG" firstAttribute="centerX" secondItem="ZCo-Xo-kq8" secondAttribute="centerX" id="HA5-ap-w4l"/>
+                                    <constraint firstItem="l8I-3G-LtG" firstAttribute="centerY" secondItem="ZCo-Xo-kq8" secondAttribute="centerY" id="Hfd-Ke-mJt"/>
+                                </constraints>
+                            </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyễn Thiên Phúc" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVF-8C-4bD">
+                                <rect key="frame" x="16" y="86" width="288" height="60"/>
+                                <color key="backgroundColor" red="0.92156862750000001" green="0.72156862749999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="Pkp-HR-aPo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Palatino-Roman" family="Palatino" pointSize="23"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oks-W7-4e4">
+                                <rect key="frame" x="0.0" y="471" width="320" height="48"/>
+                                <color key="backgroundColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="EwA-T4-FKz"/>
+                                </constraints>
                                 <connections>
-                                    <segue destination="wM8-Zv-2hy" kind="show" id="B1e-Gq-0DU"/>
+                                    <action selector="logout_OnClick:" destination="Wng-yJ-Kmt" eventType="touchUpInside" id="Rdu-JM-tbd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4g-8T-1eO">
+                                <rect key="frame" x="140" y="475" width="40" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="CT0-vb-sZK"/>
+                                    <constraint firstAttribute="width" constant="40" id="juz-7Z-vup"/>
+                                </constraints>
+                                <state key="normal" image="logoutIcon"/>
+                                <connections>
+                                    <action selector="logoutIcon_OnClick:" destination="Wng-yJ-Kmt" eventType="touchUpInside" id="dod-Ey-Pjv"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.98885581359999997" green="0.92435741299999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="hAJ-Gc-70X" firstAttribute="centerY" secondItem="KRW-rn-5rs" secondAttribute="centerY" id="373-xL-9CS"/>
-                            <constraint firstItem="hAJ-Gc-70X" firstAttribute="centerX" secondItem="KRW-rn-5rs" secondAttribute="centerX" id="Efd-ZP-KM0"/>
+                            <constraint firstItem="KVF-8C-4bD" firstAttribute="leading" secondItem="KRW-rn-5rs" secondAttribute="leadingMargin" id="Bap-Wq-Nsq"/>
+                            <constraint firstItem="KVF-8C-4bD" firstAttribute="top" secondItem="ZCo-Xo-kq8" secondAttribute="bottom" constant="8" id="JwE-78-n43"/>
+                            <constraint firstItem="X4g-8T-1eO" firstAttribute="centerX" secondItem="KRW-rn-5rs" secondAttribute="centerX" id="MSn-8S-tZr"/>
+                            <constraint firstItem="fJF-3t-nVZ" firstAttribute="top" secondItem="X4g-8T-1eO" secondAttribute="bottom" constant="4" id="RcI-Ur-VXf"/>
+                            <constraint firstItem="fJF-3t-nVZ" firstAttribute="top" secondItem="oks-W7-4e4" secondAttribute="bottom" id="Wxg-EZ-8gv"/>
+                            <constraint firstItem="ZCo-Xo-kq8" firstAttribute="top" secondItem="jR6-VN-IhB" secondAttribute="bottom" constant="8" id="Z4l-lE-Wk9"/>
+                            <constraint firstAttribute="trailing" secondItem="ZCo-Xo-kq8" secondAttribute="trailing" id="ajO-N9-Ymv"/>
+                            <constraint firstAttribute="trailing" secondItem="oks-W7-4e4" secondAttribute="trailing" id="asy-wK-Owy"/>
+                            <constraint firstItem="KVF-8C-4bD" firstAttribute="trailing" secondItem="KRW-rn-5rs" secondAttribute="trailingMargin" id="rW3-ce-da8"/>
+                            <constraint firstItem="oks-W7-4e4" firstAttribute="leading" secondItem="KRW-rn-5rs" secondAttribute="leading" id="uve-Kj-ACg"/>
+                            <constraint firstItem="ZCo-Xo-kq8" firstAttribute="leading" secondItem="KRW-rn-5rs" secondAttribute="leading" id="zOK-AX-coX"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Người dùng" image="userInfoIcon" id="gk7-WV-IKb"/>
+                    <tabBarItem key="tabBarItem" title="User" image="userInfoIcon" id="gk7-WV-IKb"/>
+                    <connections>
+                        <outlet property="btn_Logout" destination="oks-W7-4e4" id="Ccx-Vz-Lmx"/>
+                        <outlet property="lbl_Title" destination="l8I-3G-LtG" id="hJw-na-Znf"/>
+                        <outlet property="lbl_UserName" destination="KVF-8C-4bD" id="O7I-MH-hxY"/>
+                        <segue destination="Afw-MN-gCb" kind="unwind" identifier="segue_UserToLogin" unwindAction="unwindToLoginViewControllerWithSegue:" id="AWG-1Y-nfK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y3H-aU-LMk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Afw-MN-gCb" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="6313" y="911"/>
+            <point key="canvasLocation" x="6907.5" y="583.09859154929575"/>
         </scene>
         <!--Booking Manager Detail View Controller-->
         <scene sceneID="dnX-h7-8kI">
@@ -1259,7 +1316,7 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="715-Lq-BFk" kind="show" identifier="segue_BookingManagerDetailToBookingManager" id="dgP-J4-frA"/>
+                                            <action selector="btn_Return_Onclick:" destination="bjc-xc-2qd" eventType="touchUpInside" id="wTY-KR-NwL"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1304,13 +1361,15 @@
                         <outlet property="lbl_Voucher" destination="yZY-8q-cua" id="dlV-56-Qxe"/>
                         <outlet property="lbl_Voucher_Title" destination="J0l-ID-S1I" id="rAr-gU-6UM"/>
                         <outlet property="tableView_BookingTime" destination="FtR-e9-I8D" id="vCb-uo-JJ4"/>
+                        <segue destination="1S8-jg-h7w" kind="unwind" identifier="segue_BookingManagerDetailToBookingManager" unwindAction="unwindToBookingManagerWithSegue:" id="k23-RD-YIj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ocb-GR-zfr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="1S8-jg-h7w" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="7251" y="892"/>
+            <point key="canvasLocation" x="7761" y="875"/>
         </scene>
-        <!--Đặt lịch-->
+        <!--Booking-->
         <scene sceneID="Nty-nf-MaU">
             <objects>
                 <viewController id="DOw-tG-wuz" customClass="BookingManagerViewController" customModule="DrQMuller" customModuleProvider="target" sceneMemberID="viewController">
@@ -1361,7 +1420,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5x4-ck-RQ8" id="xbt-mn-Vjp">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="155"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="154"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vmH-7U-4hH">
@@ -1484,7 +1543,7 @@
                             <constraint firstItem="xzf-ke-cTT" firstAttribute="top" secondItem="Tqz-wI-4yc" secondAttribute="bottom" id="t9l-ES-p7d"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Đặt lịch" image="bookIcon" selectedImage="bookIcon" id="Frk-Yg-4Vh"/>
+                    <tabBarItem key="tabBarItem" title="Booking" image="bookIcon" selectedImage="bookIcon" id="Frk-Yg-4Vh"/>
                     <connections>
                         <outlet property="lbl_Title" destination="zao-CD-gZB" id="UpH-2E-L9s"/>
                         <outlet property="tableView_Appointments" destination="Tqz-wI-4yc" id="mcG-OS-uIh"/>
@@ -1495,7 +1554,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xev-4X-icA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7760.625" y="87.676056338028175"/>
+            <point key="canvasLocation" x="7689" y="88"/>
         </scene>
         <!--Thông tin lịch hẹn-->
         <scene sceneID="bwR-Y7-sMg">
@@ -1640,7 +1699,7 @@
                                         </constraints>
                                         <state key="normal" image="trashIcon"/>
                                         <connections>
-                                            <segue destination="715-Lq-BFk" kind="show" identifier="segue_BookingGeneralToBookingManager" id="LjO-DZ-5O3"/>
+                                            <action selector="btn_BackToBookingManager_OnClick:" destination="zGE-cu-f7j" eventType="touchUpInside" id="utK-BM-wKA"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1725,9 +1784,11 @@
                         <outlet property="slideBtn_Next" destination="SsW-LW-5Uc" id="sGr-8H-Jcq"/>
                         <outlet property="view_TopView" destination="8d5-Pl-buM" id="afi-gF-S73"/>
                         <segue destination="dGw-41-sbb" kind="show" identifier="segue_BookingGeneralToStartEnDate" id="Qzw-y1-yFF"/>
+                        <segue destination="EcC-T4-L3M" kind="unwind" identifier="segue_BookingGeneralToBookingManager" unwindAction="unwindToBookingManagerWithSegue:" id="CK7-bq-s6m"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L2l-dY-KYb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="EcC-T4-L3M" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="8531.25" y="87.676056338028175"/>
         </scene>
@@ -1857,12 +1918,13 @@
                         <outlet property="slideBtn_Next" destination="2UY-zD-BI7" id="2qz-eE-M5H"/>
                         <outlet property="view_TopView" destination="YYI-00-8Qd" id="rjP-xV-emj"/>
                         <segue destination="rI9-M0-Ata" kind="show" identifier="segue_BookingStartEndToDetail" id="XQS-Ya-8jE"/>
-                        <segue destination="zGE-cu-f7j" kind="show" identifier="segue_BookingDateToBookingGeneral" id="hW0-TU-K5l"/>
+                        <segue destination="NBX-3z-Bqh" kind="unwind" identifier="segue_BookingDateToBookingGeneral" unwindAction="unwindToBookingGeneralWithSegue:" id="CUe-oU-9F7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFv-Y1-j96" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="NBX-3z-Bqh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="9324.375" y="87.676056338028175"/>
+            <point key="canvasLocation" x="9341" y="88"/>
         </scene>
         <!--Booking Detail View Controller-->
         <scene sceneID="FI8-qP-5f3">
@@ -1949,7 +2011,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="51" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0cb-Fk-2MU">
-                                <rect key="frame" x="16" y="171" width="288" height="325"/>
+                                <rect key="frame" x="16" y="171" width="288" height="276"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.98885581359999997" green="0.92435741299999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -1957,7 +2019,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -1993,7 +2055,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvD-pX-fey" customClass="MMSlidingButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="504" width="288" height="55"/>
+                                <rect key="frame" x="16" y="455" width="288" height="55"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="XqD-z7-awr"/>
@@ -2043,7 +2105,7 @@
                                         <rect key="frame" x="0.0" y="28" width="223" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="223" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="223" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -2094,7 +2156,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1r-eh-MJr">
-                                <rect key="frame" x="16" y="22" width="288" height="539"/>
+                                <rect key="frame" x="16" y="22" width="288" height="490"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2H-ww-mff">
                                         <rect key="frame" x="242" y="11" width="35" height="35"/>
@@ -2108,7 +2170,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9u-nt-tJq">
-                                        <rect key="frame" x="8" y="458" width="272" height="50"/>
+                                        <rect key="frame" x="8" y="409" width="272" height="50"/>
                                         <color key="backgroundColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="aZ3-hq-wUY"/>
@@ -2353,11 +2415,12 @@
                         <outlet property="tableView_CartOrder" destination="amS-Gt-vkE" id="gRV-H1-DRb"/>
                         <outlet property="view_ConfirmView" destination="g1r-eh-MJr" id="Qyq-SZ-f7u"/>
                         <outlet property="view_TopView" destination="iRY-w1-mXx" id="t02-77-My6"/>
-                        <segue destination="zGE-cu-f7j" kind="show" identifier="segue_BookingDetailToBookingGeneral" id="lsA-hk-Zkm"/>
                         <segue destination="1A6-qk-CfR" kind="show" identifier="segue_BookingDetailToBookingVerification" id="17y-Yy-APu"/>
+                        <segue destination="mf6-BD-GRG" kind="unwind" identifier="segue_BookingDetailToBookingGeneral" unwindAction="unwindToBookingGeneralWithSegue:" id="ae2-hM-xWr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tP4-ZY-qPZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="mf6-BD-GRG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="10147.5" y="87.676056338028175"/>
         </scene>
@@ -2449,6 +2512,19 @@
                                     <action selector="btn_Confirm_OnClick:" destination="1A6-qk-CfR" eventType="touchUpInside" id="2Lh-3f-qI3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gYh-oE-hD2">
+                                <rect key="frame" x="104" y="420" width="112" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="Hrv-Ga-riC"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Huỷ lịch hẹn">
+                                    <color key="titleColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="btn_CancelAppointment_OnClick:" destination="1A6-qk-CfR" eventType="touchUpInside" id="oF7-zz-h0Q"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.98885581359999997" green="0.92435741299999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -2457,6 +2533,8 @@
                             <constraint firstItem="LvB-RW-9GF" firstAttribute="leading" secondItem="RiK-NS-KFL" secondAttribute="leadingMargin" constant="12" id="3xC-D2-VT7"/>
                             <constraint firstItem="LvB-RW-9GF" firstAttribute="top" secondItem="05i-he-OIu" secondAttribute="bottom" constant="34" id="5R4-VJ-vFQ"/>
                             <constraint firstItem="05i-he-OIu" firstAttribute="top" secondItem="sV1-Mj-XMq" secondAttribute="bottom" constant="43" id="9PH-1N-95b"/>
+                            <constraint firstItem="gYh-oE-hD2" firstAttribute="top" secondItem="ysy-L3-xlr" secondAttribute="bottom" constant="8" id="HuT-KG-Rih"/>
+                            <constraint firstItem="gYh-oE-hD2" firstAttribute="leading" secondItem="RiK-NS-KFL" secondAttribute="leadingMargin" constant="88" id="S6S-rX-r9t"/>
                             <constraint firstItem="sV1-Mj-XMq" firstAttribute="top" secondItem="Jn2-jY-dgK" secondAttribute="bottom" constant="8" id="a13-mt-0jb"/>
                             <constraint firstItem="ysy-L3-xlr" firstAttribute="top" secondItem="LvB-RW-9GF" secondAttribute="bottom" constant="40" id="drn-Yl-4LK"/>
                             <constraint firstItem="05i-he-OIu" firstAttribute="leading" secondItem="RiK-NS-KFL" secondAttribute="leadingMargin" constant="12" id="mKg-VG-qN9"/>
@@ -2464,23 +2542,26 @@
                             <constraint firstItem="ysy-L3-xlr" firstAttribute="leading" secondItem="RiK-NS-KFL" secondAttribute="leadingMargin" id="s3J-ar-1dH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LvB-RW-9GF" secondAttribute="trailing" constant="12" id="wBx-1u-5rJ"/>
                             <constraint firstAttribute="trailing" secondItem="sV1-Mj-XMq" secondAttribute="trailing" id="xdn-au-n1W"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gYh-oE-hD2" secondAttribute="trailing" constant="88" id="ywk-36-Cdb"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="btn_Back" destination="XTc-EJ-OEm" id="Ba4-ep-Im4"/>
+                        <outlet property="btn_CancelAppointment" destination="gYh-oE-hD2" id="YzS-Cy-ktW"/>
                         <outlet property="btn_Confirm" destination="ysy-L3-xlr" id="BMZ-GF-gYA"/>
                         <outlet property="lbl_Title" destination="Dr1-l9-Mwi" id="PHw-Qc-hhe"/>
                         <outlet property="txtView_Message" destination="05i-he-OIu" id="ZKl-FC-K19"/>
                         <outlet property="txt_VerificationCode" destination="LvB-RW-9GF" id="Cmf-qN-V3B"/>
                         <outlet property="view_TopView" destination="sV1-Mj-XMq" id="VtF-Zp-APm"/>
-                        <segue destination="715-Lq-BFk" kind="show" identifier="segue_BookingVerificationToBookingManager" id="moK-p7-N5v"/>
+                        <segue destination="5dz-Bq-lWM" kind="unwind" identifier="segue_BookingVerificationToBookingManager" unwindAction="unwindToBookingManagerWithSegue:" id="3uG-D8-c89"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YPi-tk-ODi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="5dz-Bq-lWM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="11015.625" y="87.676056338028175"/>
         </scene>
-        <!--Mới-->
+        <!--News-->
         <scene sceneID="sNP-59-y3B">
             <objects>
                 <viewController id="SoP-t2-Tsk" sceneMemberID="viewController">
@@ -2493,7 +2574,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Mới" image="adsIcon" id="dL9-cL-qIi"/>
+                    <tabBarItem key="tabBarItem" enabled="NO" title="News" image="adsIcon" id="dL9-cL-qIi"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6Gx-N0-vU7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2557,6 +2638,7 @@
         <image name="genderIcon" width="512" height="512"/>
         <image name="googleIcon" width="600" height="600"/>
         <image name="homeIcon" width="512" height="512"/>
+        <image name="logoutIcon" width="685" height="720"/>
         <image name="phoneIcon" width="512" height="512"/>
         <image name="plusIcon" width="420" height="420"/>
         <image name="pwdIcon" width="256" height="256"/>
@@ -2566,11 +2648,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="sE2-L0-Rza"/>
-        <segue reference="bED-hu-lQ7"/>
-        <segue reference="Or8-t2-Wdh"/>
-        <segue reference="4fp-eZ-ZIh"/>
         <segue reference="xbJ-Nb-K3c"/>
-        <segue reference="lsA-hk-Zkm"/>
+        <segue reference="4fp-eZ-ZIh"/>
+        <segue reference="bED-hu-lQ7"/>
+        <segue reference="SS3-ZO-8w6"/>
+        <segue reference="5Jd-1u-Qxt"/>
     </inferredMetricsTieBreakers>
 </document>
