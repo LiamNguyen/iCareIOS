@@ -139,7 +139,8 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     @IBAction func btn_Back_OnClick(_ sender: Any) {
         
 //=========POP UP CONFIRM DIALOG=========
-
+        
+        hideKeyBoard()
         DialogManager.confirmLogout(sender: self, segueIdentifier: Storyboard.SEGUE_TO_LOGIN)
     }
     
@@ -218,6 +219,11 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
                 self.txt_Address.text = customerInformation["userAddress"] as! String?
             }
         }
+    }
+    
+    private func hideKeyBoard() {
+        txt_Name.resignFirstResponder()
+        txt_Address.resignFirstResponder()
     }
     
     private func wiredUpNetworkChecking() {

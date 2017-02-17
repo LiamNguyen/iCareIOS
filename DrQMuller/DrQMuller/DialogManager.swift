@@ -18,6 +18,7 @@ struct DialogManager {
         let confirmDialog = UIAlertController(title: "CONFIRM_LOGOUT_TITLE".localized(), message: "CONFIRM_LOGOUT_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
         
         confirmDialog.addAction(UIAlertAction(title: "LOGOUT_EXECUTE_TITLE".localized(), style: .default, handler: { (action: UIAlertAction!) in
+            UserDefaults.standard.removeObject(forKey: "CustomerInformation")
             sender.performSegue(withIdentifier: segueIdentifier, sender: sender)
         }))
         confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in

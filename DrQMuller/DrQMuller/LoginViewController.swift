@@ -89,6 +89,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 viewChooseLanguage.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: viewChooseLanguage.center.y)
             }
         }
+
+        checkUserTokenForAutoLogin()
     }
     
     deinit {
@@ -387,6 +389,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    private func checkUserTokenForAutoLogin() {
+        if let userToken = UserDefaults.standard.string(forKey: "CustomerInformation") {
+            DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: userToken)
+            handleNavigation()
+            print(DTOCustomerInformation.sharedInstance.customerInformationDictionary)
+        }
     }
     
     @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {}

@@ -141,6 +141,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========POP UP CONFIRM DIALOG=========
         
+        hideKeyBoard()
         DialogManager.confirmLogout(sender: self, segueIdentifier: StoryBoard.SEGUE_TO_LOGIN)
         
     }
@@ -220,6 +221,12 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
                 self.txt_Phone.text = customerInformation["userPhone"] as! String?
             }
         }
+    }
+    
+    
+    func hideKeyBoard() {
+        txt_Email.resignFirstResponder()
+        txt_Phone.resignFirstResponder()
     }
     
 }

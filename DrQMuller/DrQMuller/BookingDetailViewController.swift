@@ -775,7 +775,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self?.tableView_BookingTime.isHidden = true
             self?.activityIndicator.startAnimating()
             let day_ID = String(self?.dropDown_DaysOfWeek.indexForSelectedRow ?? 0 + 1)
-            //OBSERVING NOTIFICATION FROM ModelHandleBookingDetail
+
             //self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
             
             self?.tupleBookingTime.id.day_ID = day_ID
@@ -979,7 +979,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.backgroundColor = ThemeBackGroundColor
         self.isRequiredClearAllCartItems = true
         modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
-        //        self.timer_bookingExpire?.invalidate()
+        self.timer_bookingExpire?.invalidate()
         print("Clear all cart items")
     }
     
