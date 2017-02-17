@@ -25,13 +25,13 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
     @IBOutlet private weak var lbl_Title: UILabel!
     
-    private var customerInformationController = CustomStyleCustomerInformation()
+    private var customerInformationController: CustomStyleCustomerInformation!
     private var picker_GenderDataSource = [String]()
-    private let datePickerRange = DatePickerRange()
-    private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var datePickerRange: DatePickerRange!
+//    private var networkViewManager: NetworkViewManager!
+//    private weak var networkCheckInRealTime: Timer!
     
-    private var modelHandelCustomerInformation = ModelHandleCustomerInformation()
+    private var modelHandelCustomerInformation: ModelHandleCustomerInformation!
     
     private func updateUI() {
         lbl_Title.text = "CUSTOMER_INFO_PAGE_TITLE".localized()
@@ -62,10 +62,26 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         //=========FILL CHOSEN INFORMATION=========
         
         fillInformation()
+        
+//        wiredUpNetworkChecking()
+        
+        //=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(SecondTabCustomerInformationViewController.onReceiveNecessaryInfoResponse(notification:)),
+            name: Notification.Name(rawValue: "necessaryInfoResponse"),
+            object: nil
+        )
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.customerInformationController = CustomStyleCustomerInformation()
+//        self.networkViewManager = NetworkViewManager()
+        self.modelHandelCustomerInformation = ModelHandleCustomerInformation()
+        self.datePickerRange = DatePickerRange()
         
 //=========DATE PICKER SET MAX=========
 
@@ -97,30 +113,28 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
         self.slideBtn_Next.delegate = self
         self.slideBtn_Next.reset()
-        
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
-        
-//=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "necessaryInfoResponse"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "necessaryInfoResponse"), object: nil, queue: nil) { (Notification) in
-            if let userInfo = Notification.userInfo {
-                if let isSuccess = userInfo["status"] as? Bool {
-                    if isSuccess {
-                        DispatchQueue.global(qos: .userInteractive).async {
-                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
-                            if customerInformation["step"] as! String == "basic" {
-                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "necessary"
-                            }
-                            DispatchQueue.main.async {
-                                self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
-                            }
+
+    }
+    
+    deinit {
+        print("Second tab VC: Dead")
+    }
+    
+    func onReceiveNecessaryInfoResponse(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            if let isSuccess = userInfo["status"] as? Bool {
+                if isSuccess {
+                    DispatchQueue.global(qos: .userInteractive).async {
+                        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+                        if customerInformation["step"] as! String == "basic" {
+                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "necessary"
                         }
-                    } else {
-                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                        DispatchQueue.main.async {
+                            self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
+                        }
                     }
+                } else {
+                    ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
                 }
             }
         }
@@ -130,7 +144,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+//        networkCheckInRealTime.invalidate()
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
@@ -218,6 +232,10 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         }
     }
     
-    
+//    private func wiredUpNetworkChecking() {
+//        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+//        networkViewManager = tupleDetectNetworkReachabilityResult.network
+//        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+//    }
     
 }

@@ -41,8 +41,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private var activityIndicator: UIActivityIndicatorView!
     private var language: String!
     
-    private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+//    private var networkViewManager = NetworkViewManager()
+//    private var networkCheckInRealTime: Timer!
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -55,7 +55,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
                 self.dropDown_Types]
     }()
     
-    private var modelHandleBookingGeneral = ModelHandleBookingGeneral()
+    private var modelHandleBookingGeneral: ModelHandleBookingGeneral!
     
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
@@ -75,11 +75,19 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         static let SEGUE_TO_BOOKING_DATE = "segue_BookingGeneralToStartEnDate"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        slideBtn_Next.reset()
+    }
+    
 //=========VIEW DID LOAD FUNC=========
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        modelHandleBookingGeneral = ModelHandleBookingGeneral()
+        
         updateUI()
         
         DTOBookingInformation.sharedInstance.clearAllDTOBookingInfo()
@@ -88,13 +96,21 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking==========
 
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "arrayDataSource"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "arrayDataSource"), object: nil, queue: nil, using: bindDataSource)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingGeneralViewController.bindDataSource(notification:)),
+            name: Notification.Name(rawValue: "arrayDataSource"),
+            object: nil
+        )
         
 //=========OBSERVING NOTIFICATION FROM PMHandleBooking OFFLINE DATASOURCE==========
         
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "arrayDataSourceOffline"), object: nil, queue: nil, using: bindDataSourceOffline)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingGeneralViewController.bindDataSourceOffline(notification:)),
+            name: Notification.Name(rawValue: "arrayDataSourceOffline"),
+            object: nil
+        )
         
 //=========SEND REQUEST TO GET DROPDOWNS DATASOURCE=========
         
@@ -111,15 +127,23 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         self.icon_Type.isHidden = true
         
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+//        networkViewManager = tupleDetectNetworkReachabilityResult.network
+//        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    deinit {
+        print("Booking General VC: dead")
+    }
+    
+    override func didReceiveMemoryWarning() {
+        dropDowns.removeAll(keepingCapacity: false)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+//        networkCheckInRealTime.invalidate()
     }
     
 //=========BINDING DATASOURCE FOR DROPDOWNS==========
@@ -242,6 +266,10 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Types.show()
     }
     
+    @IBAction func btn_BackToBookingManager_OnClick(_ sender: Any) {
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+    }
+    
 //=========WIRED UP ALL DROPDOWNS=========
     
     private func dropDownAllWiredUp(countries: [String], cities: [String], districts: [String], locations: [String], vouchers: [String], types: [String]) {
@@ -270,8 +298,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Countries.dataSource = dataSource
         dropDown_Countries.selectRow(at: 234)
         
-        dropDown_Countries.selectionAction = { [unowned self] (index, item) in
-            self.btn_CountriesDropDown.setTitle(item, for: .normal)
+        dropDown_Countries.selectionAction = { [weak self] (index, item) in
+            self?.btn_CountriesDropDown.setTitle(item, for: .normal)
         }
     }
     
@@ -283,8 +311,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Cities.dataSource = dataSource
         dropDown_Cities.selectRow(at: 57)
         
-        dropDown_Cities.selectionAction = { [unowned self] (index, item) in
-            self.btn_CitiesDropDown.setTitle(item, for: .normal)
+        dropDown_Cities.selectionAction = { [weak self] (index, item) in
+            self?.btn_CitiesDropDown.setTitle(item, for: .normal)
         }
     }
     
@@ -296,8 +324,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Districts.dataSource = getDistrictLocale(datasource: dataSource)
         dropDown_Districts.selectRow(at: 7)
         
-        dropDown_Districts.selectionAction = { [unowned self] (index, item) in
-            self.btn_DistrictsDropDown.setTitle(item, for: .normal)
+        dropDown_Districts.selectionAction = { [weak self] (index, item) in
+            self?.btn_DistrictsDropDown.setTitle(item, for: .normal)
         }
     }
     
@@ -326,8 +354,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Locations.dataSource = dataSource
         dropDown_Locations.selectRow(at: 0)
         
-        dropDown_Locations.selectionAction = { [unowned self] (index, item) in
-            self.btn_LocationsDropDown.setTitle(item, for: .normal)
+        dropDown_Locations.selectionAction = { [weak self] (index, item) in
+            self?.btn_LocationsDropDown.setTitle(item, for: .normal)
         }
     }
     
@@ -338,8 +366,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
         dropDown_Vouchers.dataSource = dataSource
         
-        dropDown_Vouchers.selectionAction = { [unowned self] (index, item) in
-            self.btn_VouchersDropDown.setTitle(item, for: .normal)
+        dropDown_Vouchers.selectionAction = { [weak self] (index, item) in
+            self?.btn_VouchersDropDown.setTitle(item, for: .normal)
         }
     }
     
@@ -356,8 +384,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
             dropDown_Types.selectRow(at: getTypeLocale(datasource: dataSource).index(of: "Free time"))
         }
 
-        dropDown_Types.selectionAction = { [unowned self] (index, item) in
-            self.btn_TypesDropDown.setTitle(item, for: .normal)
+        dropDown_Types.selectionAction = { [weak self] (index, item) in
+            self?.btn_TypesDropDown.setTitle(item, for: .normal)
         }
     }
 
@@ -382,15 +410,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDowns.forEach { $0.direction = .any }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Storyboard.SEGUE_TO_BOOKING_MANAGER {
-            if let tabVC = segue.destination as? UITabBarController {
-                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
-                tabVC.tabBar.items?[0].isEnabled = false
-                tabVC.selectedIndex = 1
-            }
-        }
-    }
+    @IBAction func unwindToBookingGeneral(segue: UIStoryboardSegue) {}
 }
 
 

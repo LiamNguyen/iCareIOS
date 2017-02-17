@@ -32,7 +32,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     private var language: String?
     private var isTypeFree = false
     
-    private var modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
+    private var modelHandleBookingManagerDetail: ModelHandleBookingManagerDetail!
     
     var dtoBookingInformation: DTOBookingInformation!
     
@@ -55,12 +55,21 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         static let SEGUE_TO_BOOKING_MANAGER = "segue_BookingManagerDetailToBookingManager"
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingManagerDetailViewController.onReceiveCancelAppointmentResponse(notification:)),
+            name: Notification.Name(rawValue: "cancelAppointment"),
+            object: nil
+        )
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
         
         updateUI()
         
@@ -76,9 +85,14 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         self.tableView_BookingTime.delegate = self
         self.tableView_BookingTime.dataSource = self
         self.tableView_BookingTime.isUserInteractionEnabled = false
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "cancelAppointment"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "cancelAppointment"), object: nil, queue: nil, using: onReceiveCancelAppointmentResponse)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    deinit {
+        print("Booking Manager Detail VC: Dead")
     }
     
     func onReceiveCancelAppointmentResponse(notification: Notification) {
@@ -147,6 +161,9 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         }))
         
         self.present(confirmDialog, animated: true, completion: nil)
+    }
+    @IBAction func btn_Return_Onclick(_ sender: Any) {
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

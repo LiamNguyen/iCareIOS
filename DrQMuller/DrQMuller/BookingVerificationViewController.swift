@@ -15,9 +15,11 @@ class BookingVerificationViewController: UIViewController {
     @IBOutlet weak var txtView_Message: UITextView!
     @IBOutlet weak var txt_VerificationCode: UITextField!
     @IBOutlet weak var btn_Confirm: UIButton!
+    @IBOutlet weak var btn_CancelAppointment: UIButton!
 
     private var borderBottom: UIView!
-    private var modelHandleBookingVerification = ModelHandleBookingVerification()
+    private var modelHandleBookingVerification: ModelHandleBookingVerification!
+    private var modelHandleBookingManagerDetail: ModelHandleBookingManagerDetail!
     var dtoBookingInformation: DTOBookingInformation!
     
     private var activityIndicator: UIActivityIndicatorView!
@@ -27,6 +29,7 @@ class BookingVerificationViewController: UIViewController {
         self.txtView_Message.text? = "VERIFICATION_MESSAGE".localized()
         self.txt_VerificationCode.placeholder = "CODE_PLACEHOLDER".localized()
         self.btn_Confirm.setTitle("CONFIRM_TITLE".localized(), for: .normal)
+        self.btn_CancelAppointment.setTitle("CANCEL_APPOINTMENT_TITLE".localized(), for: .normal)
     }
     
     private struct Storyboard {
@@ -40,25 +43,50 @@ class BookingVerificationViewController: UIViewController {
         
         txt_VerificationCode.becomeFirstResponder()
         
+        
+        //=========OBSERVING NOTIFICATION FROM PMHandleBooking=========
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingVerificationViewController.onReceiveVerifificationCodeResponse(notification:)),
+            name: Notification.Name(rawValue: "validateCode"),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingVerificationViewController.onReceiveCancelAppointmentResponse(notification:)),
+            name: Notification.Name(rawValue: "cancelAppointment"),
+            object: nil
+        )
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
+        
+        modelHandleBookingVerification = ModelHandleBookingVerification()
+        modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
 
         UIView.hr_setToastThemeColor(color: UIColor.red)
         
         self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
         self.activityIndicator.stopAnimating()
         
-        //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "validateCode"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "validateCode"), object: nil, queue: nil, using: onReceiveVerifificationCodeResponse)
-        
         print("\nBooking Verifification VC ONLOAD: ")
         dtoBookingInformation.printBookingInfo()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        txt_VerificationCode.resignFirstResponder()
+    }
+    
+    deinit {
+        print("Booking Verification VC: Dead")
     }
     
     func onReceiveVerifificationCodeResponse(notification: Notification) {
@@ -88,15 +116,58 @@ class BookingVerificationViewController: UIViewController {
         }
     }
     
+    func onReceiveCancelAppointmentResponse(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            if let isOk = userInfo["status"] as? Bool {
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.view.isUserInteractionEnabled = true
+                }
+                if isOk {
+                    DispatchQueue.main.async {
+                        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction?) in
+                            
+                            self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
+                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+                        }))
+                        
+                        self.present(confirmDialog, animated: true, completion: nil)
+                    }
+                } else {
+                    ToastManager.alert(view: self.view, msg: "CANCEL_APPOINTMENT_FAIL_MESSAGE".localized())
+                }
+            }
+        }
+    }
+    
+    @IBAction func btn_CancelAppointment_OnClick(_ sender: Any) {
+        let confirmDialog = UIAlertController(title: "WARNING_TITLE".localized(), message: "CANCEL_APPOINTMENT_CONFIRMATION_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "CONFIRM_TITLE".localized(), style: .default, handler: { (action: UIAlertAction?) in
+            self.activityIndicator.startAnimating()
+            self.view.isUserInteractionEnabled = false
+            
+            self.modelHandleBookingManagerDetail.cancelAppointment(appointment_ID: self.dtoBookingInformation.appointmentID)
+        }))
+        
+        confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction?) in
+            
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
+    }
+    
     @IBAction func btn_Back_OnClick(_ sender: Any) {
         let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "WARNING_BOOKING_UNVERIFIED".localized(), preferredStyle: UIAlertControllerStyle.alert)
         
-        confirmDialog.addAction(UIAlertAction(title: "LEAVE_EXECUTE_TITLE".localized(), style: .default, handler: { (action: UIAlertAction!) in
-            self.dtoBookingInformation.isConfirmed = "0"
-            self.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: self.dtoBookingInformation)
-            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+        confirmDialog.addAction(UIAlertAction(title: "LEAVE_EXECUTE_TITLE".localized(), style: .default, handler: { [weak self] (action: UIAlertAction!) in
+            self?.dtoBookingInformation.isConfirmed = "0"
+            self?.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: (self?.dtoBookingInformation)!)
+            self?.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
         }))
-        confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in
+        confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { [weak self] (action: UIAlertAction!) in
             
         }))
         
@@ -133,16 +204,6 @@ class BookingVerificationViewController: UIViewController {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Storyboard.SEGUE_TO_BOOKING_MANAGER {
-            if let tabVC = segue.destination as? UITabBarController {
-                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
-                tabVC.tabBar.items?[0].isEnabled = false
-                tabVC.selectedIndex = 1
-            }
-        }
     }
     
     private func createTxtFieldBorder() {

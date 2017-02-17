@@ -57,6 +57,10 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         //=========FILL CHOSEN INFORMATION=========
         
         fillInformation()
+        
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
     override func viewDidLoad() {
@@ -86,10 +90,6 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
         
         txt_Email.becomeFirstResponder()
-        
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
         
 //=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
         

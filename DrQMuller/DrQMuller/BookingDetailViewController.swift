@@ -33,10 +33,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private weak var lbl_VoucherTitle: UILabel!
     @IBOutlet private weak var lbl_TypeTitle: UILabel!
     @IBOutlet private weak var lbl_LocationTitle: UILabel!
-        
+    
     private var activityIndicator: UIActivityIndicatorView!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
+    private var modelHandleBookingVerification: ModelHandleBookingVerification!
+    
     private var freeTimeDataSource = [String]()
     
     private let dropDown_DaysOfWeek = DropDown()
@@ -50,7 +52,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var isEco = false
     private var isTypeFree = false
     private var dataHasReceive = false
-
+    
     private var tupleBookingTime_Array = [(id: (day_ID: String, time_ID: String), value: (day: String, time: String))]()
     
     private var tupleBookingTime: (id: (day_ID: String, time_ID: String), value: (day: String, time: String))!
@@ -60,8 +62,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var presentWindow : UIWindow?
     private var messageView: UIView!
     
-    private var timer: Timer!
+    private var timer: Timer?
     private var timer_bookingExpire: Timer?
+    private var networkCheckInRealTime: Timer?
+    
     private var deleteCartOrderItemIndexPath: NSIndexPath? = nil
     private var dtoBookingTime: [[String]]!
     
@@ -75,7 +79,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var flyingView: UIView!
     
     private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
     
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
@@ -101,59 +104,100 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         static let SEGUE_TO_BOOKING_GENERAL = "segue_BookingDetailToBookingGeneral"
     }
     
+    deinit {
+        print("Booking Detail VC: Dead")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
         
-//=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
+        //        //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
+        //
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingDetailViewController.onReceiveFreeTimeDataSource(notification:)),
+            name: Notification.Name(rawValue: "freeTimeDataSource"),
+            object: nil
+        )
+        //
+        //        //=========OBSERING NOTIFICATION FROM PMHandleBooking FOR CHECKING BOOKING TIME EXISTENCY RESULT=========
+        //
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingDetailViewController.onReceiveExistencyResult(notification:)),
+            name: Notification.Name(rawValue: "existencyResult"),
+            object: nil
+        )
+        //
+        //        //=========OBSERING NOTIFICATION FROM PMHandleReleaseTime=========
+        //
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingDetailViewController.onReceiveReleaseTimeResponse(notification:)),
+            name: Notification.Name(rawValue: "releaseTimeResponse"),
+            object: nil
+        )
+        //
+        //        //=========OBSERING NOTIFICATION FROM ModelHandleBookingDetail WHEN TIME_ID IS NIL=========
+        //
         
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "freeTimeDataSource"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "freeTimeDataSource"), object: nil, queue: nil, using: onReceiveFreeTimeDataSource)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingDetailViewController.onHandleWhenTimeIDIsNil(notification:)),
+            name: Notification.Name(rawValue: "timeIDIsNil"),
+            object: nil
+        )
+        //
+        //        //=========OBSERING NOTIFICATION FROM AppDelegate WHEN Application is close=========
+        //
         
-//=========OBSERING NOTIFICATION FROM PMHandleBooking FOR CHECKING BOOKING TIME EXISTENCY RESULT=========
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingDetailViewController.onBookingExpire(notification:)),
+            name: Notification.Name(rawValue: "appResignActive"),
+            object: nil
+        )
+        //
+        //
+        //        //=========OBSERING NOTIFICATION FROM AppDelegate WHEN Application is close=========
+        //
         
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "existencyResult"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "existencyResult"), object: nil, queue: nil, using: onReceiveExistencyResult)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingDetailViewController.onBookingExpire(notification:)),
+            name: Notification.Name(rawValue: "appTerminate"),
+            object: nil
+        )
+        //        //=========OBSERING NOTIFICATION FROM PMHandleBooking WHEN NEW APPOINTMENT IS INSERTED OR NOT=========
+        //
         
-//=========OBSERING NOTIFICATION FROM PMHandleReleaseTime=========
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingDetailViewController.onReceiveInsertAppointmentResponse(notification:)),
+            name: Notification.Name(rawValue: "insertAppointmentResponse"),
+            object: nil
+        )
         
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "releaseTimeResponse"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "releaseTimeResponse"), object: nil, queue: nil, using: onReceiveReleaseTimeResponse)
+        //        //=========OBSERING NOTIFICATION FROM PMHandleBooking FOR MACHINES DATASOURCE=========
+        //
         
-//=========OBSERING NOTIFICATION FROM ModelHandleBookingDetail WHEN TIME_ID IS NIL=========
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingDetailViewController.onReceiveMachinesDataSource(notification:)),
+            name: Notification.Name(rawValue: "machinesDataSource"),
+            object: nil
+        )
         
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "timeIDIsNil"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "timeIDIsNil"), object: nil, queue: nil, using: onHandleWhenTimeIDIsNil)
-        
-//=========OBSERING NOTIFICATION FROM AppDelegate WHEN Application is close=========
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "appResignActive"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "appResignActive"), object: nil, queue: nil, using: onBookingExpire)
-        
-//=========OBSERING NOTIFICATION FROM AppDelegate WHEN Application is close=========
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "appTerminate"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "appTerminate"), object: nil, queue: nil, using: onBookingExpire)
-        
-//=========OBSERING NOTIFICATION FROM PMHandleBooking WHEN NEW APPOINTMENT IS INSERTED OR NOT=========
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "insertAppointmentResponse"), object: nil, queue: nil, using: onReceiveInsertAppointmentResponse)
-        
-//=========OBSERING NOTIFICATION FROM PMHandleBooking FOR MACHINES DATASOURCE=========
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "machinesDataSource"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "machinesDataSource"), object: nil, queue: nil, using: onReceiveMachinesDataSource)
-        
-//=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
+        //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
             isEco = true
         }
         
         modelHandelBookingDetail = ModelHandleBookingDetail(isEco: isEco)
         
-//=========DELEGATING TABLEVIEW=========
-
+        //=========DELEGATING TABLEVIEW=========
+        
         self.tableView_BookingTime.dataSource = self
         self.tableView_BookingTime.delegate = self
         
@@ -169,30 +213,30 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         decorateCartOrderTableView()
         
-//=========DELEGATING SLIDE BUTTON=========
-
+        //=========DELEGATING SLIDE BUTTON=========
+        
         self.slideBtn.delegate = self
         self.slideBtn.reset()
         
-//=========CUSTOM STYLE FOR NOTIFICATION ICON=========
-
+        //=========CUSTOM STYLE FOR NOTIFICATION ICON=========
+        
         let radius = min(lbl_Notification.frame.size.width, lbl_Notification.frame.size.height) / 2.0
         self.lbl_Notification.layer.cornerRadius = radius
         self.lbl_Notification.isHidden = true
         
-//=========SET UP TOAST COLOR STYLE=========
+        //=========SET UP TOAST COLOR STYLE=========
         
         UIView.hr_setToastThemeColor(color: ToastColor)
         
-//=========INITIALIZE ACTIVITY INDICATOR=========
+        //=========INITIALIZE ACTIVITY INDICATOR=========
         
         self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
         
-//=========INITIALIZE TUPLE BOOKING TIME=========
+        //=========INITIALIZE TUPLE BOOKING TIME=========
         
         self.tupleBookingTime = (id: (day_ID: "", time_ID: ""), value: (day: "", time: ""))
         
-//=========SET TYPE=========
+        //=========SET TYPE=========
         
         if DTOBookingInformation.sharedInstance.type == "Tự do" {
             self.isTypeFree = true
@@ -201,7 +245,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.tupleBookingTime.id.day_ID = modelHandelBookingDetail.returnPreSelectedDayIDForTypeFree()
         }
         
-//=========RETRIEVE MACHINES DATASOURCE=========
+        //=========RETRIEVE MACHINES DATASOURCE=========
         
         if !self.activityIndicator.isAnimating {
             self.activityIndicator.startAnimating()
@@ -209,17 +253,17 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         modelHandelBookingDetail.bindMachinesDataSource()
         
-//=========RETRIEVE DAYS OF WEEK DATASOURCE=========
+        //=========RETRIEVE DAYS OF WEEK DATASOURCE=========
         
         self.staticArrayFromUserDefaults = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()
         self.daysOfWeekDataSource = staticArrayFromUserDefaults.daysOfWeekDisplayArray
         
-//=========BIND DAYS OF WEEK DATASOURCE TO DROPDOWN=========
+        //=========BIND DAYS OF WEEK DATASOURCE TO DROPDOWN=========
         
         dropDownDaysOfWeekWiredUp()
-
-//=========WIRED UP TAP RECOGNIZER FOR NOTIFICATION BUTTON=========
- 
+        
+        //=========WIRED UP TAP RECOGNIZER FOR NOTIFICATION BUTTON=========
+        
         setUpTapRecognitionForCartButton()
         
         dtoBookingTime = [[String]]()
@@ -244,14 +288,25 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
+        
         if !dtoBookingTime.isEmpty && !hasSuccessfullyInsertedAppointment {
             modelHandelBookingDetail.releaseTime(timeObj: dtoBookingTime)
         }
-        networkCheckInRealTime.invalidate()
+        
+        networkCheckInRealTime?.invalidate()
+        timer?.invalidate()
+        timer_bookingExpire?.invalidate()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        networkCheckInRealTime = nil
+        timer_bookingExpire = nil
+        timer = nil
+        modelHandleBookingVerification = nil
     }
     
     
-//=========UPDATE FREE TIME LIST WHEN RECEIVING RESPONSE FROM SERVER=========
+    //=========UPDATE FREE TIME LIST WHEN RECEIVING RESPONSE FROM SERVER=========
     
     func onReceiveFreeTimeDataSource(notification: Notification) {
         if dataHasReceive {
@@ -259,7 +314,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
         if let userInfo = notification.userInfo {
             DispatchQueue.global(qos: .userInteractive).async {
-
+                
                 let freeTimeDataSource = userInfo["returnArrayDataSource"]! as! [String]
                 self.freeTimeDataSource = freeTimeDataSource
                 self.dataHasReceive = true
@@ -280,7 +335,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-//=========RECEVING BOOKING TIME EXISTENCY RESULT=========
+    //=========RECEVING BOOKING TIME EXISTENCY RESULT=========
     
     func onReceiveExistencyResult(notification: Notification) {
         if let userInfo = notification.userInfo {
@@ -317,7 +372,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             
                             self.dropDown_DaysOfWeek.deselectRow(at: self.dropDownSelectedRowIndex)
                             self.dropDownSelectedRowIndex = nil
-
+                            
                         } else {
                             for i in 0 ..< self.freeTimeDataSource.count {
                                 if self.freeTimeDataSource[i] == self.tupleBookingTime.value.time {
@@ -338,7 +393,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         if notificationNumber == 1 {
                             self.lbl_Notification.isHidden = false
                         }
-
+                        
                         self.activityIndicator.stopAnimating()
                         if let startPosition = self.addToCartAnimation_StartPosition {
                             self.flyingView = UIFunctionality.createFlyingView(parentView: self.view, startPosition: startPosition)
@@ -356,7 +411,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-//=========RECEVING INSERT APPOINTMENT RESPONSE=========
+    //=========RECEVING INSERT APPOINTMENT RESPONSE=========
     
     func onReceiveInsertAppointmentResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
@@ -378,7 +433,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-//=========RECEVING RELEASE TIME RESPONSE=========
+    //=========RECEVING RELEASE TIME RESPONSE=========
     
     func onReceiveReleaseTimeResponse(notification: Notification) {
         
@@ -410,7 +465,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-//=========RECEVING MACHINES DATA SOURCE=========
+    //=========RECEVING MACHINES DATA SOURCE=========
     
     func onReceiveMachinesDataSource(notification: Notification) {
         if let userInfo = notification.userInfo {
@@ -464,7 +519,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.present(alert, animated: true, completion: nil)
     }
     
-//=========CLOSE CONFIRM BUTTON ONCLICK=========
+    //=========CLOSE CONFIRM BUTTON ONCLICK=========
     
     @IBAction func btn_CloseConfirm_OnClick(_ sender: Any) {
         self.slideBtn.reset()
@@ -475,25 +530,25 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-//=========TABLE VIEW DELEGATE METHODS=========
+    //=========TABLE VIEW DELEGATE METHODS=========
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.tableView_CartOrder || tableView == self.tableView_BookingTimeConfirm {
-        //CART ORDER TABLE VIEW AND CART ORDER CONFIRM TABLE VIEW
+            //CART ORDER TABLE VIEW AND CART ORDER CONFIRM TABLE VIEW
             return dtoBookingTime.count
         } else {
-        //FREE TIME TABLE VIEW
+            //FREE TIME TABLE VIEW
             return freeTimeDataSource.count
         }
     }
     
-//=========TABLE VIEW DELEGATE METHODS=========
+    //=========TABLE VIEW DELEGATE METHODS=========
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.tableView_BookingTime {
-        //FREE TIME TABLE VIEW
+            //FREE TIME TABLE VIEW
             let cellIdentifier = "TimeTableViewCell"
-        
+            
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! TimeTableViewCell
             
             let item = freeTimeDataSource[indexPath.row]
@@ -518,7 +573,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             return cell
         } else {
-        //CART ORDER TABLE VIEW
+            //CART ORDER TABLE VIEW
             let cellIdentifier = "CartOrderTableViewCell"
             
             let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! CartOrderTableViewCell
@@ -536,12 +591,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-//=========TABLE VIEW DELEGATE METHODS=========
-
+    //=========TABLE VIEW DELEGATE METHODS=========
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath)!
-            selectedCell.contentView.backgroundColor = UIColor(netHex: 0xFEDEFF)
-            
+        selectedCell.contentView.backgroundColor = UIColor(netHex: 0xFEDEFF)
+        
         if tableView == self.tableView_BookingTime {
             
             let bookingTime = dtoBookingTime
@@ -571,7 +626,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             if let machine_ID = self.tupleBookingMachine.id {
                 modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row], chosenMachineID: machine_ID)
             }
-                
+            
             let time_ID = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
             
             self.tupleBookingTime.id.time_ID = time_ID
@@ -584,11 +639,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             ToastManager.alert(view: view_TopView, msg: "DELETE_EACH_CART_ITEM_MESSAGE".localized())
         }
-
+        
     }
     
-//=========TABLE VIEW DELEGATE METHODS=========
-
+    //=========TABLE VIEW DELEGATE METHODS=========
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete && tableView == self.tableView_CartOrder {
             self.deleteCartOrderItemIndexPath = indexPath as NSIndexPath?
@@ -596,7 +651,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             confirmDelete(row: rowToDelete)
         }
     }
-     
+    
     private func confirmDelete(row: (id: (day_ID: String, time_ID: String), value: (day: String, time: String))) {
         let msg = "\("CONFIRM_DELETE_EACH_ITEM_MESSAGE_1ST_PART".localized())\(row.value.day) - \(row.value.time)\("CONFIRM_DELETE_EACH_ITEM_MESSAGE_2ND_PART".localized())"
         
@@ -642,10 +697,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.tableView_CartOrder.endUpdates()
             
-//            self.freeTimeDataSource.append(self.deletedTime ?? "")
-//            self.freeTimeDataSource.sort()
-//            self.tableView_BookingTime.reloadData()
-
+            //            self.freeTimeDataSource.append(self.deletedTime ?? "")
+            //            self.freeTimeDataSource.sort()
+            //            self.tableView_BookingTime.reloadData()
+            
             self.tableView_BookingTimeConfirm.reloadData()
             
             self.lbl_Notification.text = String(Int(self.lbl_Notification.text!)! - 1)
@@ -661,13 +716,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 }
             }
         }
-    } 
+    }
     
     private func cancelDeleteCartItem(alertAction: UIAlertAction!) -> Void {
         self.deleteCartOrderItemIndexPath = nil
     }
     
-//=========SLIDE BUTTON_ONSLIDE=========
+    //=========SLIDE BUTTON_ONSLIDE=========
     
     func buttonStatus(_ status: String, sender: MMSlidingButton) {
         self.slideBtn.reset()
@@ -689,12 +744,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
     }
     
-//=========WIRED UP DAYS OF WEEK DROPDOWN=========
-
+    //=========WIRED UP DAYS OF WEEK DROPDOWN=========
+    
     private func dropDownDaysOfWeekWiredUp() {
         var datasource = self.daysOfWeekDataSource!
         
-//REMOVE SATURDAY AND SUNDAY IF ISECO
+        //REMOVE SATURDAY AND SUNDAY IF ISECO
         if isEco && !isTypeFree {
             datasource.removeLast()
             datasource.removeLast()
@@ -710,41 +765,41 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         dropDown_DaysOfWeek.anchorView = btn_DropDownDaysOfWeek
         
-        dropDown_DaysOfWeek.selectionAction = { [unowned self] (index, item) in
-            self.btn_DropDownDaysOfWeek.setTitle(item, for: .normal)
+        dropDown_DaysOfWeek.selectionAction = { [weak self] (index, item) in
+            self?.btn_DropDownDaysOfWeek.setTitle(item, for: .normal)
             
-            if self.tupleBookingTime.value.day == item && self.dropDownSelectedRowIndex != nil {
+            if self?.tupleBookingTime.value.day == item && self?.dropDownSelectedRowIndex != nil {
                 return
-            } 
+            }
             
-            self.tableView_BookingTime.isHidden = true
-            self.activityIndicator.startAnimating()
-            let day_ID = String(self.dropDown_DaysOfWeek.indexForSelectedRow! + 1)
+            self?.tableView_BookingTime.isHidden = true
+            self?.activityIndicator.startAnimating()
+            let day_ID = String(self?.dropDown_DaysOfWeek.indexForSelectedRow ?? 0 + 1)
             //OBSERVING NOTIFICATION FROM ModelHandleBookingDetail
             //self.modelHandelBookingDetail.bindFreeTimeDataSource(selectedDayOfWeek_ID: day_ID)
             
-            self.tupleBookingTime.id.day_ID = day_ID
-            self.tupleBookingTime.value.day = item
+            self?.tupleBookingTime.id.day_ID = day_ID
+            self?.tupleBookingTime.value.day = item
             
-            self.dropDownSelectedRowIndex = self.dropDown_DaysOfWeek.indexForSelectedRow
-        
-            self.dataHasReceive = false
+            self?.dropDownSelectedRowIndex = self?.dropDown_DaysOfWeek.indexForSelectedRow
+            
+            self?.dataHasReceive = false
         }
     }
     
-//=========WIRED UP MACHINES DROPDOWN=========
+    //=========WIRED UP MACHINES DROPDOWN=========
     
     private func dropDownMachinesWiredUp(dataSource: [String]) {
         self.dropDown_Machines.dataSource = dataSource.sorted()
         self.dropDown_Machines.anchorView = btn_DropDownMachines
-        self.dropDown_Machines.selectionAction = { [unowned self] (index, item) in
-            self.btn_DropDownMachines.setTitle(item, for: .normal)
+        self.dropDown_Machines.selectionAction = { [weak self] (index, item) in
+            self?.btn_DropDownMachines.setTitle(item, for: .normal)
             
             let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: item)
-            self.tupleBookingMachine.id = machine_ID
-            self.tupleBookingMachine.value = item
+            self?.tupleBookingMachine.id = machine_ID
+            self?.tupleBookingMachine.value = item
             
-            self.getFreeTimeDataSource()
+            self?.getFreeTimeDataSource()
         }
     }
     
@@ -777,7 +832,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-//=========DEFAULT DROPDOWN STYLE=========
+    //=========DEFAULT DROPDOWN STYLE=========
     
     private func setupDefaultDropDown() {
         DropDown.setupDefaultAppearance()
@@ -787,7 +842,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         dropDown_DaysOfWeek.direction = .any
     }
     
-//========CREATE MESSAGE VIEW CONTAINER=========
+    //========CREATE MESSAGE VIEW CONTAINER=========
     
     private func alertMessage(message: String) {
         if self.messageView == nil {
@@ -804,7 +859,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.timer = Timer.scheduledTimer(timeInterval: 3.5, target: self, selector: #selector(self.hideContainer), userInfo: nil, repeats: false)
     }
     
-//========HANDLE MESSAGE VIEW CONTAINER=========
+    //========HANDLE MESSAGE VIEW CONTAINER=========
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let messageView = self.messageView {
@@ -823,10 +878,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     @objc private func hideContainer() {
         self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 4)
-        self.timer.invalidate()
+        self.timer?.invalidate()
     }
     
-
     private func setUpTapRecognitionForCartButton() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.btn_ShowCart_OnClick))
         tap.numberOfTapsRequired = 1
@@ -865,20 +919,20 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let expectedTableViewHeight = (rowHeight * numberOfRows) + 32
         self.constraint_CartOrderTableView_Height.constant = expectedTableViewHeight
     }
-
-//=========RESET ALL BOOKING TIME AND RELEASE CART ITEM=========
+    
+    //=========RESET ALL BOOKING TIME AND RELEASE CART ITEM=========
     
     private func resetBookingTime() {
         self.tableView_CartOrder.isHidden = true
-
+        
         self.lbl_Notification.text = "0"
         self.lbl_Notification.isHidden = true
         
         if isTypeFree {
             self.tableView_BookingTime.isHidden = false
-//            self.freeTimeDataSource.append(self.tupleBookingTime_Array[0].value.time)
-//            self.freeTimeDataSource.sort()
-//            self.tableView_BookingTime.reloadData()
+            //            self.freeTimeDataSource.append(self.tupleBookingTime_Array[0].value.time)
+            //            self.freeTimeDataSource.sort()
+            //            self.tableView_BookingTime.reloadData()
         } else {
             self.tableView_BookingTime.isHidden = true
             self.btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(), for: .normal)
@@ -900,11 +954,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.tableView_CartOrder.layer.shadowRadius = 10
     }
     
-    private func onHandleWhenTimeIDIsNil(notification: Notification) {
+    @objc private func onHandleWhenTimeIDIsNil(notification: Notification) {
         ToastManager.alert(view: view_TopView, msg: "RETRY_MESSAGE".localized())
     }
     
-    private func onBookingExpire(notification: Notification) {
+    @objc private func onBookingExpire(notification: Notification) {
         onBookingTimeExpire()
     }
     
@@ -925,7 +979,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.backgroundColor = ThemeBackGroundColor
         self.isRequiredClearAllCartItems = true
         modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
-        self.timer_bookingExpire?.invalidate()
+        //        self.timer_bookingExpire?.invalidate()
         print("Clear all cart items")
     }
     
@@ -934,6 +988,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             let bookingVerificationVC = segue.destination as! BookingVerificationViewController
             let data = sender as! DTOBookingInformation
             bookingVerificationVC.dtoBookingInformation = data
+            modelHandleBookingVerification = ModelHandleBookingVerification()
+            modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: data)
         }
     }
     
