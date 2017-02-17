@@ -37,6 +37,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var activityIndicator: UIActivityIndicatorView!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
+    private var modelHandleBookingVerification: ModelHandleBookingVerification!
+    
     private var freeTimeDataSource = [String]()
     
     private let dropDown_DaysOfWeek = DropDown()
@@ -300,6 +302,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         networkCheckInRealTime = nil
         timer_bookingExpire = nil
         timer = nil
+        modelHandleBookingVerification = nil
     }
     
     
@@ -985,6 +988,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             let bookingVerificationVC = segue.destination as! BookingVerificationViewController
             let data = sender as! DTOBookingInformation
             bookingVerificationVC.dtoBookingInformation = data
+            modelHandleBookingVerification = ModelHandleBookingVerification()
+            modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: data)
         }
     }
     
