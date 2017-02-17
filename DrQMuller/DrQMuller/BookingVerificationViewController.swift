@@ -19,6 +19,7 @@ class BookingVerificationViewController: UIViewController {
 
     private var borderBottom: UIView!
     private var modelHandleBookingVerification: ModelHandleBookingVerification!
+    private var modelHandleBookingManagerDetail: ModelHandleBookingManagerDetail!
     var dtoBookingInformation: DTOBookingInformation!
     
     private var activityIndicator: UIActivityIndicatorView!
@@ -43,12 +44,19 @@ class BookingVerificationViewController: UIViewController {
         txt_VerificationCode.becomeFirstResponder()
         
         
-        //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
+        //=========OBSERVING NOTIFICATION FROM PMHandleBooking=========
         
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(BookingVerificationViewController.onReceiveVerifificationCodeResponse(notification:)),
             name: Notification.Name(rawValue: "validateCode"),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingVerificationViewController.onReceiveCancelAppointmentResponse(notification:)),
+            name: Notification.Name(rawValue: "cancelAppointment"),
             object: nil
         )
     }
@@ -62,6 +70,7 @@ class BookingVerificationViewController: UIViewController {
         updateUI()
         
         modelHandleBookingVerification = ModelHandleBookingVerification()
+        modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
 
         UIView.hr_setToastThemeColor(color: UIColor.red)
         
@@ -107,7 +116,47 @@ class BookingVerificationViewController: UIViewController {
         }
     }
     
+    func onReceiveCancelAppointmentResponse(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            if let isOk = userInfo["status"] as? Bool {
+                DispatchQueue.main.async {
+                    self.activityIndicator.stopAnimating()
+                    self.view.isUserInteractionEnabled = true
+                }
+                if isOk {
+                    DispatchQueue.main.async {
+                        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction?) in
+                            
+                            self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
+                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+                        }))
+                        
+                        self.present(confirmDialog, animated: true, completion: nil)
+                    }
+                } else {
+                    ToastManager.alert(view: self.view, msg: "CANCEL_APPOINTMENT_FAIL_MESSAGE".localized())
+                }
+            }
+        }
+    }
+    
     @IBAction func btn_CancelAppointment_OnClick(_ sender: Any) {
+        let confirmDialog = UIAlertController(title: "WARNING_TITLE".localized(), message: "CANCEL_APPOINTMENT_CONFIRMATION_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "CONFIRM_TITLE".localized(), style: .default, handler: { (action: UIAlertAction?) in
+            self.activityIndicator.startAnimating()
+            self.view.isUserInteractionEnabled = false
+            
+            self.modelHandleBookingManagerDetail.cancelAppointment(appointment_ID: self.dtoBookingInformation.appointmentID)
+        }))
+        
+        confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction?) in
+            
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
