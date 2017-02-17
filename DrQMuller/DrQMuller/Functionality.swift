@@ -219,6 +219,10 @@ struct Functionality {
             tabVC.tabBar.items?[0].title = "News"
             tabVC.tabBar.items?[1].title = "Booking"
             tabVC.tabBar.items?[2].title = "User"
+        } else {
+            tabVC.tabBar.items?[0].title = "Mới"
+            tabVC.tabBar.items?[1].title = "Đặt lịch"
+            tabVC.tabBar.items?[2].title = "Người dùng"
         }
     }
     
