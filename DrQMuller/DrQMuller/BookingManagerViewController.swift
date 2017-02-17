@@ -15,7 +15,9 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     
     private var message_NoAppointment: UILabel!
     
-    private var modelHandleBookingManger: ModelHandleBookingManager!
+    private var modelHandleBookingManager: ModelHandleBookingManager!
+    private var modelHandleBookingManagerDetail: ModelHandleBookingManagerDetail!
+    
     private var appoinmentDataSource = [DTOBookingInformation]()
     
     private func updateUI() {
@@ -43,8 +45,10 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         tableView_Appointments.dataSource = self
         tableView_Appointments.separatorColor = ThemeColor
         
-        modelHandleBookingManger = ModelHandleBookingManager()
-        modelHandleBookingManger.validateAppointment()
+        modelHandleBookingManager = ModelHandleBookingManager()
+        modelHandleBookingManager.validateAppointment()
+        
+        modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,11 +120,24 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
                 
                 var keyArray = Array(appointments.customerAppointmentsDictionary.keys)
                 keyArray = keyArray.sorted {$0 > $1}
+                
                 print("\nPulling from User Default: \n")
-                for item in keyArray {
-                    self.appoinmentDataSource.append(appointments.customerAppointmentsDictionary[item]!)
+                
+                for i in 0...keyArray.count - 1 {
+                    let item = keyArray[i]
+                    
                     print("\n================START================\nAPPOINTMENT ID: \(item)")
+                    
                     appointments.customerAppointmentsDictionary[item]?.printBookingInfo()
+                    
+                //Limit appointment list to maximum of 5 items
+                    if i == 5 {
+                        print("Item to clear: App_ID - \(item)")
+                        modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: item)
+                        break
+                    }
+                
+                    self.appoinmentDataSource.append(appointments.customerAppointmentsDictionary[item]!)
                 }
                 
                 self.tableView_Appointments.reloadData()
