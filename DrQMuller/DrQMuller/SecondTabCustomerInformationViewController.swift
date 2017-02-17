@@ -28,8 +28,8 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     private var customerInformationController: CustomStyleCustomerInformation!
     private var picker_GenderDataSource = [String]()
     private var datePickerRange: DatePickerRange!
-//    private var networkViewManager: NetworkViewManager!
-//    private weak var networkCheckInRealTime: Timer!
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
     
     private var modelHandelCustomerInformation: ModelHandleCustomerInformation!
     
@@ -63,7 +63,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         
         fillInformation()
         
-//        wiredUpNetworkChecking()
+        wiredUpNetworkChecking()
         
         //=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
         
@@ -79,7 +79,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         super.viewDidLoad()
         
         self.customerInformationController = CustomStyleCustomerInformation()
-//        self.networkViewManager = NetworkViewManager()
+        self.networkViewManager = NetworkViewManager()
         self.modelHandelCustomerInformation = ModelHandleCustomerInformation()
         self.datePickerRange = DatePickerRange()
         
@@ -232,10 +232,11 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         }
     }
     
-//    private func wiredUpNetworkChecking() {
-//        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-//        networkViewManager = tupleDetectNetworkReachabilityResult.network
-//        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
-//    }
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+
     
 }

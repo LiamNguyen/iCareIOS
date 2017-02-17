@@ -30,8 +30,7 @@ class UserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        lbl_UserName.text = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] as! String?
-        
+        lbl_UserName.text = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] as? String ?? ""
         lbl_UserName.layer.cornerRadius = 10
     }
     
@@ -57,11 +56,16 @@ class UserViewController: UIViewController {
         let confirmDialog = UIAlertController(title: "", message: "CONFIRM_LOGOUT_TITLE".localized(), preferredStyle: UIAlertControllerStyle.actionSheet)
         
         confirmDialog.addAction(UIAlertAction(title: "LOGOUT_EXECUTE_TITLE".localized(), style: .destructive, handler: { (action: UIAlertAction!) in
+            self.clearUserToken()
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_LOGIN, sender: self)
         }))
         confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in
             
         }))
         self.present(confirmDialog, animated: true, completion: nil)
+    }
+    
+    private func clearUserToken() {
+        UserDefaults.standard.removeObject(forKey: "CustomerInformation")
     }
 }
