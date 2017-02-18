@@ -70,6 +70,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             name: Notification.Name(rawValue: "registerResponse"),
             object: nil
         )
+        
+        revertToDefaultStyle()
     }
     
     deinit {
@@ -260,6 +262,19 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         adjustTxtOrigin(y: initialTxtOrigin)
         lbl_Welcome.isHidden = false
         constrant_TxtView_LoginView.constant = initialConstraintConstant
+    }
+    
+    private func revertToDefaultStyle() {
+        if !isIphone4 {
+            UIView.animate(withDuration: 0.4) { () -> Void in
+                self.loginView.frame.origin = CGPoint(x: self.loginView.frame.origin.x, y: self.initialViewOrigin)
+            }
+            UIView.animate(withDuration: 0.4) { () -> Void in
+                self.txtView.frame.origin = CGPoint(x: self.txtView.frame.origin.x, y: self.initialTxtOrigin)
+            }
+            return
+        }
+        updateTxtFieldLoseFocusStyleForIphone4()
     }
     
 //=========SWIPE TO GET BACK=========

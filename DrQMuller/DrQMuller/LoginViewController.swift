@@ -79,6 +79,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             name: Notification.Name(rawValue: "loginResponse"),
             object: nil
         )
+        
+        revertToDefaultStyle()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -176,7 +178,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //=========UPDATE FOR IPHONE 4S SCREEN ON LOAD=========
         
         updateLoadStyleForIphone4()
-        
 
         
 //        //=========DRAW LINE=========
@@ -295,6 +296,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         adjustTxtOrigin(y: initialTxtOrigin)
         constraint_BtnLogin_TxtConfirm.constant = initialConstraintConstant
         btn_ResetPassword.isHidden = false
+    }
+    
+    private func revertToDefaultStyle() {
+        if !isIphone4 {
+            UIView.animate(withDuration: 0.4) { () -> Void in
+                self.loginView.frame.origin = CGPoint(x: self.loginView.frame.origin.x, y: self.initialViewOrigin)
+            }
+            return
+        }
+        updateTxtFieldLoseFocusStyleForIphone4()
     }
     
     @IBAction func btn_Login_OnClick(_ sender: Any) {
