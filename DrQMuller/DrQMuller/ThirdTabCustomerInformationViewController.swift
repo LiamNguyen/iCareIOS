@@ -63,6 +63,12 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        informMessage(message: "EMAIL_PHONE_ATTENTION_MESSAGE".localized())
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -206,6 +212,16 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         } else {
             return false
         }
+    }
+    
+    private func informMessage(message: String) {
+        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
     }
     
     private func fillInformation() {

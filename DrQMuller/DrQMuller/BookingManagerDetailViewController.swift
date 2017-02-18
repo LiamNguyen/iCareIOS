@@ -104,15 +104,8 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
                 }
                 if isOk {
                     DispatchQueue.main.async {
-                        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
-                        
-                        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction?) in
-                            
-                            self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
-                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
-                        }))
-    
-                        self.present(confirmDialog, animated: true, completion: nil)
+                        self.informMessage(message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized())
+                        self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
                     }
                 } else {
                     ToastManager.alert(view: self.view, msg: "CANCEL_APPOINTMENT_FAIL_MESSAGE".localized())
@@ -174,6 +167,16 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
                 tabVC.selectedIndex = 1
             }
         }
+    }
+    
+    func informMessage(message: String) {
+        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction?) in
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
     }
 
     private func bindData() {

@@ -101,13 +101,7 @@ class BookingVerificationViewController: UIViewController {
                         self.dtoBookingInformation.isConfirmed = "1"
                         self.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: self.dtoBookingInformation)
                         
-                        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
-                        
-                        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
-                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
-                        }))
-                        
-                        self.present(confirmDialog, animated: true, completion: nil)
+                        self.informMessage(message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized())
                     }
                 } else {
                     ToastManager.alert(view: view_TopView, msg: "VALIDATE_CODE_FAIL_MESSAGE".localized())
@@ -125,15 +119,8 @@ class BookingVerificationViewController: UIViewController {
                 }
                 if isOk {
                     DispatchQueue.main.async {
-                        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
-                        
-                        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction?) in
-                            
-                            self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
-                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
-                        }))
-                        
-                        self.present(confirmDialog, animated: true, completion: nil)
+                        self.informMessage(message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized())
+                        self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
                     }
                 } else {
                     ToastManager.alert(view: self.view, msg: "CANCEL_APPOINTMENT_FAIL_MESSAGE".localized())
@@ -192,6 +179,16 @@ class BookingVerificationViewController: UIViewController {
         self.activityIndicator.startAnimating()
         self.view.isUserInteractionEnabled = false
         modelHandleBookingVerification.validateCode(appointment_ID: dtoBookingInformation.appointmentID)
+    }
+    
+    private func informMessage(message: String) {
+        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
