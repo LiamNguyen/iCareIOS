@@ -271,9 +271,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         bindDataConfirmView()
         
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        wiredUpNetworkChecking()
         
         print("\nBooking Detail VC ONLOAD: ")
         DTOBookingInformation.sharedInstance.printBookingInfo()
@@ -1069,6 +1067,12 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if let flyingView = self.flyingView {
             flyingView.removeFromSuperview()
         }
+    }
+    
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 }
 

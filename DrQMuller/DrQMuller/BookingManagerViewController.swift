@@ -20,6 +20,9 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     
     private var appoinmentDataSource = [DTOBookingInformation]()
     
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
+    
     private func updateUI() {
         lbl_Title.text = "BOOKING_MANAGER_PAGE_TITLE".localized()
     }
@@ -35,6 +38,8 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         
         print("\nBooking Manager VC ONLOAD: ")
         DTOBookingInformation.sharedInstance.printBookingInfo()
+        
+        wiredUpNetworkChecking()
     }
     
     override func viewDidLoad() {
@@ -49,6 +54,14 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         modelHandleBookingManager.validateAppointment()
         
         modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
+        
+        networkViewManager = NetworkViewManager()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        networkCheckInRealTime.invalidate()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -181,6 +194,12 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         } else {
             return "IS_NOT_CONFIRMED".localized()
         }
+    }
+    
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
     @IBAction func unwindToBookingManager(segue: UIStoryboardSegue) {}

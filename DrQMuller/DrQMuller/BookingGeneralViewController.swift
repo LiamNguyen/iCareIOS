@@ -41,8 +41,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private var activityIndicator: UIActivityIndicatorView!
     private var language: String!
     
-//    private var networkViewManager = NetworkViewManager()
-//    private var networkCheckInRealTime: Timer!
+    private var networkViewManager = NetworkViewManager()
+    private var networkCheckInRealTime: Timer!
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -127,8 +127,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         self.icon_Type.isHidden = true
         
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-//        networkViewManager = tupleDetectNetworkReachabilityResult.network
-//        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
     deinit {
@@ -143,7 +143,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-//        networkCheckInRealTime.invalidate()
+        networkCheckInRealTime.invalidate()
     }
     
 //=========BINDING DATASOURCE FOR DROPDOWNS==========

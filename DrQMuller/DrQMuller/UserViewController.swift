@@ -14,6 +14,9 @@ class UserViewController: UIViewController {
     @IBOutlet weak var btn_Logout: UIButton!
     @IBOutlet weak var lbl_UserName: UILabel!
     
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
+    
     func updateUI() {
         lbl_Title.text = "USER_PAGE_TITLE".localized()
     }
@@ -25,15 +28,24 @@ class UserViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     
+        wiredUpNetworkChecking()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.networkViewManager = NetworkViewManager()
+        
         updateUI()
         
         lbl_UserName.text = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] as? String ?? ""
         lbl_UserName.layer.cornerRadius = 10
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        networkCheckInRealTime.invalidate()
     }
     
     deinit {
@@ -69,5 +81,11 @@ class UserViewController: UIViewController {
     
     private func clearUserToken() {
         UserDefaults.standard.removeObject(forKey: "CustomerInformation")
+    }
+    
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 }

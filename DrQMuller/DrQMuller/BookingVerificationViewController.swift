@@ -24,6 +24,9 @@ class BookingVerificationViewController: UIViewController {
     
     private var activityIndicator: UIActivityIndicatorView!
     
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
+    
     private func updateUI() {
         self.lbl_Title.text? = "BOOKING_VERIFICATION_PAGE_TITLE".localized()
         self.txtView_Message.text? = "VERIFICATION_MESSAGE".localized()
@@ -59,6 +62,8 @@ class BookingVerificationViewController: UIViewController {
             name: Notification.Name(rawValue: "cancelAppointment"),
             object: nil
         )
+        
+        wiredUpNetworkChecking()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -71,6 +76,7 @@ class BookingVerificationViewController: UIViewController {
         
         modelHandleBookingVerification = ModelHandleBookingVerification()
         modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
+        networkViewManager = NetworkViewManager()
 
         UIView.hr_setToastThemeColor(color: UIColor.red)
         
@@ -83,6 +89,7 @@ class BookingVerificationViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         txt_VerificationCode.resignFirstResponder()
+        networkCheckInRealTime.invalidate()
     }
     
     deinit {
@@ -208,5 +215,11 @@ class BookingVerificationViewController: UIViewController {
         self.borderBottom.backgroundColor = ThemeColor
         
         self.txt_VerificationCode.addSubview(self.borderBottom)
+    }
+    
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 }

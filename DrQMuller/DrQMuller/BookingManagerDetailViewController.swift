@@ -36,6 +36,9 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     
     var dtoBookingInformation: DTOBookingInformation!
     
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
+    
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
 
@@ -64,12 +67,15 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
             name: Notification.Name(rawValue: "cancelAppointment"),
             object: nil
         )
+        
+        wiredUpNetworkChecking()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
+        networkViewManager = NetworkViewManager()
         
         updateUI()
         
@@ -89,6 +95,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
     }
     
     deinit {
@@ -207,5 +214,11 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
             self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.startDate)?.shortDateVnFormatted
             self.lbl_EndDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.endDate)?.shortDateVnFormatted
         }
+    }
+    
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 }
