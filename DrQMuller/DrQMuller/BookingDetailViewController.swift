@@ -802,15 +802,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.dropDown_Machines.selectionAction = { [weak self] (index, item) in
             self?.btn_DropDownMachines.setTitle(item, for: .normal)
             
-            let machine_ID = String(self?.dropDown_Machines.indexForSelectedRow ?? 0 + 1)
+            let machine_ID = String((self?.dropDown_Machines.indexForSelectedRow ?? 0) + 1)
             var machine_Value = ""
-            
+
             if self?.language == "en" {
                 machine_Value = Functionality.translateMachine(translate: item, to: .VI)
             } else {
                 machine_Value = item
             }
-            
             self?.tupleBookingMachine.id = machine_ID
             self?.tupleBookingMachine.value = machine_Value
             
