@@ -86,13 +86,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        checkUserTokenForAutoLogin()
+        
         if let viewChooseLanguage = LoginViewController.view_BackLayer {
+            if UserDefaults.standard.string(forKey: "lang") != nil {
+                return
+            }
             UIView.animate(withDuration: 0.5) {
                 viewChooseLanguage.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: viewChooseLanguage.center.y)
             }
         }
-
-        checkUserTokenForAutoLogin()
     }
     
     deinit {
@@ -132,7 +135,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //UserDefaults.standard.removeObject(forKey: "lang")
         
         if UserDefaults.standard.string(forKey: "lang") == nil {
-            UserDefaults.standard.set("en", forKey: "lang")
+            //UserDefaults.standard.set("en", forKey: "lang")
             UIFunctionality.createChooseLanguageView(view: self.view)
         }
         
