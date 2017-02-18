@@ -76,7 +76,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
             cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.startDate)?.shortDateVnFormatted
             cell.lbl_EndDate.text = Functionality.convertDateFormatFromStringToDate(str: item.endDate)?.shortDateVnFormatted
         } else {
-            cell.lbl_StartDate_Title.text = "LBL_EXACT_DATE".localized()
+            cell.lbl_StartDate_Title.text = "LBL_EXACT_DATE".localized() + ": "
             cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.exactDate)?.shortDateVnFormatted
             cell.lbl_EndDate_Title.isHidden = true
             cell.lbl_EndDate.isHidden = true
