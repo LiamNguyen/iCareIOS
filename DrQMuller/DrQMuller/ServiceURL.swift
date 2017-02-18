@@ -51,6 +51,7 @@ public class ServiceURL {
             prdURL["Update_BasicInfo"] = "http://210.211.109.180/drmuller/Update_BasicInfo.php"
             prdURL["Update_NecessaryInfo"] = "http://210.211.109.180/drmuller/Update_NecessaryInfo.php"
             prdURL["Update_ImportantInfo"] = "http://210.211.109.180/drmuller/Update_ImportantInfo.php"
+            prdURL["SendMail_NotifyBooking"] = "http://210.211.109.180/drmuller_test/SendMail_NotifyBooking1.php"
         case .BETA:
             betaURL["Select_ToAuthenticate"] = "http://210.211.109.180/drmuller_test/Select_ToAuthenticate.php"
             betaURL["Select_CheckUserExistence"] = "http://210.211.109.180/drmuller_test/Select_CheckUserExistence.php"
@@ -82,6 +83,7 @@ public class ServiceURL {
             betaURL["Update_BasicInfo"] = "http://210.211.109.180/drmuller_test/Update_BasicInfo.php"
             betaURL["Update_NecessaryInfo"] = "http://210.211.109.180/drmuller_test/Update_NecessaryInfo.php"
             betaURL["Update_ImportantInfo"] = "http://210.211.109.180/drmuller_test/Update_ImportantInfo.php"
+            betaURL["SendMail_NotifyBooking"] = "http://210.211.109.180/drmuller_test/SendMail_NotifyBooking1.php"
 
         case .LOCAL:
 //===============IF THIS IS LOCAL ENVIRONMENTS================
