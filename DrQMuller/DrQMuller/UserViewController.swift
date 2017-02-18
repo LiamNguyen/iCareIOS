@@ -30,6 +30,8 @@ class UserViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        updateUI()
+        
         lbl_UserName.text = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] as? String ?? ""
         lbl_UserName.layer.cornerRadius = 10
     }

@@ -89,6 +89,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(), for: .normal)
         btn_ClearAllCartItems.setTitle("BTN_CLEAR_ALL_CART_ITEM".localized(), for: .normal)
         btn_ConfirmBooking.setTitle("CONFIRM_TITLE".localized(), for: .normal)
+        btn_DropDownMachines.setTitle("BTN_CHOOSE_MACHINE_TITLE".localized(), for: .normal)
         
         lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized()
         lbl_VoucherTitle.text = "LBL_VOUCHER_TITLE".localized()
@@ -757,8 +758,15 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         dropDown_DaysOfWeek.dataSource = getDaysOfWeekLocalized(datasource: datasource)
         
+        var daysOfWeek = self.tupleBookingTime.value.day
+        
         if isTypeFree {
-            btn_DropDownDaysOfWeek.setTitle(self.tupleBookingTime.value.day, for: .normal)
+            
+            if self.language == "en" {
+                daysOfWeek = Functionality.translateDaysOfWeek(translate: self.tupleBookingTime.value.day, to: .EN)
+            }
+            
+            btn_DropDownDaysOfWeek.setTitle(daysOfWeek, for: .normal)
             dropDown_DaysOfWeek.selectRow(at: datasource.index(of: self.tupleBookingTime.value.day))
             return
         }
@@ -790,14 +798,23 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     //=========WIRED UP MACHINES DROPDOWN=========
     
     private func dropDownMachinesWiredUp(dataSource: [String]) {
-        self.dropDown_Machines.dataSource = dataSource.sorted()
+        self.dropDown_Machines.dataSource = getMachinesLocalized(datasource: dataSource).sorted()
+
         self.dropDown_Machines.anchorView = btn_DropDownMachines
         self.dropDown_Machines.selectionAction = { [weak self] (index, item) in
             self?.btn_DropDownMachines.setTitle(item, for: .normal)
             
-            let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: item)
+            let machine_ID = String(self?.dropDown_Machines.indexForSelectedRow ?? 0 + 1)
+            var machine_Value = ""
+            
+            if self?.language == "en" {
+                machine_Value = Functionality.translateMachine(translate: item, to: .VI)
+            } else {
+                machine_Value = item
+            }
+            
             self?.tupleBookingMachine.id = machine_ID
-            self?.tupleBookingMachine.value = item
+            self?.tupleBookingMachine.value = machine_Value
             
             self?.getFreeTimeDataSource()
         }
@@ -827,6 +844,15 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     "Friday",
                     "Saturday",
                     "Sunday"]
+        } else {
+            return datasource
+        }
+    }
+    
+    func getMachinesLocalized(datasource: [String]) -> [String] {
+        if self.language == "en" {
+            return ["Machine 1",
+                    "Machine 2"]
         } else {
             return datasource
         }

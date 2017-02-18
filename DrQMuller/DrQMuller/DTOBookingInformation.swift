@@ -285,7 +285,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     }
     
     func printBookingInfo() {
-        print("\nAppointment ID: \(self.appointmentID)\nCountry: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nStatus: \(self.isConfirmed)\nVerification Code: \(self.verificationCode)\n")
+        print("\nAppointment ID: \(self.appointmentID)\nCountry: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nMachine: \(self.machine)\nStatus: \(self.isConfirmed)\nVerification Code: \(self.verificationCode)\n")
     }
     
     func returnHttpBody() -> String? {
@@ -295,7 +295,7 @@ class DTOBookingInformation: NSObject, NSCoding {
         let vouchersDataSource = dtoArrays.dropDownVouchersDataSource
         let locationsDataSource = dtoArrays.dropDownLocationsDataSource
         
-        let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: DTOBookingInformation.sharedInstance.machine)
+        let machine_ID = Functionality.findKeyFromValue(dictionary: self.machinesDataSource, value: self.machine)
         
         let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
 

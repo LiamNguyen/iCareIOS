@@ -97,10 +97,32 @@ struct Functionality {
             for item in daysOfWeek {
                 if item.value == translate {
                     translated = item.key
+                    break
                 }
             }
         } else {
             translated = daysOfWeek[translate]!
+        }
+        
+        return translated
+    }
+    
+    //TRANSLATE MACHINES
+    
+    static func translateMachine(translate: String, to: language) -> String {
+        var machineDataSource = ["Machine 1": "Máy 1",
+                                 "Machine 2": "Máy 2"]
+        var translated = ""
+        
+        if to == .EN {
+            for item in machineDataSource {
+                if item.value == translate {
+                    translated = item.key
+                    break
+                }
+            }
+        } else {
+            translated = machineDataSource[translate]!
         }
         
         return translated
