@@ -33,11 +33,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     private var isIphone4 = false
     private var initialConstraintConstant: CGFloat!
     
-    private var modelHandleLogin = ModelHandleLogin()
-    private var hasReceiveLoginResponse = false
+    private var modelHandleLogin: ModelHandleLogin!
     
-    private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
 
     private func updateUI() {
         //=========TXTFIELD PLACEHOLDER=========
@@ -64,14 +63,43 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         static let SEGUE_TO_THIRDTAB_CUSTOMER_INFO = "segue_LoginToCustomerInformationThirdTab"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        txt_Username.text = ""
+        txt_Password.text = ""
+        
+        wiredUpNetworkChecking()
+        
+        //=========OBSERVE FOR NOTIFICATION FROM PMHandleLogin=========
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(LoginViewController.onReceiveLoginResponse(notification:)),
+            name: Notification.Name(rawValue: "loginResponse"),
+            object: nil
+        )
+        
+        revertToDefaultStyle()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        checkUserTokenForAutoLogin()
+        
         if let viewChooseLanguage = LoginViewController.view_BackLayer {
+            if UserDefaults.standard.string(forKey: "lang") != nil {
+                return
+            }
             UIView.animate(withDuration: 0.5) {
                 viewChooseLanguage.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: viewChooseLanguage.center.y)
             }
         }
+    }
+    
+    deinit {
+        print("Login VC: Dead")
     }
     
     func btn_LanguageDropDown_OnClick(sender: UIButton) {
@@ -107,13 +135,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         //UserDefaults.standard.removeObject(forKey: "lang")
         
         if UserDefaults.standard.string(forKey: "lang") == nil {
-            UserDefaults.standard.set("en", forKey: "lang")
+            //UserDefaults.standard.set("en", forKey: "lang")
             UIFunctionality.createChooseLanguageView(view: self.view)
         }
         
         updateUI()
         
         activityIndicator.stopAnimating()
+        
+        self.networkViewManager = NetworkViewManager()
+        self.modelHandleLogin = ModelHandleLogin()
         
 //=========TXTFIELD DELEGATE=========
         
@@ -150,11 +181,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //=========UPDATE FOR IPHONE 4S SCREEN ON LOAD=========
         
         updateLoadStyleForIphone4()
-        
-        
-//=========OBSERVE FOR NOTIFICATION FROM PMHandleLogin=========
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "loginResponse"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "loginResponse"), object: nil, queue: nil, using: handleView)
 
         
 //        //=========DRAW LINE=========
@@ -172,16 +198,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 //=========TOAST SET UP COLOR=========
         
         UIView.hr_setToastThemeColor(color: ToastColorAlert)
-        
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
         
-        self.networkCheckInRealTime.invalidate()
+       self.networkCheckInRealTime.invalidate()
     }
     
 //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========
@@ -279,6 +301,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         btn_ResetPassword.isHidden = false
     }
     
+    private func revertToDefaultStyle() {
+        if !isIphone4 {
+            UIView.animate(withDuration: 0.4) { () -> Void in
+                self.loginView.frame.origin = CGPoint(x: self.loginView.frame.origin.x, y: self.initialViewOrigin)
+            }
+            return
+        }
+        updateTxtFieldLoseFocusStyleForIphone4()
+    }
+    
     @IBAction func btn_Login_OnClick(_ sender: Any) {
         login()
         if !isIphone4 {
@@ -294,15 +326,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         uiWaitingLoginResponse(isDone: false)
         modelHandleLogin.handleLogin(username: txt_Username.text!, password: txt_Password.text!)
-        self.hasReceiveLoginResponse = false
     }
     
 //=========HANDLE LOGIN PROCEDURE=========
     
-    func handleView(notification: Notification) {
-        if hasReceiveLoginResponse {
-            return
-        }
+    func onReceiveLoginResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
             if let isOk = userInfo["status"] as? Bool {
                 if isOk {
@@ -313,7 +341,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             }
         }
         uiWaitingLoginResponse(isDone: true)
-        self.hasReceiveLoginResponse = true
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -372,6 +399,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    private func checkUserTokenForAutoLogin() {
+        if let userToken = UserDefaults.standard.string(forKey: "CustomerInformation") {
+            DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: userToken)
+            handleNavigation()
+            print(DTOCustomerInformation.sharedInstance.customerInformationDictionary)
+        }
+    }
+    
+    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {}
     
 }
 

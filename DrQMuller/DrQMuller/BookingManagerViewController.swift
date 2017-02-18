@@ -10,12 +10,18 @@ import UIKit
 
 class BookingManagerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var tableView_Appointments: UITableView!
-    @IBOutlet weak var constraint_TableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var lbl_Title: UILabel!
     @IBOutlet weak var view_TopView: UIView!
     
-    private var modelHandleBookingManger = ModelHandleBookingManager()
+    private var message_NoAppointment: UILabel!
+    
+    private var modelHandleBookingManager: ModelHandleBookingManager!
+    private var modelHandleBookingManagerDetail: ModelHandleBookingManagerDetail!
+    
     private var appoinmentDataSource = [DTOBookingInformation]()
+    
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
     
     private func updateUI() {
         lbl_Title.text = "BOOKING_MANAGER_PAGE_TITLE".localized()
@@ -27,6 +33,15 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         static let SEGUE_TO_BOOKING_VERIFICATION = "segue_BookingManagerToBookingVerification"
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        bindAppointmentDataSource()
+        
+        print("\nBooking Manager VC ONLOAD: ")
+        DTOBookingInformation.sharedInstance.printBookingInfo()
+        
+        wiredUpNetworkChecking()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
@@ -35,12 +50,18 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         tableView_Appointments.dataSource = self
         tableView_Appointments.separatorColor = ThemeColor
         
-        modelHandleBookingManger.validateAppointment()
+        modelHandleBookingManager = ModelHandleBookingManager()
+        modelHandleBookingManager.validateAppointment()
         
-        bindAppointmentDataSource()
+        modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
         
-        print("\nBooking Manager VC ONLOAD: ")
-        DTOBookingInformation.sharedInstance.printBookingInfo()
+        networkViewManager = NetworkViewManager()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        networkCheckInRealTime.invalidate()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -68,7 +89,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
             cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.startDate)?.shortDateVnFormatted
             cell.lbl_EndDate.text = Functionality.convertDateFormatFromStringToDate(str: item.endDate)?.shortDateVnFormatted
         } else {
-            cell.lbl_StartDate_Title.text = "LBL_EXACT_DATE".localized()
+            cell.lbl_StartDate_Title.text = "LBL_EXACT_DATE".localized() + ": "
             cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.exactDate)?.shortDateVnFormatted
             cell.lbl_EndDate_Title.isHidden = true
             cell.lbl_EndDate.isHidden = true
@@ -104,7 +125,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     
     private func bindAppointmentDataSource() {
         if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String) as? DTOCustomerInformation {
-
+            appoinmentDataSource.removeAll(keepingCapacity: false)
             if appointments.customerAppointmentsDictionary.count > 0 {
                                 
 //                let model = ModelHandleBookingManagerDetail()
@@ -112,25 +133,40 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
                 
                 var keyArray = Array(appointments.customerAppointmentsDictionary.keys)
                 keyArray = keyArray.sorted {$0 > $1}
+                
                 print("\nPulling from User Default: \n")
-                for item in keyArray {
-                    self.appoinmentDataSource.append(appointments.customerAppointmentsDictionary[item]!)
+                
+                for i in 0...keyArray.count - 1 {
+                    let item = keyArray[i]
+                    
                     print("\n================START================\nAPPOINTMENT ID: \(item)")
+                    
                     appointments.customerAppointmentsDictionary[item]?.printBookingInfo()
+                    
+                //Limit appointment list to maximum of 5 items
+                    if i == 5 {
+                        print("Item to clear: App_ID - \(item)")
+                        modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: item)
+                        break
+                    }
+                
+                    self.appoinmentDataSource.append(appointments.customerAppointmentsDictionary[item]!)
+                }
+                
+                self.tableView_Appointments.reloadData()
+                if let msg_NoAppointment = self.message_NoAppointment {
+                    msg_NoAppointment.isHidden = true
                 }
                 self.tableView_Appointments.isHidden = false
             } else {
-                self.addLabelForEmptyAppointment()
-                self.tableView_Appointments.isHidden = true
+                displayLabelForEmptyAppointment()
             }
         } else {
-            self.addLabelForEmptyAppointment()
-            self.tableView_Appointments.isHidden = true
+            displayLabelForEmptyAppointment()
         }
-
     }
     
-    private func addLabelForEmptyAppointment() {
+    private func createLabelForEmptyAppointment() {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width - 70, height: 250))
         label.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
         
@@ -140,6 +176,16 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         label.numberOfLines = 5
         
         self.view.addSubview(label)
+        self.message_NoAppointment = label
+    }
+    
+    private func displayLabelForEmptyAppointment() {
+        if self.message_NoAppointment == nil {
+            createLabelForEmptyAppointment()
+        } else {
+            self.message_NoAppointment.isHidden = false
+        }
+        self.tableView_Appointments.isHidden = true
     }
     
     private func returnDisplayValueForStatus(isConfirmed: String) -> String {
@@ -149,4 +195,12 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
             return "IS_NOT_CONFIRMED".localized()
         }
     }
+    
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    @IBAction func unwindToBookingManager(segue: UIStoryboardSegue) {}
 }

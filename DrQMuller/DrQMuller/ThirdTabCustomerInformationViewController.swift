@@ -57,6 +57,16 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         //=========FILL CHOSEN INFORMATION=========
         
         fillInformation()
+        
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        informMessage(message: "EMAIL_PHONE_ATTENTION_MESSAGE".localized())
     }
     
     override func viewDidLoad() {
@@ -86,10 +96,6 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
         
         txt_Email.becomeFirstResponder()
-        
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
         
 //=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
         
@@ -141,6 +147,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========POP UP CONFIRM DIALOG=========
         
+        hideKeyBoard()
         DialogManager.confirmLogout(sender: self, segueIdentifier: StoryBoard.SEGUE_TO_LOGIN)
         
     }
@@ -207,6 +214,16 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         }
     }
     
+    private func informMessage(message: String) {
+        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
+    }
+    
     private func fillInformation() {
         DispatchQueue.global(qos: .userInteractive).async {
             let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
@@ -220,6 +237,12 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
                 self.txt_Phone.text = customerInformation["userPhone"] as! String?
             }
         }
+    }
+    
+    
+    func hideKeyBoard() {
+        txt_Email.resignFirstResponder()
+        txt_Phone.resignFirstResponder()
     }
     
 }
