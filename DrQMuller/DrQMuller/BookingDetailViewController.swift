@@ -81,7 +81,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var networkViewManager = NetworkViewManager()
     
     private func updateUI() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
         
         btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(), for: .normal)
         slideBtn.buttonText = "BTN_FINISH_TITLE".localized()
@@ -194,6 +193,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             name: Notification.Name(rawValue: "machinesDataSource"),
             object: nil
         )
+        
+        self.language = UserDefaults.standard.string(forKey: "lang")
         
         //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
@@ -653,6 +654,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.deleteCartOrderItemIndexPath = indexPath as NSIndexPath?
             let rowToDelete = self.tupleBookingTime_Array[indexPath.row]
             confirmDelete(row: rowToDelete)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if tableView == self.tableView_CartOrder {
+            return true
+        } else {
+            return false
         }
     }
     
