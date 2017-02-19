@@ -1049,12 +1049,29 @@
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xtn-J1-kyz">
+                                        <rect key="frame" x="272" y="5" width="40" height="40"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="lLo-IQ-avw"/>
+                                            <constraint firstAttribute="height" constant="40" id="qta-1m-aXp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <state key="normal" title="EN">
+                                            <color key="titleColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="btn_ChangeLanguage_OnClick:" destination="Wng-yJ-Kmt" eventType="touchUpInside" id="S2p-cz-bmp"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="2Dw-Gn-edV"/>
+                                    <constraint firstAttribute="trailing" secondItem="Xtn-J1-kyz" secondAttribute="trailing" constant="8" id="6kE-1y-IYX"/>
                                     <constraint firstItem="l8I-3G-LtG" firstAttribute="centerX" secondItem="ZCo-Xo-kq8" secondAttribute="centerX" id="HA5-ap-w4l"/>
                                     <constraint firstItem="l8I-3G-LtG" firstAttribute="centerY" secondItem="ZCo-Xo-kq8" secondAttribute="centerY" id="Hfd-Ke-mJt"/>
+                                    <constraint firstItem="Xtn-J1-kyz" firstAttribute="centerY" secondItem="ZCo-Xo-kq8" secondAttribute="centerY" id="b6p-cR-WG4"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nguyễn Thiên Phúc" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KVF-8C-4bD">
@@ -1106,6 +1123,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="User" image="userInfoIcon" id="gk7-WV-IKb"/>
                     <connections>
+                        <outlet property="btn_ChangeLanguage" destination="Xtn-J1-kyz" id="7w1-5P-b6J"/>
                         <outlet property="btn_Logout" destination="oks-W7-4e4" id="Ccx-Vz-Lmx"/>
                         <outlet property="lbl_Title" destination="l8I-3G-LtG" id="hJw-na-Znf"/>
                         <outlet property="lbl_UserName" destination="KVF-8C-4bD" id="O7I-MH-hxY"/>
@@ -2648,10 +2666,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="xbJ-Nb-K3c"/>
         <segue reference="4fp-eZ-ZIh"/>
         <segue reference="bED-hu-lQ7"/>
         <segue reference="SS3-ZO-8w6"/>
         <segue reference="5Jd-1u-Qxt"/>
+        <segue reference="17y-Yy-APu"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -40,7 +40,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var networkViewManager = NetworkViewManager()
     private var networkCheckInRealTime: Timer!
     
-    private func handleLanguageChanged() {
+    private func updateUI() {
         lbl_StartDate.text = "LBL_START_DATE".localized()
         lbl_EndDate.text = "LBL_END_DATE".localized()
         
@@ -58,11 +58,16 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         static let SEGUE_TO_BOOKING_GENERAL = "segue_BookingDateToBookingGeneral"
         static let SEGUE_TO_BOOKING_DETAIL = "segue_BookingStartEndToDetail"
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateUI()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleLanguageChanged()
         
 //=========PREPARE UI BASE ON LOGIC OF DTOBookingInformation=========
         

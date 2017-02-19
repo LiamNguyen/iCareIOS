@@ -39,12 +39,13 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         print("\nBooking Manager VC ONLOAD: ")
         DTOBookingInformation.sharedInstance.printBookingInfo()
         
+        updateUI()
+
         wiredUpNetworkChecking()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
         
         tableView_Appointments.delegate = self
         tableView_Appointments.dataSource = self

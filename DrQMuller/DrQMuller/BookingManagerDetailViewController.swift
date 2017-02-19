@@ -68,6 +68,8 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
             object: nil
         )
         
+        updateUI()
+
         wiredUpNetworkChecking()
     }
 
@@ -77,7 +79,6 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
         networkViewManager = NetworkViewManager()
         
-        updateUI()
         
         self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
         self.activityIndicator.stopAnimating()
