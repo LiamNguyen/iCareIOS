@@ -97,10 +97,32 @@ struct Functionality {
             for item in daysOfWeek {
                 if item.value == translate {
                     translated = item.key
+                    break
                 }
             }
         } else {
             translated = daysOfWeek[translate]!
+        }
+        
+        return translated
+    }
+    
+    //TRANSLATE MACHINES
+    
+    static func translateMachine(translate: String, to: language) -> String {
+        var machineDataSource = ["Machine 1": "Máy 1",
+                                 "Machine 2": "Máy 2"]
+        var translated = ""
+        
+        if to == .EN {
+            for item in machineDataSource {
+                if item.value == translate {
+                    translated = item.key
+                    break
+                }
+            }
+        } else {
+            translated = machineDataSource[translate]!
         }
         
         return translated
@@ -219,6 +241,10 @@ struct Functionality {
             tabVC.tabBar.items?[0].title = "News"
             tabVC.tabBar.items?[1].title = "Booking"
             tabVC.tabBar.items?[2].title = "User"
+        } else {
+            tabVC.tabBar.items?[0].title = "Mới"
+            tabVC.tabBar.items?[1].title = "Đặt lịch"
+            tabVC.tabBar.items?[2].title = "Người dùng"
         }
     }
     

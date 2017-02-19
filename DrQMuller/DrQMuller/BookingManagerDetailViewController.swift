@@ -32,9 +32,12 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     private var language: String?
     private var isTypeFree = false
     
-    private var modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
+    private var modelHandleBookingManagerDetail: ModelHandleBookingManagerDetail!
     
     var dtoBookingInformation: DTOBookingInformation!
+    
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
     
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
@@ -55,12 +58,24 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         static let SEGUE_TO_BOOKING_MANAGER = "segue_BookingManagerDetailToBookingManager"
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        NotificationCenter.default.removeObserver(self)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingManagerDetailViewController.onReceiveCancelAppointmentResponse(notification:)),
+            name: Notification.Name(rawValue: "cancelAppointment"),
+            object: nil
+        )
+        
+        wiredUpNetworkChecking()
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
+        networkViewManager = NetworkViewManager()
         
         updateUI()
         
@@ -76,9 +91,15 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         self.tableView_BookingTime.delegate = self
         self.tableView_BookingTime.dataSource = self
         self.tableView_BookingTime.isUserInteractionEnabled = false
-        
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "cancelAppointment"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "cancelAppointment"), object: nil, queue: nil, using: onReceiveCancelAppointmentResponse)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+        networkCheckInRealTime.invalidate()
+    }
+    
+    deinit {
+        print("Booking Manager Detail VC: Dead")
     }
     
     func onReceiveCancelAppointmentResponse(notification: Notification) {
@@ -90,15 +111,8 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
                 }
                 if isOk {
                     DispatchQueue.main.async {
-                        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized(), preferredStyle: UIAlertControllerStyle.alert)
-                        
-                        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction?) in
-                            
-                            self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
-                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
-                        }))
-    
-                        self.present(confirmDialog, animated: true, completion: nil)
+                        self.informMessage(message: "CANCEL_APPOINTMENT_SUCCESS_MESSAGE".localized())
+                        self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
                     }
                 } else {
                     ToastManager.alert(view: self.view, msg: "CANCEL_APPOINTMENT_FAIL_MESSAGE".localized())
@@ -148,6 +162,9 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         
         self.present(confirmDialog, animated: true, completion: nil)
     }
+    @IBAction func btn_Return_Onclick(_ sender: Any) {
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Storyboard.SEGUE_TO_BOOKING_MANAGER {
@@ -157,6 +174,16 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
                 tabVC.selectedIndex = 1
             }
         }
+    }
+    
+    func informMessage(message: String) {
+        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction?) in
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
     }
 
     private func bindData() {
@@ -187,5 +214,11 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
             self.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.startDate)?.shortDateVnFormatted
             self.lbl_EndDate.text = Functionality.convertDateFormatFromStringToDate(str: bookingInfo.endDate)?.shortDateVnFormatted
         }
+    }
+    
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
 }

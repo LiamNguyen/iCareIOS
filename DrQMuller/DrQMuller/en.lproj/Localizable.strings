@@ -98,6 +98,9 @@
 "RETURN_TITLE" = "Return";
 "WARNING_TITLE" = "Warning!";
 "CANCEL_APPOINTMENT_CONFIRMATION_MESSAGE" = "You are about to cancel this appointment. Are you sure?";
-
+"USER_PAGE_TITLE" = "User";
+"CANCEL_APPOINTMENT_TITLE" = "Cancel appointment";
+"EMAIL_PHONE_ATTENTION_MESSAGE" = "Please input correctly your Email and Phone number. DrQMuller Center will contact you throught those contact information to veryfy your appointment. Thank you";
+"BTN_CHOOSE_MACHINE_TITLE" = "Choose machine";
 
 

@@ -254,8 +254,38 @@ class DTOBookingInformation: NSObject, NSCoding {
         self._verificationCode = nil
     }
     
+    func returnJsonAppointmentInfo() -> String {
+        var appointmentInfoDictionary = [String: Any]()
+        
+        appointmentInfoDictionary["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as? String ?? ""
+        appointmentInfoDictionary["userName"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] as? String ?? ""
+        appointmentInfoDictionary["createdAt"] = Functionality.getCurrentDateTime()
+        appointmentInfoDictionary["appointmentId"] = self._appointmentID
+        appointmentInfoDictionary["location"] = self._location
+        appointmentInfoDictionary["voucher"] = self._voucher
+        appointmentInfoDictionary["type"] = self._type
+        appointmentInfoDictionary["startDate"] = self._startDate
+        appointmentInfoDictionary["endDate"] = self._endDate
+        appointmentInfoDictionary["exactDate"] = self._exactDate
+        appointmentInfoDictionary["verificationCode"] = self.verificationCode
+        appointmentInfoDictionary["bookingTime"] = returnBookingTimeForEmailTemplate()
+        
+        return Functionality.jsonStringify(obj: appointmentInfoDictionary as AnyObject)
+    }
+    
+    private func returnBookingTimeForEmailTemplate() -> String {
+        var result = ""
+        let dtoArrays = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()
+        
+        let allTime = dtoArrays?.allTimeDataSource
+
+        result = "\(self.exactDayOfWeek) - \((allTime?[self.bookingTime[0][1]])!)"
+        
+        return result
+    }
+    
     func printBookingInfo() {
-        print("\nAppointment ID: \(self.appointmentID)\nCountry: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nStatus: \(self.isConfirmed)\nVerification Code: \(self.verificationCode)\n")
+        print("\nAppointment ID: \(self.appointmentID)\nCountry: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nMachine: \(self.machine)\nStatus: \(self.isConfirmed)\nVerification Code: \(self.verificationCode)\n")
     }
     
     func returnHttpBody() -> String? {
@@ -265,7 +295,7 @@ class DTOBookingInformation: NSObject, NSCoding {
         let vouchersDataSource = dtoArrays.dropDownVouchersDataSource
         let locationsDataSource = dtoArrays.dropDownLocationsDataSource
         
-        let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: DTOBookingInformation.sharedInstance.machine)
+        let machine_ID = Functionality.findKeyFromValue(dictionary: self.machinesDataSource, value: self.machine)
         
         let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
 

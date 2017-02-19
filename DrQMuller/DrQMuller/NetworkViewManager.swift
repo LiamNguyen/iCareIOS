@@ -32,11 +32,15 @@ class NetworkViewManager: UIView {
         
         messageView.addSubview(messageLabel)
         parentView.addSubview(messageView)
+        
+        messageView.isHidden = true
+        
         self.parentView = parentView
     }
     
     func showNetworkMessage() {
         DispatchQueue.main.async {
+            self.messageView.isHidden = false
             UIView.animate(withDuration: 0.8) {
                 self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: 30)
             }
@@ -47,6 +51,7 @@ class NetworkViewManager: UIView {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.8) {
                 self.messageView.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: -60)
+                self.messageView.isHidden = true
             }
         }
     }

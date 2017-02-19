@@ -32,9 +32,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     private var hasReceiveRegisterResponse = false
     
-    private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
-    private var modelHandleRegister = ModelHandleRegister()
+    private var networkViewManager: NetworkViewManager!
+    private weak var networkCheckInRealTime: Timer!
+    private var modelHandleRegister: ModelHandleRegister!
+    
+    private struct Storyboard {
+        static let SEGUE_TO_LOGIN = "segue_RegisterToLogin"
+        static let SEGUE_TO_FIRST_TAB = "segue_RegisterToContactInformation"
+    }
     
     private func updateUI() {
         
@@ -53,10 +58,31 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         super.viewWillAppear(animated)
         
         updateUI()
+        
+        wiredUpNetworkChecking()
+        
+        
+        //=========OBSERVE FOR NOTIFICATION FROM PMHandleRegister=========
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(RegisterViewController.onReceiveRegisterResponse(notification:)),
+            name: Notification.Name(rawValue: "registerResponse"),
+            object: nil
+        )
+        
+        revertToDefaultStyle()
+    }
+    
+    deinit {
+        print("Register VC: dead")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.networkViewManager = NetworkViewManager()
+        self.modelHandleRegister = ModelHandleRegister()
         
 //=========TXTFIELD DELEGATE=========
         
@@ -99,27 +125,20 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(self.respondToSwipeGesture(gesture:)))
         swipeRight.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(swipeRight)
-        
-//=========OBSERVE FOR NOTIFICATION FROM PMHandleRegister=========
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "registerResponse"), object: nil)
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "registerResponse"), object: nil, queue: nil, using: onReceiveRegisterResponse)
 
 //=========TEXTFIELD ONLOAD AUTOFOCUS=========
         
         txt_Username.becomeFirstResponder()
 
         self.activityIndicator.stopAnimating()
-        
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -245,13 +264,26 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         constrant_TxtView_LoginView.constant = initialConstraintConstant
     }
     
+    private func revertToDefaultStyle() {
+        if !isIphone4 {
+            UIView.animate(withDuration: 0.4) { () -> Void in
+                self.loginView.frame.origin = CGPoint(x: self.loginView.frame.origin.x, y: self.initialViewOrigin)
+            }
+            UIView.animate(withDuration: 0.4) { () -> Void in
+                self.txtView.frame.origin = CGPoint(x: self.txtView.frame.origin.x, y: self.initialTxtOrigin)
+            }
+            return
+        }
+        updateTxtFieldLoseFocusStyleForIphone4()
+    }
+    
 //=========SWIPE TO GET BACK=========
 
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizerDirection.right:
-                self.performSegue(withIdentifier: "segue_RegisterToLogin", sender: self)
+                self.performSegue(withIdentifier: Storyboard.SEGUE_TO_LOGIN, sender: self)
             default:
                 break
             }
@@ -272,7 +304,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             return
         }
         uiWaitingRegisterResponse(isDone: false)
-        modelHandleRegister.handleRegister(username: txt_Username.text!, password: txt_Password.text!)
+        modelHandleRegister?.handleRegister(username: txt_Username.text!, password: txt_Password.text!)
         self.hasReceiveRegisterResponse = false
     }
     
@@ -286,7 +318,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             if let status = userInfo["status"] as? String {
                 if status == "1" {
                     print("Register Success")
-                    self.performSegue(withIdentifier: "segue_RegisterToContactInformation", sender: self)
+                    self.performSegue(withIdentifier: Storyboard.SEGUE_TO_FIRST_TAB, sender: self)
                 } else if status == "2" {
                     print("Register Duplicated")
                     ToastManager.alert(view: loginView, msg: "USERNAME_EXISTED_MESSAGE".localized())
@@ -340,6 +372,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    @IBAction func btn_Back_OnClick(_ sender: Any) {
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_LOGIN, sender: self)
+    }
 }
 
 

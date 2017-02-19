@@ -99,8 +99,10 @@
 "RETURN_TITLE" = "Quay lại";
 "WARNING_TITLE" = "Lưu ý";
 "CANCEL_APPOINTMENT_CONFIRMATION_MESSAGE" = "Quý khách xác nhận huỷ bỏ lịch hẹn này?";
-
-
+"USER_PAGE_TITLE" = "Thông tin người dùng";
+"CANCEL_APPOINTMENT_TITLE" = "Huỷ lịch hẹn";
+"EMAIL_PHONE_ATTENTION_MESSAGE" = "Xin quý khách vui lòng điền đầy đủ chính xác Email và Số điện thoại. Trung tâm DrQMuller sẽ liên lạc qua những thông tin trên để xác nhận lịch hẹn của quý khách. Xin cảm ơn";
+"BTN_CHOOSE_MACHINE_TITLE" = "Chọn máy";
 
 
 

@@ -51,6 +51,10 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
                     }
                 }
                 
+                if let token = arrayDict?["jwt"] as? String {
+                    UserDefaults.standard.set(token, forKey: "CustomerInformation")
+                    DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: token)
+                }
             }
             NotificationCenter.default.post(name: Notification.Name(rawValue: notificationName), object: nil, userInfo: isSuccess)
         }

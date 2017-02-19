@@ -92,6 +92,10 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
     }
     
+    deinit {
+        print("Booking Start end: Dead")
+    }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
