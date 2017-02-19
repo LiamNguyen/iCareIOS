@@ -27,9 +27,7 @@ class ChooseLanguageView: UIView {
         
         let container = createContainer()
         
-        let btn_LanguageDropDown = createBtnLanguageDropDown(view_Container: container)
-        
-        createBorderBottom(parentContainer: btn_LanguageDropDown)
+        self.btn_LanguageDropDown = createBtnLanguageDropDown(view_Container: container)
         
         createLanguageDropDown(btn_LanguageDropDown: btn_LanguageDropDown, borderBottom: self.borderBottom)
         
@@ -42,7 +40,6 @@ class ChooseLanguageView: UIView {
         
         return view_BackLayer
     }
-    
     
     private func createBackLayerView() -> UIView {
         let view_BackLayer = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -70,11 +67,13 @@ class ChooseLanguageView: UIView {
         btn_LanguageDropDown.addTarget(self, action: #selector(btn_LanguageDropDown_OnClick), for: .touchUpInside)
         btn_LanguageDropDown.showsTouchWhenHighlighted = true
         
+        createBorderBottom()
+        
         return btn_LanguageDropDown
     }
     
-    private func createBorderBottom(parentContainer: UIButton) {
-        borderBottom = UIView(frame: CGRect(x: 0, y: parentContainer.bounds.height - 10, width: parentContainer.bounds.width, height: 2.5))
+    private func createBorderBottom() {
+        borderBottom = UIView(frame: CGRect(x: 0, y: self.btn_LanguageDropDown.bounds.height - 10, width: self.btn_LanguageDropDown.bounds.width, height: 2.5))
         borderBottom.backgroundColor = ThemeColor
     }
     
