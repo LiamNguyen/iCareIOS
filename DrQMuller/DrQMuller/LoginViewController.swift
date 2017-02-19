@@ -9,7 +9,7 @@
 import UIKit
 import DropDown
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguageViewDelegate {
 
     @IBOutlet private weak var loginView: UIView!
     @IBOutlet private weak var txtView: UIView!
@@ -22,11 +22,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet private weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet private weak var image_Background: UIImageView!
     
-    static var view_BackLayer: UIView!
-    static var dropDown_Language = DropDown()
-    static var btn_LanguageDropDown: UIButton!
-    static var borderBottom: UIView!
-    
     private var initialViewOrigin: CGFloat!
     private var initialTxtOrigin: CGFloat!
     private var screenHeight: CGFloat!
@@ -37,6 +32,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     private var networkViewManager: NetworkViewManager!
     private weak var networkCheckInRealTime: Timer!
+    
+    private var chooseLanguageView: ChooseLanguageView!
 
     private func updateUI() {
         //=========TXTFIELD PLACEHOLDER=========
@@ -88,55 +85,50 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         checkUserTokenForAutoLogin()
         
-        if let viewChooseLanguage = LoginViewController.view_BackLayer {
-            if UserDefaults.standard.string(forKey: "lang") != nil {
-                return
-            }
-            UIView.animate(withDuration: 0.5) {
-                viewChooseLanguage.center = CGPoint(x: UIScreen.main.bounds.width / 2, y: viewChooseLanguage.center.y)
-            }
+        if UserDefaults.standard.string(forKey: "lang") != nil {
+            return
         }
+        chooseLanguageView.showLanguageView()
     }
     
     deinit {
         print("Login VC: Dead")
     }
     
-    func btn_LanguageDropDown_OnClick(sender: UIButton) {
-        LoginViewController.dropDown_Language.show()
-    }
-    
-    func btn_Confirm_OnClick(sender: UIButton) {
-        if LoginViewController.dropDown_Language.selectedItem == nil {
-            UIFunctionality.addShakyAnimation(elementToBeShake: LoginViewController.btn_LanguageDropDown)
-            
-            LoginViewController.borderBottom.backgroundColor = UIColor.red
-            LoginViewController.btn_LanguageDropDown.setTitleColor(UIColor.red, for: .normal)
-            
-            return
-        }
-        
-        UIView.animate(withDuration: 1, animations: {
-            LoginViewController.view_BackLayer.center = CGPoint(x: LoginViewController.view_BackLayer.center.x - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 2)
-        })
-        
-        if LoginViewController.dropDown_Language.indexForSelectedRow == 0 {
-            UserDefaults.standard.set("vi", forKey: "lang")
-        } else {
-            UserDefaults.standard.set("en", forKey: "lang")
-        }
-        
-        updateUI()
-    }
+//    func btn_LanguageDropDown_OnClick(sender: UIButton) {
+//        LoginViewController.dropDown_Language.show()
+//    }
+//    
+//    func btn_ConfirmLanguage_OnClick(sender: UIButton) {
+//        if LoginViewController.dropDown_Language.selectedItem == nil {
+//            UIFunctionality.addShakyAnimation(elementToBeShake: LoginViewController.btn_LanguageDropDown)
+//            
+//            LoginViewController.borderBottom.backgroundColor = UIColor.red
+//            LoginViewController.btn_LanguageDropDown.setTitleColor(UIColor.red, for: .normal)
+//            
+//            return
+//        }
+//        
+//        UIView.animate(withDuration: 1, animations: {
+//            LoginViewController.view_BackLayer.center = CGPoint(x: LoginViewController.view_BackLayer.center.x - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 2)
+//        })
+//        
+//        if LoginViewController.dropDown_Language.indexForSelectedRow == 0 {
+//            UserDefaults.standard.set("vi", forKey: "lang")
+//        } else {
+//            UserDefaults.standard.set("en", forKey: "lang")
+//        }
+//        
+//        updateUI()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
-        //UserDefaults.standard.removeObject(forKey: "lang")
         
         if UserDefaults.standard.string(forKey: "lang") == nil {
             //UserDefaults.standard.set("en", forKey: "lang")
-            UIFunctionality.createChooseLanguageView(view: self.view)
+            
+            initializeLanguageView()
         }
         
         updateUI()
@@ -204,6 +196,18 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self)
         
        self.networkCheckInRealTime.invalidate()
+    }
+    
+    private func initializeLanguageView() {
+        self.chooseLanguageView = ChooseLanguageView()
+        self.chooseLanguageView.delegate = self
+        self.view.addSubview(self.chooseLanguageView.createChooseLanguageView())
+    }
+    
+//=========RECEIVE UI UPDATE REQUIREMENT=========
+
+    func onRequireUIUpdate() {
+        updateUI()
     }
     
 //=========TEXT FIELD FOCUS CALL BACK FUNCTION=========

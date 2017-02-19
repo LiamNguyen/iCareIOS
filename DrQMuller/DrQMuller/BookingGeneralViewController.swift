@@ -59,7 +59,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
-        
+
         lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized()
         slideBtn_Next.delegate = self
         slideBtn_Next.reset()
@@ -77,7 +77,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         slideBtn_Next.reset()
     }
     
@@ -85,10 +85,9 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateUI()
 
         modelHandleBookingGeneral = ModelHandleBookingGeneral()
-        
-        updateUI()
         
         DTOBookingInformation.sharedInstance.clearAllDTOBookingInfo()
         print("Booking General After clear dtoBooking:")

@@ -13,12 +13,14 @@ class UserViewController: UIViewController {
     @IBOutlet weak var lbl_Title: UILabel!
     @IBOutlet weak var btn_Logout: UIButton!
     @IBOutlet weak var lbl_UserName: UILabel!
+    @IBOutlet weak var btn_ChangeLanguage: UIButton!
     
     private var networkViewManager: NetworkViewManager!
     private weak var networkCheckInRealTime: Timer!
     
     func updateUI() {
         lbl_Title.text = "USER_PAGE_TITLE".localized()
+        btn_ChangeLanguage.setTitle("BTN_CHOOSE_LANGUAGE".localized(), for: .normal)
     }
     
     private struct Storyboard {
@@ -38,8 +40,9 @@ class UserViewController: UIViewController {
         
         updateUI()
         
-        lbl_UserName.text = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] as? String ?? ""
-        lbl_UserName.layer.cornerRadius = 10
+        nameLblCustomStyle()
+        
+        changeLanguageBtnCustomStyle()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -66,6 +69,10 @@ class UserViewController: UIViewController {
         logout()
     }
     
+    @IBAction func btn_ChangeLanguage_OnClick(_ sender: Any) {
+        handleLanguageChange()
+    }
+    
     func logout() {
         let confirmDialog = UIAlertController(title: "", message: "CONFIRM_LOGOUT_TITLE".localized(), preferredStyle: UIAlertControllerStyle.actionSheet)
         
@@ -77,6 +84,28 @@ class UserViewController: UIViewController {
             
         }))
         self.present(confirmDialog, animated: true, completion: nil)
+    }
+    
+    private func nameLblCustomStyle() {
+        lbl_UserName.text = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] as? String ?? ""
+        lbl_UserName.layer.cornerRadius = 10
+
+    }
+    
+    private func changeLanguageBtnCustomStyle() {
+        let radius = min(btn_ChangeLanguage.frame.size.width, btn_ChangeLanguage.frame.size.height) / 2.0
+        btn_ChangeLanguage.layer.cornerRadius = radius
+    }
+    
+    private func handleLanguageChange() {
+        
+        if UserDefaults.standard.string(forKey: "lang") == "vi" {
+            UserDefaults.standard.set("en", forKey: "lang")
+        } else {
+            UserDefaults.standard.set("vi", forKey: "lang")
+        }
+        
+        updateUI()
     }
     
     private func clearUserToken() {

@@ -63,6 +63,8 @@ class BookingVerificationViewController: UIViewController {
             object: nil
         )
         
+        updateUI()
+
         wiredUpNetworkChecking()
     }
     
@@ -72,7 +74,6 @@ class BookingVerificationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
         
         modelHandleBookingVerification = ModelHandleBookingVerification()
         modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()

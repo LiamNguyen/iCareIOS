@@ -109,9 +109,14 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         print("Booking Detail VC: Dead")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateUI()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
         
         //        //=========OBSERVING NOTIFICATION FROM ModelHandleBookingDetail=========
         //
