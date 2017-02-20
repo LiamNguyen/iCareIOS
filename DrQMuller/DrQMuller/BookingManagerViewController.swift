@@ -25,6 +25,9 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     
     private func updateUI() {
         lbl_Title.text = "BOOKING_MANAGER_PAGE_TITLE".localized()
+        if let message = self.message_NoAppointment {
+            message.text = "NO_APPOINTMENT_MESSAGE".localized()
+        }
     }
     
     private struct Storyboard {
@@ -39,12 +42,13 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         print("\nBooking Manager VC ONLOAD: ")
         DTOBookingInformation.sharedInstance.printBookingInfo()
         
+        updateUI()
+
         wiredUpNetworkChecking()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
         
         tableView_Appointments.delegate = self
         tableView_Appointments.dataSource = self
