@@ -89,6 +89,12 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         cell.lbl_Location.text = item.location
         cell.lbl_Status.text = returnDisplayValueForStatus(isConfirmed: item.isConfirmed)
         
+        if item.isConfirmed == "1" {
+            cell.lbl_Status.textColor = UIColor.green
+        } else {
+            cell.lbl_Status.textColor = UIColor.red
+        }
+        
         if !item.startDate.isEmpty {
             cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.startDate)?.shortDateVnFormatted
             cell.lbl_EndDate.text = Functionality.convertDateFormatFromStringToDate(str: item.endDate)?.shortDateVnFormatted
