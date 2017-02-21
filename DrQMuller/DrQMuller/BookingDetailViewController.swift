@@ -85,7 +85,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(), for: .normal)
         slideBtn.buttonText = "BTN_FINISH_TITLE".localized()
         slideBtn.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized()
-        btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(), for: .normal)
+        //btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(), for: .normal)
         btn_ClearAllCartItems.setTitle("BTN_CLEAR_ALL_CART_ITEM".localized(), for: .normal)
         btn_ConfirmBooking.setTitle("CONFIRM_TITLE".localized(), for: .normal)
         btn_DropDownMachines.setTitle("BTN_CHOOSE_MACHINE_TITLE".localized(), for: .normal)
