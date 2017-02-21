@@ -27,7 +27,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     private var customerInformationController: CustomStyleCustomerInformation!
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private var modelHandleCustomerInformation: ModelHandleCustomerInformation!
 
@@ -133,7 +133,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {

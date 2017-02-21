@@ -31,7 +31,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     private var modelHandleLogin: ModelHandleLogin!
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private var chooseLanguageView: ChooseLanguageView!
 
@@ -194,8 +194,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
 
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
-        
-       self.networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
     private func initializeLanguageView() {

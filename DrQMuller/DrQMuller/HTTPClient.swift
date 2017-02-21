@@ -19,6 +19,7 @@ public class HTTPClient {
     
     func getRequest(url: String, parameter: String) {
         if !Reachability.isConnectedToNetwork() {
+            print("No network connection")
             return
         }
         let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
@@ -49,6 +50,7 @@ public class HTTPClient {
     
     func postRequest(url: String, body: String) {//, postCompleted: @escaping (_ success: Bool, _ msg: String) -> ()) {
         if !Reachability.isConnectedToNetwork() {
+            print("No network connection")
             return
         }
         

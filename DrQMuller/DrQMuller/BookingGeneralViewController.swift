@@ -42,7 +42,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private var language: String!
     
     private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var networkCheckInRealTime: Timer?
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -142,7 +142,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
 //=========BINDING DATASOURCE FOR DROPDOWNS==========

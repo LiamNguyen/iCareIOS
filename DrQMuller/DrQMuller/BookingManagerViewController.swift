@@ -21,7 +21,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     private var appoinmentDataSource = [DTOBookingInformation]()
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private func updateUI() {
         lbl_Title.text = "BOOKING_MANAGER_PAGE_TITLE".localized()
@@ -65,7 +65,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -88,6 +88,12 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         cell.lbl_Voucher.text = item.voucher
         cell.lbl_Location.text = item.location
         cell.lbl_Status.text = returnDisplayValueForStatus(isConfirmed: item.isConfirmed)
+        
+        if item.isConfirmed == "1" {
+            cell.lbl_Status.textColor = UIColor.green
+        } else {
+            cell.lbl_Status.textColor = UIColor.red
+        }
         
         if !item.startDate.isEmpty {
             cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.startDate)?.shortDateVnFormatted

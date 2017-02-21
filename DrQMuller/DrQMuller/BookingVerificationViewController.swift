@@ -25,7 +25,7 @@ class BookingVerificationViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView!
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private func updateUI() {
         self.lbl_Title.text? = "BOOKING_VERIFICATION_PAGE_TITLE".localized()
@@ -90,7 +90,7 @@ class BookingVerificationViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         txt_VerificationCode.resignFirstResponder()
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
     deinit {

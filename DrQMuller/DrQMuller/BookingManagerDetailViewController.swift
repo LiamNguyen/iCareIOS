@@ -37,7 +37,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     var dtoBookingInformation: DTOBookingInformation!
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
@@ -96,7 +96,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
     deinit {

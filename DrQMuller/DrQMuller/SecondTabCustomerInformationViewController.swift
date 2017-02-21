@@ -29,7 +29,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     private var picker_GenderDataSource = [String]()
     private var datePickerRange: DatePickerRange!
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private var modelHandelCustomerInformation: ModelHandleCustomerInformation!
     
@@ -144,7 +144,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-//        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {

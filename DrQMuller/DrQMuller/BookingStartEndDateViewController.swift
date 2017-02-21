@@ -38,7 +38,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var timer: Timer!
     
     private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var networkCheckInRealTime: Timer?
     
     private func updateUI() {
         lbl_StartDate.text = "LBL_START_DATE".localized()
@@ -105,7 +105,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
 
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
