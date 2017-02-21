@@ -27,7 +27,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     private var customerInformationController = CustomStyleCustomerInformation()
     private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var networkCheckInRealTime: Timer?
     
     private var modelHandleCustomerInformation = ModelHandleCustomerInformation()
     
@@ -58,9 +58,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
         fillInformation()
         
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        wiredUpNetworkChecking()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -126,7 +124,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
 //=========BUTTON NEXT ONCLICK=========
@@ -239,6 +237,11 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         }
     }
     
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
     
     func hideKeyBoard() {
         txt_Email.resignFirstResponder()

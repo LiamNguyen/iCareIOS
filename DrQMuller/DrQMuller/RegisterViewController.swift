@@ -33,7 +33,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var hasReceiveRegisterResponse = false
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     private var modelHandleRegister: ModelHandleRegister!
     
     private struct Storyboard {
@@ -138,7 +138,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        self.networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
 
     override func didReceiveMemoryWarning() {

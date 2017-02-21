@@ -16,7 +16,7 @@ class UserViewController: UIViewController {
     @IBOutlet weak var btn_ChangeLanguage: UIButton!
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     func updateUI() {
         lbl_Title.text = "USER_PAGE_TITLE".localized()
@@ -48,7 +48,7 @@ class UserViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
     deinit {
