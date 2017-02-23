@@ -101,7 +101,9 @@ struct Functionality {
                 }
             }
         } else {
-            translated = daysOfWeek[translate]!
+            if let result = daysOfWeek[translate] {
+                translated = result
+            }
         }
         
         return translated
