@@ -12,6 +12,7 @@ extension Date {
     // returns weekday name (Sunday-Saturday) as String
     var dayOfWeek: String {
         let formatter = DateFormatter()
+        formatter.locale = NSLocale.init(localeIdentifier: "en_EN") as Locale!
         formatter.dateFormat = "EEEE"
         return formatter.string(from: self as Date)
     }
