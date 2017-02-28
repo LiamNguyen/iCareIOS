@@ -331,10 +331,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.activityIndicator.stopAnimating()
                     self.view.isUserInteractionEnabled = true
                     
+                    if freeTimeDataSource.count < 1 {
+                        self.alertMessage(message: "NO_FREE_TIME_LEFT".localized())
+                        return
+                    }
+                    
                     self.tableView_BookingTime.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
                     self.tableView_BookingTime.isHidden = false
                     
                     self.tableView_BookingTime.setContentOffset(CGPoint.zero, animated: true)
+
                 }
             }
         }

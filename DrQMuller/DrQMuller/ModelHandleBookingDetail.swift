@@ -103,7 +103,7 @@ class ModelHandleBookingDetail {
                     }
                     
                     for displayItem in ecoTimeDisplayArray {
-                        if !selectedTimeDataSourceWithID.values.contains(displayItem) {
+                        if !selectedTimeDataSourceWithID.values.contains(displayItem) && Functionality.isGreaterThanCurrentTime(time: displayItem) {
                             freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
                         }
                     }
@@ -124,7 +124,7 @@ class ModelHandleBookingDetail {
                     }
                     
                     for displayItem in allTimeDisplayArray {
-                        if !selectedTimeDataSourceWithID.values.contains(displayItem) {
+                        if !selectedTimeDataSourceWithID.values.contains(displayItem) && Functionality.isGreaterThanCurrentTime(time: displayItem) {
                             freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
                         }
                     }
