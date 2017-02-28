@@ -136,21 +136,21 @@
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                             </button>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fbIcon" translatesAutoresizingMaskIntoConstraints="NO" id="evt-hn-txo">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fbIcon" translatesAutoresizingMaskIntoConstraints="NO" id="evt-hn-txo">
                                                 <rect key="frame" x="20" y="307" width="47" height="47"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="47" id="PnI-bm-3pV"/>
                                                     <constraint firstAttribute="width" constant="47" id="ljX-Up-JhA"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitterIcon" translatesAutoresizingMaskIntoConstraints="NO" id="b95-gX-40N">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="twitterIcon" translatesAutoresizingMaskIntoConstraints="NO" id="b95-gX-40N">
                                                 <rect key="frame" x="108" y="307" width="47" height="47"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="47" id="8co-az-rTf"/>
                                                     <constraint firstAttribute="height" constant="47" id="y54-Uh-3c4"/>
                                                 </constraints>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="googleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WLe-o6-l7I">
+                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="googleIcon" translatesAutoresizingMaskIntoConstraints="NO" id="WLe-o6-l7I">
                                                 <rect key="frame" x="196" y="307" width="47" height="47"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="47" id="fCK-dg-1ah"/>
@@ -2029,7 +2029,7 @@
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="51" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0cb-Fk-2MU">
-                                <rect key="frame" x="16" y="171" width="288" height="325"/>
+                                <rect key="frame" x="16" y="171" width="288" height="276"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.98885581359999997" green="0.92435741299999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -2073,7 +2073,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yvD-pX-fey" customClass="MMSlidingButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="504" width="288" height="55"/>
+                                <rect key="frame" x="16" y="455" width="288" height="55"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="55" id="XqD-z7-awr"/>
@@ -2174,7 +2174,7 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1r-eh-MJr">
-                                <rect key="frame" x="16" y="22" width="288" height="539"/>
+                                <rect key="frame" x="16" y="22" width="288" height="490"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u2H-ww-mff">
                                         <rect key="frame" x="242" y="11" width="35" height="35"/>
@@ -2188,7 +2188,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U9u-nt-tJq">
-                                        <rect key="frame" x="8" y="458" width="272" height="50"/>
+                                        <rect key="frame" x="8" y="409" width="272" height="50"/>
                                         <color key="backgroundColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="aZ3-hq-wUY"/>
@@ -2666,10 +2666,10 @@
         <image name="userInfoIcon" width="27" height="28"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4fp-eZ-ZIh"/>
-        <segue reference="bED-hu-lQ7"/>
-        <segue reference="SS3-ZO-8w6"/>
-        <segue reference="5Jd-1u-Qxt"/>
+        <segue reference="MnH-6T-CHY"/>
+        <segue reference="NtQ-bk-9Of"/>
+        <segue reference="25N-BX-oeo"/>
+        <segue reference="Hn6-nH-Q49"/>
         <segue reference="17y-Yy-APu"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -26,7 +26,7 @@
 "PASSWORD_PLACEHOLDER" = "Password";
 "CONFIRM_PASSWORD_PLACEHOLDER" = "Confirm password";
 "FULLNAME_PLACEHOLDER" = "Your full name";
-"ADDRESS_PLACEHOLDER" = "Your address";
+"ADDRESS_PLACEHOLDER" = "Your address (Optional)";
 "EMAIL_PLACEHOLDER" = "Your email";
 "PHONE_PLACEHOLDER" = "Your phone number";
 "RESET_PASSWORD_LINK" = "You forgot username or password?";
@@ -104,3 +104,6 @@
 "BTN_CHOOSE_MACHINE_TITLE" = "Choose machine";
 "BTN_CHOOSE_LANGUAGE" = "EN";
 "NO_FREE_TIME_LEFT" = "Seems like it is too late and we are closing or there is no free time left to book at this Dr.Q-Muller Center";
+"OPTIONAL_INFO_MESSAGE" = "Date Of Birth and Gender are optional information. Do you want to tell us your DOB and Gender or Do you want to skip?";
+"SKIP_TITLE" = "Skip";
+"FILL_TITLE" = "Fill";
