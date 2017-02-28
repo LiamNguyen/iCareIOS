@@ -104,6 +104,7 @@
 "EMAIL_PHONE_ATTENTION_MESSAGE" = "Xin quý khách vui lòng điền đầy đủ chính xác Email và Số điện thoại. Trung tâm DrQMuller sẽ liên lạc qua những thông tin trên để xác nhận lịch hẹn của quý khách. Xin cảm ơn";
 "BTN_CHOOSE_MACHINE_TITLE" = "Chọn máy";
 "BTN_CHOOSE_LANGUAGE" = "VI";
+"NO_FREE_TIME_LEFT" = "Hiện tại có thể đã đến giờ đóng cửa của Trung tâm Dr.Q-Muller hoặc không còn giờ trống nào tại địa điểm Trung tâm hiện tại";
 
 
 

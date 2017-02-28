@@ -81,6 +81,21 @@ struct Functionality {
         return sortedArr
     }
     
+    static func isGreaterThanCurrentTime(time: String) -> Bool {
+        let currentTime = Functionality.getCurrentTime()
+        let toBeCompareTime = time.replacingOccurrences(of: ":", with: "")
+        
+        print(toBeCompareTime)
+        
+        print(currentTime)
+        
+        if toBeCompareTime > currentTime {
+            return true
+        } else {
+            return false
+        }
+    }
+    
 //TRANSLATE DAYS OF WEEK
     
     static func translateDaysOfWeek(translate: String, to: language) -> String {
@@ -265,6 +280,22 @@ struct Functionality {
         let sec = calendar.component(.second, from: date)
         
         return "\(year)-\(month)-\(day) \(hour):\(minute):\(sec)"
+    }
+    
+    //GET CURRENT TIME
+    
+    static func getCurrentTime() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        
+        let hour = String(calendar.component(.hour, from: date))
+        var minute = String(calendar.component(.minute, from: date))
+        
+        if minute.characters.count < 2 {
+            minute.insert("0", at: minute.startIndex)
+        }
+        
+        return "\(hour)\(minute)"
     }
     
 //=========DRAW LINE TO ESTIMATE IPHONE 4 KEYBOARD=========

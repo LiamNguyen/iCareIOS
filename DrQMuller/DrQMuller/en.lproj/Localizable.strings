@@ -103,4 +103,4 @@
 "EMAIL_PHONE_ATTENTION_MESSAGE" = "Please input correctly your Email and Phone number. DrQMuller Center will contact you throught those contact information to veryfy your appointment. Thank you";
 "BTN_CHOOSE_MACHINE_TITLE" = "Choose machine";
 "BTN_CHOOSE_LANGUAGE" = "EN";
-
+"NO_FREE_TIME_LEFT" = "Seems like it is too late and we are closing or there is no free time left to book at this Dr.Q-Muller Center";
