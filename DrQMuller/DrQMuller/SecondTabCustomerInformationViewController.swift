@@ -75,6 +75,12 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         )
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        informMessage(message: "OPTIONAL_INFO_MESSAGE".localized())
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -182,6 +188,10 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
 //=========TRANSITION TO THIRD INFO PAGE WITH slideBtn_Next=========
     
     func buttonStatus(_ status:String, sender:MMSlidingButton) {
+        saveInfo()
+    }
+    
+    private func saveInfo() {
         let step = "necessary"
         var gender = ""
         
@@ -236,6 +246,20 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    private func informMessage(message: String) {
+        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "SKIP_TITLE".localized(), style: .default, handler: { (action: UIAlertAction!) in
+            self.saveInfo()
+        }))
+        
+        confirmDialog.addAction(UIAlertAction(title: "FILL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in
+            
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
     }
 
     

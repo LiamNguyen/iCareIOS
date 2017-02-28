@@ -105,7 +105,9 @@
 "BTN_CHOOSE_MACHINE_TITLE" = "Chọn máy";
 "BTN_CHOOSE_LANGUAGE" = "VI";
 "NO_FREE_TIME_LEFT" = "Hiện tại có thể đã đến giờ đóng cửa của Trung tâm Dr.Q-Muller hoặc không còn giờ trống nào tại địa điểm Trung tâm hiện tại";
-
+"OPTIONAL_INFO_MESSAGE" = "Ngày sinh và giới tính là thông tin không bắt buộc. Quý khách có thể bỏ qua, hoặc cung cấp thông tin cho chúng tôi";
+"SKIP_TITLE" = "Bỏ qua";
+"FILL_TITLE" = "Điền";
 
 
 
