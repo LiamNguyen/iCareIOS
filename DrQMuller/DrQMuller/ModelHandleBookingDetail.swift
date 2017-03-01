@@ -85,15 +85,18 @@ class ModelHandleBookingDetail {
         }
         freeTimeDataSourceWithID = Dictionary<String, String>() //CLEAR DICTIONARY
         freeTimeDataSource = [String]()                         //CLEAR ARRAY
+        
         if let userInfo = notification.userInfo {
+            
             let receivedSelectedTimeDataSource = userInfo["returnArrayDataSource"]! as? Dictionary<String, String>
             selectedTimeDataSourceWithID = receivedSelectedTimeDataSource
             
             switch isEco {
             case true:
                 if selectedTimeDataSourceWithID.isEmpty {
-                    freeTimeDataSource = ecoTimeDisplayArray
-                    freeTimeDataSourceWithID = ecoTimeDataSource
+                    
+                    freeTimeDataSource = Functionality.filterTimeSmallerThanCurrentTimeInArray(array: ecoTimeDisplayArray)
+                    freeTimeDataSourceWithID = Functionality.filterTimeSmallerThanCurrentTimeInDictionary(dictionary: ecoTimeDataSource)
                 } else {
                 
                     for (ecoTimeID, ecoTimeItem) in ecoTimeDataSource {
@@ -112,8 +115,8 @@ class ModelHandleBookingDetail {
             default:
                 if selectedTimeDataSourceWithID.isEmpty {
                     
-                    freeTimeDataSource = allTimeDisplayArray
-                    freeTimeDataSourceWithID = allTimeDataSource
+                    freeTimeDataSource = Functionality.filterTimeSmallerThanCurrentTimeInArray(array: allTimeDisplayArray)
+                    freeTimeDataSourceWithID = Functionality.filterTimeSmallerThanCurrentTimeInDictionary(dictionary: allTimeDataSource)
                     
                 } else {
                     

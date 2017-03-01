@@ -81,21 +81,6 @@ struct Functionality {
         return sortedArr
     }
     
-    static func isGreaterThanCurrentTime(time: String) -> Bool {
-        let currentTime = Functionality.getCurrentTime()
-        let toBeCompareTime = time.replacingOccurrences(of: ":", with: "")
-        
-        print(toBeCompareTime)
-        
-        print(currentTime)
-        
-        if toBeCompareTime > currentTime {
-            return true
-        } else {
-            return false
-        }
-    }
-    
 //TRANSLATE DAYS OF WEEK
     
     static func translateDaysOfWeek(translate: String, to: language) -> String {
@@ -282,20 +267,93 @@ struct Functionality {
         return "\(year)-\(month)-\(day) \(hour):\(minute):\(sec)"
     }
     
-    //GET CURRENT TIME
+//GET CURRENT TIME
     
     static func getCurrentTime() -> String {
         let date = Date()
         let calendar = Calendar.current
         
-        let hour = String(calendar.component(.hour, from: date))
+        var hour = String(calendar.component(.hour, from: date))
         var minute = String(calendar.component(.minute, from: date))
+        
+        if hour.characters.count < 2 {
+            hour.insert("0", at: hour.startIndex)
+        }
         
         if minute.characters.count < 2 {
             minute.insert("0", at: minute.startIndex)
         }
         
         return "\(hour)\(minute)"
+    }
+    
+//COMPARE TIME WITH CURRENT TIME AND SORT OUT TIME WHICH SMALL THAN CURRENT
+    
+    static func isGreaterThanCurrentTime(time: String) -> Bool {
+        let currentTime = Functionality.getCurrentTime()
+        let toBeCompareTime = time.replacingOccurrences(of: ":", with: "")
+        
+        print(toBeCompareTime)
+        
+        print(currentTime)
+        
+        if toBeCompareTime > currentTime {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+//FILTER OUT TIME WHICH IS SMALL THAN CURRENT TIME IN ARRAY
+    
+    static func filterTimeSmallerThanCurrentTimeInArray(array: [String]) -> [String] {
+        var numberOfAcceptedTime = 0
+        
+        var filteredArray = array
+        let currentTime = Functionality.getCurrentTime()
+        var toBeComparedTime = ""
+        
+        for item in array {
+            toBeComparedTime = item.replacingOccurrences(of: ":", with: "")
+            
+            if numberOfAcceptedTime == 2 {
+                break
+            }
+            
+            if toBeComparedTime < currentTime {
+                filteredArray.remove(at: filteredArray.index(of: item)!)
+            } else {
+                numberOfAcceptedTime += 1
+            }
+        }
+        
+        return filteredArray
+    }
+    
+//FILTER OUT TIME WHICH IS SMALL THAN CURRENT TIME IN DICTIONARY
+    
+    static func filterTimeSmallerThanCurrentTimeInDictionary(dictionary: [String: String]) -> [String: String] {
+        var numberOfAcceptedTime = 0
+        
+        var filteredDict = dictionary
+        let currentTime = Functionality.getCurrentTime()
+        var toBeComparedTime = ""
+        
+        for (key, value) in dictionary {
+            toBeComparedTime = value.replacingOccurrences(of: ":", with: "")
+            
+            if numberOfAcceptedTime == 2 {
+                break
+            }
+            
+            if toBeComparedTime < currentTime {
+                filteredDict.removeValue(forKey: key)
+            } else {
+                numberOfAcceptedTime += 1
+            }
+        }
+        
+        return filteredDict
     }
     
 //=========DRAW LINE TO ESTIMATE IPHONE 4 KEYBOARD=========
