@@ -67,7 +67,8 @@
 "PASSWORD_EMPTY_MESSAGE" = "Passwod empty";
 "CONFIRM_PASSWORD_EMPTY_MESSAGE" = "Confirm passwod empty";
 "CONFIRM_PASSWORD_UNMATCH_MESSAGE" = "Confirm password do not match";
-"CREDENTIAL_INVALID" = "Invalid username or password";
+"invalid-username-or-password" = "Invalid username or password";
+"pattern-fail" = "Username and password should contained at least 8 characters without symbols";
 "REGISTER_FAILED_MESSAGE" = "Register failed";
 "USERNAME_EXISTED_MESSAGE" = "Username has already existed";
 "ONE_LOCATION_MESSAGE" = "Currently there is only one DrQMuller FBT Shop at district 3, Viet Nam";
@@ -107,3 +108,4 @@
 "OPTIONAL_INFO_MESSAGE" = "Date Of Birth and Gender are optional information. Do you want to tell us your DOB and Gender or Do you want to skip?";
 "SKIP_TITLE" = "Skip";
 "FILL_TITLE" = "Fill";
+"SERVER_ERROR" = "Server error. Please contact DrQMuller FBT Shop for more information. Phone number: [phone_number_waiting]";

@@ -269,6 +269,10 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             NotificationCenter.default.post(name: Notification.Name(rawValue: "existencyResult"), object: nil, userInfo: returnExistencyResult)
         }
     }
+    
+    func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
+        
+    }
 
 //MAKE GET REQUEST FOR STATIC ARRAY DATASOURCE
     
@@ -276,18 +280,18 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         if staticArrayDataSourceHasExisted() {
             return
         }
-        httpClient.getRequest(url: "Select_Countries", parameter: "")
+        httpClient.getRequest(url: "Select_Countries")
         httpClient.getRequest(url: "Select_Cities", parameter: "?country_id=235")
         httpClient.getRequest(url: "Select_Districts", parameter: "?city_id=58")
         httpClient.getRequest(url: "Select_Locations", parameter: "?district_id=630")
-        httpClient.getRequest(url: "Select_Vouchers", parameter: "")
-        httpClient.getRequest(url: "Select_Types", parameter: "")
+        httpClient.getRequest(url: "Select_Vouchers")
+        httpClient.getRequest(url: "Select_Types")
         
         //DOWNLOAD OTHER NECCESSARY ARRAY DATASOURCE
         
-        httpClient.getRequest(url: "Select_AllTime", parameter: "")
-        httpClient.getRequest(url: "Select_EcoTime", parameter: "")
-        httpClient.getRequest(url: "Select_DaysOfWeek", parameter: "")
+        httpClient.getRequest(url: "Select_AllTime")
+        httpClient.getRequest(url: "Select_EcoTime")
+        httpClient.getRequest(url: "Select_DaysOfWeek")
     }
  
 //MAKE GET REQUEST FOR SELECTED TIME
@@ -331,7 +335,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
 //VALIDATE APPOINTMENT
 
     func validateAppointment() {
-        httpClient.postRequest(url: "Update_ValidateAppointment", body: "")
+        httpClient.putRequest(url: "Update_ValidateAppointment")
     }
     
 //CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT

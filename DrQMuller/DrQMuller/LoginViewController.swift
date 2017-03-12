@@ -34,7 +34,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     private weak var networkCheckInRealTime: Timer?
     
     private var chooseLanguageView: ChooseLanguageView!
-
+    
     private func updateUI() {
         //=========TXTFIELD PLACEHOLDER=========
         
@@ -72,7 +72,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(LoginViewController.onReceiveLoginResponse(notification:)),
+            selector: #selector(LoginViewController.onReceiveAuthenticationResponse(notification:)),
             name: Notification.Name(rawValue: "loginResponse"),
             object: nil
         )
@@ -85,7 +85,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
         
         checkUserTokenForAutoLogin()
         
-        if UserDefaults.standard.string(forKey: "lang") != nil {
+        if UserDefaults.standard.string(forKey: UserDefaultKeys.language) != nil {
             return
         }
         chooseLanguageView.showLanguageView()
@@ -95,39 +95,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
         print("Login VC: Dead")
     }
     
-//    func btn_LanguageDropDown_OnClick(sender: UIButton) {
-//        LoginViewController.dropDown_Language.show()
-//    }
-//    
-//    func btn_ConfirmLanguage_OnClick(sender: UIButton) {
-//        if LoginViewController.dropDown_Language.selectedItem == nil {
-//            UIFunctionality.addShakyAnimation(elementToBeShake: LoginViewController.btn_LanguageDropDown)
-//            
-//            LoginViewController.borderBottom.backgroundColor = UIColor.red
-//            LoginViewController.btn_LanguageDropDown.setTitleColor(UIColor.red, for: .normal)
-//            
-//            return
-//        }
-//        
-//        UIView.animate(withDuration: 1, animations: {
-//            LoginViewController.view_BackLayer.center = CGPoint(x: LoginViewController.view_BackLayer.center.x - UIScreen.main.bounds.width, y: UIScreen.main.bounds.height / 2)
-//        })
-//        
-//        if LoginViewController.dropDown_Language.indexForSelectedRow == 0 {
-//            UserDefaults.standard.set("vi", forKey: "lang")
-//        } else {
-//            UserDefaults.standard.set("en", forKey: "lang")
-//        }
-//        
-//        updateUI()
-//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UserDefaults.standard.string(forKey: "lang") == nil {
-            //UserDefaults.standard.set("en", forKey: "lang")
-            
+        if UserDefaults.standard.string(forKey: UserDefaultKeys.language) == nil {
             initializeLanguageView()
         }
         
@@ -333,23 +305,24 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     
 //=========HANDLE LOGIN PROCEDURE=========
     
-    func onReceiveLoginResponse(notification: Notification) {
+    func onReceiveAuthenticationResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
-            if let isOk = userInfo["status"] as? Bool {
-                if isOk {
-                    handleNavigation()
+            if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+                uiWaitingLoginResponse(isDone: true)
+                
+                if statusCode != HttpStatusCode.success {
+                    ToastManager.alert(view: loginView, msg: errorCode.localized())
                 } else {
-                    ToastManager.alert(view: loginView, msg: "CREDENTIAL_INVALID".localized())
+                    handleNavigation()
                 }
             }
         }
-        uiWaitingLoginResponse(isDone: true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "segue_LoginToBookingTabViewController"){
             if let tabVC = segue.destination as? UITabBarController{
-                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: UserDefaultKeys.language) ?? "vi", tabVC: tabVC)
                 tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
@@ -409,7 +382,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     }
     
     private func checkUserTokenForAutoLogin() {
-        if let userToken = UserDefaults.standard.string(forKey: "CustomerInformation") {
+        if let userToken = UserDefaults.standard.string(forKey: UserDefaultKeys.customerInformation) {
             DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: userToken)
             handleNavigation()
             print(DTOCustomerInformation.sharedInstance.customerInformationDictionary)

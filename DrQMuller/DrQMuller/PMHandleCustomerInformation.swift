@@ -37,6 +37,10 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
         handleReponseFromServer(responseHeader: "Update_ImportantInfo", notificationName: "importantInfoResponse", data: data)
     }
     
+    func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
+        
+    }
+    
     private func handleReponseFromServer(responseHeader: String, notificationName: String, data: AnyObject) {
         if let arrayResponse = data[responseHeader] as? NSArray {
             var isSuccess = [String: Bool]()

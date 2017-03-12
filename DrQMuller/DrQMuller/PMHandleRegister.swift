@@ -49,4 +49,8 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "registerResponse"), object: nil, userInfo: status)
         }
     }
+    
+    func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
+        
+    }
 }

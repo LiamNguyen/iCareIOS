@@ -87,7 +87,7 @@ public class ServiceURL {
 
         case .LOCAL:
 //===============IF THIS IS LOCAL ENVIRONMENTS================
-            localURL["Select_ToAuthenticate"] = "http://localhost/drmuller/Select_ToAuthenticate.php"
+            localURL["Select_ToAuthenticate"] = "/user/login"
             localURL["Select_CheckUserExistence"] = "http://localhost/drmuller/Select_CheckUserExistence.php"
             localURL["Select_NumberOfCustomer"] = "http://localhost/drmuller/Select_NumberOfCustomer.php"
             localURL["Select_Countries"] = "http://localhost/drmuller/Select_Countries.php"
@@ -106,7 +106,7 @@ public class ServiceURL {
             localURL["Insert_NewBookingTime"] = "http://localhost/drmuller/Insert_NewBookingTime.php"
             localURL["Update_UnchosenTime"] = "http://localhost/drmuller/Update_UnchosenTime.php"
             localURL["Update_CustomerInfo"] = "http://localhost/drmuller/Update_CustomerInfo.php"
-            localURL["Update_ValidateAppointment"] = "http://localhost/drmuller/Update_ValidateAppointment.php"
+            localURL["Update_ValidateAppointment"] = "/appointment/validate"
             localURL["Update_Appointment"] = "http://localhost/drmuller/Update_Appointment.php"
             localURL["Update_CancelAppointment"] = "http://localhost/drmuller/Update_CancelAppointment.php"
             localURL["Update_VerifyAcc"] = "http://localhost/drmuller/Update_VerifyAcc.php"
@@ -119,7 +119,7 @@ public class ServiceURL {
             localURL["Update_ImportantInfo"] = "http://localhost/drmuller/Update_ImportantInfo.php"
 //===============IF THIS IS UAT ENVIRONMENTS================
         default:
-            uatURL["Select_ToAuthenticate"] = "http://drqmuller.com/drmuller/Select_ToAuthenticate.php"
+            uatURL["Select_ToAuthenticate"] = "/user/login"
             uatURL["Select_CheckUserExistence"] = "http://drqmuller.com/drmuller/Select_CheckUserExistence.php"
             uatURL["Select_NumberOfCustomer.php"] = "http://drqmuller.com/drmuller/Select_NumberOfCustomer.php"
             uatURL["Select_Countries"] = "http://drqmuller.com/drmuller/Select_Countries.php"
@@ -156,7 +156,7 @@ public class ServiceURL {
         switch self.environment {
         case .PRD:
             if let url = prdURL[serviceURL] {
-                return url
+                return Host.PRD + url
             } else {
                 return "Can't find URL"
             }
@@ -168,13 +168,13 @@ public class ServiceURL {
             }
         case .LOCAL:
             if let url = localURL[serviceURL] {
-                return url
+                return Host.LOCAL + url
             } else {
                 return "Can't find URL"
             }
         default:
             if let url = uatURL[serviceURL] {
-                return url
+                return Host.UAT + url
             } else {
                 return "Can't find URL"
             }
@@ -186,5 +186,12 @@ public class ServiceURL {
         case UAT
         case LOCAL
         case BETA
+    }
+    
+    private struct Host {
+        static let PRD = "http://210.211.109.180/drmuller/api"
+        static let UAT = "http://drqmuller.com/drmuller/api"
+        static let BETA = "http://210.211.109.180/drmuller_test/api"
+        static let LOCAL = "http://localhost/drmuller/api"
     }
 }

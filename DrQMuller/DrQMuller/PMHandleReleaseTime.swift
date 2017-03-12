@@ -47,4 +47,9 @@ class PMHandleReleaseTime: NSObject, HTTPClientDelegate {
         }
     }
     
+    func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
+        
+    }
+    
+    
 }

@@ -65,6 +65,9 @@
 		ED9A5C981E4B7A6600CE34C5 /* APIHandleRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */; };
 		ED9A5C9A1E4BA0A200CE34C5 /* DTOCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */; };
 		ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */; };
+		EDA747881E753DA80083889A /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA747871E753DA80083889A /* HttpStatusCode.swift */; };
+		EDA7478A1E7553A60083889A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA747891E7553A60083889A /* Error.swift */; };
+		EDA7478C1E755C630083889A /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7478B1E755C630083889A /* UserDefaultKeys.swift */; };
 		EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
 		EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338971DE9D86300DE940B /* LoginViewController.swift */; };
@@ -180,6 +183,9 @@
 		ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleRegister.swift; sourceTree = "<group>"; };
 		ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOCustomerInformation.swift; sourceTree = "<group>"; };
 		ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingStartEnd.swift; sourceTree = "<group>"; };
+		EDA747871E753DA80083889A /* HttpStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
+		EDA747891E7553A60083889A /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		EDA7478B1E755C630083889A /* UserDefaultKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleReleaseTime.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338951DE9D86300DE940B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -248,9 +254,11 @@
 		ED03CEB01E36981A00C9EBFB /* Resusable */ = {
 			isa = PBXGroup;
 			children = (
+				EDA747871E753DA80083889A /* HttpStatusCode.swift */,
 				ED03CEB11E36983D00C9EBFB /* Functionality.swift */,
 				ED522D621E38F84C00E53403 /* StringExtension.swift */,
 				ED6A68591E492CEA00776B6B /* Reachability.swift */,
+				EDA7478B1E755C630083889A /* UserDefaultKeys.swift */,
 			);
 			name = Resusable;
 			sourceTree = "<group>";
@@ -336,6 +344,7 @@
 			isa = PBXGroup;
 			children = (
 				ED522D601E38F65800E53403 /* Localizable.strings */,
+				EDA747891E7553A60083889A /* Error.swift */,
 			);
 			name = Locale;
 			sourceTree = "<group>";
@@ -686,7 +695,9 @@
 				ED9035531E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift in Sources */,
 				ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */,
 				ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */,
+				EDA7478A1E7553A60083889A /* Error.swift in Sources */,
 				ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */,
+				EDA747881E753DA80083889A /* HttpStatusCode.swift in Sources */,
 				EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */,
 				ED04C9931E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift in Sources */,
 				ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */,
@@ -711,6 +722,7 @@
 				ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */,
 				EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */,
 				ED6A685A1E492CEA00776B6B /* Reachability.swift in Sources */,
+				EDA7478C1E755C630083889A /* UserDefaultKeys.swift in Sources */,
 				ED9A5C941E4AF01300CE34C5 /* PMHandleRegister.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
