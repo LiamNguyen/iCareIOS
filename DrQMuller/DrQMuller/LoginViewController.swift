@@ -306,9 +306,10 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
 //=========HANDLE LOGIN PROCEDURE=========
     
     func onReceiveAuthenticationResponse(notification: Notification) {
+        uiWaitingLoginResponse(isDone: true)
+
         if let userInfo = notification.userInfo {
             if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
-                uiWaitingLoginResponse(isDone: true)
                 
                 if statusCode != HttpStatusCode.success {
                     ToastManager.alert(view: loginView, msg: errorCode.localized())

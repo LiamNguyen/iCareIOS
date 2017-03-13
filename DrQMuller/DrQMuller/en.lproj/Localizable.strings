@@ -70,7 +70,7 @@
 "invalid-username-or-password" = "Invalid username or password";
 "pattern-fail" = "Username and password should contained at least 8 characters without symbols";
 "REGISTER_FAILED_MESSAGE" = "Register failed";
-"USERNAME_EXISTED_MESSAGE" = "Username has already existed";
+"USERNAME_EXISTED" = "Username has already existed";
 "ONE_LOCATION_MESSAGE" = "Currently there is only one DrQMuller FBT Shop at district 3, Viet Nam";
 "NETWORK_REACHED" = "Network Connected";
 "NETWORK_UNREACHED" = "No Internet Connection";

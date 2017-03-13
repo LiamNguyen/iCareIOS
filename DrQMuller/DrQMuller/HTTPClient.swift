@@ -141,49 +141,5 @@ public class HTTPClient {
         
         task.resume()
     }
-    
-    
 }
 
-
-
-
-
-//        let request = NSMutableURLRequest(url: URL as! URL)
-//
-//        let task = URLSession.shared.dataTask(with: request as URLRequest) { data, response, error in
-//            guard error == nil && data != nil else
-//            {
-//                print("Error:",error!)
-//                return
-//            }
-//            if data?.count != 0
-//            {
-//                let JSONResponse = try! JSONSerialization.jsonObject(with: data!, options: .allowFragments) as! NSDictionary //because JSON data started with dictionary. Not an array
-//
-//                if let dataArray = JSONResponse["Select_AllTime"] as? [AnyObject] // posts started with array
-//                {
-////                    for arrayItem in dataArray
-////                    {
-////                        //let voucher = arrayItem["VOUCHER"] as! String //specify as String
-////                        print(arrayItem)
-////                        DispatchQueue.main.sync
-////                        {
-////                            //reload table
-////                        }
-////                    }
-//                    DispatchQueue.main.sync
-//                    {
-//                        self.returnArray = dataArray
-//                    }
-//                }
-//                else
-//                {
-//                    print("No data can be found in dataArray")
-//                }
-//
-//            } else {
-//                print("No data can be found in this url")
-//            }
-//        }
-//        task.resume()

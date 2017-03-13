@@ -11,6 +11,7 @@ import Foundation
 struct Error {
     struct Backend {
         static let serverError = "SERVER_ERROR"
+        static let customerExisted = "USERNAME_EXISTED"
     }
     
     struct Login {

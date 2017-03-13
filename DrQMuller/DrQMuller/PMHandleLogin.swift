@@ -37,12 +37,11 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
         dataToSend["statusCode"] = statusCode
         dataToSend["errorCode"] = ""
         
-//        Status code 500
-        if statusCode == HttpStatusCode.internalServerError {
+//        Status code 500 or 501
+        if statusCode == HttpStatusCode.internalServerError || statusCode == HttpStatusCode.notImplemented {
             dataToSend["errorCode"] = Error.Backend.serverError
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginResponse"), object: nil, userInfo: dataToSend)
-            }
+            postNotification(withData: dataToSend)
+
             return
         }
         
@@ -53,18 +52,16 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
 //                Status code 400
                 if statusCode == HttpStatusCode.badRequest {
                     dataToSend["errorCode"] = responseObj?["errorCode"] as? String
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginResponse"), object: nil, userInfo: dataToSend)
-                    }
+                    postNotification(withData: dataToSend)
+
                     return
                 }
                 
 //                Status code 401
                 if statusCode == HttpStatusCode.unauthorized {
                     dataToSend["errorCode"] = responseObj?["errorCode"] as? String
-                    DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginResponse"), object: nil, userInfo: dataToSend)
-                    }
+                    postNotification(withData: dataToSend)
+
                     return
                 }
                 
@@ -72,16 +69,21 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
                     if let jwt = responseObj?["jwt"] as? String {
                         UserDefaults.standard.set(jwt, forKey: UserDefaultKeys.customerInformation)
                         DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: jwt)                        
-                        DispatchQueue.main.async {
-                            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginResponse"), object: nil, userInfo: dataToSend)
-                        }
+                        postNotification(withData: dataToSend)
+
 
                     } else {
                         print("Error while getting JWT")
                     }
                 }
-                
             }
         }
     }
+    
+    private func postNotification(withData: [String: Any]) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "loginResponse"), object: nil, userInfo: withData)
+        }
+    }
+    
 }
