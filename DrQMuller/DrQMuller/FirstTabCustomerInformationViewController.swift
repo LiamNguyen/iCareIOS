@@ -65,7 +65,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(FirstTabCustomerInformationViewController.onReceiveBasicInfoResponse(notification:)),
-            name: Notification.Name(rawValue: "basicInfoResponse"),
+            name: Notification.Name(rawValue: UserDefaultKeys.basicInfoResponse),
             object: nil
         )
     }
@@ -106,20 +106,11 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     func onReceiveBasicInfoResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
-            if let isSuccess = userInfo["status"] as? Bool {
-                if isSuccess {
-                    DispatchQueue.global(qos: .userInteractive).async {
-                        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
-                        
-                        if customerInformation["step"] as! String == "none" {
-                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "basic"
-                        }
-                        DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
-                        }
-                    }
+            if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+                if statusCode != HttpStatusCode.success {
+                    ToastManager.alert(view: view_TopView, msg: errorCode.localized())
                 } else {
-                    ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                    self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
                 }
             }
         }
@@ -191,13 +182,13 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         if let customerName = txt_Name.text, let address = txt_Address.text {
             if customerName.isEmpty {
                 UIFunctionality.addShakyAnimation(elementToBeShake: txt_Name)
-                ToastManager.alert(view: view_TopView, msg: "CUSTOMER_NAME_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: view_TopView, msg: Error.Empty.customerName.localized())
                 return false
             }
             
             if address.isEmpty {
                 UIFunctionality.addShakyAnimation(elementToBeShake: txt_Address)
-                ToastManager.alert(view: view_TopView, msg: "ADDRESS_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: view_TopView, msg: Error.Empty.address.localized())
                 return false
             }
             return true

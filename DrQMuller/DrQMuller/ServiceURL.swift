@@ -114,7 +114,7 @@ public class ServiceURL {
             localURL["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
             localURL["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
             localURL["BookingTransaction"] = "http://localhost/drmuller/BookingTransaction.php"
-            localURL["Update_BasicInfo"] = "http://localhost/drmuller/Update_BasicInfo.php"
+            localURL["Update_BasicInfo"] = "/user/basicinformation"
             localURL["Update_NecessaryInfo"] = "http://localhost/drmuller/Update_NecessaryInfo.php"
             localURL["Update_ImportantInfo"] = "http://localhost/drmuller/Update_ImportantInfo.php"
 //===============IF THIS IS UAT ENVIRONMENTS================

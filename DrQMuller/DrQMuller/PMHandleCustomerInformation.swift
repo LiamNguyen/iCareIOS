@@ -19,9 +19,11 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
     }
     
     func handleCustomerInformation(step: String, httpBody: String) {
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary["sessionToken"] as! String
+        
         switch step {
         case "basic":
-            httpClient.postRequest(url: "Update_BasicInfo", body: httpBody)
+            httpClient.putRequest(url: "Update_BasicInfo", body: httpBody, sessionToken: sessionToken)
         case "necessary":
             httpClient.postRequest(url: "Update_NecessaryInfo", body: httpBody)
         case "important":
@@ -31,36 +33,69 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
         }
     }
     
-    func onReceiveRequestResponse(data: AnyObject) {
-        handleReponseFromServer(responseHeader: "Update_BasicInfo", notificationName: "basicInfoResponse", data: data)
-        handleReponseFromServer(responseHeader: "Update_NecessaryInfo", notificationName: "necessaryInfoResponse", data: data)
-        handleReponseFromServer(responseHeader: "Update_ImportantInfo", notificationName: "importantInfoResponse", data: data)
-    }
+    func onReceiveRequestResponse(data: AnyObject) {}
     
     func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
-        
+        handleReponseFromServer(responseHeader: "Update_BasicInfo", notificationName: UserDefaultKeys.basicInfoResponse, data: data, statusCode: statusCode)
+        handleReponseFromServer(responseHeader: "Update_NecessaryInfo", notificationName: UserDefaultKeys.necessaryInfoResponse, data: data, statusCode: statusCode)
+        handleReponseFromServer(responseHeader: "Update_ImportantInfo", notificationName: UserDefaultKeys.importantInfoResponse, data: data, statusCode: statusCode)
     }
     
-    private func handleReponseFromServer(responseHeader: String, notificationName: String, data: AnyObject) {
-        if let arrayResponse = data[responseHeader] as? NSArray {
-            var isSuccess = [String: Bool]()
+    private func handleReponseFromServer(responseHeader: String, notificationName: String, data: AnyObject, statusCode: Int) {
+        var dataToSend = [String: Any]()
+        
+        dataToSend["statusCode"] = statusCode
+        dataToSend["errorCode"] = String()
+        
+        //        Status code 500 or 501
+        if statusCode == HttpStatusCode.internalServerError || statusCode == HttpStatusCode.notImplemented {
+            dataToSend["errorCode"] = Error.Backend.serverError
+            postNotification(withData: dataToSend, notificationName: notificationName)
             
-            for arrayItem in arrayResponse {
-                let arrayDict = arrayItem as? NSDictionary
-                if let result = arrayDict?["Status"] as? String {
-                    if result == "1" {
-                        isSuccess["status"] = true
-                    } else {
-                        isSuccess["status"] = false
+            return
+        }
+        
+        if let response = data[responseHeader] as? NSArray {
+            for item in response {
+                let responseObj = item as? NSDictionary
+                
+                //                Status code 400
+                if statusCode == HttpStatusCode.badRequest {
+                    if (responseObj?["error"] as! String).contains("customerName") {
+                        dataToSend["errorCode"] = Error.Pattern.customerName
+                    } else if (responseObj?["error"] as! String).contains("address") {
+                        dataToSend["errorCode"] = Error.Pattern.address
                     }
+                    postNotification(withData: dataToSend, notificationName: notificationName)
+                    
+                    return
                 }
                 
-                if let token = arrayDict?["jwt"] as? String {
-                    UserDefaults.standard.set(token, forKey: "CustomerInformation")
-                    DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: token)
+                //                Status code 401
+                if statusCode == HttpStatusCode.unauthorized {
+                    dataToSend["errorCode"] = responseObj?["errorCode"] as? String
+                    postNotification(withData: dataToSend, notificationName: notificationName)
+                    
+                    return
+                }
+                
+                if statusCode == HttpStatusCode.success {
+                    if let jwt = responseObj?["jwt"] as? String {
+                        UserDefaults.standard.set(jwt, forKey: UserDefaultKeys.customerInformation)
+                        DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: jwt)
+                        postNotification(withData: dataToSend, notificationName: notificationName)
+                        
+                    } else {
+                        print("Error while getting JWT")
+                    }
                 }
             }
-            NotificationCenter.default.post(name: Notification.Name(rawValue: notificationName), object: nil, userInfo: isSuccess)
+        }
+    }
+    
+    private func postNotification(withData: [String: Any], notificationName: String) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: notificationName), object: nil, userInfo: withData)
         }
     }
 }

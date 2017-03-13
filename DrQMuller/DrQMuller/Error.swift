@@ -14,8 +14,25 @@ struct Error {
         static let customerExisted = "USERNAME_EXISTED"
     }
     
-    struct Login {
-        static let usernamePatternFail = "";
-        static let passwordPatternFail = "";
+    struct Pattern {
+        static let username = "USERNAME_PATTERN_FAIL"
+        static let password = "PASSWORD_PATTERN_FAIL"
+        static let customerName = "CUSTOMER_NAME_PATTERN_FAIL"
+        static let address = "ADDRESS_PATTERN_FAIL"
+    }
+    
+    struct Empty {
+        static let username = "USERNAME_EMPTY"
+        static let password = "PASSWORD_EMPTY"
+        static let confirmPassword = "CONFRIM_PASSWORD_EMPTY"
+        static let customerName = "CUSTOMER_NAME_EMPTY"
+        static let address = "ADDRESS_EMPTY"
+        static let email = "EMAIL_EMPTY"
+        static let phone = "PHONE_EMPTY"
+    }
+    
+    struct Register {
+        static let confirmPasswordUnMatch = "CONFIRM_PASSWORD_UNMATCH"
+        static let registerFail = "REGISTER_FAILED"
     }
 }
