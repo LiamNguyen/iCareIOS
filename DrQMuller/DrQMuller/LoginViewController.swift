@@ -73,7 +73,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(LoginViewController.onReceiveAuthenticationResponse(notification:)),
-            name: Notification.Name(rawValue: "loginResponse"),
+            name: Notification.Name(rawValue: UserDefaultKeys.loginResponse),
             object: nil
         )
         
@@ -351,12 +351,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     private func frontValidationPassed() -> Bool {
         if let username = txt_Username.text, let password = txt_Password.text {
             if username.isEmpty {
-                ToastManager.alert(view: loginView, msg: "USERNAME_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Empty.username.localized())
                 return false
             }
             
             if password.isEmpty {
-                ToastManager.alert(view: loginView, msg: "PASSWORD_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Empty.password.localized())
                 return false
             }
             return true

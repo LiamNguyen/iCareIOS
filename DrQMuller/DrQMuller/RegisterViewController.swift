@@ -65,7 +65,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(RegisterViewController.onReceiveRegisterResponse(notification:)),
-            name: Notification.Name(rawValue: "registerResponse"),
+            name: Notification.Name(rawValue: UserDefaultKeys.registerResponse),
             object: nil
         )
         
@@ -327,22 +327,22 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private func frontValidationPassed() -> Bool {
         if let username = txt_Username.text, let password = txt_Password.text, let confirmPassword = txt_ConfirmPassword.text {
             if username.isEmpty {
-                ToastManager.alert(view: loginView, msg: "USERNAME_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Empty.username.localized())
                 return false
             }
             
             if password.isEmpty {
-                ToastManager.alert(view: loginView, msg: "PASSWORD_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Empty.password.localized())
                 return false
             }
             
             if confirmPassword.isEmpty {
-                ToastManager.alert(view: loginView, msg: "CONFIRM_PASSWORD_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Empty.confirmPassword.localized())
                 return false
             }
             
             if confirmPassword != password {
-                ToastManager.alert(view: loginView, msg: "CONFIRM_PASSWORD_UNMATCH_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Register.confirmPasswordUnMatch.localized())
                 return false
             }
             return true

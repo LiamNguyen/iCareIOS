@@ -51,7 +51,12 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
                 
 //                Status code 400
                 if statusCode == HttpStatusCode.badRequest {
-                    dataToSend["errorCode"] = responseObj?["errorCode"] as? String
+                    if (responseObj?["error"] as! String).contains("username") {
+                        dataToSend["errorCode"] = Error.Pattern.username
+                    } else {
+                        dataToSend["errorCode"] = Error.Pattern.password
+                    }
+                    
                     postNotification(withData: dataToSend)
                     
                     return
@@ -79,7 +84,7 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
     
     private func postNotification(withData: [String: Any]) {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "registerResponse"), object: nil, userInfo: withData)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: UserDefaultKeys.registerResponse), object: nil, userInfo: withData)
         }
     }
     
