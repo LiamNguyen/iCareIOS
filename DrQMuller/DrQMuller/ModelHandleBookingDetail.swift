@@ -25,6 +25,7 @@ class ModelHandleBookingDetail {
     
     private var staticArrayFromUserDefaults: DTOStaticArrayDataSource!
     private var isEco: Bool!
+    private var exactDate: String!
     
     private var dataHasReturn = false
     
@@ -45,6 +46,8 @@ class ModelHandleBookingDetail {
         
         self.isEco = isEco
         bindTimeDataSource(isEco: isEco)
+        
+        self.exactDate = DTOBookingInformation.sharedInstance.exactDate
         
 //OBSERVING NOTIFICATION FROM PMHandleBooking FOR SELECTED TIME DATASOURCE
         
@@ -95,8 +98,14 @@ class ModelHandleBookingDetail {
             case true:
                 if selectedTimeDataSourceWithID.isEmpty {
                     
-                    freeTimeDataSource = Functionality.filterTimeSmallerThanCurrentTimeInArray(array: ecoTimeDisplayArray)
-                    freeTimeDataSourceWithID = Functionality.filterTimeSmallerThanCurrentTimeInDictionary(dictionary: ecoTimeDataSource)
+                    if self.exactDate == Functionality.getCurrentDate() {
+                        freeTimeDataSource = Functionality.filterTimeSmallerThanCurrentTimeInArray(array: ecoTimeDisplayArray)
+                        freeTimeDataSourceWithID = Functionality.filterTimeSmallerThanCurrentTimeInDictionary(dictionary: ecoTimeDataSource)
+                    } else {
+                        freeTimeDataSource = ecoTimeDisplayArray
+                        freeTimeDataSourceWithID = ecoTimeDataSource
+                    }
+
                 } else {
                 
                     for (ecoTimeID, ecoTimeItem) in ecoTimeDataSource {
@@ -106,8 +115,14 @@ class ModelHandleBookingDetail {
                     }
                     
                     for displayItem in ecoTimeDisplayArray {
-                        if !selectedTimeDataSourceWithID.values.contains(displayItem) && Functionality.isGreaterThanCurrentTime(time: displayItem) {
-                            freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                        if !selectedTimeDataSourceWithID.values.contains(displayItem) {
+                            if self.exactDate == Functionality.getCurrentDate() {
+                                if Functionality.isGreaterThanCurrentTime(time: displayItem) {
+                                    freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                                }
+                            } else {
+                                freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                            }
                         }
                     }
                     
@@ -115,8 +130,13 @@ class ModelHandleBookingDetail {
             default:
                 if selectedTimeDataSourceWithID.isEmpty {
                     
-                    freeTimeDataSource = Functionality.filterTimeSmallerThanCurrentTimeInArray(array: allTimeDisplayArray)
-                    freeTimeDataSourceWithID = Functionality.filterTimeSmallerThanCurrentTimeInDictionary(dictionary: allTimeDataSource)
+                    if self.exactDate == Functionality.getCurrentDate() {
+                        freeTimeDataSource = Functionality.filterTimeSmallerThanCurrentTimeInArray(array: allTimeDisplayArray)
+                        freeTimeDataSourceWithID = Functionality.filterTimeSmallerThanCurrentTimeInDictionary(dictionary: allTimeDataSource)
+                    } else {
+                        freeTimeDataSource = allTimeDisplayArray
+                        freeTimeDataSourceWithID = allTimeDataSource
+                    }
                     
                 } else {
                     
@@ -127,8 +147,14 @@ class ModelHandleBookingDetail {
                     }
                     
                     for displayItem in allTimeDisplayArray {
-                        if !selectedTimeDataSourceWithID.values.contains(displayItem) && Functionality.isGreaterThanCurrentTime(time: displayItem) {
-                            freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                        if !selectedTimeDataSourceWithID.values.contains(displayItem) {
+                            if self.exactDate == Functionality.getCurrentDate() {
+                                if Functionality.isGreaterThanCurrentTime(time: displayItem) {
+                                    freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                                }
+                            } else {
+                                freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                            }
                         }
                     }
                     

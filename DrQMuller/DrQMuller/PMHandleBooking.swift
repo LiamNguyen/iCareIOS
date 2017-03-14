@@ -235,7 +235,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var machinesDataSource = [String: String]()
             for arrayItem in arrayResponse {
                 let dictItem = arrayItem as! NSDictionary
-                machinesDataSource[dictItem["MACHINE_ID"] as! String] = (dictItem["MACHINE_NAME"] as! String)
+                machinesDataSource[(dictItem["MACHINE_ID"] as! NSNumber).stringValue] = (dictItem["MACHINE_NAME"] as! String)
             }
             DTOBookingInformation.sharedInstance.machinesDataSource = machinesDataSource
             
@@ -297,13 +297,13 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
 //MAKE GET REQUEST FOR SELECTED TIME
 
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String, location_ID: String, machine_ID: String) {
-        httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)&location_id=\(location_ID)&machine_id=\(machine_ID)")
+        httpClient.getRequest(url: "Select_SelectedTime", parameter: "\(selectedDayOfWeek_ID)/\(location_ID)/\(machine_ID)")
     }
     
 //MAKE GET REQUEST FOR MACHINES DATASOURCE
     
     func getMachinesByLocationID(locationID: String) {
-        httpClient.getRequest(url: "Select_Machines", parameter: "?location_id=\(locationID)")
+        httpClient.getRequest(url: "Select_Machines", parameter: "\(locationID)")
     }
     
 //MAKE GET REQUEST FOR CHECKING EXISTENCE OF BOOKING TIME
