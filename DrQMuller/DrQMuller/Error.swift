@@ -19,6 +19,8 @@ struct Error {
         static let password = "PASSWORD_PATTERN_FAIL"
         static let customerName = "CUSTOMER_NAME_PATTERN_FAIL"
         static let address = "ADDRESS_PATTERN_FAIL"
+        static let email = "EMAIL_PATTERN_FAIL"
+        static let phone = "PHONE_PATTERN_FAIL"
     }
     
     struct Empty {

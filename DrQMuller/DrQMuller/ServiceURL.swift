@@ -115,8 +115,8 @@ public class ServiceURL {
             localURL["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
             localURL["BookingTransaction"] = "http://localhost/drmuller/BookingTransaction.php"
             localURL["Update_BasicInfo"] = "/user/basicinformation"
-            localURL["Update_NecessaryInfo"] = "http://localhost/drmuller/Update_NecessaryInfo.php"
-            localURL["Update_ImportantInfo"] = "http://localhost/drmuller/Update_ImportantInfo.php"
+            localURL["Update_NecessaryInfo"] = "/user/necessaryinformation"
+            localURL["Update_ImportantInfo"] = "/user/importantinformation"
 //===============IF THIS IS UAT ENVIRONMENTS================
         default:
             uatURL["Select_ToAuthenticate"] = "/user/login"

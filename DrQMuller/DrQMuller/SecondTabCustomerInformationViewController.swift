@@ -128,19 +128,11 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     
     func onReceiveNecessaryInfoResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
-            if let isSuccess = userInfo["status"] as? Bool {
-                if isSuccess {
-                    DispatchQueue.global(qos: .userInteractive).async {
-                        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
-                        if customerInformation["step"] as! String == "basic" {
-                            DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "necessary"
-                        }
-                        DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
-                        }
-                    }
+            if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+                if statusCode != HttpStatusCode.success {
+                    ToastManager.alert(view: view_TopView, msg: errorCode.localized())
                 } else {
-                    ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                    self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
                 }
             }
         }

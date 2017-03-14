@@ -82,6 +82,8 @@
 "EMAIL_EMPTY" = "Email empty";
 "PHONE_EMPTY" = "Phone empty";
 "EMAIL_INVALID_FORMAT" = "Email is invalid";
+"EMAIL_PATTERN_FAIL" = "Email should contained only Latin scriptm numbers and symbols: /-_@";
+"PHONE_PATTERN_FAIL" = "Phone number should contained only number. Max length is 12";
 "UPDATE_SUCCESS_MESSAGE" = "Contact information updated successfully";
 "UPDATE_FAIL_MESSAGE" = "Save information unsuccesfully. Please try again";
 "NO_APPOINTMENT_MESSAGE" = "You haven't had appointment yet.\nStart to book a new appointment by clicking \"+\" sign";

@@ -100,20 +100,11 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "importantInfoResponse"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "importantInfoResponse"), object: nil, queue: nil) { (Notification) in
             if let userInfo = Notification.userInfo {
-                if let isSuccess = userInfo["status"] as? Bool {
-                    if isSuccess {
-                        DispatchQueue.global(qos: .userInteractive).async {
-                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
-                            
-                            if customerInformation["step"] as! String == "necessary" {
-                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "important"
-                            }
-                            DispatchQueue.main.async {
-                                self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_BOOKING_VC, sender: self)
-                            }
-                        }
+                if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+                    if statusCode != HttpStatusCode.success {
+                        ToastManager.alert(view: self.view_TopView, msg: errorCode.localized())
                     } else {
-                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_BOOKING_VC, sender: self)
                     }
                 }
             }

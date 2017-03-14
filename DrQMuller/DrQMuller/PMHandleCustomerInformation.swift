@@ -25,9 +25,9 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
         case "basic":
             httpClient.putRequest(url: "Update_BasicInfo", body: httpBody, sessionToken: sessionToken)
         case "necessary":
-            httpClient.postRequest(url: "Update_NecessaryInfo", body: httpBody)
+            httpClient.putRequest(url: "Update_NecessaryInfo", body: httpBody, sessionToken: sessionToken)
         case "important":
-            httpClient.postRequest(url: "Update_ImportantInfo", body: httpBody)
+            httpClient.putRequest(url: "Update_ImportantInfo", body: httpBody, sessionToken: sessionToken)
         default:
             return
         }
@@ -61,10 +61,16 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
                 
                 //                Status code 400
                 if statusCode == HttpStatusCode.badRequest {
-                    if (responseObj?["error"] as! String).contains("customerName") {
+                    let serverErrorResponse = responseObj?["error"] as! String
+                    
+                    if serverErrorResponse.contains("customerName") {
                         dataToSend["errorCode"] = Error.Pattern.customerName
-                    } else if (responseObj?["error"] as! String).contains("address") {
+                    } else if serverErrorResponse.contains("address") {
                         dataToSend["errorCode"] = Error.Pattern.address
+                    } else if serverErrorResponse.contains("phone") {
+                        dataToSend["errorCode"] = Error.Pattern.phone
+                    } else if serverErrorResponse.contains("email") {
+                        dataToSend["errorCode"] = Error.Pattern.email
                     }
                     postNotification(withData: dataToSend, notificationName: notificationName)
                     

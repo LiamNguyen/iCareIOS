@@ -82,6 +82,8 @@
 "ADDRESS_PATTERN_FAIL" = "Địa chỉ bao gồm ký tự Latin, số và các ký hiệu như: .-. Số ký tự nhiều nhất cho phép: 150";
 "EMAIL_EMPTY" = "Email trống";
 "PHONE_EMPTY" = "Số điện thoại trống";
+"EMAIL_PATTERN_FAIL" = "Địa chỉ email bao gồm ký tự Latin, số và các ký hiệu như: /-_@";
+"PHONE_PATTERN_FAIL" = "Số điện thoại không hợp lệ. Số chữ số nhiều nhất cho phép: 12";
 "EMAIL_INVALID_FORMAT" = "Email không hợp lệ";
 "UPDATE_SUCCESS_MESSAGE" = "Cập nhật thành công";
 "UPDATE_FAIL_MESSAGE" = "Cập nhật không thành công. Xin vui lòng thử lại";
