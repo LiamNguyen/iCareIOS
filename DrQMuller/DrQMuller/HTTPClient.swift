@@ -23,8 +23,14 @@ public class HTTPClient {
             print("No network connection")
             return
         }
-        let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter!)
-        var request = URLRequest(url: URL as! URL)
+        
+        let nsUrl: NSURL!
+        if parameter!.isEmpty {
+            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter!)
+        } else {
+            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + "/\(parameter!)")
+        }
+        var request = URLRequest(url: nsUrl as URL)
         request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
@@ -42,7 +48,7 @@ public class HTTPClient {
             
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
-                print("\nGET: \(URL!)\n")
+                print("\nGET: \(nsUrl!)\n")
                 print("Response from server: \n\(JSONResponse)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse!)
             }
@@ -57,8 +63,8 @@ public class HTTPClient {
             return
         }
         
-        let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
-        var request = URLRequest(url: URL as! URL)
+        let nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
+        var request = URLRequest(url: nsUrl as! URL)
         request.httpMethod = "POST"
         request.httpBody = body.data(using: .utf8)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -88,7 +94,7 @@ public class HTTPClient {
             
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
-                print("\nPOST: \(URL!)\n")
+                print("\nPOST: \(nsUrl!)\n")
                 print("Response from server: \n\(JSONResponse)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse)
                 
@@ -105,8 +111,8 @@ public class HTTPClient {
             return
         }
         
-        let URL = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
-        var request = URLRequest(url: URL as! URL)
+        let nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
+        var request = URLRequest(url: nsUrl as! URL)
         request.httpMethod = "PUT"
         request.httpBody = body?.data(using: .utf8)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -131,7 +137,7 @@ public class HTTPClient {
             
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as! NSDictionary
-                print("\nPUT: \(URL!)\n")
+                print("\nPUT: \(nsUrl!)\n")
                 print("Response from server: \n\(JSONResponse)")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse)
                 

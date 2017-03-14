@@ -60,7 +60,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var dropDownLocationsDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownLocationsDataSource[(dictItem["LOCATION_ID"] as? String)!] = (dictItem["ADDRESS"] as? String)!
+                dropDownLocationsDataSource[(dictItem["LOCATION_ID"] as? NSNumber)!.stringValue] = (dictItem["ADDRESS"] as? String)!
             }
             DTOStaticArrayDataSource.sharedInstance.dropDownLocationsDataSource = dropDownLocationsDataSource
         }
@@ -71,7 +71,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var dropDownVouchersDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownVouchersDataSource[(dictItem["VOUCHER_ID"] as? String)!] = (dictItem["VOUCHER"] as? String)!
+                dropDownVouchersDataSource[(dictItem["VOUCHER_ID"] as? NSNumber)!.stringValue] = (dictItem["VOUCHER"] as? String)!
             }
             DTOStaticArrayDataSource.sharedInstance.dropDownVouchersDataSource = dropDownVouchersDataSource
         }
@@ -82,7 +82,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var dropDownTypesDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownTypesDataSource[(dictItem["TYPE_ID"] as? String)!] = (dictItem["TYPE"] as? String)!
+                dropDownTypesDataSource[(dictItem["TYPE_ID"] as? NSNumber)!.stringValue] = (dictItem["TYPE"] as? String)!
             }
             DTOStaticArrayDataSource.sharedInstance.dropDownTypesDataSource = dropDownTypesDataSource
         }
@@ -96,7 +96,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 allTimeDisplayArray.append((dictItem["TIME"] as? String)!)
-                allTimeDataSource[(dictItem["TIME_ID"] as? String)!] = (dictItem["TIME"] as? String)!
+                allTimeDataSource[(dictItem["TIME_ID"] as? NSNumber)!.stringValue] = (dictItem["TIME"] as? String)!
             }
             //let sortedArray = sortDictionary(dictionary: allTimeDataSource)
             //DTOStaticArrayDataSource.sharedInstance.allTimeDisplayArray = sortedArray
@@ -113,7 +113,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 ecoTimeDisplayArray.append((dictItem["TIME"] as? String)!)
-                ecoTimeDataSource[(dictItem["TIME_ID"] as? String)!] = dictItem["TIME"]! as? String
+                ecoTimeDataSource[(dictItem["TIME_ID"] as? NSNumber)!.stringValue] = dictItem["TIME"]! as? String
             }
             //let sortedArray = sortDictionary(dictionary: ecoTimeDataSource)
             //DTOStaticArrayDataSource.sharedInstance.ecoTimeDisplayArray = sortedArray
@@ -141,7 +141,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var selectedTimeDataSource = Dictionary<String, String>()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                selectedTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
+                selectedTimeDataSource[(dictItem["TIME_ID"]! as? NSNumber)!.stringValue] = dictItem["TIME"]! as? String
             }
         //PASS SELECTED TIME DATASOURCE
             
@@ -281,9 +281,9 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             return
         }
         httpClient.getRequest(url: "Select_Countries")
-        httpClient.getRequest(url: "Select_Cities", parameter: "?country_id=235")
-        httpClient.getRequest(url: "Select_Districts", parameter: "?city_id=58")
-        httpClient.getRequest(url: "Select_Locations", parameter: "?district_id=630")
+        httpClient.getRequest(url: "Select_Cities", parameter: "235")
+        httpClient.getRequest(url: "Select_Districts", parameter: "58")
+        httpClient.getRequest(url: "Select_Locations", parameter: "630")
         httpClient.getRequest(url: "Select_Vouchers")
         httpClient.getRequest(url: "Select_Types")
         
