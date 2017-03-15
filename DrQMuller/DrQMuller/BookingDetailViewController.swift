@@ -353,8 +353,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if let userInfo = notification.userInfo {
             
             DispatchQueue.global(qos: .userInteractive).async {
-                let existencyResult = userInfo["returnExistencyResult"] as! String
-                if existencyResult == "1" {
+                let existed = userInfo["returnExistencyResult"] as! Bool
+                if existed {
                     DispatchQueue.main.sync {
                         self.activityIndicator.stopAnimating()
                         self.tableView_BookingTime.isUserInteractionEnabled = true

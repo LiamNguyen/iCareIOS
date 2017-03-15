@@ -256,16 +256,16 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
 //HANDLE CHECKING BOOKING TIME EXISTENCY
 
         if let arrayDataSource = data["BookingTransaction"]! as? NSArray {
-            var returnExistencyResult = [String: String]()
-            var existency: String!
+            var returnExistencyResult = [String: Bool]()
+            var existed: Bool!
             
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                existency = dictItem["existence"]! as! String
+                existed = dictItem["existed"]! as! Bool
             }
         //PASS CHECKING EXISTENCY RESULT
 
-            returnExistencyResult["returnExistencyResult"] = existency
+            returnExistencyResult["returnExistencyResult"] = existed
             NotificationCenter.default.post(name: Notification.Name(rawValue: "existencyResult"), object: nil, userInfo: returnExistencyResult)
         }
     }
