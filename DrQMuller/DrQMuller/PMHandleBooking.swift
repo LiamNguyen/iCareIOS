@@ -261,7 +261,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                existency = dictItem["existency"]! as! String
+                existency = dictItem["existence"]! as! String
             }
         //PASS CHECKING EXISTENCY RESULT
 
@@ -308,16 +308,17 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
 //MAKE GET REQUEST FOR CHECKING EXISTENCE OF BOOKING TIME
     
-    func checkBookingTime(day_ID: String, time_ID: String, chosenMachineID: String) {
-        let location_ID = Functionality.findKeyFromValue(dictionary: APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!.dropDownLocationsDataSource, value: DTOBookingInformation.sharedInstance.location)
+    func checkBookingTime(time: [String: String]) {
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForBookingTransaction(time: time)
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
         
-        httpClient.postRequest(url: "BookingTransaction", body: "day_id=\(day_ID)&time_id=\(time_ID)&location_id=\(location_ID)&machine_id=\(chosenMachineID)")
+        httpClient.postRequest(url: "BookingTransaction", body: requestBody, sessionToken: sessionToken)
     }
     
 //INSERT NEW APPOINTMENT
     
     func insertNewAppointment() {
-        httpClient.postRequest(url: "Insert_NewAppointment", body: DTOBookingInformation.sharedInstance.returnHttpBody()!)
+//        httpClient.postRequest(url: "Insert_NewAppointment", body: DTOBookingInformation.sharedInstance.returnHttpBody()!)
     }
     
 //CHECK VERIFICATION CODE

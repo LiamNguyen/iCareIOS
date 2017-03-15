@@ -113,7 +113,7 @@ public class ServiceURL {
             localURL["Update_ResetPw"] = "http://localhost/drmuller/Update_ResetPw.php"
             localURL["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
             localURL["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
-            localURL["BookingTransaction"] = "http://localhost/drmuller/BookingTransaction.php"
+            localURL["BookingTransaction"] = "/time/book"
             localURL["Update_BasicInfo"] = "/user/basicinformation"
             localURL["Update_NecessaryInfo"] = "/user/necessaryinformation"
             localURL["Update_ImportantInfo"] = "/user/importantinformation"

@@ -21,7 +21,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var appointmentID: String {
         get {
             if _appointmentID == nil {
-                return ""
+                return String()
             }
             return _appointmentID
         }
@@ -35,7 +35,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var verificationCode: String {
         get {
             if _verificationCode == nil {
-                return ""
+                return String()
             }
             return _verificationCode
         }
@@ -45,7 +45,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var country: String {
         get {
             if _country == nil {
-                return ""
+                return String()
             }
             return _country
         }
@@ -59,7 +59,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var city: String {
         get {
             if _city == nil {
-                return ""
+                return String()
             }
             return _city
         }
@@ -73,7 +73,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var district: String {
         get {
             if _district == nil {
-                return ""
+                return String()
             }
             return _district
         }
@@ -87,7 +87,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var location: String {
         get {
             if _location == nil {
-                return ""
+                return String()
             }
             return _location
         }
@@ -101,7 +101,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var voucher: String {
         get {
             if _voucher == nil {
-                return ""
+                return String()
             }
             return _voucher
         }
@@ -115,7 +115,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var type: String {
         get {
             if _type == nil {
-                return ""
+                return String()
             }
             return _type
         }
@@ -143,7 +143,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var machine: String {
         get {
             if _machine == nil {
-                return ""
+                return String()
             }
             return _machine
         }
@@ -157,7 +157,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var startDate: String {
         get {
             if _startDate == nil {
-                return ""
+                return String()
             }
             return _startDate
         }
@@ -171,7 +171,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var endDate: String {
         get {
             if _endDate == nil {
-                return ""
+                return String()
             }
             return _endDate
         }
@@ -185,7 +185,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var exactDate: String {
         get {
             if _exactDate == nil {
-                return ""
+                return String()
             }
             return _exactDate
         }
@@ -199,7 +199,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var exactDayOfWeek: String {
         get {
             if _exactDayOfWeek == nil {
-                return ""
+                return String()
             }
             return _exactDayOfWeek
         }
@@ -209,11 +209,11 @@ class DTOBookingInformation: NSObject, NSCoding {
         }
     }
     
-    private var _bookingTime: [[String]]!
-    var bookingTime: [[String]] {
+    private var _bookingTime: [[String: String]]!
+    var bookingTime: [[String: String]] {
         get {
             if _bookingTime == nil {
-                return [[String]]()
+                return [[String: String]]()
             }
             return _bookingTime
         }
@@ -227,7 +227,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     var isConfirmed: String {
         get {
             if _isConfirmed == nil {
-                return ""
+                return String()
             }
             return _isConfirmed
         }
@@ -257,8 +257,8 @@ class DTOBookingInformation: NSObject, NSCoding {
     func returnJsonAppointmentInfo() -> String {
         var appointmentInfoDictionary = [String: Any]()
         
-        appointmentInfoDictionary["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as? String ?? ""
-        appointmentInfoDictionary["userName"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] as? String ?? ""
+        appointmentInfoDictionary["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as? String ?? String()
+        appointmentInfoDictionary["userName"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userName] as? String ?? String()
         appointmentInfoDictionary["createdAt"] = Functionality.getCurrentDateTime()
         appointmentInfoDictionary["appointmentId"] = self._appointmentID
         appointmentInfoDictionary["location"] = self._location
@@ -274,12 +274,12 @@ class DTOBookingInformation: NSObject, NSCoding {
     }
     
     private func returnBookingTimeForEmailTemplate() -> String {
-        var result = ""
+        var result = String()
         let dtoArrays = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()
         
         let allTime = dtoArrays?.allTimeDataSource
 
-        result = "\(self.exactDayOfWeek) - \((allTime?[self.bookingTime[0][1]])!)"
+        result = "\(self.exactDayOfWeek) - \((allTime?[self.bookingTime[0]["timeId"]!])!)"
         
         return result
     }
@@ -288,51 +288,61 @@ class DTOBookingInformation: NSObject, NSCoding {
         print("\nAppointment ID: \(self.appointmentID)\nCountry: \(self.country)\nCity: \(self.city)\nDistrict: \(self.district)\nLocation: \(self.location)\nVoucher: \(self.voucher)\nType: \(self.type)\nStart: \(self.startDate)\nEnd: \(self.endDate)\nExact: \(self.exactDate)\nDay Of Week: \(self.exactDayOfWeek)\nBooking Time: \(self.bookingTime)\nMachine: \(self.machine)\nStatus: \(self.isConfirmed)\nVerification Code: \(self.verificationCode)\n")
     }
     
-    func returnHttpBody() -> String? {
+    func getRequestBodyForCreateAppointment() -> String {
+        
+        let dtoArrays = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!
+        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
+        
+        self._verificationCode = generateVerificationCode(length: 10)
+        
+        let locationId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownLocationsDataSource, value: _location)
+        let voucherId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownVouchersDataSource, value: _voucher)
+        let typeId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownTypesDataSource, value: _type)
+        let customerId = customerInformation[JsonPropertyName.userId] as! String
+        var startDate = String()
+        
+        if self.startDate.isEmpty {
+            startDate = "1111-11-11"
+        } else {
+            startDate = self.startDate
+        }
+        
+        let dict: [String: Any] = [
+            "startDate": startDate,
+            "expiredDate": self.endDate,
+            "typeId": typeId,
+            "userId": customerId,
+            "voucherId": voucherId,
+            "verificationCode": self.verificationCode,
+            "locationId": locationId,
+            "time": self.bookingTime
+        ]
+        
+        return Functionality.jsonStringify(obj: dict as AnyObject)
+        
+    }
+    
+    func getRequestBodyForBookingTransaction(time: [String: String]) -> String {
+        let timeArray = [time]
+
         let dtoArrays = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!
         
-        let typesDataSource = dtoArrays.dropDownTypesDataSource
-        let vouchersDataSource = dtoArrays.dropDownVouchersDataSource
-        let locationsDataSource = dtoArrays.dropDownLocationsDataSource
+        let locationId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownLocationsDataSource, value: _location)
         
-        let machine_ID = Functionality.findKeyFromValue(dictionary: self.machinesDataSource, value: self.machine)
+        let dict: [String: Any] = [
+            "locationId": locationId,
+            "time": timeArray
+        ]
         
-        let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
-
-        var result = ""
-        
-        if _type == "Tự do" {
-            if let exactDate = _exactDate {
-                result += "start_date=1111-11-11&expire_date=\(exactDate)&"
-            }
-        } else {
-            if let startDate = _startDate, let endDate = _endDate {
-                result += "start_date=\(startDate)&expire_date=\(endDate)&"
-            }
-        }
-
-        if let type = _type, let customerID = customerInformation["userId"], let location = _location, let voucher = _voucher, let bookingTime = _bookingTime {
-            self._verificationCode = generateVerificationCode(length: 10)
-            result += "type_id=\(Functionality.findKeyFromValue(dictionary: typesDataSource, value: type))&" +
-                        "customer_id=\(customerID)&" +
-                        "location_id=\(Functionality.findKeyFromValue(dictionary: locationsDataSource, value: location))&" +
-                        "voucher_id=\(Functionality.findKeyFromValue(dictionary: vouchersDataSource, value: voucher))&" +
-                        "bookingTime=\(Functionality.jsonStringify(obj: bookingTime as AnyObject))&" +
-                        "code=\(self._verificationCode!)&" +
-                        "machine_id=\(machine_ID)"
-        } else {
-            return ""
-        }
-        
-        return result
+        return Functionality.jsonStringify(obj: dict as AnyObject)
     }
     
     func generateVerificationCode(length: Int) -> String {
         
-        let letters : NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let letters : NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         let len = UInt32(letters.length)
         
-        var randomString = ""
+        var randomString = String()
         
         for _ in 0 ..< length {
             let rand = arc4random_uniform(len)
@@ -349,22 +359,22 @@ class DTOBookingInformation: NSObject, NSCoding {
     required init?(coder aDecoder: NSCoder) {
         super.init()
         
-        self._appointmentID = aDecoder.decodeObject(forKey: "appointmentID") as? String ?? ""
-        self._verificationCode = aDecoder.decodeObject(forKey: "veriCode") as? String ?? ""
-        self._country = aDecoder.decodeObject(forKey: "country") as? String ?? ""
-        self._city = aDecoder.decodeObject(forKey: "city") as? String ?? ""
-        self._district = aDecoder.decodeObject(forKey: "district") as? String ?? ""
-        self._location = aDecoder.decodeObject(forKey: "location") as? String ?? ""
-        self._voucher = aDecoder.decodeObject(forKey: "voucher") as? String ?? ""
-        self._type = aDecoder.decodeObject(forKey: "type") as? String ?? ""
+        self._appointmentID = aDecoder.decodeObject(forKey: "appointmentID") as? String ?? String()
+        self._verificationCode = aDecoder.decodeObject(forKey: "veriCode") as? String ?? String()
+        self._country = aDecoder.decodeObject(forKey: "country") as? String ?? String()
+        self._city = aDecoder.decodeObject(forKey: "city") as? String ?? String()
+        self._district = aDecoder.decodeObject(forKey: "district") as? String ?? String()
+        self._location = aDecoder.decodeObject(forKey: "location") as? String ?? String()
+        self._voucher = aDecoder.decodeObject(forKey: "voucher") as? String ?? String()
+        self._type = aDecoder.decodeObject(forKey: "type") as? String ?? String()
         self._machinesDataSource = aDecoder.decodeObject(forKey: "machinesDS") as? [String: String] ?? [String: String]()
-        self._machine = aDecoder.decodeObject(forKey: "machine") as? String ?? ""
-        self._startDate = aDecoder.decodeObject(forKey: "startDate") as? String ?? ""
-        self._endDate = aDecoder.decodeObject(forKey: "endDate") as? String ?? ""
-        self._exactDate = aDecoder.decodeObject(forKey: "exactDate") as? String ?? ""
-        self._exactDayOfWeek = aDecoder.decodeObject(forKey: "exactDayOfWeed") as? String ?? ""
-        self._bookingTime = aDecoder.decodeObject(forKey: "bookingTime") as? [[String]] ?? [[String]]()
-        self._isConfirmed = aDecoder.decodeObject(forKey: "isConfirmed") as? String ?? ""
+        self._machine = aDecoder.decodeObject(forKey: "machine") as? String ?? String()
+        self._startDate = aDecoder.decodeObject(forKey: "startDate") as? String ?? String()
+        self._endDate = aDecoder.decodeObject(forKey: "endDate") as? String ?? String()
+        self._exactDate = aDecoder.decodeObject(forKey: "exactDate") as? String ?? String()
+        self._exactDayOfWeek = aDecoder.decodeObject(forKey: "exactDayOfWeed") as? String ?? String()
+        self._bookingTime = aDecoder.decodeObject(forKey: "bookingTime") as? [[String: String]] ?? [[String: String]]()
+        self._isConfirmed = aDecoder.decodeObject(forKey: "isConfirmed") as? String ?? String()
     }
     
     func encode(with aCoder: NSCoder) {
@@ -385,14 +395,4 @@ class DTOBookingInformation: NSObject, NSCoding {
         aCoder.encode(_bookingTime, forKey: "bookingTime")
         aCoder.encode(_isConfirmed, forKey: "isConfirmed")
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
