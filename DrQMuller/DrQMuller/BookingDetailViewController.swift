@@ -295,8 +295,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         NotificationCenter.default.removeObserver(self)
         
-        if !bookingTimeArray.isEmpty && !hasSuccessfullyInsertedAppointment {
-//            modelHandelBookingDetail.releaseTime(timeObj: bookingTimeArray)
+        if !self.bookingTimeArray.isEmpty && !hasSuccessfullyInsertedAppointment {
+            modelHandelBookingDetail.releaseTime(time: self.bookingTimeArray)
         }
         
         networkCheckInRealTime?.invalidate()
@@ -516,7 +516,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.activityIndicator.startAnimating()
             self.view.isUserInteractionEnabled = false
             
-//            self.modelHandelBookingDetail.releaseTime(timeObj: self.bookingTimeArray)
+            self.modelHandelBookingDetail.releaseTime(time: self.bookingTimeArray)
         }))
         alert.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in
         }))
@@ -693,9 +693,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.isUserInteractionEnabled = false
         
         if let indexPath = deleteCartOrderItemIndexPath {
-//            let timeWillBeDeleted = [self.tupleBookingTime_Array[indexPath.row].id.day_ID, self.tupleBookingTime_Array[indexPath.row].id.time_ID]
-//            let timeArrayWillBeDeleted = [timeWillBeDeleted]
-//            self.modelHandelBookingDetail.releaseTime(timeObj: timeArrayWillBeDeleted)
+
+            let willBeDeletedTime = self.bookingTimeArray[indexPath.row]
+            
+            self.modelHandelBookingDetail.releaseTime(time: [willBeDeletedTime])
             self.deletedTime = self.tupleBookingTime_Array[indexPath.row].value.time
         } else {
             print("indexPath is nil")
@@ -715,9 +716,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.tableView_CartOrder.endUpdates()
             
-            //            self.freeTimeDataSource.append(self.deletedTime ?? "")
-            //            self.freeTimeDataSource.sort()
-            //            self.tableView_BookingTime.reloadData()
+            self.freeTimeDataSource.append(self.deletedTime ?? "")
+            self.freeTimeDataSource.sort()
+            self.tableView_BookingTime.reloadData()
             
             self.tableView_BookingTimeConfirm.reloadData()
             
@@ -1020,7 +1021,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.view_TopView.isUserInteractionEnabled = true
         self.view.backgroundColor = ThemeBackGroundColor
         self.isRequiredClearAllCartItems = true
-//        modelHandelBookingDetail?.releaseTime(timeObj: bookingTimeArray)
+        modelHandelBookingDetail?.releaseTime(time: self.bookingTimeArray)
         self.timer_bookingExpire?.invalidate()
         print("Clear all cart items")
     }

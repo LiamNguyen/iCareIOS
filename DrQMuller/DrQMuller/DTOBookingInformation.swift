@@ -337,6 +337,20 @@ class DTOBookingInformation: NSObject, NSCoding {
         return Functionality.jsonStringify(obj: dict as AnyObject)
     }
     
+    func getRequestBodyForReleasingTime(time: [[String: String]]) -> String {
+        
+        let dtoArrays = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!
+        
+        let locationId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownLocationsDataSource, value: _location)
+        
+        let dict: [String: Any] = [
+            "locationId": locationId,
+            "time": time
+        ]
+        
+        return Functionality.jsonStringify(obj: dict as AnyObject)
+    }
+    
     func generateVerificationCode(length: Int) -> String {
         
         let letters : NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"

@@ -218,8 +218,8 @@ class ModelHandleBookingDetail {
     
 //RELEASE TIME IN TEMPORARY BOOK TBL
     
-    func releaseTime(timeObj: [[String]]) {
-        APIHandleReleaseTime.sharedInstace.releaseTime(timeObj: timeObj)
+    func releaseTime(time: [[String: String]]) {
+        APIHandleReleaseTime.sharedInstace.releaseTime(time: time)
     }
     
 //BIND MACHINES DATASOURCE

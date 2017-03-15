@@ -104,7 +104,7 @@ public class ServiceURL {
             localURL["Insert_NewCustomer"] = "/user/register"
             localURL["Insert_NewAppointment"] = "http://localhost/drmuller/Insert_NewAppointment.php"
             localURL["Insert_NewBookingTime"] = "http://localhost/drmuller/Insert_NewBookingTime.php"
-            localURL["Update_UnchosenTime"] = "http://localhost/drmuller/Update_UnchosenTime.php"
+            localURL["Update_ReleaseTime"] = "/time/release"
             localURL["Update_CustomerInfo"] = "http://localhost/drmuller/Update_CustomerInfo.php"
             localURL["Update_ValidateAppointment"] = "/appointment/validate"
             localURL["Update_Appointment"] = "http://localhost/drmuller/Update_Appointment.php"
