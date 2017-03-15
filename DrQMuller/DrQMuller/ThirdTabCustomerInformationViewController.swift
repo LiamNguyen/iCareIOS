@@ -183,18 +183,18 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         if let email = txt_Email.text, let phone = txt_Phone.text {
             if email.isEmpty {
                 UIFunctionality.addShakyAnimation(elementToBeShake: txt_Email)
-                ToastManager.alert(view: view_TopView, msg: "EMAIL_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: view_TopView, msg: Error.Empty.email.localized())
                 return false
             }
             
             if !email.contains("@") {
-                ToastManager.alert(view: view_TopView, msg: "EMAIL_INVALID_FORMAT".localized())
+                ToastManager.alert(view: view_TopView, msg: Error.Pattern.email.localized())
                 return false
             }
             
             if phone.isEmpty {
                 UIFunctionality.addShakyAnimation(elementToBeShake: txt_Phone)
-                ToastManager.alert(view: view_TopView, msg: "PHONE_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: view_TopView, msg: Error.Empty.phone.localized())
                 return false
             }
             return true
