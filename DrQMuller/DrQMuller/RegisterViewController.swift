@@ -130,6 +130,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
         self.activityIndicator.stopAnimating()
 
+        UIView.hr_setToastThemeColor(color: ToastColorAlert)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
