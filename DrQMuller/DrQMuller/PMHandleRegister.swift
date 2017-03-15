@@ -34,12 +34,12 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
     func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
         var dataToSend = [String: Any]()
         
-        dataToSend["statusCode"] = statusCode
-        dataToSend["errorCode"] = ""
+        dataToSend[JsonPropertyName.statusCode] = statusCode
+        dataToSend[JsonPropertyName.errorCode] = String()
         
 //        Status code 500 or 501
         if statusCode == HttpStatusCode.internalServerError || statusCode == HttpStatusCode.notImplemented {
-            dataToSend["errorCode"] = Error.Backend.serverError
+            dataToSend[JsonPropertyName.errorCode] = Error.Backend.serverError
             postNotification(withData: dataToSend)
             
             return
@@ -51,10 +51,10 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
                 
 //                Status code 400
                 if statusCode == HttpStatusCode.badRequest {
-                    if (responseObj?["error"] as! String).contains("username") {
-                        dataToSend["errorCode"] = Error.Pattern.username
+                    if (responseObj?[JsonPropertyName.error] as! String).contains("username") {
+                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.username
                     } else {
-                        dataToSend["errorCode"] = Error.Pattern.password
+                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.password
                     }
                     
                     postNotification(withData: dataToSend)
@@ -64,12 +64,12 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
                 
 //                Status code 409
                 if statusCode == HttpStatusCode.conflict {
-                    dataToSend["errorCode"] = Error.Backend.customerExisted
+                    dataToSend[JsonPropertyName.errorCode] = Error.Backend.customerExisted
                     postNotification(withData: dataToSend)
                 }
                 
                 if statusCode == HttpStatusCode.created {
-                    if let jwt = responseObj?["jwt"] as? String {
+                    if let jwt = responseObj?[JsonPropertyName.jwt] as? String {
                         UserDefaults.standard.set(jwt, forKey: UserDefaultKeys.customerInformation)
                         DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: jwt)
                         postNotification(withData: dataToSend)

@@ -128,7 +128,7 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     
     func onReceiveNecessaryInfoResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
-            if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
                 if statusCode != HttpStatusCode.success {
                     ToastManager.alert(view: view_TopView, msg: errorCode.localized())
                 } else {
@@ -184,17 +184,17 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     }
     
     private func saveInfo() {
-        let step = "necessary"
-        var gender = ""
+        let step = JsonPropertyName.UiFillStep.necessary
+        var gender = String()
         
-        if UserDefaults.standard.string(forKey: "lang") == "vi" {
+        if UserDefaults.standard.string(forKey: UserDefaultKeys.language) == "vi" {
             gender = Functionality.translateGender(tranlate: picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)], to: .EN)
         } else  {
             gender = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
         }
         
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userDob"] = picker_Date.date.shortDate
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userGender"] = gender
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userDob] = picker_Date.date.shortDate
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userGender] = gender
         
         modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
@@ -216,16 +216,16 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         DispatchQueue.global(qos: .userInteractive).async {
             let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
             
-            if let _ = customerInformation["userDob"] as? NSNull, let _ = customerInformation["userGender"] as? NSNull {
+            if let _ = customerInformation[JsonPropertyName.userDob] as? NSNull, let _ = customerInformation[JsonPropertyName.userGender] as? NSNull {
                 return
             }
             
-            let chosenDob = Functionality.convertDateFormatFromStringToDate(str: customerInformation["userDob"] as! String)!
-            var gender = ""
-            if UserDefaults.standard.string(forKey: "lang") == "vi" {
-                gender = Functionality.translateGender(tranlate: customerInformation["userGender"] as! String, to: .VI)
+            let chosenDob = Functionality.convertDateFormatFromStringToDate(str: customerInformation[JsonPropertyName.userDob] as! String)!
+            var gender = String()
+            if UserDefaults.standard.string(forKey: UserDefaultKeys.language) == "vi" {
+                gender = Functionality.translateGender(tranlate: customerInformation[JsonPropertyName.userGender] as! String, to: .VI)
             } else {
-                gender = customerInformation["userGender"] as! String
+                gender = customerInformation[JsonPropertyName.userGender] as! String
             }
             DispatchQueue.main.async {
                 self.picker_Gender.selectRow(self.picker_GenderDataSource.index(of: gender)!, inComponent: 0, animated: true)

@@ -28,6 +28,7 @@
 		ED4687941E4D0885002C4FC6 /* PMHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687931E4D0885002C4FC6 /* PMHandleCustomerInformation.swift */; };
 		ED4687961E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687951E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift */; };
 		ED4687981E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687971E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift */; };
+		ED4F97861E79631800316833 /* JsonPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4F97851E79631800316833 /* JsonPropertyName.swift */; };
 		ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */; };
 		ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */; };
 		ED522D5E1E38F65800E53403 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED522D601E38F65800E53403 /* Localizable.strings */; };
@@ -144,6 +145,7 @@
 		ED4687931E4D0885002C4FC6 /* PMHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleCustomerInformation.swift; sourceTree = "<group>"; };
 		ED4687951E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleCustomerInformation.swift; sourceTree = "<group>"; };
 		ED4687971E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleCustomerInformation.swift; sourceTree = "<group>"; };
+		ED4F97851E79631800316833 /* JsonPropertyName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonPropertyName.swift; sourceTree = "<group>"; };
 		ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingDetailViewController.swift; sourceTree = "<group>"; };
 		ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingGeneralViewController.swift; sourceTree = "<group>"; };
 		ED522D5A1E38F5DA00E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				ED522D621E38F84C00E53403 /* StringExtension.swift */,
 				ED6A68591E492CEA00776B6B /* Reachability.swift */,
 				EDA7478B1E755C630083889A /* UserDefaultKeys.swift */,
+				ED4F97851E79631800316833 /* JsonPropertyName.swift */,
 			);
 			name = Resusable;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 				ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */,
 				ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */,
 				ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */,
+				ED4F97861E79631800316833 /* JsonPropertyName.swift in Sources */,
 				ED9A5C981E4B7A6600CE34C5 /* APIHandleRegister.swift in Sources */,
 				ED4687961E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift in Sources */,
 				ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */,

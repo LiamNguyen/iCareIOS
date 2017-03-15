@@ -63,8 +63,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        txt_Username.text = ""
-        txt_Password.text = ""
+        txt_Username.text = String()
+        txt_Password.text = String()
         
         wiredUpNetworkChecking()
         
@@ -309,7 +309,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
         uiWaitingLoginResponse(isDone: true)
 
         if let userInfo = notification.userInfo {
-            if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
                 
                 if statusCode != HttpStatusCode.success {
                     ToastManager.alert(view: loginView, msg: errorCode.localized())
@@ -321,7 +321,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if(segue.identifier == "segue_LoginToBookingTabViewController"){
+        if(segue.identifier == Storyboard.SEGUE_TO_BOOKINGVC){
             if let tabVC = segue.destination as? UITabBarController{
                 Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: UserDefaultKeys.language) ?? "vi", tabVC: tabVC)
                 tabVC.tabBar.items?[0].isEnabled = false
@@ -333,12 +333,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     private func handleNavigation() {
         let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
         
-        switch customerInformation["step"] as! String {
-        case "none":
+        switch customerInformation[JsonPropertyName.uiFillStep] as! String {
+        case JsonPropertyName.UiFillStep.none:
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_FIRSTTAB_CUSTOMER_INFO, sender: self)
-        case "basic":
+        case JsonPropertyName.UiFillStep.basic:
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECONDTAB_CUSTOMER_INFO, sender: self)
-        case "necessary":
+        case JsonPropertyName.UiFillStep.necessary:
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_THIRDTAB_CUSTOMER_INFO, sender: self)
         default:
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKINGVC, sender: self)

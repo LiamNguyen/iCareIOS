@@ -19,14 +19,14 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
     }
     
     func handleCustomerInformation(step: String, httpBody: String) {
-        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary["sessionToken"] as! String
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
         
         switch step {
-        case "basic":
+        case JsonPropertyName.UiFillStep.basic:
             httpClient.putRequest(url: "Update_BasicInfo", body: httpBody, sessionToken: sessionToken)
-        case "necessary":
+        case JsonPropertyName.UiFillStep.necessary:
             httpClient.putRequest(url: "Update_NecessaryInfo", body: httpBody, sessionToken: sessionToken)
-        case "important":
+        case JsonPropertyName.UiFillStep.important:
             httpClient.putRequest(url: "Update_ImportantInfo", body: httpBody, sessionToken: sessionToken)
         default:
             return
@@ -44,12 +44,12 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
     private func handleReponseFromServer(responseHeader: String, notificationName: String, data: AnyObject, statusCode: Int) {
         var dataToSend = [String: Any]()
         
-        dataToSend["statusCode"] = statusCode
-        dataToSend["errorCode"] = String()
+        dataToSend[JsonPropertyName.statusCode] = statusCode
+        dataToSend[JsonPropertyName.errorCode] = String()
         
         //        Status code 500 or 501
         if statusCode == HttpStatusCode.internalServerError || statusCode == HttpStatusCode.notImplemented {
-            dataToSend["errorCode"] = Error.Backend.serverError
+            dataToSend[JsonPropertyName.errorCode] = Error.Backend.serverError
             postNotification(withData: dataToSend, notificationName: notificationName)
             
             return
@@ -61,16 +61,16 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
                 
                 //                Status code 400
                 if statusCode == HttpStatusCode.badRequest {
-                    let serverErrorResponse = responseObj?["error"] as! String
+                    let serverErrorResponse = responseObj?[JsonPropertyName.error] as! String
                     
                     if serverErrorResponse.contains("customerName") {
-                        dataToSend["errorCode"] = Error.Pattern.customerName
+                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.customerName
                     } else if serverErrorResponse.contains("address") {
-                        dataToSend["errorCode"] = Error.Pattern.address
+                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.address
                     } else if serverErrorResponse.contains("phone") {
-                        dataToSend["errorCode"] = Error.Pattern.phone
+                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.phone
                     } else if serverErrorResponse.contains("email") {
-                        dataToSend["errorCode"] = Error.Pattern.email
+                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.email
                     }
                     postNotification(withData: dataToSend, notificationName: notificationName)
                     
@@ -79,14 +79,14 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
                 
                 //                Status code 401
                 if statusCode == HttpStatusCode.unauthorized {
-                    dataToSend["errorCode"] = responseObj?["errorCode"] as? String
+                    dataToSend[JsonPropertyName.errorCode] = responseObj?[JsonPropertyName.errorCode] as? String
                     postNotification(withData: dataToSend, notificationName: notificationName)
                     
                     return
                 }
                 
                 if statusCode == HttpStatusCode.success {
-                    if let jwt = responseObj?["jwt"] as? String {
+                    if let jwt = responseObj?[JsonPropertyName.jwt] as? String {
                         UserDefaults.standard.set(jwt, forKey: UserDefaultKeys.customerInformation)
                         DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: jwt)
                         postNotification(withData: dataToSend, notificationName: notificationName)

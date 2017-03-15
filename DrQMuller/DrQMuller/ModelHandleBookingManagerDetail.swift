@@ -15,7 +15,7 @@ class ModelHandleBookingManagerDetail: NSObject {
     
     func removeAppointmentFromUserDefault(appointment_ID: String) {
         
-        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String
+        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as! String
         var savedAppointments = [String: DTOBookingInformation]()
         
         //Get saved appointment from user default

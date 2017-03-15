@@ -106,7 +106,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     func onReceiveBasicInfoResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
-            if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
                 if statusCode != HttpStatusCode.success {
                     ToastManager.alert(view: view_TopView, msg: errorCode.localized())
                 } else {
@@ -142,10 +142,10 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
             return
         }
         
-        let step = "basic"
+        let step = JsonPropertyName.UiFillStep.basic
         
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userName"] = txt_Name.text!
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userAddress"] = txt_Address.text!
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userName] = txt_Name.text!
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userAddress] = txt_Address.text!
 
         modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
@@ -201,13 +201,13 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         DispatchQueue.global(qos: .userInteractive).async {
             let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
             
-            if let _ = customerInformation["userName"] as? NSNull, let _ = customerInformation["userAddress"] as? NSNull {
+            if let _ = customerInformation[JsonPropertyName.userName] as? NSNull, let _ = customerInformation[JsonPropertyName.userAddress] as? NSNull {
                 return
             }
             
             DispatchQueue.main.async {
-                self.txt_Name.text = customerInformation["userName"] as! String?
-                self.txt_Address.text = customerInformation["userAddress"] as! String?
+                self.txt_Name.text = customerInformation[JsonPropertyName.userName] as! String?
+                self.txt_Address.text = customerInformation[JsonPropertyName.userAddress] as! String?
             }
         }
     }

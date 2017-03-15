@@ -311,7 +311,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         uiWaitingRegisterResponse(isDone: true)
 
         if let userInfo = notification.userInfo {
-            if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
                 
                 if statusCode != HttpStatusCode.created {
                     ToastManager.alert(view: loginView, msg: errorCode.localized())

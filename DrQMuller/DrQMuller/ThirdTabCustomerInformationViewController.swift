@@ -100,7 +100,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "importantInfoResponse"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "importantInfoResponse"), object: nil, queue: nil) { (Notification) in
             if let userInfo = Notification.userInfo {
-                if let statusCode = userInfo["statusCode"] as? Int, let errorCode = userInfo["errorCode"] as? String {
+                if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
                     if statusCode != HttpStatusCode.success {
                         ToastManager.alert(view: self.view_TopView, msg: errorCode.localized())
                     } else {
@@ -124,10 +124,10 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         if !frontValidationPassed() {
             return
         }
-        let step = "important"
+        let step = JsonPropertyName.UiFillStep.important
         
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userEmail"] = txt_Email.text
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userPhone"] = txt_Phone.text
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userEmail] = txt_Email.text
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userPhone] = txt_Phone.text
         
         modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
@@ -172,7 +172,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == StoryBoard.SEGUE_TO_BOOKING_VC){
             if let tabVC = segue.destination as? UITabBarController{
-                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: UserDefaultKeys.language) ?? "vi", tabVC: tabVC)
                 tabVC.selectedIndex = 1
                 tabVC.tabBar.items?[0].isEnabled = false
             }
@@ -217,13 +217,13 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         DispatchQueue.global(qos: .userInteractive).async {
             let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
             
-            if let _ = customerInformation["userEmail"] as? NSNull, let _ = customerInformation["userPhone"] as? NSNull {
+            if let _ = customerInformation[JsonPropertyName.userEmail] as? NSNull, let _ = customerInformation[JsonPropertyName.userPhone] as? NSNull {
                 return
             }
             
             DispatchQueue.global(qos: .userInteractive).async {
-                self.txt_Email.text = customerInformation["userEmail"] as! String?
-                self.txt_Phone.text = customerInformation["userPhone"] as! String?
+                self.txt_Email.text = customerInformation[JsonPropertyName.userEmail] as! String?
+                self.txt_Phone.text = customerInformation[JsonPropertyName.userPhone] as! String?
             }
         }
     }
