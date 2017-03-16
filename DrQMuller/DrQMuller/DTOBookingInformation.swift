@@ -354,7 +354,7 @@ class DTOBookingInformation: NSObject, NSCoding {
         return Functionality.jsonStringify(obj: dict as AnyObject)
     }
     
-    func getRequestBodyForCancelAppointment(appointmentId: String) -> String {
+    func getRequestBodyForCancelAndConfirmAppointment(appointmentId: String) -> String {
         let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as! String
         
         let dict: [String: Any] = [

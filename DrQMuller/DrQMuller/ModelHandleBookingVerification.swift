@@ -9,8 +9,8 @@
 import UIKit
 
 class ModelHandleBookingVerification: NSObject {
-    func validateCode(appointment_ID: String) {
-        APIHandleBooking.sharedInstace.validateCode(appointment_ID: appointment_ID)
+    func confirmAppointment(appointmentId: String) {
+        APIHandleBooking.sharedInstace.confirmAppointment(appointmentId: appointmentId)
     }
     
     //=========SAVE APPOINTMENT INFORMATION TO USER DEFAULT=========

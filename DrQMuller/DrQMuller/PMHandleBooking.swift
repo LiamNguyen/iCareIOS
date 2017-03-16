@@ -179,12 +179,12 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         
 //HANDLE REPONSE OF VALIDATING VERIFICATION CODE
         
-        if let arrayResponse = data["Update_Appointment"]! as? NSArray {
+        if let arrayResponse = data["Update_ConfirmAppointment"]! as? NSArray {
             var isOk = [String: Bool]()
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as? NSDictionary
                 
-                if let result = arrayDict?["Status"] as? String {
+                if let result = arrayDict?["status"] as? String {
                     if result == "1" {
                         isOk["status"] = true
                     } else {
@@ -192,7 +192,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                     }
                 }
             }
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "validateCode"), object: nil, userInfo: isOk)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "confirmAppointmentResponse"), object: nil, userInfo: isOk)
         }
         
 //HANDLE REPONSE OF CANCELING APPOINTMENT
@@ -326,14 +326,17 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
 //CHECK VERIFICATION CODE
     
-    func validateCode(appointment_ID: String) {
-        httpClient.postRequest(url: "Update_Appointment", body: "appointmentId=\(appointment_ID)")
+    func confirmAppointment(appointmentId: String) {
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAndConfirmAppointment(appointmentId: appointmentId)
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        
+        httpClient.putRequest(url: "Update_ConfirmAppointment", body: requestBody, sessionToken: sessionToken)
     }
     
 //CANCEL APPOINTMENT
     
     func cancelAppointment(appointmentId: String) {
-        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAppointment(appointmentId: appointmentId)
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAndConfirmAppointment(appointmentId: appointmentId)
         let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
         
         httpClient.putRequest(url: "Update_CancelAppointment", body: requestBody, sessionToken: sessionToken)

@@ -51,8 +51,8 @@ class BookingVerificationViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(BookingVerificationViewController.onReceiveVerifificationCodeResponse(notification:)),
-            name: Notification.Name(rawValue: "validateCode"),
+            selector: #selector(BookingVerificationViewController.onReceiveConfirmAppointmentResponse(notification:)),
+            name: Notification.Name(rawValue: "confirmAppointmentResponse"),
             object: nil
         )
         
@@ -97,7 +97,7 @@ class BookingVerificationViewController: UIViewController {
         print("Booking Verification VC: Dead")
     }
     
-    func onReceiveVerifificationCodeResponse(notification: Notification) {
+    func onReceiveConfirmAppointmentResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
             if let isOk = userInfo["status"] as? Bool {
                 DispatchQueue.main.async {
@@ -186,7 +186,7 @@ class BookingVerificationViewController: UIViewController {
         }
         self.activityIndicator.startAnimating()
         self.view.isUserInteractionEnabled = false
-        modelHandleBookingVerification.validateCode(appointment_ID: dtoBookingInformation.appointmentID)
+        modelHandleBookingVerification.confirmAppointment(appointmentId: dtoBookingInformation.appointmentID)
     }
     
     private func informMessage(message: String) {
