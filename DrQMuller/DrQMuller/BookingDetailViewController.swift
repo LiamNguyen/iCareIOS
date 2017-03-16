@@ -456,7 +456,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         updateLocalWhenDeleteOneItem()
                     }
                     
-                    if self.tupleBookingMachine.value == DTOBookingInformation.sharedInstance.machine {
+                    if self.tupleBookingMachine.value != DTOBookingInformation.sharedInstance.machine {
                         self.getFreeTimeDataSource()
                     } else {
                         self.activityIndicator.stopAnimating()
