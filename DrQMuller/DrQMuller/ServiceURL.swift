@@ -88,8 +88,6 @@ public class ServiceURL {
         case .LOCAL:
 //===============IF THIS IS LOCAL ENVIRONMENTS================
             localURL["Select_ToAuthenticate"] = "/user/login"
-            localURL["Select_CheckUserExistence"] = "http://localhost/drmuller/Select_CheckUserExistence.php"
-            localURL["Select_NumberOfCustomer"] = "http://localhost/drmuller/Select_NumberOfCustomer.php"
             localURL["Select_Countries"] = "/datasource/countries"
             localURL["Select_Cities"] = "/datasource/cities"
             localURL["Select_Districts"] = "/datasource/districts"
@@ -103,7 +101,6 @@ public class ServiceURL {
             localURL["Select_Machines"] = "/datasource/machines"
             localURL["Insert_NewCustomer"] = "/user/register"
             localURL["Insert_NewAppointment"] = "/appointment/create"
-            localURL["Insert_NewBookingTime"] = "http://localhost/drmuller/Insert_NewBookingTime.php"
             localURL["Update_ReleaseTime"] = "/time/release"
             localURL["Update_CustomerInfo"] = "http://localhost/drmuller/Update_CustomerInfo.php"
             localURL["Update_ValidateAppointment"] = "/appointment/validate"
