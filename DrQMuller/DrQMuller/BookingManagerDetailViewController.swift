@@ -154,7 +154,8 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
             self.activityIndicator.startAnimating()
             self.view.isUserInteractionEnabled = false
             
-            self.modelHandleBookingManagerDetail.cancelAppointment(appointment_ID: self.dtoBookingInformation.appointmentID)
+            
+            self.modelHandleBookingManagerDetail.cancelAppointment(appointmentId: self.dtoBookingInformation.appointmentID)
         }))
         
         confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction?) in

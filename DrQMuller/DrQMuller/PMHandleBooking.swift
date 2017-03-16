@@ -202,7 +202,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as? NSDictionary
                 
-                if let result = arrayDict?["Status"] as? String {
+                if let result = arrayDict?["status"] as? String {
                     if result == "1" {
                         isOk["status"] = true
                     } else {
@@ -332,8 +332,11 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
 //CANCEL APPOINTMENT
     
-    func cancelAppointment(appointment_ID: String) {
-        httpClient.postRequest(url: "Update_CancelAppointment", body: "appointmentId=\(appointment_ID)")
+    func cancelAppointment(appointmentId: String) {
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAppointment(appointmentId: appointmentId)
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        
+        httpClient.putRequest(url: "Update_CancelAppointment", body: requestBody, sessionToken: sessionToken)
     }
     
 //VALIDATE APPOINTMENT

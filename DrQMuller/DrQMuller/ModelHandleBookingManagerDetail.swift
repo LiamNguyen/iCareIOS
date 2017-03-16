@@ -9,8 +9,8 @@
 import UIKit
 
 class ModelHandleBookingManagerDetail: NSObject {
-    func cancelAppointment(appointment_ID: String) {
-        APIHandleBooking.sharedInstace.cancelAppointment(appointment_ID: appointment_ID)
+    func cancelAppointment(appointmentId: String) {
+        APIHandleBooking.sharedInstace.cancelAppointment(appointmentId: appointmentId)
     }
     
     func removeAppointmentFromUserDefault(appointment_ID: String) {

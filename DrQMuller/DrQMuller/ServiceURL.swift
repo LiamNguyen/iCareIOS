@@ -108,7 +108,7 @@ public class ServiceURL {
             localURL["Update_CustomerInfo"] = "http://localhost/drmuller/Update_CustomerInfo.php"
             localURL["Update_ValidateAppointment"] = "/appointment/validate"
             localURL["Update_Appointment"] = "http://localhost/drmuller/Update_Appointment.php"
-            localURL["Update_CancelAppointment"] = "http://localhost/drmuller/Update_CancelAppointment.php"
+            localURL["Update_CancelAppointment"] = "/appointment/cancel"
             localURL["Update_VerifyAcc"] = "http://localhost/drmuller/Update_VerifyAcc.php"
             localURL["Update_ResetPw"] = "http://localhost/drmuller/Update_ResetPw.php"
             localURL["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
