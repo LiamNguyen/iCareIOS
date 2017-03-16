@@ -102,7 +102,7 @@ public class ServiceURL {
             localURL["Select_SelectedTime"] = "/time/selectedtime"
             localURL["Select_Machines"] = "/datasource/machines"
             localURL["Insert_NewCustomer"] = "/user/register"
-            localURL["Insert_NewAppointment"] = "http://localhost/drmuller/Insert_NewAppointment.php"
+            localURL["Insert_NewAppointment"] = "/appointment/create"
             localURL["Insert_NewBookingTime"] = "http://localhost/drmuller/Insert_NewBookingTime.php"
             localURL["Update_ReleaseTime"] = "/time/release"
             localURL["Update_CustomerInfo"] = "http://localhost/drmuller/Update_CustomerInfo.php"

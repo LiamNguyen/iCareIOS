@@ -157,16 +157,16 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var appointment_ID: String?
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as? NSDictionary
-                if let app_ID = arrayDict?["Appointment_ID"] as? String {
+                if let app_ID = arrayDict?["appointmentId"] as? String {
                     appointment_ID = app_ID
                 }
 
-                if let result = arrayDict?["Status"] as? String {
+                if let result = arrayDict!["status"] as? String {
                     if result == "1" {
                         isOk["status"] = true
                         if let app_ID = appointment_ID {
                             DTOBookingInformation.sharedInstance.appointmentID = app_ID
-                            httpClient.postRequest(url: "SendMail_NotifyBooking", body: DTOBookingInformation.sharedInstance.returnJsonAppointmentInfo())
+//                            httpClient.postRequest(url: "SendMail_NotifyBooking", body: DTOBookingInformation.sharedInstance.returnJsonAppointmentInfo())
                             print(DTOBookingInformation.sharedInstance.returnJsonAppointmentInfo())
                         }
                     } else {
@@ -318,7 +318,10 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
 //INSERT NEW APPOINTMENT
     
     func insertNewAppointment() {
-//        httpClient.postRequest(url: "Insert_NewAppointment", body: DTOBookingInformation.sharedInstance.returnHttpBody()!)
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCreateAppointment()
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        
+        httpClient.postRequest(url: "Insert_NewAppointment", body: requestBody, sessionToken: sessionToken)
     }
     
 //CHECK VERIFICATION CODE

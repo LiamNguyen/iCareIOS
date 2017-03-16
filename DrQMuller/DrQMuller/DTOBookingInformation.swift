@@ -293,23 +293,26 @@ class DTOBookingInformation: NSObject, NSCoding {
         let dtoArrays = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!
         let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
         
-        self._verificationCode = generateVerificationCode(length: 10)
+        self._verificationCode = generateVerificationCode(length: 8)
         
         let locationId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownLocationsDataSource, value: _location)
         let voucherId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownVouchersDataSource, value: _voucher)
         let typeId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownTypesDataSource, value: _type)
         let customerId = customerInformation[JsonPropertyName.userId] as! String
         var startDate = String()
+        var expiredDate = String()
         
         if self.startDate.isEmpty {
             startDate = "1111-11-11"
+            expiredDate = self.exactDate
         } else {
             startDate = self.startDate
+            expiredDate = self.endDate
         }
         
         let dict: [String: Any] = [
             "startDate": startDate,
-            "expiredDate": self.endDate,
+            "expiredDate": expiredDate,
             "typeId": typeId,
             "userId": customerId,
             "voucherId": voucherId,
@@ -317,7 +320,7 @@ class DTOBookingInformation: NSObject, NSCoding {
             "locationId": locationId,
             "time": self.bookingTime
         ]
-        
+                
         return Functionality.jsonStringify(obj: dict as AnyObject)
         
     }

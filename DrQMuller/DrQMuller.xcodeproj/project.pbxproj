@@ -304,6 +304,7 @@
 		ED3BEBD41E0845B500CAA173 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ED9558991E11728B004893DA /* DTO */,
 				ED522D641E390F3A00E53403 /* Locale */,
 				ED03CEB01E36981A00C9EBFB /* Resusable */,
 				ED939FE31E0D248F00A1164F /* DatePickerRange.swift */,
@@ -323,7 +324,6 @@
 		ED3BEBD51E0845BC00CAA173 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				ED9558991E11728B004893DA /* DTO */,
 				ED9558941E10F566004893DA /* PersistencyManager */,
 				ED9558931E10F525004893DA /* LibraryAPI */,
 			);

@@ -21,7 +21,7 @@ struct Functionality {
             return ""
         }
         
-        let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
+        let data = try! JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
         let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
         
         return jsonString
