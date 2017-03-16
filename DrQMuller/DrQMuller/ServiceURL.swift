@@ -14,7 +14,7 @@ public class ServiceURL {
     private var prdURL = [String:String]()
     private var betaURL = [String: String]()
     private var uatURL = [String:String]()
-    private var localURL = [String:String]()
+    private var URI = [String:String]()
     
     init (environment: Environments) {
         self.environment = environment
@@ -87,65 +87,35 @@ public class ServiceURL {
 
         case .LOCAL:
 //===============IF THIS IS LOCAL ENVIRONMENTS================
-            localURL["Select_ToAuthenticate"] = "/user/login"
-            localURL["Select_Countries"] = "/datasource/countries"
-            localURL["Select_Cities"] = "/datasource/cities"
-            localURL["Select_Districts"] = "/datasource/districts"
-            localURL["Select_Locations"] = "/datasource/locations"
-            localURL["Select_Vouchers"] = "/datasource/vouchers"
-            localURL["Select_Types"] = "/datasource/types"
-            localURL["Select_AllTime"] = "/time/alltime"
-            localURL["Select_EcoTime"] = "/time/ecotime"
-            localURL["Select_DaysOfWeek"] = "/datasource/daysofweek"
-            localURL["Select_SelectedTime"] = "/time/selectedtime"
-            localURL["Select_Machines"] = "/datasource/machines"
-            localURL["Insert_NewCustomer"] = "/user/register"
-            localURL["Insert_NewAppointment"] = "/appointment/create"
-            localURL["Update_ReleaseTime"] = "/time/release"
-            localURL["Update_CustomerInfo"] = "http://localhost/drmuller/Update_CustomerInfo.php"
-            localURL["Update_ValidateAppointment"] = "/appointment/validate"
-            localURL["Update_ConfirmAppointment"] = "/appointment/confirm"
-            localURL["Update_CancelAppointment"] = "/appointment/cancel"
-            localURL["Update_VerifyAcc"] = "http://localhost/drmuller/Update_VerifyAcc.php"
-            localURL["Update_ResetPw"] = "http://localhost/drmuller/Update_ResetPw.php"
-            localURL["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
-            localURL["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
-            localURL["BookingTransaction"] = "/time/book"
-            localURL["Update_BasicInfo"] = "/user/basicinformation"
-            localURL["Update_NecessaryInfo"] = "/user/necessaryinformation"
-            localURL["Update_ImportantInfo"] = "/user/importantinformation"
-//===============IF THIS IS UAT ENVIRONMENTS================
+            URI["Select_ToAuthenticate"] = "/user/login"
+            URI["Select_Countries"] = "/datasource/countries"
+            URI["Select_Cities"] = "/datasource/cities"
+            URI["Select_Districts"] = "/datasource/districts"
+            URI["Select_Locations"] = "/datasource/locations"
+            URI["Select_Vouchers"] = "/datasource/vouchers"
+            URI["Select_Types"] = "/datasource/types"
+            URI["Select_AllTime"] = "/time/alltime"
+            URI["Select_EcoTime"] = "/time/ecotime"
+            URI["Select_DaysOfWeek"] = "/datasource/daysofweek"
+            URI["Select_SelectedTime"] = "/time/selectedtime"
+            URI["Select_Machines"] = "/datasource/machines"
+            URI["Insert_NewCustomer"] = "/user/register"
+            URI["Insert_NewAppointment"] = "/appointment/create"
+            URI["Update_ReleaseTime"] = "/time/release"
+            URI["Update_CustomerInfo"] = "http://localhost/drmuller/Update_CustomerInfo.php"
+            URI["Update_ValidateAppointment"] = "/appointment/validate"
+            URI["Update_ConfirmAppointment"] = "/appointment/confirm"
+            URI["Update_CancelAppointment"] = "/appointment/cancel"
+            URI["Update_VerifyAcc"] = "http://localhost/drmuller/Update_VerifyAcc.php"
+            URI["Update_ResetPw"] = "http://localhost/drmuller/Update_ResetPw.php"
+            URI["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
+            URI["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
+            URI["BookingTransaction"] = "/time/book"
+            URI["Update_BasicInfo"] = "/user/basicinformation"
+            URI["Update_NecessaryInfo"] = "/user/necessaryinformation"
+            URI["Update_ImportantInfo"] = "/user/importantinformation"
         default:
-            uatURL["Select_ToAuthenticate"] = "/user/login"
-            uatURL["Select_CheckUserExistence"] = "http://drqmuller.com/drmuller/Select_CheckUserExistence.php"
-            uatURL["Select_NumberOfCustomer.php"] = "http://drqmuller.com/drmuller/Select_NumberOfCustomer.php"
-            uatURL["Select_Countries"] = "http://drqmuller.com/drmuller/Select_Countries.php"
-            uatURL["Select_Cities"] = "http://drqmuller.com/drmuller/Select_Cities.php"
-            uatURL["Select_Districts"] = "http://drqmuller.com/drmuller/Select_Districts.php"
-            uatURL["Select_Locations"] = "http://drqmuller.com/drmuller/Select_Locations.php"
-            uatURL["Select_Vouchers"] = "http://drqmuller.com/drmuller/Select_Vouchers.php"
-            uatURL["Select_Types"] = "http://drqmuller.com/drmuller/Select_Types.php"
-            uatURL["Select_AllTime"] = "http://drqmuller.com/drmuller/Select_AllTime.php"
-            uatURL["Select_EcoTime"] = "http://drqmuller.com/drmuller/Select_EcoTime.php"
-            uatURL["Select_DaysOfWeek"] = "http://drqmuller.com/drmuller/Select_DaysOfWeek.php"
-            uatURL["Select_SelectedTime"] = "http://drqmuller.com/drmuller/Select_SelectedTime.php"
-            uatURL["Select_Machines"] = "http://drqmuller.com/drmuller/Select_Machines.php"
-            uatURL["Insert_NewCustomer"] = "http://drqmuller.com/drmuller/Insert_NewCustomer.php"
-            uatURL["Insert_NewAppointment"] = "http://drqmuller.com/drmuller/Insert_NewAppointment.php"
-            uatURL["Insert_NewBookingTime"] = "http://drqmuller.com/drmuller/Insert_NewBookingTime.php"
-            uatURL["Update_UnchosenTime"] = "http://drqmuller.com/drmuller/Update_UnchosenTime.php"
-            uatURL["Update_CustomerInfo"] = "http://drqmuller.com/drmuller/Update_CustomerInfo.php"
-            uatURL["Update_ValidateAppointment"] = "http://drqmuller.com/drmuller/Update_ValidateAppointment.php"
-            uatURL["Update_Appointment"] = "http://drqmuller.com/drmuller/Update_Appointment.php"
-            uatURL["Update_CancelAppointment"] = "http://drqmuller.com/drmuller/Update_CancelAppointment.php"
-            uatURL["Update_VerifyAcc"] = "http://drqmuller.com/drmuller/Update_VerifyAcc.php"
-            uatURL["Update_ResetPw"] = "http://drqmuller.com/drmuller/Update_ResetPw.php"
-            uatURL["SendMail_VerifyAcc"] = "http://drqmuller.com/drmuller/SendMail_VerifyAcc.php"
-            uatURL["SendMail_ResetPassword"] = "http://drqmuller.com/drmuller/SendMail_ResetPassword.php"
-            uatURL["BookingTransaction"] = "http://drqmuller.com/drmuller/BookingTransaction.php"
-            uatURL["Update_BasicInfo"] = "http://drqmuller.com/drmuller/Update_BasicInfo.php"
-            uatURL["Update_NecessaryInfo"] = "http://drqmuller.com/drmuller/Update_NecessaryInfo.php"
-            uatURL["Update_ImportantInfo"] = "http://drqmuller.com/drmuller/Update_ImportantInfo.php"
+            break
         }
     }
     
@@ -164,13 +134,13 @@ public class ServiceURL {
                 return "Can't find URL"
             }
         case .LOCAL:
-            if let url = localURL[serviceURL] {
+            if let url = URI[serviceURL] {
                 return Host.LOCAL + url
             } else {
                 return "Can't find URL"
             }
         default:
-            if let url = uatURL[serviceURL] {
+            if let url = URI[serviceURL] {
                 return Host.UAT + url
             } else {
                 return "Can't find URL"
@@ -188,7 +158,7 @@ public class ServiceURL {
     private struct Host {
         static let PRD = "http://210.211.109.180/drmuller/api"
         static let UAT = "http://drqmuller.com/drmuller/api"
-        static let BETA = "http://210.211.109.180/drmuller_test/api"
+        static let BETA = "http://210.211.109.180/uat_drmuller/api"
         static let LOCAL = "http://localhost/drmuller/api"
     }
 }

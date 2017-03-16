@@ -978,6 +978,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             //            self.freeTimeDataSource.append(self.tupleBookingTime_Array[0].value.time)
             //            self.freeTimeDataSource.sort()
             //            self.tableView_BookingTime.reloadData()
+            self.getFreeTimeDataSource()
         } else {
             self.tableView_BookingTime.isHidden = true
             self.btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(), for: .normal)
