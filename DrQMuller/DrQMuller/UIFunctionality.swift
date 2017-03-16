@@ -34,16 +34,23 @@ struct UIFunctionality {
         activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
         activityIndicator.backgroundColor = ThemeColor
         activityIndicator.layer.cornerRadius = 10
-        activityIndicator.layer.shadowColor = UIColor.black.cgColor
-        activityIndicator.layer.shadowOffset = CGSize.zero
-        activityIndicator.layer.shadowOpacity = 0.7
-        activityIndicator.layer.shadowRadius = 10
+
+        UIFunctionality.applyShadow(toView: activityIndicator)
         
         activityIndicator.hidesWhenStopped = true
         activityIndicator.stopAnimating()
         activityIndicator.center = view.center
         view.addSubview(activityIndicator)
         return activityIndicator
+    }
+    
+    static func applyShadow(toView: AnyObject) {
+        toView.layer.shadowPath = UIBezierPath(rect: toView.bounds).cgPath
+        toView.layer.shadowColor = UIColor.black.cgColor
+        toView.layer.shadowOffset = CGSize.zero
+        toView.layer.shadowOpacity = 0.7
+        toView.layer.shadowRadius = 10
+        toView.layer.masksToBounds = false
     }
     
 //DRAWING LINE

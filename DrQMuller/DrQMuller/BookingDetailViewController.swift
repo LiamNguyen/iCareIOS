@@ -288,6 +288,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLayoutSubviews()
         
         self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x + 400, y: self.view_ConfirmView.center.y)
+        UIFunctionality.applyShadow(toView: self.view_ConfirmView)
+        self.view_ConfirmView.layer.cornerRadius = 20
     }
     
     override func viewWillDisappear(_ animated: Bool) {
