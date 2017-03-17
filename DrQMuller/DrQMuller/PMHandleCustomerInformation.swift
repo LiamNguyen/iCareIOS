@@ -23,11 +23,11 @@ class PMHandleCustomerInformation: NSObject, HTTPClientDelegate {
         
         switch step {
         case JsonPropertyName.UiFillStep.basic:
-            httpClient.putRequest(url: "Update_BasicInfo", body: httpBody, sessionToken: sessionToken)
+            httpClient.postRequest(url: "Update_BasicInfo", body: httpBody, sessionToken: sessionToken)
         case JsonPropertyName.UiFillStep.necessary:
-            httpClient.putRequest(url: "Update_NecessaryInfo", body: httpBody, sessionToken: sessionToken)
+            httpClient.postRequest(url: "Update_NecessaryInfo", body: httpBody, sessionToken: sessionToken)
         case JsonPropertyName.UiFillStep.important:
-            httpClient.putRequest(url: "Update_ImportantInfo", body: httpBody, sessionToken: sessionToken)
+            httpClient.postRequest(url: "Update_ImportantInfo", body: httpBody, sessionToken: sessionToken)
         default:
             return
         }

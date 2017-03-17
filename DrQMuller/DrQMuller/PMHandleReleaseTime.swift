@@ -22,7 +22,7 @@ class PMHandleReleaseTime: NSObject, HTTPClientDelegate {
         let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForReleasingTime(time: time)
         let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
         
-        httpClient.putRequest(url: "Update_ReleaseTime", body: requestBody, sessionToken: sessionToken)
+        httpClient.postRequest(url: "Update_ReleaseTime", body: requestBody, sessionToken: sessionToken)
     }
     
     func onReceiveRequestResponse(data: AnyObject) {

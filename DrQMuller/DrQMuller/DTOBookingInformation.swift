@@ -320,7 +320,9 @@ class DTOBookingInformation: NSObject, NSCoding {
             "locationId": locationId,
             "time": self.bookingTime
         ]
-                
+        
+        print(Functionality.jsonStringify(obj: dict as AnyObject))
+        
         return Functionality.jsonStringify(obj: dict as AnyObject)
         
     }
@@ -337,6 +339,8 @@ class DTOBookingInformation: NSObject, NSCoding {
             "time": timeArray
         ]
         
+        print(Functionality.jsonStringify(obj: dict as AnyObject))
+        
         return Functionality.jsonStringify(obj: dict as AnyObject)
     }
     
@@ -351,6 +355,8 @@ class DTOBookingInformation: NSObject, NSCoding {
             "time": time
         ]
         
+        print(Functionality.jsonStringify(obj: dict as AnyObject))
+        
         return Functionality.jsonStringify(obj: dict as AnyObject)
     }
     
@@ -361,6 +367,8 @@ class DTOBookingInformation: NSObject, NSCoding {
             "userId": customerId,
             "appointmentId": appointmentId
         ]
+        
+        print(Functionality.jsonStringify(obj: dict as AnyObject))
         
         return Functionality.jsonStringify(obj: dict as AnyObject)
     }

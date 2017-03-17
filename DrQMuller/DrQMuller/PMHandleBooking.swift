@@ -330,7 +330,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAndConfirmAppointment(appointmentId: appointmentId)
         let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
         
-        httpClient.putRequest(url: "Update_ConfirmAppointment", body: requestBody, sessionToken: sessionToken)
+        httpClient.postRequest(url: "Update_ConfirmAppointment", body: requestBody, sessionToken: sessionToken)
     }
     
 //CANCEL APPOINTMENT
@@ -339,13 +339,13 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAndConfirmAppointment(appointmentId: appointmentId)
         let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
         
-        httpClient.putRequest(url: "Update_CancelAppointment", body: requestBody, sessionToken: sessionToken)
+        httpClient.postRequest(url: "Update_CancelAppointment", body: requestBody, sessionToken: sessionToken)
     }
     
 //VALIDATE APPOINTMENT
 
     func validateAppointment() {
-        httpClient.putRequest(url: "Update_ValidateAppointment")
+        httpClient.postRequest(url: "Update_ValidateAppointment")
     }
     
 //CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT

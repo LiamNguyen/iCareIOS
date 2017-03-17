@@ -14,7 +14,7 @@ protocol HTTPClientDelegate {
 }
 
 public class HTTPClient {
-    private var serviceURL = ServiceURL(environment: .LOCAL)
+    private var serviceURL = ServiceURL(environment: .BETA)
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
@@ -57,16 +57,17 @@ public class HTTPClient {
         task.resume()
     }
     
-    func postRequest(url: String, body: String, sessionToken: String? = "") {
+    func postRequest(url: String, body: String? = "", sessionToken: String? = "") {
         if !Reachability.isConnectedToNetwork() {
             print("No network connection")
             return
         }
         
         let nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
+        
         var request = URLRequest(url: nsUrl as! URL)
         request.httpMethod = "POST"
-        request.httpBody = body.data(using: .utf8)
+        request.httpBody = body?.data(using: .utf8)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue(sessionToken!, forHTTPHeaderField: "Authorization")
         
@@ -105,7 +106,7 @@ public class HTTPClient {
         task.resume()
     }
     
-    func putRequest(url: String, body: String? = "", sessionToken: String? = "") {
+    func puRequest(url: String, body: String? = "", sessionToken: String? = "") {
         if !Reachability.isConnectedToNetwork() {
             print("No network connection")
             return
