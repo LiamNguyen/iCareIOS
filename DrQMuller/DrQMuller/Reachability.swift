@@ -11,10 +11,15 @@ import SystemConfiguration
 import UIKit
 
 struct Reachability {
+    private static var networkCheckingIsDisabled = true
+    
     //CHECK NETWORK CONNECTIVITY
     
     static func isConnectedToNetwork() -> Bool
     {
+        if self.networkCheckingIsDisabled {
+            return true
+        }
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)
@@ -35,6 +40,11 @@ struct Reachability {
     }
     
     static func detectNetworkReachabilityObserver(parentView: UIView) -> (network: NetworkViewManager, timer: Timer) {
+
+        if self.networkCheckingIsDisabled {
+            return (NetworkViewManager(), Timer())
+        }
+        
         let viewManager = NetworkViewManager()
         viewManager.createNetworkMessage(parentView: parentView)
         

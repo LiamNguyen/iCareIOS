@@ -37,7 +37,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     var dtoBookingInformation: DTOBookingInformation!
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private func updateUI() {
         self.language = UserDefaults.standard.string(forKey: "lang")
@@ -68,6 +68,8 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
             object: nil
         )
         
+        updateUI()
+
         wiredUpNetworkChecking()
     }
 
@@ -77,7 +79,6 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
         modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
         networkViewManager = NetworkViewManager()
         
-        updateUI()
         
         self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
         self.activityIndicator.stopAnimating()
@@ -95,7 +96,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     
     override func viewWillDisappear(_ animated: Bool) {
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
     deinit {
@@ -153,7 +154,8 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
             self.activityIndicator.startAnimating()
             self.view.isUserInteractionEnabled = false
             
-            self.modelHandleBookingManagerDetail.cancelAppointment(appointment_ID: self.dtoBookingInformation.appointmentID)
+            
+            self.modelHandleBookingManagerDetail.cancelAppointment(appointmentId: self.dtoBookingInformation.appointmentID)
         }))
         
         confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction?) in
@@ -169,7 +171,7 @@ class BookingManagerDetailViewController: UIViewController, UITableViewDelegate,
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Storyboard.SEGUE_TO_BOOKING_MANAGER {
             if let tabVC = segue.destination as? UITabBarController {
-                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: UserDefaultKeys.language) ?? "vi", tabVC: tabVC)
                 tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }

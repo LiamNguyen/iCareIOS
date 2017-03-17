@@ -21,10 +21,13 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     private var appoinmentDataSource = [DTOBookingInformation]()
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private func updateUI() {
         lbl_Title.text = "BOOKING_MANAGER_PAGE_TITLE".localized()
+        if let message = self.message_NoAppointment {
+            message.text = "NO_APPOINTMENT_MESSAGE".localized()
+        }
     }
     
     private struct Storyboard {
@@ -39,12 +42,13 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         print("\nBooking Manager VC ONLOAD: ")
         DTOBookingInformation.sharedInstance.printBookingInfo()
         
+        updateUI()
+
         wiredUpNetworkChecking()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
         
         tableView_Appointments.delegate = self
         tableView_Appointments.dataSource = self
@@ -61,7 +65,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -84,6 +88,12 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
         cell.lbl_Voucher.text = item.voucher
         cell.lbl_Location.text = item.location
         cell.lbl_Status.text = returnDisplayValueForStatus(isConfirmed: item.isConfirmed)
+        
+        if item.isConfirmed == "1" {
+            cell.lbl_Status.textColor = UIColor.green
+        } else {
+            cell.lbl_Status.textColor = UIColor.red
+        }
         
         if !item.startDate.isEmpty {
             cell.lbl_StartDate.text = Functionality.convertDateFormatFromStringToDate(str: item.startDate)?.shortDateVnFormatted
@@ -124,7 +134,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     private func bindAppointmentDataSource() {
-        if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String) as? DTOCustomerInformation {
+        if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as! String) as? DTOCustomerInformation {
             appoinmentDataSource.removeAll(keepingCapacity: false)
             if appointments.customerAppointmentsDictionary.count > 0 {
                                 

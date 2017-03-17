@@ -21,7 +21,7 @@ struct Functionality {
             return ""
         }
         
-        let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
+        let data = try! JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
         let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
         
         return jsonString
@@ -101,7 +101,9 @@ struct Functionality {
                 }
             }
         } else {
-            translated = daysOfWeek[translate]!
+            if let result = daysOfWeek[translate] {
+                translated = result
+            }
         }
         
         return translated
@@ -263,6 +265,112 @@ struct Functionality {
         let sec = calendar.component(.second, from: date)
         
         return "\(year)-\(month)-\(day) \(hour):\(minute):\(sec)"
+    }
+    
+//GET CURRENT TIME
+    
+    static func getCurrentTime() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        
+        var hour = String(calendar.component(.hour, from: date))
+        var minute = String(calendar.component(.minute, from: date))
+        
+        if hour.characters.count < 2 {
+            hour.insert("0", at: hour.startIndex)
+        }
+        
+        if minute.characters.count < 2 {
+            minute.insert("0", at: minute.startIndex)
+        }
+        
+        return "\(hour)\(minute)"
+    }
+    
+//GET CURRENT DATE
+    
+    static func getCurrentDate() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        
+        let year = String(calendar.component(.year, from: date))
+        var month = String(calendar.component(.month, from: date))
+        var day = String(calendar.component(.day, from: date))
+        
+        if month.characters.count < 2 {
+            month.insert("0", at: month.startIndex)
+        }
+        
+        if day.characters.count < 2 {
+            day.insert("0", at: day.startIndex)
+        }
+        
+        return "\(year)/\(month)/\(day)"
+    }
+    
+//COMPARE TIME WITH CURRENT TIME AND SORT OUT TIME WHICH SMALL THAN CURRENT
+    
+    static func isGreaterThanCurrentTime(time: String) -> Bool {
+        let currentTime = Functionality.getCurrentTime()
+        let toBeCompareTime = time.replacingOccurrences(of: ":", with: "")
+
+        if toBeCompareTime > currentTime {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+//FILTER OUT TIME WHICH IS SMALL THAN CURRENT TIME IN ARRAY
+    
+    static func filterTimeSmallerThanCurrentTimeInArray(array: [String]) -> [String] {
+        var numberOfAcceptedTime = 0
+        
+        var filteredArray = array
+        let currentTime = Functionality.getCurrentTime()
+        var toBeComparedTime = ""
+        
+        for item in array {
+            toBeComparedTime = item.replacingOccurrences(of: ":", with: "")
+            
+            if numberOfAcceptedTime == 2 {
+                break
+            }
+            
+            if toBeComparedTime < currentTime {
+                filteredArray.remove(at: filteredArray.index(of: item)!)
+            } else {
+                numberOfAcceptedTime += 1
+            }
+        }
+        
+        return filteredArray
+    }
+    
+//FILTER OUT TIME WHICH IS SMALL THAN CURRENT TIME IN DICTIONARY
+    
+    static func filterTimeSmallerThanCurrentTimeInDictionary(dictionary: [String: String]) -> [String: String] {
+        var numberOfAcceptedTime = 0
+        
+        var filteredDict = dictionary
+        let currentTime = Functionality.getCurrentTime()
+        var toBeComparedTime = String()
+        
+        for (key, value) in dictionary {
+            toBeComparedTime = value.replacingOccurrences(of: ":", with: "")
+            
+            if numberOfAcceptedTime == 2 {
+                break
+            }
+            
+            if toBeComparedTime < currentTime {
+                filteredDict.removeValue(forKey: key)
+            } else {
+                numberOfAcceptedTime += 1
+            }
+        }
+        
+        return filteredDict
     }
     
 //=========DRAW LINE TO ESTIMATE IPHONE 4 KEYBOARD=========

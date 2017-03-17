@@ -42,7 +42,6 @@ class DTOCustomerInformation: NSObject, NSCoding {
         var tempDict = [String: Any]()
         
         tempDict["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"]
-        tempDict["updatedAt"] = Functionality.getCurrentDateTime()
         
         switch step {
         case "basic":

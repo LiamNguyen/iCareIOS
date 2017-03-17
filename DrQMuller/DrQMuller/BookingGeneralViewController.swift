@@ -42,7 +42,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private var language: String!
     
     private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var networkCheckInRealTime: Timer?
     
     //=========ARRAY OF ALL DROPDOWNS=========
     
@@ -58,8 +58,8 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private var modelHandleBookingGeneral: ModelHandleBookingGeneral!
     
     private func updateUI() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
-        
+        self.language = UserDefaults.standard.string(forKey: UserDefaultKeys.language)
+
         lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized()
         slideBtn_Next.delegate = self
         slideBtn_Next.reset()
@@ -77,7 +77,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         slideBtn_Next.reset()
     }
     
@@ -85,10 +85,9 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        updateUI()
 
         modelHandleBookingGeneral = ModelHandleBookingGeneral()
-        
-        updateUI()
         
         DTOBookingInformation.sharedInstance.clearAllDTOBookingInfo()
         print("Booking General After clear dtoBooking:")
@@ -143,7 +142,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         super.viewDidDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
 //=========BINDING DATASOURCE FOR DROPDOWNS==========

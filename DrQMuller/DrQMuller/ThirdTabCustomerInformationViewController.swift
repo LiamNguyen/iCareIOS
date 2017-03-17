@@ -27,7 +27,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     private var customerInformationController = CustomStyleCustomerInformation()
     private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var networkCheckInRealTime: Timer?
     
     private var modelHandleCustomerInformation = ModelHandleCustomerInformation()
     
@@ -58,9 +58,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
         fillInformation()
         
-        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
-        networkViewManager = tupleDetectNetworkReachabilityResult.network
-        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+        wiredUpNetworkChecking()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -102,20 +100,11 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "importantInfoResponse"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "importantInfoResponse"), object: nil, queue: nil) { (Notification) in
             if let userInfo = Notification.userInfo {
-                if let isSuccess = userInfo["status"] as? Bool {
-                    if isSuccess {
-                        DispatchQueue.global(qos: .userInteractive).async {
-                            let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
-                            
-                            if customerInformation["step"] as! String == "necessary" {
-                                DTOCustomerInformation.sharedInstance.customerInformationDictionary["step"] = "important"
-                            }
-                            DispatchQueue.main.async {
-                                self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_BOOKING_VC, sender: self)
-                            }
-                        }
+                if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
+                    if statusCode != HttpStatusCode.success {
+                        ToastManager.alert(view: self.view_TopView, msg: errorCode.localized())
                     } else {
-                        ToastManager.alert(view: self.view_TopView, msg: "UPDATE_FAIL_MESSAGE".localized())
+                        self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_BOOKING_VC, sender: self)
                     }
                 }
             }
@@ -126,7 +115,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
 //=========BUTTON NEXT ONCLICK=========
@@ -135,10 +124,10 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         if !frontValidationPassed() {
             return
         }
-        let step = "important"
+        let step = JsonPropertyName.UiFillStep.important
         
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userEmail"] = txt_Email.text
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary["userPhone"] = txt_Phone.text
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userEmail] = txt_Email.text
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userPhone] = txt_Phone.text
         
         modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
@@ -183,7 +172,7 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == StoryBoard.SEGUE_TO_BOOKING_VC){
             if let tabVC = segue.destination as? UITabBarController{
-                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: "lang") ?? "vi", tabVC: tabVC)
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: UserDefaultKeys.language) ?? "vi", tabVC: tabVC)
                 tabVC.selectedIndex = 1
                 tabVC.tabBar.items?[0].isEnabled = false
             }
@@ -194,18 +183,18 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         if let email = txt_Email.text, let phone = txt_Phone.text {
             if email.isEmpty {
                 UIFunctionality.addShakyAnimation(elementToBeShake: txt_Email)
-                ToastManager.alert(view: view_TopView, msg: "EMAIL_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: view_TopView, msg: Error.Empty.email.localized())
                 return false
             }
             
             if !email.contains("@") {
-                ToastManager.alert(view: view_TopView, msg: "EMAIL_INVALID_FORMAT".localized())
+                ToastManager.alert(view: view_TopView, msg: Error.Pattern.email.localized())
                 return false
             }
             
             if phone.isEmpty {
                 UIFunctionality.addShakyAnimation(elementToBeShake: txt_Phone)
-                ToastManager.alert(view: view_TopView, msg: "PHONE_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: view_TopView, msg: Error.Empty.phone.localized())
                 return false
             }
             return true
@@ -228,17 +217,22 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         DispatchQueue.global(qos: .userInteractive).async {
             let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
             
-            if let _ = customerInformation["userEmail"] as? NSNull, let _ = customerInformation["userPhone"] as? NSNull {
+            if let _ = customerInformation[JsonPropertyName.userEmail] as? NSNull, let _ = customerInformation[JsonPropertyName.userPhone] as? NSNull {
                 return
             }
             
             DispatchQueue.global(qos: .userInteractive).async {
-                self.txt_Email.text = customerInformation["userEmail"] as! String?
-                self.txt_Phone.text = customerInformation["userPhone"] as! String?
+                self.txt_Email.text = customerInformation[JsonPropertyName.userEmail] as! String?
+                self.txt_Phone.text = customerInformation[JsonPropertyName.userPhone] as! String?
             }
         }
     }
     
+    private func wiredUpNetworkChecking() {
+        let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
+        networkViewManager = tupleDetectNetworkReachabilityResult.network
+        networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
     
     func hideKeyBoard() {
         txt_Email.resignFirstResponder()

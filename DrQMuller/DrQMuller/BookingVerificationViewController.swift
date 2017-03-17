@@ -25,7 +25,7 @@ class BookingVerificationViewController: UIViewController {
     private var activityIndicator: UIActivityIndicatorView!
     
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     
     private func updateUI() {
         self.lbl_Title.text? = "BOOKING_VERIFICATION_PAGE_TITLE".localized()
@@ -51,8 +51,8 @@ class BookingVerificationViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(BookingVerificationViewController.onReceiveVerifificationCodeResponse(notification:)),
-            name: Notification.Name(rawValue: "validateCode"),
+            selector: #selector(BookingVerificationViewController.onReceiveConfirmAppointmentResponse(notification:)),
+            name: Notification.Name(rawValue: "confirmAppointmentResponse"),
             object: nil
         )
         
@@ -63,6 +63,8 @@ class BookingVerificationViewController: UIViewController {
             object: nil
         )
         
+        updateUI()
+
         wiredUpNetworkChecking()
     }
     
@@ -72,7 +74,6 @@ class BookingVerificationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
         
         modelHandleBookingVerification = ModelHandleBookingVerification()
         modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
@@ -89,14 +90,14 @@ class BookingVerificationViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         txt_VerificationCode.resignFirstResponder()
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
     
     deinit {
         print("Booking Verification VC: Dead")
     }
     
-    func onReceiveVerifificationCodeResponse(notification: Notification) {
+    func onReceiveConfirmAppointmentResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
             if let isOk = userInfo["status"] as? Bool {
                 DispatchQueue.main.async {
@@ -143,7 +144,7 @@ class BookingVerificationViewController: UIViewController {
             self.activityIndicator.startAnimating()
             self.view.isUserInteractionEnabled = false
             
-            self.modelHandleBookingManagerDetail.cancelAppointment(appointment_ID: self.dtoBookingInformation.appointmentID)
+            self.modelHandleBookingManagerDetail.cancelAppointment(appointmentId: self.dtoBookingInformation.appointmentID)
         }))
         
         confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction?) in
@@ -185,7 +186,7 @@ class BookingVerificationViewController: UIViewController {
         }
         self.activityIndicator.startAnimating()
         self.view.isUserInteractionEnabled = false
-        modelHandleBookingVerification.validateCode(appointment_ID: dtoBookingInformation.appointmentID)
+        modelHandleBookingVerification.confirmAppointment(appointmentId: dtoBookingInformation.appointmentID)
     }
     
     private func informMessage(message: String) {

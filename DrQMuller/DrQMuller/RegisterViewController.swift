@@ -30,10 +30,8 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private var screenHeight: CGFloat!
     private var isIphone4 = false
     
-    private var hasReceiveRegisterResponse = false
-    
     private var networkViewManager: NetworkViewManager!
-    private weak var networkCheckInRealTime: Timer!
+    private weak var networkCheckInRealTime: Timer?
     private var modelHandleRegister: ModelHandleRegister!
     
     private struct Storyboard {
@@ -67,7 +65,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(RegisterViewController.onReceiveRegisterResponse(notification:)),
-            name: Notification.Name(rawValue: "registerResponse"),
+            name: Notification.Name(rawValue: UserDefaultKeys.registerResponse),
             object: nil
         )
         
@@ -132,13 +130,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
 
         self.activityIndicator.stopAnimating()
 
+        UIView.hr_setToastThemeColor(color: ToastColorAlert)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        self.networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
 
     override func didReceiveMemoryWarning() {
@@ -305,31 +304,23 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         }
         uiWaitingRegisterResponse(isDone: false)
         modelHandleRegister?.handleRegister(username: txt_Username.text!, password: txt_Password.text!)
-        self.hasReceiveRegisterResponse = false
     }
     
 //=========HANDLE REGISTER RESPONSE=========
     
     func onReceiveRegisterResponse(notification: Notification) {
-        if hasReceiveRegisterResponse {
-            return
-        }
+        uiWaitingRegisterResponse(isDone: true)
+
         if let userInfo = notification.userInfo {
-            if let status = userInfo["status"] as? String {
-                if status == "1" {
-                    print("Register Success")
-                    self.performSegue(withIdentifier: Storyboard.SEGUE_TO_FIRST_TAB, sender: self)
-                } else if status == "2" {
-                    print("Register Duplicated")
-                    ToastManager.alert(view: loginView, msg: "USERNAME_EXISTED_MESSAGE".localized())
+            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
+                
+                if statusCode != HttpStatusCode.created {
+                    ToastManager.alert(view: loginView, msg: errorCode.localized())
                 } else {
-                    print("Register Failed")
-                    ToastManager.alert(view: loginView, msg: "CREDENTIAL_INVALID".localized())
+                    self.performSegue(withIdentifier: Storyboard.SEGUE_TO_FIRST_TAB, sender: self)
                 }
             }
         }
-        uiWaitingRegisterResponse(isDone: true)
-        self.hasReceiveRegisterResponse = true
     }
     
 //=========VALIDATE TEXTFIELD=========
@@ -337,22 +328,22 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
     private func frontValidationPassed() -> Bool {
         if let username = txt_Username.text, let password = txt_Password.text, let confirmPassword = txt_ConfirmPassword.text {
             if username.isEmpty {
-                ToastManager.alert(view: loginView, msg: "USERNAME_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Empty.username.localized())
                 return false
             }
             
             if password.isEmpty {
-                ToastManager.alert(view: loginView, msg: "PASSWORD_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Empty.password.localized())
                 return false
             }
             
             if confirmPassword.isEmpty {
-                ToastManager.alert(view: loginView, msg: "CONFIRM_PASSWORD_EMPTY_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Empty.confirmPassword.localized())
                 return false
             }
             
             if confirmPassword != password {
-                ToastManager.alert(view: loginView, msg: "CONFIRM_PASSWORD_UNMATCH_MESSAGE".localized())
+                ToastManager.alert(view: loginView, msg: Error.Register.confirmPasswordUnMatch.localized())
                 return false
             }
             return true

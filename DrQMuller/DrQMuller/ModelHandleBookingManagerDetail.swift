@@ -9,13 +9,13 @@
 import UIKit
 
 class ModelHandleBookingManagerDetail: NSObject {
-    func cancelAppointment(appointment_ID: String) {
-        APIHandleBooking.sharedInstace.cancelAppointment(appointment_ID: appointment_ID)
+    func cancelAppointment(appointmentId: String) {
+        APIHandleBooking.sharedInstace.cancelAppointment(appointmentId: appointmentId)
     }
     
     func removeAppointmentFromUserDefault(appointment_ID: String) {
         
-        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String
+        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as! String
         var savedAppointments = [String: DTOBookingInformation]()
         
         //Get saved appointment from user default
@@ -34,7 +34,7 @@ class ModelHandleBookingManagerDetail: NSObject {
         
     }
     
-    func returnTupleOfArrayFromArrayOfDictionary(array: [[String]]) -> [(day: String, time: String)] {
+    func returnTupleOfArrayFromArrayOfDictionary(array: [[String: String]]) -> [(day: String, time: String)] {
         var returnTuple = [(day: String, time: String)]()
         if let staticArrayFromUserDefaults = APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults() {
             let allTime = staticArrayFromUserDefaults.allTimeDataSource
@@ -42,8 +42,8 @@ class ModelHandleBookingManagerDetail: NSObject {
             
             for item in array {
                 var tuple: (day: String, time: String)
-                tuple.day = dayOfWeek[Int(item[0])! - 1]
-                tuple.time = allTime[item[1]]!
+                tuple.day = dayOfWeek[Int(item["dayId"]!)! - 1]
+                tuple.time = allTime[item["timeId"]!]!
                 returnTuple.append(tuple)
             }
         }

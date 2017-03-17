@@ -25,6 +25,7 @@ class ModelHandleBookingDetail {
     
     private var staticArrayFromUserDefaults: DTOStaticArrayDataSource!
     private var isEco: Bool!
+    private var exactDate: String!
     
     private var dataHasReturn = false
     
@@ -45,6 +46,8 @@ class ModelHandleBookingDetail {
         
         self.isEco = isEco
         bindTimeDataSource(isEco: isEco)
+        
+        self.exactDate = DTOBookingInformation.sharedInstance.exactDate
         
 //OBSERVING NOTIFICATION FROM PMHandleBooking FOR SELECTED TIME DATASOURCE
         
@@ -85,15 +88,24 @@ class ModelHandleBookingDetail {
         }
         freeTimeDataSourceWithID = Dictionary<String, String>() //CLEAR DICTIONARY
         freeTimeDataSource = [String]()                         //CLEAR ARRAY
+        
         if let userInfo = notification.userInfo {
+            
             let receivedSelectedTimeDataSource = userInfo["returnArrayDataSource"]! as? Dictionary<String, String>
             selectedTimeDataSourceWithID = receivedSelectedTimeDataSource
             
             switch isEco {
             case true:
                 if selectedTimeDataSourceWithID.isEmpty {
-                    freeTimeDataSource = ecoTimeDisplayArray
-                    freeTimeDataSourceWithID = ecoTimeDataSource
+                    
+                    if self.exactDate == Functionality.getCurrentDate() {
+                        freeTimeDataSource = Functionality.filterTimeSmallerThanCurrentTimeInArray(array: ecoTimeDisplayArray)
+                        freeTimeDataSourceWithID = Functionality.filterTimeSmallerThanCurrentTimeInDictionary(dictionary: ecoTimeDataSource)
+                    } else {
+                        freeTimeDataSource = ecoTimeDisplayArray
+                        freeTimeDataSourceWithID = ecoTimeDataSource
+                    }
+
                 } else {
                 
                     for (ecoTimeID, ecoTimeItem) in ecoTimeDataSource {
@@ -104,7 +116,13 @@ class ModelHandleBookingDetail {
                     
                     for displayItem in ecoTimeDisplayArray {
                         if !selectedTimeDataSourceWithID.values.contains(displayItem) {
-                            freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                            if self.exactDate == Functionality.getCurrentDate() {
+                                if Functionality.isGreaterThanCurrentTime(time: displayItem) {
+                                    freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                                }
+                            } else {
+                                freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                            }
                         }
                     }
                     
@@ -112,8 +130,13 @@ class ModelHandleBookingDetail {
             default:
                 if selectedTimeDataSourceWithID.isEmpty {
                     
-                    freeTimeDataSource = allTimeDisplayArray
-                    freeTimeDataSourceWithID = allTimeDataSource
+                    if self.exactDate == Functionality.getCurrentDate() {
+                        freeTimeDataSource = Functionality.filterTimeSmallerThanCurrentTimeInArray(array: allTimeDisplayArray)
+                        freeTimeDataSourceWithID = Functionality.filterTimeSmallerThanCurrentTimeInDictionary(dictionary: allTimeDataSource)
+                    } else {
+                        freeTimeDataSource = allTimeDisplayArray
+                        freeTimeDataSourceWithID = allTimeDataSource
+                    }
                     
                 } else {
                     
@@ -125,7 +148,13 @@ class ModelHandleBookingDetail {
                     
                     for displayItem in allTimeDisplayArray {
                         if !selectedTimeDataSourceWithID.values.contains(displayItem) {
-                            freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                            if self.exactDate == Functionality.getCurrentDate() {
+                                if Functionality.isGreaterThanCurrentTime(time: displayItem) {
+                                    freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                                }
+                            } else {
+                                freeTimeDataSource.insert(displayItem, at: freeTimeDataSource.count)
+                            }
                         }
                     }
                     
@@ -152,13 +181,8 @@ class ModelHandleBookingDetail {
     
 //MAKE GET REQUEST FOR CHECKING BOOKING TIME EXISTENCY
     
-    func checkBookingTime(day_ID: String, chosenTime: String, chosenMachineID: String) {
-        let time_ID = returnTimeID(chosenTime: chosenTime)
-        if time_ID.isEmpty {
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "timeIDIsNil"), object: nil)
-            return
-        }
-        APIHandleBooking.sharedInstace.checkBookingTime(day_ID: day_ID, time_ID: time_ID, chosenMachineID: chosenMachineID)
+    func checkBookingTime(time: [String: String]) {
+        APIHandleBooking.sharedInstace.checkBookingTime(time: time)
     }
     
 //INSERT NEW APPOINTMENT
@@ -194,8 +218,8 @@ class ModelHandleBookingDetail {
     
 //RELEASE TIME IN TEMPORARY BOOK TBL
     
-    func releaseTime(timeObj: [[String]]) {
-        APIHandleReleaseTime.sharedInstace.releaseTime(timeObj: timeObj)
+    func releaseTime(time: [[String: String]]) {
+        APIHandleReleaseTime.sharedInstace.releaseTime(time: time)
     }
     
 //BIND MACHINES DATASOURCE

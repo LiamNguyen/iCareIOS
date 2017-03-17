@@ -16,6 +16,7 @@
 		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
 		ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */; };
 		ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */; };
+		ED2956AA1E59501500D178A5 /* ChooseLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2956A91E59501500D178A5 /* ChooseLanguageView.swift */; };
 		ED3011E21E192D790037F020 /* DTOBookingInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3011E11E192D790037F020 /* DTOBookingInformation.swift */; };
 		ED3011E41E19877C0037F020 /* DateExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3011E31E19877C0037F020 /* DateExtensions.swift */; };
 		ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */; };
@@ -27,6 +28,8 @@
 		ED4687941E4D0885002C4FC6 /* PMHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687931E4D0885002C4FC6 /* PMHandleCustomerInformation.swift */; };
 		ED4687961E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687951E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift */; };
 		ED4687981E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4687971E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift */; };
+		ED4F97861E79631800316833 /* JsonPropertyName.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4F97851E79631800316833 /* JsonPropertyName.swift */; };
+		ED4F97881E79BB9A00316833 /* DTOBookingTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4F97871E79BB9A00316833 /* DTOBookingTime.swift */; };
 		ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */; };
 		ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */; };
 		ED522D5E1E38F65800E53403 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = ED522D601E38F65800E53403 /* Localizable.strings */; };
@@ -64,6 +67,9 @@
 		ED9A5C981E4B7A6600CE34C5 /* APIHandleRegister.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */; };
 		ED9A5C9A1E4BA0A200CE34C5 /* DTOCustomerInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */; };
 		ED9FA0081E2093A9008F3739 /* ModelHandleBookingStartEnd.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */; };
+		EDA747881E753DA80083889A /* HttpStatusCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA747871E753DA80083889A /* HttpStatusCode.swift */; };
+		EDA7478A1E7553A60083889A /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA747891E7553A60083889A /* Error.swift */; };
+		EDA7478C1E755C630083889A /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA7478B1E755C630083889A /* UserDefaultKeys.swift */; };
 		EDB032661E301D940071FD7F /* PMHandleReleaseTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */; };
 		EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338951DE9D86300DE940B /* AppDelegate.swift */; };
 		EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB338971DE9D86300DE940B /* LoginViewController.swift */; };
@@ -128,6 +134,7 @@
 		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartOrderTableViewCell.swift; sourceTree = "<group>"; };
+		ED2956A91E59501500D178A5 /* ChooseLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageView.swift; sourceTree = "<group>"; };
 		ED3011E11E192D790037F020 /* DTOBookingInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOBookingInformation.swift; sourceTree = "<group>"; };
 		ED3011E31E19877C0037F020 /* DateExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateExtensions.swift; sourceTree = "<group>"; };
 		ED3BEBD11E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
@@ -139,6 +146,8 @@
 		ED4687931E4D0885002C4FC6 /* PMHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleCustomerInformation.swift; sourceTree = "<group>"; };
 		ED4687951E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleCustomerInformation.swift; sourceTree = "<group>"; };
 		ED4687971E4D0B6F002C4FC6 /* ModelHandleCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleCustomerInformation.swift; sourceTree = "<group>"; };
+		ED4F97851E79631800316833 /* JsonPropertyName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonPropertyName.swift; sourceTree = "<group>"; };
+		ED4F97871E79BB9A00316833 /* DTOBookingTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOBookingTime.swift; sourceTree = "<group>"; };
 		ED4FFDC11E0BF0A600E158E2 /* BookingDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingDetailViewController.swift; sourceTree = "<group>"; };
 		ED4FFDC51E0BF72C00E158E2 /* BookingGeneralViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingGeneralViewController.swift; sourceTree = "<group>"; };
 		ED522D5A1E38F5DA00E53403 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
@@ -178,6 +187,9 @@
 		ED9A5C971E4B7A6600CE34C5 /* APIHandleRegister.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIHandleRegister.swift; sourceTree = "<group>"; };
 		ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DTOCustomerInformation.swift; sourceTree = "<group>"; };
 		ED9FA0071E2093A9008F3739 /* ModelHandleBookingStartEnd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingStartEnd.swift; sourceTree = "<group>"; };
+		EDA747871E753DA80083889A /* HttpStatusCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpStatusCode.swift; sourceTree = "<group>"; };
+		EDA747891E7553A60083889A /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		EDA7478B1E755C630083889A /* UserDefaultKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		EDB032651E301D940071FD7F /* PMHandleReleaseTime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMHandleReleaseTime.swift; sourceTree = "<group>"; };
 		EDB338921DE9D86300DE940B /* DrQMuller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrQMuller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EDB338951DE9D86300DE940B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -246,9 +258,12 @@
 		ED03CEB01E36981A00C9EBFB /* Resusable */ = {
 			isa = PBXGroup;
 			children = (
+				EDA747871E753DA80083889A /* HttpStatusCode.swift */,
 				ED03CEB11E36983D00C9EBFB /* Functionality.swift */,
 				ED522D621E38F84C00E53403 /* StringExtension.swift */,
 				ED6A68591E492CEA00776B6B /* Reachability.swift */,
+				EDA7478B1E755C630083889A /* UserDefaultKeys.swift */,
+				ED4F97851E79631800316833 /* JsonPropertyName.swift */,
 			);
 			name = Resusable;
 			sourceTree = "<group>";
@@ -262,6 +277,7 @@
 				ED6A685D1E492D9C00776B6B /* DialogManager.swift */,
 				ED6A685F1E492DCA00776B6B /* AnimationManager.swift */,
 				ED6A68611E492DF800776B6B /* CustomStyleCustomerInformation.swift */,
+				ED2956A91E59501500D178A5 /* ChooseLanguageView.swift */,
 			);
 			name = Reusable;
 			sourceTree = "<group>";
@@ -288,6 +304,7 @@
 		ED3BEBD41E0845B500CAA173 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				ED9558991E11728B004893DA /* DTO */,
 				ED522D641E390F3A00E53403 /* Locale */,
 				ED03CEB01E36981A00C9EBFB /* Resusable */,
 				ED939FE31E0D248F00A1164F /* DatePickerRange.swift */,
@@ -307,7 +324,6 @@
 		ED3BEBD51E0845BC00CAA173 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				ED9558991E11728B004893DA /* DTO */,
 				ED9558941E10F566004893DA /* PersistencyManager */,
 				ED9558931E10F525004893DA /* LibraryAPI */,
 			);
@@ -333,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				ED522D601E38F65800E53403 /* Localizable.strings */,
+				EDA747891E7553A60083889A /* Error.swift */,
 			);
 			name = Locale;
 			sourceTree = "<group>";
@@ -381,6 +398,7 @@
 				ED41DF421E169A0200803A14 /* DTOStaticArrayDataSource.swift */,
 				ED3011E11E192D790037F020 /* DTOBookingInformation.swift */,
 				ED9A5C991E4BA0A200CE34C5 /* DTOCustomerInformation.swift */,
+				ED4F97871E79BB9A00316833 /* DTOBookingTime.swift */,
 			);
 			name = DTO;
 			sourceTree = "<group>";
@@ -653,6 +671,7 @@
 				ED96A4F81E0DD1E500AA22D0 /* MMSlidingButton.swift in Sources */,
 				ED41DF431E169A0200803A14 /* DTOStaticArrayDataSource.swift in Sources */,
 				ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */,
+				ED4F97861E79631800316833 /* JsonPropertyName.swift in Sources */,
 				ED9A5C981E4B7A6600CE34C5 /* APIHandleRegister.swift in Sources */,
 				ED4687961E4D0A5D002C4FC6 /* APIHandleCustomerInformation.swift in Sources */,
 				ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */,
@@ -663,6 +682,7 @@
 				ED3011E21E192D790037F020 /* DTOBookingInformation.swift in Sources */,
 				ED95589B1E1172F1004893DA /* DTOAuthentication.swift in Sources */,
 				ED9558921E10F4DC004893DA /* HTTPClient.swift in Sources */,
+				ED2956AA1E59501500D178A5 /* ChooseLanguageView.swift in Sources */,
 				ED4FFDC21E0BF0A600E158E2 /* BookingDetailViewController.swift in Sources */,
 				ED6D3A391E50A00100DDB68B /* ModelHandleBookingVerification.swift in Sources */,
 				EDEAC1661E1D3DAC002FF282 /* ModelHandleBookingDetail.swift in Sources */,
@@ -682,7 +702,9 @@
 				ED9035531E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift in Sources */,
 				ED939FE41E0D248F00A1164F /* DatePickerRange.swift in Sources */,
 				ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */,
+				EDA7478A1E7553A60083889A /* Error.swift in Sources */,
 				ED95589F1E11867A004893DA /* APIHandleLogin.swift in Sources */,
+				EDA747881E753DA80083889A /* HttpStatusCode.swift in Sources */,
 				EDB338981DE9D86300DE940B /* LoginViewController.swift in Sources */,
 				ED04C9931E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift in Sources */,
 				ED3BEBD21E08459B00CAA173 /* FirstTabCustomerInformationViewController.swift in Sources */,
@@ -692,6 +714,7 @@
 				ED8B96651E53942600EDBF2B /* ModelHandleBookingManager.swift in Sources */,
 				ED6D3A3B1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift in Sources */,
 				ED6A685E1E492D9C00776B6B /* DialogManager.swift in Sources */,
+				ED4F97881E79BB9A00316833 /* DTOBookingTime.swift in Sources */,
 				ED03CEB21E36983D00C9EBFB /* Functionality.swift in Sources */,
 				ED4FFDC61E0BF72C00E158E2 /* BookingGeneralViewController.swift in Sources */,
 				EDB338961DE9D86300DE940B /* AppDelegate.swift in Sources */,
@@ -707,6 +730,7 @@
 				ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */,
 				EDE41FDC1E08D4A6006CCE99 /* ColorExtensions.swift in Sources */,
 				ED6A685A1E492CEA00776B6B /* Reachability.swift in Sources */,
+				EDA7478C1E755C630083889A /* UserDefaultKeys.swift in Sources */,
 				ED9A5C941E4AF01300CE34C5 /* PMHandleRegister.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

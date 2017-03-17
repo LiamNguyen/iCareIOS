@@ -38,13 +38,13 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     private var timer: Timer!
     
     private var networkViewManager = NetworkViewManager()
-    private var networkCheckInRealTime: Timer!
+    private var networkCheckInRealTime: Timer?
     
-    private func handleLanguageChanged() {
+    private func updateUI() {
         lbl_StartDate.text = "LBL_START_DATE".localized()
         lbl_EndDate.text = "LBL_END_DATE".localized()
         
-        let date_picker_localization = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: UserDefaults.standard.string(forKey: "lang") ?? "vi")) as Locale
+        let date_picker_localization = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: UserDefaults.standard.string(forKey: UserDefaultKeys.language) ?? "vi")) as Locale
         
         picker_StartDate.locale = date_picker_localization
         picker_EndDate.locale = date_picker_localization
@@ -58,11 +58,16 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         static let SEGUE_TO_BOOKING_GENERAL = "segue_BookingDateToBookingGeneral"
         static let SEGUE_TO_BOOKING_DETAIL = "segue_BookingStartEndToDetail"
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateUI()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        handleLanguageChanged()
         
 //=========PREPARE UI BASE ON LOGIC OF DTOBookingInformation=========
         
@@ -100,7 +105,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         super.viewWillDisappear(animated)
         
         NotificationCenter.default.removeObserver(self)
-        networkCheckInRealTime.invalidate()
+        self.networkCheckInRealTime?.invalidate()
     }
 
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
