@@ -64,20 +64,26 @@
 "LBL_BOOKING_TIME_TITLE" = "Giờ đặt";
 "DROPDOWN_VOUCHER_EMPTY_MESSAGE" = "Xin vui lòng chọn Voucher";
 "DROPDOWN_TYPE_EMPTY_MESSAGE" = "Xin vui lòng chọn Loại Dịch Vụ";
-"USERNAME_EMPTY_MESSAGE" = "Tên đăng nhập trống";
-"PASSWORD_EMPTY_MESSAGE" = "Mật khẩu trống";
-"CONFIRM_PASSWORD_EMPTY_MESSAGE" = "Xác nhận mật khẩu trống";
-"CONFIRM_PASSWORD_UNMATCH_MESSAGE" = "Xác nhận mật khẩu không trùng khớp";
-"CREDENTIAL_INVALID" = "Tên đăng nhập và mật khẩu không hợp lệ";
-"REGISTER_FAILED_MESSAGE" = "Đăng ký không thành công";
-"USERNAME_EXISTED_MESSAGE" = "Tên đăng nhập đã được sử dụng";
+"USERNAME_EMPTY" = "Tên đăng nhập trống";
+"PASSWORD_EMPTY" = "Mật khẩu trống";
+"CONFRIM_PASSWORD_EMPTY" = "Xác nhận mật khẩu trống";
+"CONFIRM_PASSWORD_UNMATCH" = "Xác nhận mật khẩu không trùng khớp";
+"invalid-username-or-password" = "Tên đăng nhập và mật khẩu không hợp lệ";
+"USERNAME_PATTERN_FAIL" = "Tên đăng nhập phải có ít nhất 8 ký tự và không có ký tự đặc biệt";
+"PASSWORD_PATTERN_FAIL" = "Mật khẩu phải có ít nhất 8 ký tự và không có ký tự đặc biệt";
+"REGISTER_FAILED" = "Đăng ký không thành công";
+"USERNAME_EXISTED" = "Tên đăng nhập đã được sử dụng";
 "ONE_LOCATION_MESSAGE" = "Hiện tại Dr.Q-Muller chỉ có 1 trung tâm tại Quận 3, Việt Nam";
 "NETWORK_REACHED" = "Đã kết nối mạng";
 "NETWORK_UNREACHED" = "Không có kết nối mạng";
-"CUSTOMER_NAME_EMPTY_MESSAGE" = "Họ và tên trống";
-"ADDRESS_EMPTY_MESSAGE" = "Địa chỉ trống";
-"EMAIL_EMPTY_MESSAGE" = "Email trống";
-"PHONE_EMPTY_MESSAGE" = "Số điện thoại trống";
+"CUSTOMER_NAME_EMPTY" = "Họ và tên trống";
+"ADDRESS_EMPTY" = "Địa chỉ trống";
+"CUSTOMER_NAME_PATTERN_FAIL" = "Họ và tên bao gồm ký tự Latin và các ký hiệu như: .-. Số ký tự nhiều nhất cho phép: 50";
+"ADDRESS_PATTERN_FAIL" = "Địa chỉ bao gồm ký tự Latin, số và các ký hiệu như: .-. Số ký tự nhiều nhất cho phép: 150";
+"EMAIL_EMPTY" = "Email trống";
+"PHONE_EMPTY" = "Số điện thoại trống";
+"EMAIL_PATTERN_FAIL" = "Địa chỉ email bao gồm ký tự Latin, số và các ký hiệu như: /-_@";
+"PHONE_PATTERN_FAIL" = "Số điện thoại không hợp lệ. Số chữ số nhiều nhất cho phép: 12";
 "EMAIL_INVALID_FORMAT" = "Email không hợp lệ";
 "UPDATE_SUCCESS_MESSAGE" = "Cập nhật thành công";
 "UPDATE_FAIL_MESSAGE" = "Cập nhật không thành công. Xin vui lòng thử lại";
@@ -104,8 +110,11 @@
 "EMAIL_PHONE_ATTENTION_MESSAGE" = "Xin quý khách vui lòng điền đầy đủ chính xác Email và Số điện thoại. Trung tâm DrQMuller sẽ liên lạc qua những thông tin trên để xác nhận lịch hẹn của quý khách. Xin cảm ơn";
 "BTN_CHOOSE_MACHINE_TITLE" = "Chọn máy";
 "BTN_CHOOSE_LANGUAGE" = "VI";
-
-
+"NO_FREE_TIME_LEFT" = "Hiện tại có thể đã đến giờ đóng cửa của Trung tâm Dr.Q-Muller hoặc không còn giờ trống nào tại địa điểm Trung tâm hiện tại";
+"OPTIONAL_INFO_MESSAGE" = "Ngày sinh và giới tính là thông tin không bắt buộc. Quý khách có thể bỏ qua, hoặc cung cấp thông tin cho chúng tôi";
+"SKIP_TITLE" = "Bỏ qua";
+"FILL_TITLE" = "Điền";
+"SERVER_ERROR" = "Lỗi máy chủ. Xin vui lòng liên lạc với trung tâm DrQMuller qua số điện thoại [PHONE_NUMBER_WAITING]";
 
 
 

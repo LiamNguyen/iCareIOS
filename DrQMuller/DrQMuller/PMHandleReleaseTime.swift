@@ -18,22 +18,19 @@ class PMHandleReleaseTime: NSObject, HTTPClientDelegate {
         self.httpClient.delegate = self
     }
     
-    func releaseTime(timeObj: [[String]]) {
-        let jsonString = "bookingTime=\(Functionality.jsonStringify(obj: timeObj as AnyObject))"
-        let location_ID = Functionality.findKeyFromValue(dictionary: APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!.dropDownLocationsDataSource, value: DTOBookingInformation.sharedInstance.location)
-        let machine_ID = Functionality.findKeyFromValue(dictionary: DTOBookingInformation.sharedInstance.machinesDataSource, value: DTOBookingInformation.sharedInstance.machine)
+    func releaseTime(time: [[String: String]]) {
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForReleasingTime(time: time)
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
         
-        let httpBody = "\(jsonString)&location_id=\(location_ID)&machine_id=\(machine_ID)"
-        
-        httpClient.postRequest(url: "Update_UnchosenTime", body: httpBody)
+        httpClient.postRequest(url: "Update_ReleaseTime", body: requestBody, sessionToken: sessionToken)
     }
     
     func onReceiveRequestResponse(data: AnyObject) {
         var isOk = [String: Bool]()
-        if let arrayResponse = data["Update_UnchosenTime"] as? NSArray {
+        if let arrayResponse = data["Update_ReleaseTime"] as? NSArray {
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as! NSDictionary
-                if let result = arrayDict["Status"] as? String {
+                if let result = arrayDict["status"] as? String {
                     if result == "1" {
                         isOk["status"] = true
                     } else {
@@ -46,5 +43,10 @@ class PMHandleReleaseTime: NSObject, HTTPClientDelegate {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "releaseTimeResponse"), object: nil, userInfo: isOk)
         }
     }
+    
+    func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
+        
+    }
+    
     
 }

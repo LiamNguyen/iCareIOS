@@ -9,8 +9,8 @@
 import UIKit
 
 class ModelHandleBookingVerification: NSObject {
-    func validateCode(appointment_ID: String) {
-        APIHandleBooking.sharedInstace.validateCode(appointment_ID: appointment_ID)
+    func confirmAppointment(appointmentId: String) {
+        APIHandleBooking.sharedInstace.confirmAppointment(appointmentId: appointmentId)
     }
     
     //=========SAVE APPOINTMENT INFORMATION TO USER DEFAULT=========
@@ -19,7 +19,7 @@ class ModelHandleBookingVerification: NSObject {
         print("\nBefore saving to User default: ")
         dtoBookingInformation.printBookingInfo()
         
-        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String
+        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as! String
         var savedAppointments = [String: DTOBookingInformation]()
         
         //Get saved appointment from user default

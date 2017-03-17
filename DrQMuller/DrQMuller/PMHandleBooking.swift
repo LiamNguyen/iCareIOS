@@ -60,7 +60,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var dropDownLocationsDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownLocationsDataSource[(dictItem["LOCATION_ID"] as? String)!] = (dictItem["ADDRESS"] as? String)!
+                dropDownLocationsDataSource[(dictItem["LOCATION_ID"] as? NSNumber)!.stringValue] = (dictItem["ADDRESS"] as? String)!
             }
             DTOStaticArrayDataSource.sharedInstance.dropDownLocationsDataSource = dropDownLocationsDataSource
         }
@@ -71,7 +71,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var dropDownVouchersDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownVouchersDataSource[(dictItem["VOUCHER_ID"] as? String)!] = (dictItem["VOUCHER"] as? String)!
+                dropDownVouchersDataSource[(dictItem["VOUCHER_ID"] as? NSNumber)!.stringValue] = (dictItem["VOUCHER"] as? String)!
             }
             DTOStaticArrayDataSource.sharedInstance.dropDownVouchersDataSource = dropDownVouchersDataSource
         }
@@ -82,7 +82,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var dropDownTypesDataSource = [String: String]()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                dropDownTypesDataSource[(dictItem["TYPE_ID"] as? String)!] = (dictItem["TYPE"] as? String)!
+                dropDownTypesDataSource[(dictItem["TYPE_ID"] as? NSNumber)!.stringValue] = (dictItem["TYPE"] as? String)!
             }
             DTOStaticArrayDataSource.sharedInstance.dropDownTypesDataSource = dropDownTypesDataSource
         }
@@ -96,7 +96,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 allTimeDisplayArray.append((dictItem["TIME"] as? String)!)
-                allTimeDataSource[(dictItem["TIME_ID"] as? String)!] = (dictItem["TIME"] as? String)!
+                allTimeDataSource[(dictItem["TIME_ID"] as? NSNumber)!.stringValue] = (dictItem["TIME"] as? String)!
             }
             //let sortedArray = sortDictionary(dictionary: allTimeDataSource)
             //DTOStaticArrayDataSource.sharedInstance.allTimeDisplayArray = sortedArray
@@ -113,7 +113,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
                 ecoTimeDisplayArray.append((dictItem["TIME"] as? String)!)
-                ecoTimeDataSource[(dictItem["TIME_ID"] as? String)!] = dictItem["TIME"]! as? String
+                ecoTimeDataSource[(dictItem["TIME_ID"] as? NSNumber)!.stringValue] = dictItem["TIME"]! as? String
             }
             //let sortedArray = sortDictionary(dictionary: ecoTimeDataSource)
             //DTOStaticArrayDataSource.sharedInstance.ecoTimeDisplayArray = sortedArray
@@ -141,7 +141,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var selectedTimeDataSource = Dictionary<String, String>()
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                selectedTimeDataSource[(dictItem["TIME_ID"]! as? String)!] = dictItem["TIME"]! as? String
+                selectedTimeDataSource[(dictItem["TIME_ID"]! as? NSNumber)!.stringValue] = dictItem["TIME"]! as? String
             }
         //PASS SELECTED TIME DATASOURCE
             
@@ -157,16 +157,16 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var appointment_ID: String?
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as? NSDictionary
-                if let app_ID = arrayDict?["Appointment_ID"] as? String {
+                if let app_ID = arrayDict?["appointmentId"] as? String {
                     appointment_ID = app_ID
                 }
 
-                if let result = arrayDict?["Status"] as? String {
+                if let result = arrayDict!["status"] as? String {
                     if result == "1" {
                         isOk["status"] = true
                         if let app_ID = appointment_ID {
                             DTOBookingInformation.sharedInstance.appointmentID = app_ID
-                            httpClient.postRequest(url: "SendMail_NotifyBooking", body: DTOBookingInformation.sharedInstance.returnJsonAppointmentInfo())
+//                            httpClient.postRequest(url: "SendMail_NotifyBooking", body: DTOBookingInformation.sharedInstance.returnJsonAppointmentInfo())
                             print(DTOBookingInformation.sharedInstance.returnJsonAppointmentInfo())
                         }
                     } else {
@@ -179,12 +179,12 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         
 //HANDLE REPONSE OF VALIDATING VERIFICATION CODE
         
-        if let arrayResponse = data["Update_Appointment"]! as? NSArray {
+        if let arrayResponse = data["Update_ConfirmAppointment"]! as? NSArray {
             var isOk = [String: Bool]()
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as? NSDictionary
                 
-                if let result = arrayDict?["Status"] as? String {
+                if let result = arrayDict?["status"] as? String {
                     if result == "1" {
                         isOk["status"] = true
                     } else {
@@ -192,7 +192,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                     }
                 }
             }
-            NotificationCenter.default.post(name: Notification.Name(rawValue: "validateCode"), object: nil, userInfo: isOk)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "confirmAppointmentResponse"), object: nil, userInfo: isOk)
         }
         
 //HANDLE REPONSE OF CANCELING APPOINTMENT
@@ -202,7 +202,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             for arrayItem in arrayResponse {
                 let arrayDict = arrayItem as? NSDictionary
                 
-                if let result = arrayDict?["Status"] as? String {
+                if let result = arrayDict?["status"] as? String {
                     if result == "1" {
                         isOk["status"] = true
                     } else {
@@ -235,7 +235,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             var machinesDataSource = [String: String]()
             for arrayItem in arrayResponse {
                 let dictItem = arrayItem as! NSDictionary
-                machinesDataSource[dictItem["MACHINE_ID"] as! String] = (dictItem["MACHINE_NAME"] as! String)
+                machinesDataSource[(dictItem["MACHINE_ID"] as! NSNumber).stringValue] = (dictItem["MACHINE_NAME"] as! String)
             }
             DTOBookingInformation.sharedInstance.machinesDataSource = machinesDataSource
             
@@ -256,18 +256,22 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
 //HANDLE CHECKING BOOKING TIME EXISTENCY
 
         if let arrayDataSource = data["BookingTransaction"]! as? NSArray {
-            var returnExistencyResult = [String: String]()
-            var existency: String!
+            var returnExistencyResult = [String: Bool]()
+            var existed: Bool!
             
             for arrayItem in arrayDataSource {
                 let dictItem = arrayItem as! NSDictionary
-                existency = dictItem["existency"]! as! String
+                existed = dictItem["existed"]! as! Bool
             }
         //PASS CHECKING EXISTENCY RESULT
 
-            returnExistencyResult["returnExistencyResult"] = existency
+            returnExistencyResult["returnExistencyResult"] = existed
             NotificationCenter.default.post(name: Notification.Name(rawValue: "existencyResult"), object: nil, userInfo: returnExistencyResult)
         }
+    }
+    
+    func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
+        
     }
 
 //MAKE GET REQUEST FOR STATIC ARRAY DATASOURCE
@@ -276,62 +280,72 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
         if staticArrayDataSourceHasExisted() {
             return
         }
-        httpClient.getRequest(url: "Select_Countries", parameter: "")
-        httpClient.getRequest(url: "Select_Cities", parameter: "?country_id=235")
-        httpClient.getRequest(url: "Select_Districts", parameter: "?city_id=58")
-        httpClient.getRequest(url: "Select_Locations", parameter: "?district_id=630")
-        httpClient.getRequest(url: "Select_Vouchers", parameter: "")
-        httpClient.getRequest(url: "Select_Types", parameter: "")
+        httpClient.getRequest(url: "Select_Countries")
+        httpClient.getRequest(url: "Select_Cities", parameter: "235")
+        httpClient.getRequest(url: "Select_Districts", parameter: "58")
+        httpClient.getRequest(url: "Select_Locations", parameter: "630")
+        httpClient.getRequest(url: "Select_Vouchers")
+        httpClient.getRequest(url: "Select_Types")
         
         //DOWNLOAD OTHER NECCESSARY ARRAY DATASOURCE
         
-        httpClient.getRequest(url: "Select_AllTime", parameter: "")
-        httpClient.getRequest(url: "Select_EcoTime", parameter: "")
-        httpClient.getRequest(url: "Select_DaysOfWeek", parameter: "")
+        httpClient.getRequest(url: "Select_AllTime")
+        httpClient.getRequest(url: "Select_EcoTime")
+        httpClient.getRequest(url: "Select_DaysOfWeek")
     }
  
 //MAKE GET REQUEST FOR SELECTED TIME
 
     func getSelectedTimeDataSource(selectedDayOfWeek_ID: String, location_ID: String, machine_ID: String) {
-        httpClient.getRequest(url: "Select_SelectedTime", parameter: "?day_id=\(selectedDayOfWeek_ID)&location_id=\(location_ID)&machine_id=\(machine_ID)")
+        httpClient.getRequest(url: "Select_SelectedTime", parameter: "\(selectedDayOfWeek_ID)/\(location_ID)/\(machine_ID)")
     }
     
 //MAKE GET REQUEST FOR MACHINES DATASOURCE
     
     func getMachinesByLocationID(locationID: String) {
-        httpClient.getRequest(url: "Select_Machines", parameter: "?location_id=\(locationID)")
+        httpClient.getRequest(url: "Select_Machines", parameter: "\(locationID)")
     }
     
 //MAKE GET REQUEST FOR CHECKING EXISTENCE OF BOOKING TIME
     
-    func checkBookingTime(day_ID: String, time_ID: String, chosenMachineID: String) {
-        let location_ID = Functionality.findKeyFromValue(dictionary: APIHandleBooking.sharedInstace.pulledStaticArrayFromUserDefaults()!.dropDownLocationsDataSource, value: DTOBookingInformation.sharedInstance.location)
+    func checkBookingTime(time: [String: String]) {
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForBookingTransaction(time: time)
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
         
-        httpClient.postRequest(url: "BookingTransaction", body: "day_id=\(day_ID)&time_id=\(time_ID)&location_id=\(location_ID)&machine_id=\(chosenMachineID)")
+        httpClient.postRequest(url: "BookingTransaction", body: requestBody, sessionToken: sessionToken)
     }
     
 //INSERT NEW APPOINTMENT
     
     func insertNewAppointment() {
-        httpClient.postRequest(url: "Insert_NewAppointment", body: DTOBookingInformation.sharedInstance.returnHttpBody()!)
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCreateAppointment()
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        
+        httpClient.postRequest(url: "Insert_NewAppointment", body: requestBody, sessionToken: sessionToken)
     }
     
 //CHECK VERIFICATION CODE
     
-    func validateCode(appointment_ID: String) {
-        httpClient.postRequest(url: "Update_Appointment", body: "appointmentId=\(appointment_ID)")
+    func confirmAppointment(appointmentId: String) {
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAndConfirmAppointment(appointmentId: appointmentId)
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        
+        httpClient.postRequest(url: "Update_ConfirmAppointment", body: requestBody, sessionToken: sessionToken)
     }
     
 //CANCEL APPOINTMENT
     
-    func cancelAppointment(appointment_ID: String) {
-        httpClient.postRequest(url: "Update_CancelAppointment", body: "appointmentId=\(appointment_ID)")
+    func cancelAppointment(appointmentId: String) {
+        let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAndConfirmAppointment(appointmentId: appointmentId)
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        
+        httpClient.postRequest(url: "Update_CancelAppointment", body: requestBody, sessionToken: sessionToken)
     }
     
 //VALIDATE APPOINTMENT
 
     func validateAppointment() {
-        httpClient.postRequest(url: "Update_ValidateAppointment", body: "")
+        httpClient.postRequest(url: "Update_ValidateAppointment")
     }
     
 //CHECK EXISTENCE OF STATIC ARRAYS DATASOURCE ON USER DEFAULT

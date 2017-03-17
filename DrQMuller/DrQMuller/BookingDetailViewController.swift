@@ -67,7 +67,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var networkCheckInRealTime: Timer?
     
     private var deleteCartOrderItemIndexPath: NSIndexPath? = nil
-    private var dtoBookingTime: [[String]]!
+    private var bookingTimeArray: [[String: String]]!
+    private var dtoBookingTime: DTOBookingTime!
     
     private var dropDownSelectedRowIndex: Int!
     private var isRequiredClearAllCartItems = false
@@ -194,7 +195,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             object: nil
         )
         
-        self.language = UserDefaults.standard.string(forKey: "lang")
+        self.language = UserDefaults.standard.string(forKey: UserDefaultKeys.language)
         
         //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {
@@ -273,7 +274,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         setUpTapRecognitionForCartButton()
         
-        dtoBookingTime = [[String]]()
+        bookingTimeArray = [[String: String]]()
         
         bindDataConfirmView()
         
@@ -287,6 +288,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLayoutSubviews()
         
         self.view_ConfirmView.center = CGPoint(x: self.view_ConfirmView.center.x + 400, y: self.view_ConfirmView.center.y)
+        UIFunctionality.applyShadow(toView: self.view_ConfirmView)
+        self.view_ConfirmView.layer.cornerRadius = 20
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -294,8 +297,8 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         NotificationCenter.default.removeObserver(self)
         
-        if !dtoBookingTime.isEmpty && !hasSuccessfullyInsertedAppointment {
-            modelHandelBookingDetail.releaseTime(timeObj: dtoBookingTime)
+        if !self.bookingTimeArray.isEmpty && !hasSuccessfullyInsertedAppointment {
+            modelHandelBookingDetail.releaseTime(time: self.bookingTimeArray)
         }
         
         networkCheckInRealTime?.invalidate()
@@ -331,10 +334,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.activityIndicator.stopAnimating()
                     self.view.isUserInteractionEnabled = true
                     
+                    if freeTimeDataSource.count < 1 {
+                        self.alertMessage(message: "NO_FREE_TIME_LEFT".localized())
+                        return
+                    }
+                    
                     self.tableView_BookingTime.layer.add(AnimationManager.getAnimation_Fade(duration: 0.7), forKey: nil)
                     self.tableView_BookingTime.isHidden = false
                     
                     self.tableView_BookingTime.setContentOffset(CGPoint.zero, animated: true)
+
                 }
             }
         }
@@ -346,17 +355,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if let userInfo = notification.userInfo {
             
             DispatchQueue.global(qos: .userInteractive).async {
-                let existencyResult = userInfo["returnExistencyResult"] as! String
-                if existencyResult == "1" {
+                let existed = userInfo["returnExistencyResult"] as! Bool
+                if existed {
                     DispatchQueue.main.sync {
                         self.activityIndicator.stopAnimating()
                         self.tableView_BookingTime.isUserInteractionEnabled = true
                         ToastManager.alert(view: self.view_TopView, msg: "BOOKING_TIME_HAS_EXISTED_MESSAGE".localized())
                     }
                 } else {
-                    let bookingTime = [self.tupleBookingTime.id.day_ID, self.tupleBookingTime.id.time_ID]
-                    self.dtoBookingTime.insert(bookingTime, at: self.dtoBookingTime.count)
-                    DTOBookingInformation.sharedInstance.bookingTime = self.dtoBookingTime
+                    self.bookingTimeArray.insert(self.dtoBookingTime.getDictionary(), at: self.bookingTimeArray.count)
+                    DTOBookingInformation.sharedInstance.bookingTime = self.bookingTimeArray
                     if let machine = self.tupleBookingMachine.value {
                         DTOBookingInformation.sharedInstance.machine = machine
                     }
@@ -365,9 +373,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     
                     DispatchQueue.main.async {
                         
-                        print("LUKA CHECK THIS OUT!!")
-                        
-                        if self.dtoBookingTime.count == 1 {
+                        if self.bookingTimeArray.count == 1 {
                             self.timer_bookingExpire = Timer.scheduledTimer(timeInterval: 15 * 60, target: self, selector: #selector(self.onBookingTimeExpire), userInfo: nil, repeats: false)
                         }
                         
@@ -393,7 +399,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         
                         //UPDATE NOTIFICATION LABEL
                         
-                        self.lbl_Notification.text = String(self.dtoBookingTime.count)
+                        self.lbl_Notification.text = String(self.bookingTimeArray.count)
                         let notificationNumber = Int(self.lbl_Notification.text!)
                         if notificationNumber == 1 {
                             self.lbl_Notification.isHidden = false
@@ -452,7 +458,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         updateLocalWhenDeleteOneItem()
                     }
                     
-                    if self.tupleBookingMachine.value == DTOBookingInformation.sharedInstance.machine {
+                    if self.tupleBookingMachine.value != DTOBookingInformation.sharedInstance.machine {
                         self.getFreeTimeDataSource()
                     } else {
                         self.activityIndicator.stopAnimating()
@@ -512,7 +518,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.activityIndicator.startAnimating()
             self.view.isUserInteractionEnabled = false
             
-            self.modelHandelBookingDetail.releaseTime(timeObj: self.dtoBookingTime)
+            self.modelHandelBookingDetail.releaseTime(time: self.bookingTimeArray)
         }))
         alert.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in
         }))
@@ -540,7 +546,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.tableView_CartOrder || tableView == self.tableView_BookingTimeConfirm {
             //CART ORDER TABLE VIEW AND CART ORDER CONFIRM TABLE VIEW
-            return dtoBookingTime.count
+            return bookingTimeArray.count
         } else {
             //FREE TIME TABLE VIEW
             return freeTimeDataSource.count
@@ -604,19 +610,15 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         if tableView == self.tableView_BookingTime {
             
-            let bookingTime = dtoBookingTime
-            
-            if bookingTime?.count == 3 {
+            if self.bookingTimeArray.count == 3 {
                 alertMessage(message: "FULL_BOOKING_TIME_MESSAGE".localized())
                 return
             }
             
-            if !(bookingTime?.isEmpty)! {
-                for item in bookingTime! {
-                    if item[0] == self.tupleBookingTime.id.day_ID {
-                        alertMessage(message: "\("DUPLICATE_BOOKING_DAY_OF_WWEK_MESSAGE".localized())\(self.tupleBookingTime.value.day)")
-                        return
-                    }
+            for item in self.bookingTimeArray {
+                if item["dayId"] == self.tupleBookingTime.id.day_ID {
+                    alertMessage(message: "\("DUPLICATE_BOOKING_DAY_OF_WWEK_MESSAGE".localized())\(self.tupleBookingTime.value.day)")
+                    return
                 }
             }
             
@@ -628,8 +630,13 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.activityIndicator.startAnimating()
             self.tableView_BookingTime.isUserInteractionEnabled = false
             
-            if let machine_ID = self.tupleBookingMachine.id {
-                modelHandelBookingDetail.checkBookingTime(day_ID: self.tupleBookingTime.id.day_ID, chosenTime: freeTimeDataSource[indexPath.row], chosenMachineID: machine_ID)
+            if let machineId = self.tupleBookingMachine.id {
+                let dayId = self.tupleBookingTime.id.day_ID
+                let timeId = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
+                
+                self.dtoBookingTime = DTOBookingTime(dayId: dayId, timeId: timeId, machineId: machineId)
+                
+                modelHandelBookingDetail.checkBookingTime(time: self.dtoBookingTime.getDictionary())
             }
             
             let time_ID = modelHandelBookingDetail.returnTimeID(chosenTime: freeTimeDataSource[indexPath.row])
@@ -688,9 +695,10 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.view.isUserInteractionEnabled = false
         
         if let indexPath = deleteCartOrderItemIndexPath {
-            let timeWillBeDeleted = [self.tupleBookingTime_Array[indexPath.row].id.day_ID, self.tupleBookingTime_Array[indexPath.row].id.time_ID]
-            let timeArrayWillBeDeleted = [timeWillBeDeleted]
-            self.modelHandelBookingDetail.releaseTime(timeObj: timeArrayWillBeDeleted)
+
+            let willBeDeletedTime = self.bookingTimeArray[indexPath.row]
+            
+            self.modelHandelBookingDetail.releaseTime(time: [willBeDeletedTime])
             self.deletedTime = self.tupleBookingTime_Array[indexPath.row].value.time
         } else {
             print("indexPath is nil")
@@ -702,7 +710,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.tableView_CartOrder.beginUpdates()
             
-            dtoBookingTime.remove(at: indexPath.row)
+            bookingTimeArray.remove(at: indexPath.row)
             self.tupleBookingTime_Array.remove(at: indexPath.row)
             
             self.tableView_CartOrder.deleteRows(at: [indexPath as IndexPath], with: .automatic)
@@ -710,9 +718,9 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.tableView_CartOrder.endUpdates()
             
-            //            self.freeTimeDataSource.append(self.deletedTime ?? "")
-            //            self.freeTimeDataSource.sort()
-            //            self.tableView_BookingTime.reloadData()
+            self.freeTimeDataSource.append(self.deletedTime ?? "")
+            self.freeTimeDataSource.sort()
+            self.tableView_BookingTime.reloadData()
             
             self.tableView_BookingTimeConfirm.reloadData()
             
@@ -927,7 +935,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     @objc private func btn_ShowCart_OnClick() {
         
-        if dtoBookingTime.count < 1 {
+        if bookingTimeArray.count < 1 {
             ToastManager.alert(view: view_TopView, msg: "CART_ORDER_EMPTY_MESSAGE".localized())
             return
         }
@@ -970,6 +978,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             //            self.freeTimeDataSource.append(self.tupleBookingTime_Array[0].value.time)
             //            self.freeTimeDataSource.sort()
             //            self.tableView_BookingTime.reloadData()
+            self.getFreeTimeDataSource()
         } else {
             self.tableView_BookingTime.isHidden = true
             self.btn_DropDownDaysOfWeek.setTitle("BTN_DROPDOWN_DAY_OF_WEEK".localized(), for: .normal)
@@ -979,7 +988,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         updateCartOrderTableViewHeight()
         print(self.tupleBookingTime_Array)
         self.tupleBookingTime_Array.removeAll()
-        dtoBookingTime.removeAll()
+        bookingTimeArray.removeAll()
         DTOBookingInformation.sharedInstance.bookingTime.removeAll()
         
     }
@@ -1000,7 +1009,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @objc private func onBookingTimeExpire() {
-        if dtoBookingTime.count < 1 {
+        if bookingTimeArray.count < 1 {
             print("Not doing anything")
             return
         }
@@ -1015,7 +1024,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         self.view_TopView.isUserInteractionEnabled = true
         self.view.backgroundColor = ThemeBackGroundColor
         self.isRequiredClearAllCartItems = true
-        modelHandelBookingDetail?.releaseTime(timeObj: dtoBookingTime)
+        modelHandelBookingDetail?.releaseTime(time: self.bookingTimeArray)
         self.timer_bookingExpire?.invalidate()
         print("Clear all cart items")
     }

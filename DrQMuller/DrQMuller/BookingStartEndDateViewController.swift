@@ -44,7 +44,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         lbl_StartDate.text = "LBL_START_DATE".localized()
         lbl_EndDate.text = "LBL_END_DATE".localized()
         
-        let date_picker_localization = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: UserDefaults.standard.string(forKey: "lang") ?? "vi")) as Locale
+        let date_picker_localization = NSLocale.init(localeIdentifier: Functionality.getDatePickerLocale(language: UserDefaults.standard.string(forKey: UserDefaultKeys.language) ?? "vi")) as Locale
         
         picker_StartDate.locale = date_picker_localization
         picker_EndDate.locale = date_picker_localization
