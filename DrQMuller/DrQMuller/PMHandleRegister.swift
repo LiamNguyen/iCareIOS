@@ -29,24 +29,68 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
         }
     }
     
-    func onReceiveRequestResponse(data: AnyObject) {
-        var status = [String: String]()
-        if let arrayResponse = data["Insert_NewCustomer"] as? NSArray {
-            for arrayItem in arrayResponse {
-                let arrayDict = arrayItem as? NSDictionary
-
-                if let token = arrayDict?["jwt"] as? String {
-                    UserDefaults.standard.set(token, forKey: "CustomerInformation")
-                    DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: token)
+    func onReceiveRequestResponse(data: AnyObject) {}
+    
+    func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
+        var dataToSend = [String: Any]()
+        
+        dataToSend[JsonPropertyName.statusCode] = statusCode
+        dataToSend[JsonPropertyName.errorCode] = String()
+        
+//        Status code 500 or 501
+        if statusCode == HttpStatusCode.internalServerError || statusCode == HttpStatusCode.notImplemented {
+            dataToSend[JsonPropertyName.errorCode] = Error.Backend.serverError
+            postNotification(withData: dataToSend)
+            
+            return
+        }
+        
+        if let response = data["Insert_NewCustomer"] as? NSArray {
+            for item in response {
+                let responseObj = item as? NSDictionary
+                
+//                Status code 400
+                if statusCode == HttpStatusCode.badRequest {
+                    if (responseObj?[JsonPropertyName.error] as! String).contains("username") {
+                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.username
+                    } else {
+                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.password
+                    }
+                    
+                    postNotification(withData: dataToSend)
+                    
+                    return
                 }
                 
-                if let result = arrayDict?["Status"] as? String {
-                    status["status"] = result
+//                Status code 409
+                if statusCode == HttpStatusCode.conflict {
+                    dataToSend[JsonPropertyName.errorCode] = Error.Backend.customerExisted
+                    postNotification(withData: dataToSend)
+                }
+                
+                if statusCode == HttpStatusCode.created {
+                    if let jwt = responseObj?[JsonPropertyName.jwt] as? String {
+                        UserDefaults.standard.set(jwt, forKey: UserDefaultKeys.customerInformation)
+                        DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: jwt)
+                        postNotification(withData: dataToSend)
+                    
+                    } else {
+                        print("Error while getting JWT")
+                    }
                 }
             }
         }
+    }
+    
+    private func postNotification(withData: [String: Any]) {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "registerResponse"), object: nil, userInfo: status)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: UserDefaultKeys.registerResponse), object: nil, userInfo: withData)
         }
     }
+    
+    
+    
+    
+    
+    
 }

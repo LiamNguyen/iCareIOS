@@ -23,7 +23,7 @@ class APIHandleReleaseTime: NSObject {
         self.persistencyManager = PMHandleReleaseTime()
     }
     
-    func releaseTime(timeObj: [[String]]) {
-        self.persistencyManager.releaseTime(timeObj: timeObj)
+    func releaseTime(time: [[String: String]]) {
+        self.persistencyManager.releaseTime(time: time)
     }
 }

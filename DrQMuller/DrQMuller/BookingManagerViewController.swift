@@ -134,7 +134,7 @@ class BookingManagerViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     private func bindAppointmentDataSource() {
-        if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: DTOCustomerInformation.sharedInstance.customerInformationDictionary["userId"] as! String) as? DTOCustomerInformation {
+        if let appointments = Functionality.pulledStaticArrayFromUserDefaults(forKey: DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as! String) as? DTOCustomerInformation {
             appoinmentDataSource.removeAll(keepingCapacity: false)
             if appointments.customerAppointmentsDictionary.count > 0 {
                                 

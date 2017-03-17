@@ -58,7 +58,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     private var modelHandleBookingGeneral: ModelHandleBookingGeneral!
     
     private func updateUI() {
-        self.language = UserDefaults.standard.string(forKey: "lang")
+        self.language = UserDefaults.standard.string(forKey: UserDefaultKeys.language)
 
         lbl_Title.text = "BOOKING_INFO_PAGE_TITLE".localized()
         slideBtn_Next.delegate = self

@@ -42,6 +42,7 @@ class DTOAuthentication: NSObject {
     func returnHttpBody() -> String? {
         if let username = _username, let password = _password {
             let json = ["username": username, "password": password]
+            print("Request Body: \(Functionality.jsonStringify(obj: json as AnyObject))")
             
             return (Functionality.jsonStringify(obj: json as AnyObject))
         } else {

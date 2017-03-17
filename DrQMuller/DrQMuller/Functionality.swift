@@ -21,7 +21,7 @@ struct Functionality {
             return ""
         }
         
-        let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
+        let data = try! JSONSerialization.data(withJSONObject: obj, options: .prettyPrinted)
         let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
         
         return jsonString
@@ -287,16 +287,33 @@ struct Functionality {
         return "\(hour)\(minute)"
     }
     
+//GET CURRENT DATE
+    
+    static func getCurrentDate() -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        
+        let year = String(calendar.component(.year, from: date))
+        var month = String(calendar.component(.month, from: date))
+        var day = String(calendar.component(.day, from: date))
+        
+        if month.characters.count < 2 {
+            month.insert("0", at: month.startIndex)
+        }
+        
+        if day.characters.count < 2 {
+            day.insert("0", at: day.startIndex)
+        }
+        
+        return "\(year)/\(month)/\(day)"
+    }
+    
 //COMPARE TIME WITH CURRENT TIME AND SORT OUT TIME WHICH SMALL THAN CURRENT
     
     static func isGreaterThanCurrentTime(time: String) -> Bool {
         let currentTime = Functionality.getCurrentTime()
         let toBeCompareTime = time.replacingOccurrences(of: ":", with: "")
-        
-        print(toBeCompareTime)
-        
-        print(currentTime)
-        
+
         if toBeCompareTime > currentTime {
             return true
         } else {
@@ -337,7 +354,7 @@ struct Functionality {
         
         var filteredDict = dictionary
         let currentTime = Functionality.getCurrentTime()
-        var toBeComparedTime = ""
+        var toBeComparedTime = String()
         
         for (key, value) in dictionary {
             toBeComparedTime = value.replacingOccurrences(of: ":", with: "")
