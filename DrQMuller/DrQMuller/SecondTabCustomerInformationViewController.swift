@@ -128,8 +128,8 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     
     func onReceiveNecessaryInfoResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
-            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
-                if statusCode != HttpStatusCode.success {
+            if let statusCode = userInfo[Constants.JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[Constants.JsonPropertyName.errorCode] as? String {
+                if statusCode != Constants.HttpStatusCode.success {
                     ToastManager.alert(view: view_TopView, msg: errorCode.localized())
                 } else {
                     self.performSegue(withIdentifier: StoryBoard.SEGUE_TO_THIRD_TAB, sender: self)
@@ -184,17 +184,17 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
     }
     
     private func saveInfo() {
-        let step = JsonPropertyName.UiFillStep.necessary
+        let step = Constants.JsonPropertyName.UiFillStep.necessary
         var gender = String()
         
-        if UserDefaults.standard.string(forKey: UserDefaultKeys.language) == "vi" {
+        if UserDefaults.standard.string(forKey: Constants.UserDefaultsKey.language) == "vi" {
             gender = Functionality.translateGender(tranlate: picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)], to: .EN)
         } else  {
             gender = picker_GenderDataSource[picker_Gender.selectedRow(inComponent: 0)]
         }
         
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userDob] = picker_Date.date.shortDate
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userGender] = gender
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userDob] = picker_Date.date.shortDate
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userGender] = gender
         
         modelHandelCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
@@ -216,16 +216,16 @@ class SecondTabCustomerInformationViewController: UIViewController, UIPickerView
         DispatchQueue.global(qos: .userInteractive).async {
             let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
             
-            if let _ = customerInformation[JsonPropertyName.userDob] as? NSNull, let _ = customerInformation[JsonPropertyName.userGender] as? NSNull {
+            if let _ = customerInformation[Constants.JsonPropertyName.userDob] as? NSNull, let _ = customerInformation[Constants.JsonPropertyName.userGender] as? NSNull {
                 return
             }
             
-            let chosenDob = Functionality.convertDateFormatFromStringToDate(str: customerInformation[JsonPropertyName.userDob] as! String)!
+            let chosenDob = Functionality.convertDateFormatFromStringToDate(str: customerInformation[Constants.JsonPropertyName.userDob] as! String)!
             var gender = String()
-            if UserDefaults.standard.string(forKey: UserDefaultKeys.language) == "vi" {
-                gender = Functionality.translateGender(tranlate: customerInformation[JsonPropertyName.userGender] as! String, to: .VI)
+            if UserDefaults.standard.string(forKey: Constants.UserDefaultsKey.language) == "vi" {
+                gender = Functionality.translateGender(tranlate: customerInformation[Constants.JsonPropertyName.userGender] as! String, to: .VI)
             } else {
-                gender = customerInformation[JsonPropertyName.userGender] as! String
+                gender = customerInformation[Constants.JsonPropertyName.userGender] as! String
             }
             DispatchQueue.main.async {
                 self.picker_Gender.selectRow(self.picker_GenderDataSource.index(of: gender)!, inComponent: 0, animated: true)

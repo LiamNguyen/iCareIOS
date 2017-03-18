@@ -19,7 +19,7 @@ class ModelHandleBookingVerification: NSObject {
         print("\nBefore saving to User default: ")
         dtoBookingInformation.printBookingInfo()
         
-        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as! String
+        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userId] as! String
         var savedAppointments = [String: DTOBookingInformation]()
         
         //Get saved appointment from user default

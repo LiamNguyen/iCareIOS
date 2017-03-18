@@ -65,7 +65,7 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(FirstTabCustomerInformationViewController.onReceiveBasicInfoResponse(notification:)),
-            name: Notification.Name(rawValue: UserDefaultKeys.basicInfoResponse),
+            name: Notification.Name(rawValue: Constants.NotificationName.basicInfoResponse),
             object: nil
         )
     }
@@ -106,8 +106,8 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
     
     func onReceiveBasicInfoResponse(notification: Notification) {
         if let userInfo = notification.userInfo {
-            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
-                if statusCode != HttpStatusCode.success {
+            if let statusCode = userInfo[Constants.JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[Constants.JsonPropertyName.errorCode] as? String {
+                if statusCode != Constants.HttpStatusCode.success {
                     ToastManager.alert(view: view_TopView, msg: errorCode.localized())
                 } else {
                     self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECOND_TAB, sender: self)
@@ -142,10 +142,10 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
             return
         }
         
-        let step = JsonPropertyName.UiFillStep.basic
+        let step = Constants.JsonPropertyName.UiFillStep.basic
         
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userName] = txt_Name.text!
-        DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userAddress] = txt_Address.text!
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userName] = txt_Name.text!
+        DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userAddress] = txt_Address.text!
 
         modelHandleCustomerInformation.handleCustomerInformation(step: step, httpBody: DTOCustomerInformation.sharedInstance.returnHttpBody(step: step)!)
     }
@@ -201,13 +201,13 @@ class FirstTabCustomerInformationViewController: UIViewController, UITextFieldDe
         DispatchQueue.global(qos: .userInteractive).async {
             let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
             
-            if let _ = customerInformation[JsonPropertyName.userName] as? NSNull, let _ = customerInformation[JsonPropertyName.userAddress] as? NSNull {
+            if let _ = customerInformation[Constants.JsonPropertyName.userName] as? NSNull, let _ = customerInformation[Constants.JsonPropertyName.userAddress] as? NSNull {
                 return
             }
             
             DispatchQueue.main.async {
-                self.txt_Name.text = customerInformation[JsonPropertyName.userName] as! String?
-                self.txt_Address.text = customerInformation[JsonPropertyName.userAddress] as! String?
+                self.txt_Name.text = customerInformation[Constants.JsonPropertyName.userName] as! String?
+                self.txt_Address.text = customerInformation[Constants.JsonPropertyName.userAddress] as! String?
             }
         }
     }
