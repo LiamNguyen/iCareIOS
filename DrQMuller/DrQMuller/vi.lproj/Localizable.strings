@@ -115,6 +115,8 @@
 "SKIP_TITLE" = "Bỏ qua";
 "FILL_TITLE" = "Điền";
 "SERVER_ERROR" = "Lỗi máy chủ. Xin vui lòng liên lạc với trung tâm DrQMuller qua số điện thoại [PHONE_NUMBER_WAITING]";
+"notify-booking-sent" = "Trung tâm DrQMuller đã nhận được thông báo đặt lịch của khách hàng. Xin vui lòng đợi trong chốc lát. Xin cảm ơn";
+"notify-booking-fail" = "Hệ thống gửi mail gặp lỗi. Xin quý khách vui lòng gọi đến số [PHONE_NUMBER_WAITING]. Xin thứ lỗi";
 
 
 

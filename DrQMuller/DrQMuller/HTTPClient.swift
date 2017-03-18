@@ -64,7 +64,6 @@ public class HTTPClient {
         }
         
         let nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
-        
         var request = URLRequest(url: nsUrl as! URL)
         request.httpMethod = "POST"
         request.httpBody = body.data(using: .utf8)
@@ -72,7 +71,7 @@ public class HTTPClient {
         request.addValue(sessionToken, forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            var statusCode = HttpStatusCode.noContent
+            var statusCode = Constants.HttpStatusCode.noContent
             
             guard let data = data, error == nil else {
                 print("error =\n\(error)")
@@ -87,7 +86,7 @@ public class HTTPClient {
                 }
                 statusCode = httpStatus.statusCode
                 
-                if statusCode == HttpStatusCode.methodNotAllowed {
+                if statusCode == Constants.HttpStatusCode.methodNotAllowed {
                     print("Try different http method ;)")
                     return
                 }
@@ -120,7 +119,7 @@ public class HTTPClient {
         request.addValue(sessionToken, forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            var statusCode = HttpStatusCode.noContent
+            var statusCode = Constants.HttpStatusCode.noContent
             
             guard let data = data, error == nil else {
                 print("error =\n\(error)")

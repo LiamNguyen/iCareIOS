@@ -34,12 +34,12 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
     func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
         var dataToSend = [String: Any]()
         
-        dataToSend[JsonPropertyName.statusCode] = statusCode
-        dataToSend[JsonPropertyName.errorCode] = String()
+        dataToSend[Constants.JsonPropertyName.statusCode] = statusCode
+        dataToSend[Constants.JsonPropertyName.errorCode] = String()
         
 //        Status code 500 or 501
-        if statusCode == HttpStatusCode.internalServerError || statusCode == HttpStatusCode.notImplemented {
-            dataToSend[JsonPropertyName.errorCode] = Error.Backend.serverError
+        if statusCode == Constants.HttpStatusCode.internalServerError || statusCode == Constants.HttpStatusCode.notImplemented {
+            dataToSend[Constants.JsonPropertyName.errorCode] = Error.Backend.serverError
             postNotification(withData: dataToSend)
             
             return
@@ -50,11 +50,11 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
                 let responseObj = item as? NSDictionary
                 
 //                Status code 400
-                if statusCode == HttpStatusCode.badRequest {
-                    if (responseObj?[JsonPropertyName.error] as! String).contains("username") {
-                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.username
+                if statusCode == Constants.HttpStatusCode.badRequest {
+                    if (responseObj?[Constants.JsonPropertyName.error] as! String).contains("username") {
+                        dataToSend[Constants.JsonPropertyName.errorCode] = Error.Pattern.username
                     } else {
-                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.password
+                        dataToSend[Constants.JsonPropertyName.errorCode] = Error.Pattern.password
                     }
                     
                     postNotification(withData: dataToSend)
@@ -63,14 +63,14 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
                 }
                 
 //                Status code 409
-                if statusCode == HttpStatusCode.conflict {
-                    dataToSend[JsonPropertyName.errorCode] = Error.Backend.customerExisted
+                if statusCode == Constants.HttpStatusCode.conflict {
+                    dataToSend[Constants.JsonPropertyName.errorCode] = Error.Backend.customerExisted
                     postNotification(withData: dataToSend)
                 }
                 
-                if statusCode == HttpStatusCode.created {
-                    if let jwt = responseObj?[JsonPropertyName.jwt] as? String {
-                        UserDefaults.standard.set(jwt, forKey: UserDefaultKeys.customerInformation)
+                if statusCode == Constants.HttpStatusCode.created {
+                    if let jwt = responseObj?[Constants.JsonPropertyName.jwt] as? String {
+                        UserDefaults.standard.set(jwt, forKey: Constants.UserDefaultsKey.customerInformation)
                         DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: jwt)
                         postNotification(withData: dataToSend)
                     
@@ -84,7 +84,7 @@ class PMHandleRegister: NSObject, HTTPClientDelegate {
     
     private func postNotification(withData: [String: Any]) {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: UserDefaultKeys.registerResponse), object: nil, userInfo: withData)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationName.registerResponse), object: nil, userInfo: withData)
         }
     }
     

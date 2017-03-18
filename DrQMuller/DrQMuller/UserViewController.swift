@@ -87,7 +87,7 @@ class UserViewController: UIViewController {
     }
     
     private func nameLblCustomStyle() {
-        lbl_UserName.text = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userName] as? String ?? ""
+        lbl_UserName.text = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userName] as? String ?? ""
         lbl_UserName.layer.cornerRadius = 10
 
     }
@@ -99,17 +99,17 @@ class UserViewController: UIViewController {
     
     private func handleLanguageChange() {
         
-        if UserDefaults.standard.string(forKey: UserDefaultKeys.language) == "vi" {
-            UserDefaults.standard.set("en", forKey: UserDefaultKeys.language)
+        if UserDefaults.standard.string(forKey: Constants.UserDefaultsKey.language) == "vi" {
+            UserDefaults.standard.set("en", forKey: Constants.UserDefaultsKey.language)
         } else {
-            UserDefaults.standard.set("vi", forKey: UserDefaultKeys.language)
+            UserDefaults.standard.set("vi", forKey: Constants.UserDefaultsKey.language)
         }
         
         updateUI()
     }
     
     private func clearUserToken() {
-        UserDefaults.standard.removeObject(forKey: UserDefaultKeys.customerInformation)
+        UserDefaults.standard.removeObject(forKey: Constants.UserDefaultsKey.customerInformation)
     }
     
     private func wiredUpNetworkChecking() {
