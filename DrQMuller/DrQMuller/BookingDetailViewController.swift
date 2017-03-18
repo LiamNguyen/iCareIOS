@@ -195,7 +195,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
             object: nil
         )
         
-        self.language = UserDefaults.standard.string(forKey: UserDefaultKeys.language)
+        self.language = UserDefaults.standard.string(forKey: Constants.UserDefaultsKey.language)
         
         //=========SET VOUCHER MODELHANDELBOOKINGDETAIL=========
         if DTOBookingInformation.sharedInstance.voucher == "ECO Booking" {

@@ -73,7 +73,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(LoginViewController.onReceiveAuthenticationResponse(notification:)),
-            name: Notification.Name(rawValue: UserDefaultKeys.loginResponse),
+            name: Notification.Name(rawValue: Constants.NotificationName.loginResponse),
             object: nil
         )
         
@@ -85,7 +85,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
         
         checkUserTokenForAutoLogin()
         
-        if UserDefaults.standard.string(forKey: UserDefaultKeys.language) != nil {
+        if UserDefaults.standard.string(forKey: Constants.UserDefaultsKey.language) != nil {
             return
         }
         chooseLanguageView.showLanguageView()
@@ -99,7 +99,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UserDefaults.standard.string(forKey: UserDefaultKeys.language) == nil {
+        if UserDefaults.standard.string(forKey: Constants.UserDefaultsKey.language) == nil {
             initializeLanguageView()
         }
         
@@ -309,9 +309,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
         uiWaitingLoginResponse(isDone: true)
 
         if let userInfo = notification.userInfo {
-            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
+            if let statusCode = userInfo[Constants.JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[Constants.JsonPropertyName.errorCode] as? String {
                 
-                if statusCode != HttpStatusCode.success {
+                if statusCode != Constants.HttpStatusCode.success {
                     ToastManager.alert(view: loginView, msg: errorCode.localized())
                 } else {
                     handleNavigation()
@@ -323,7 +323,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == Storyboard.SEGUE_TO_BOOKINGVC){
             if let tabVC = segue.destination as? UITabBarController{
-                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: UserDefaultKeys.language) ?? "vi", tabVC: tabVC)
+                Functionality.tabBarItemsLocalized(language: UserDefaults.standard.string(forKey: Constants.UserDefaultsKey.language) ?? "vi", tabVC: tabVC)
                 tabVC.tabBar.items?[0].isEnabled = false
                 tabVC.selectedIndex = 1
             }
@@ -333,12 +333,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     private func handleNavigation() {
         let customerInformation = DTOCustomerInformation.sharedInstance.customerInformationDictionary
         
-        switch customerInformation[JsonPropertyName.uiFillStep] as! String {
-        case JsonPropertyName.UiFillStep.none:
+        switch customerInformation[Constants.JsonPropertyName.uiFillStep] as! String {
+        case Constants.JsonPropertyName.UiFillStep.none:
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_FIRSTTAB_CUSTOMER_INFO, sender: self)
-        case JsonPropertyName.UiFillStep.basic:
+        case Constants.JsonPropertyName.UiFillStep.basic:
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_SECONDTAB_CUSTOMER_INFO, sender: self)
-        case JsonPropertyName.UiFillStep.necessary:
+        case Constants.JsonPropertyName.UiFillStep.necessary:
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_THIRDTAB_CUSTOMER_INFO, sender: self)
         default:
             self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKINGVC, sender: self)
@@ -383,7 +383,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, ChooseLanguage
     }
     
     private func checkUserTokenForAutoLogin() {
-        if let userToken = UserDefaults.standard.string(forKey: UserDefaultKeys.customerInformation) {
+        if let userToken = UserDefaults.standard.string(forKey: Constants.UserDefaultsKey.customerInformation) {
             DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: userToken)
             handleNavigation()
             print(DTOCustomerInformation.sharedInstance.customerInformationDictionary)
