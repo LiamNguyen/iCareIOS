@@ -166,8 +166,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                         isOk["status"] = true
                         if let app_ID = appointment_ID {
                             DTOBookingInformation.sharedInstance.appointmentID = app_ID
-//                            httpClient.postRequest(url: "SendMail_NotifyBooking", body: DTOBookingInformation.sharedInstance.returnJsonAppointmentInfo())
-                            print(DTOBookingInformation.sharedInstance.returnJsonAppointmentInfo())
+                            httpClient.postRequest(url: "SendMail_NotifyBooking", body: "appointmentId=\(app_ID)")
                         }
                     } else {
                         isOk["status"] = false
@@ -271,7 +270,26 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     }
     
     func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
+        if let response = data["SendMail_NotifyBooking"] as? NSArray {
+            var dataToSend = [String: Any]()
+            
+            dataToSend[Constants.JsonPropertyName.messageCode] = String()
+            
+            //        Status code 500
+            if statusCode == Constants.HttpStatusCode.internalServerError {
+                dataToSend[Constants.JsonPropertyName.errorCode] = Error.Backend.serverError
+                postNotification(withData: dataToSend)
+                
+                return
+            }
         
+            for item in response {
+                let responseObj = item as? NSDictionary
+                
+                dataToSend[Constants.JsonPropertyName.messageCode] = responseObj?[Constants.JsonPropertyName.messageCode]
+                postNotification(withData: dataToSend)
+            }
+        }
     }
 
 //MAKE GET REQUEST FOR STATIC ARRAY DATASOURCE
@@ -310,7 +328,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
     func checkBookingTime(time: [String: String]) {
         let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForBookingTransaction(time: time)
-        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.sessionToken] as! String
         
         httpClient.postRequest(url: "BookingTransaction", body: requestBody, sessionToken: sessionToken)
     }
@@ -319,7 +337,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
     func insertNewAppointment() {
         let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCreateAppointment()
-        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.sessionToken] as! String
         
         httpClient.postRequest(url: "Insert_NewAppointment", body: requestBody, sessionToken: sessionToken)
     }
@@ -328,7 +346,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
     func confirmAppointment(appointmentId: String) {
         let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAndConfirmAppointment(appointmentId: appointmentId)
-        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.sessionToken] as! String
         
         httpClient.postRequest(url: "Update_ConfirmAppointment", body: requestBody, sessionToken: sessionToken)
     }
@@ -337,7 +355,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
     
     func cancelAppointment(appointmentId: String) {
         let requestBody = DTOBookingInformation.sharedInstance.getRequestBodyForCancelAndConfirmAppointment(appointmentId: appointmentId)
-        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.sessionToken] as! String
+        let sessionToken = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.sessionToken] as! String
         
         httpClient.postRequest(url: "Update_CancelAppointment", body: requestBody, sessionToken: sessionToken)
     }
@@ -394,5 +412,11 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
             return false
         }
         return true
+    }
+    
+    private func postNotification(withData: [String: Any]) {
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationName.notifyBookingResponse), object: nil, userInfo: withData)
+        }
     }
 }

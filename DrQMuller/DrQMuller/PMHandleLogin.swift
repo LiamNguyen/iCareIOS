@@ -32,29 +32,30 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
     func onReceiveRequestResponse(data: AnyObject) {}
     
     func onReceivePostRequestResponse(data: AnyObject, statusCode: Int) {
-        var dataToSend = [String: Any]()
-        
-        dataToSend[JsonPropertyName.statusCode] = statusCode
-        dataToSend[JsonPropertyName.errorCode] = String()
-        
-//        Status code 500 or 501
-        if statusCode == HttpStatusCode.internalServerError || statusCode == HttpStatusCode.notImplemented {
-            dataToSend[JsonPropertyName.errorCode] = Error.Backend.serverError
-            postNotification(withData: dataToSend)
-
-            return
-        }
-        
         if let response = data["Select_ToAuthenticate"] as? NSArray {
+
+            var dataToSend = [String: Any]()
+            
+            dataToSend[Constants.JsonPropertyName.statusCode] = statusCode
+            dataToSend[Constants.JsonPropertyName.errorCode] = String()
+            
+    //        Status code 500 or 501
+            if statusCode == Constants.HttpStatusCode.internalServerError || statusCode == Constants.HttpStatusCode.notImplemented {
+                dataToSend[Constants.JsonPropertyName.errorCode] = Error.Backend.serverError
+                postNotification(withData: dataToSend)
+
+                return
+            }
+        
             for item in response {
                 let responseObj = item as? NSDictionary
                 
 //                Status code 400
-                if statusCode == HttpStatusCode.badRequest {
-                    if (responseObj?[JsonPropertyName.error] as! String).contains("username") {
-                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.username
+                if statusCode == Constants.HttpStatusCode.badRequest {
+                    if (responseObj?[Constants.JsonPropertyName.error] as! String).contains("username") {
+                        dataToSend[Constants.JsonPropertyName.errorCode] = Error.Pattern.username
                     } else {
-                        dataToSend[JsonPropertyName.errorCode] = Error.Pattern.password
+                        dataToSend[Constants.JsonPropertyName.errorCode] = Error.Pattern.password
                     }
 
                     postNotification(withData: dataToSend)
@@ -63,19 +64,18 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
                 }
                 
 //                Status code 401
-                if statusCode == HttpStatusCode.unauthorized {
-                    dataToSend[JsonPropertyName.errorCode] = responseObj?[JsonPropertyName.errorCode] as? String
+                if statusCode == Constants.HttpStatusCode.unauthorized {
+                    dataToSend[Constants.JsonPropertyName.errorCode] = responseObj?[Constants.JsonPropertyName.errorCode] as? String
                     postNotification(withData: dataToSend)
 
                     return
                 }
                 
-                if statusCode == HttpStatusCode.success {
-                    if let jwt = responseObj?[JsonPropertyName.jwt] as? String {
-                        UserDefaults.standard.set(jwt, forKey: UserDefaultKeys.customerInformation)
+                if statusCode == Constants.HttpStatusCode.success {
+                    if let jwt = responseObj?[Constants.JsonPropertyName.jwt] as? String {
+                        UserDefaults.standard.set(jwt, forKey: Constants.UserDefaultsKey.customerInformation)
                         DTOCustomerInformation.sharedInstance.customerInformationDictionary = Functionality.jwtDictionarify(token: jwt)                        
                         postNotification(withData: dataToSend)
-
 
                     } else {
                         print("Error while getting JWT")
@@ -87,7 +87,7 @@ class PMHandleLogin: NSObject, HTTPClientDelegate {
     
     private func postNotification(withData: [String: Any]) {
         DispatchQueue.main.async {
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: UserDefaultKeys.loginResponse), object: nil, userInfo: withData)
+            NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.NotificationName.loginResponse), object: nil, userInfo: withData)
         }
     }
     

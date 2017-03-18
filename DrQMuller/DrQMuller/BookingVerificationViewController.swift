@@ -63,6 +63,13 @@ class BookingVerificationViewController: UIViewController {
             object: nil
         )
         
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(BookingVerificationViewController.onReceiveNotifyBookingResponse(notification:)),
+            name: Notification.Name(rawValue: Constants.NotificationName.notifyBookingResponse),
+            object: nil
+        )
+        
         updateUI()
 
         wiredUpNetworkChecking()
@@ -78,8 +85,6 @@ class BookingVerificationViewController: UIViewController {
         modelHandleBookingVerification = ModelHandleBookingVerification()
         modelHandleBookingManagerDetail = ModelHandleBookingManagerDetail()
         networkViewManager = NetworkViewManager()
-
-        UIView.hr_setToastThemeColor(color: UIColor.red)
         
         self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
         self.activityIndicator.stopAnimating()
@@ -112,6 +117,7 @@ class BookingVerificationViewController: UIViewController {
                         self.informMessage(message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized())
                     }
                 } else {
+                    UIView.hr_setToastThemeColor(color: UIColor.red)
                     ToastManager.alert(view: view_TopView, msg: "VALIDATE_CODE_FAIL_MESSAGE".localized())
                 }
             }
@@ -131,8 +137,17 @@ class BookingVerificationViewController: UIViewController {
                         self.modelHandleBookingManagerDetail.removeAppointmentFromUserDefault(appointment_ID: self.dtoBookingInformation.appointmentID)
                     }
                 } else {
+                    UIView.hr_setToastThemeColor(color: UIColor.orange)
                     ToastManager.alert(view: self.view, msg: "CANCEL_APPOINTMENT_FAIL_MESSAGE".localized())
                 }
+            }
+        }
+    }
+    
+    func onReceiveNotifyBookingResponse(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            if let messageCode = userInfo[Constants.JsonPropertyName.messageCode] as? String {
+                ToastManager.alert(view: view_TopView, msg: messageCode.localized())
             }
         }
     }

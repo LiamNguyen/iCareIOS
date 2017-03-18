@@ -257,8 +257,8 @@ class DTOBookingInformation: NSObject, NSCoding {
     func returnJsonAppointmentInfo() -> String {
         var appointmentInfoDictionary = [String: Any]()
         
-        appointmentInfoDictionary["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as? String ?? String()
-        appointmentInfoDictionary["userName"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userName] as? String ?? String()
+        appointmentInfoDictionary["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userId] as? String ?? String()
+        appointmentInfoDictionary["userName"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userName] as? String ?? String()
         appointmentInfoDictionary["createdAt"] = Functionality.getCurrentDateTime()
         appointmentInfoDictionary["appointmentId"] = self._appointmentID
         appointmentInfoDictionary["location"] = self._location
@@ -298,7 +298,7 @@ class DTOBookingInformation: NSObject, NSCoding {
         let locationId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownLocationsDataSource, value: _location)
         let voucherId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownVouchersDataSource, value: _voucher)
         let typeId = Functionality.findKeyFromValue(dictionary: dtoArrays.dropDownTypesDataSource, value: _type)
-        let customerId = customerInformation[JsonPropertyName.userId] as! String
+        let customerId = customerInformation[Constants.JsonPropertyName.userId] as! String
         var startDate = String()
         var expiredDate = String()
         
@@ -361,7 +361,7 @@ class DTOBookingInformation: NSObject, NSCoding {
     }
     
     func getRequestBodyForCancelAndConfirmAppointment(appointmentId: String) -> String {
-        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[JsonPropertyName.userId] as! String
+        let customerId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userId] as! String
         
         let dict: [String: Any] = [
             "userId": customerId,

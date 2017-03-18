@@ -65,7 +65,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(RegisterViewController.onReceiveRegisterResponse(notification:)),
-            name: Notification.Name(rawValue: UserDefaultKeys.registerResponse),
+            name: Notification.Name(rawValue: Constants.NotificationName.registerResponse),
             object: nil
         )
         
@@ -312,9 +312,9 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         uiWaitingRegisterResponse(isDone: true)
 
         if let userInfo = notification.userInfo {
-            if let statusCode = userInfo[JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[JsonPropertyName.errorCode] as? String {
+            if let statusCode = userInfo[Constants.JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[Constants.JsonPropertyName.errorCode] as? String {
                 
-                if statusCode != HttpStatusCode.created {
+                if statusCode != Constants.HttpStatusCode.created {
                     ToastManager.alert(view: loginView, msg: errorCode.localized())
                 } else {
                     self.performSegue(withIdentifier: Storyboard.SEGUE_TO_FIRST_TAB, sender: self)
