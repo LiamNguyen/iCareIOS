@@ -89,7 +89,7 @@ public class ServiceURL {
             
             URI["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
             URI["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
-            URI["SendMail_NotifyBooking"] = "http://localhost/drmuller_test/SendMail_NotifyBooking1.php"
+            URI["SendMail_NotifyBooking"] = "/notifybooking/send"
         default:
             break
         }
@@ -132,9 +132,9 @@ public class ServiceURL {
     }
     
     private struct Host {
-        static let PRD = "http://210.211.109.180/drmuller/api"
-        static let UAT = "http://drqmuller.com/drmuller/api"
-        static let BETA = "http://210.211.109.180/beta_drmuller/public/index.php"
-        static let LOCAL = "http://localhost/drmuller/api"
+        static let PRD = "http://210.211.109.180/drmuller/api/index.php"
+        static let UAT = "http://drqmuller.com/drmuller/api/index.php"
+        static let BETA = "http://210.211.109.180/beta_drmuller/api/index.php"
+        static let LOCAL = "http://localhost/drmuller/api/index.php"
     }
 }

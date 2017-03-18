@@ -18,17 +18,17 @@ public class HTTPClient {
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
-    func getRequest(url: String, parameter: String? = "") {
+    func getRequest(url: String, parameter: String = "") {
         if !Reachability.isConnectedToNetwork() {
             print("No network connection")
             return
         }
         
         let nsUrl: NSURL!
-        if parameter!.isEmpty {
-            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter!)
+        if parameter.isEmpty {
+            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
         } else {
-            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + "/\(parameter!)")
+            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + "/\(parameter)")
         }
         var request = URLRequest(url: nsUrl as URL)
         request.httpMethod = "GET"
@@ -57,7 +57,7 @@ public class HTTPClient {
         task.resume()
     }
     
-    func postRequest(url: String, body: String? = "", sessionToken: String? = "") {
+    func postRequest(url: String, body: String = "", sessionToken: String = "") {
         if !Reachability.isConnectedToNetwork() {
             print("No network connection")
             return
@@ -67,9 +67,9 @@ public class HTTPClient {
         
         var request = URLRequest(url: nsUrl as! URL)
         request.httpMethod = "POST"
-        request.httpBody = body?.data(using: .utf8)
+        request.httpBody = body.data(using: .utf8)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(sessionToken!, forHTTPHeaderField: "Authorization")
+        request.addValue(sessionToken, forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             var statusCode = HttpStatusCode.noContent
@@ -106,7 +106,7 @@ public class HTTPClient {
         task.resume()
     }
     
-    func puRequest(url: String, body: String? = "", sessionToken: String? = "") {
+    func puRequest(url: String, body: String = "", sessionToken: String = "") {
         if !Reachability.isConnectedToNetwork() {
             print("No network connection")
             return
@@ -115,9 +115,9 @@ public class HTTPClient {
         let nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
         var request = URLRequest(url: nsUrl as! URL)
         request.httpMethod = "PUT"
-        request.httpBody = body?.data(using: .utf8)
+        request.httpBody = body.data(using: .utf8)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue(sessionToken!, forHTTPHeaderField: "Authorization")
+        request.addValue(sessionToken, forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             var statusCode = HttpStatusCode.noContent
