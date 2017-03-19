@@ -97,7 +97,6 @@ class ThirdTabCustomerInformationViewController: UIViewController, UITextFieldDe
         
 //=========OBSERVING NOTIFICATION FROM PMHandleCustomerInformation=========
         
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(rawValue: "importantInfoResponse"), object: nil)
         NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: "importantInfoResponse"), object: nil, queue: nil) { (Notification) in
             if let userInfo = Notification.userInfo {
                 if let statusCode = userInfo[Constants.JsonPropertyName.statusCode] as? Int, let errorCode = userInfo[Constants.JsonPropertyName.errorCode] as? String {
