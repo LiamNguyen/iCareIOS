@@ -32,6 +32,8 @@ struct Constants {
             static let necessary = "necessary"
             static let important = "important"
         }
+        
+        static let build = "build"
     }
     
     
@@ -75,5 +77,6 @@ struct Constants {
         static let necessaryInfoResponse = "necessaryInfoResponse"
         static let importantInfoResponse = "importantInfoResponse"
         static let notifyBookingResponse = "notifyBookingResponse"
+        static let versionResponse = "versionResponse"
     }
 }
