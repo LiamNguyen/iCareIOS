@@ -116,3 +116,5 @@
 "SERVER_ERROR" = "Server error. Please contact DrQMuller FBT Shop for more information. Phone number: [phone_number_waiting]";
 "notify-booking-sent" = "Email has been sent to DrQMuller Center. Please wait for a call to verify your appointment. Thank you";
 "notify-booking-fail" = "Mail server error occur. Please call us to verify your appointment through [PHONE_NUMBER_WAITING]. We applogize for this inconvenience";
+"NEW_UPDATE_NOTIFY" = "A new version of DrQMuller has been released. Please update your app";
+"BTN_UPDATE" = "Update";

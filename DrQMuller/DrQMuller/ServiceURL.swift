@@ -65,6 +65,7 @@ public class ServiceURL {
             URI["Select_DaysOfWeek"] = "/datasource/daysofweek"
             URI["Select_SelectedTime"] = "/time/selectedtime"
             URI["Select_Machines"] = "/datasource/machines"
+            URI["Select_LatestBuild"] = "/version"
             
 //            INSERT
             
