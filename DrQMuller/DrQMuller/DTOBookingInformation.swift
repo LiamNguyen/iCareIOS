@@ -255,22 +255,35 @@ class DTOBookingInformation: NSObject, NSCoding {
     }
     
     func returnJsonAppointmentInfo() -> String {
-        var appointmentInfoDictionary = [String: Any]()
+        let userId = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userId] as? String ?? String()
+        let userName = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userName] as? String ?? String()
+
+        var startDate = String()
+        var expiredDate = String()
         
-        appointmentInfoDictionary["userId"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userId] as? String ?? String()
-        appointmentInfoDictionary["userName"] = DTOCustomerInformation.sharedInstance.customerInformationDictionary[Constants.JsonPropertyName.userName] as? String ?? String()
-        appointmentInfoDictionary["createdAt"] = Functionality.getCurrentDateTime()
-        appointmentInfoDictionary["appointmentId"] = self._appointmentID
-        appointmentInfoDictionary["location"] = self._location
-        appointmentInfoDictionary["voucher"] = self._voucher
-        appointmentInfoDictionary["type"] = self._type
-        appointmentInfoDictionary["startDate"] = self._startDate
-        appointmentInfoDictionary["endDate"] = self._endDate
-        appointmentInfoDictionary["exactDate"] = self._exactDate
-        appointmentInfoDictionary["verificationCode"] = self.verificationCode
-        appointmentInfoDictionary["bookingTime"] = returnBookingTimeForEmailTemplate()
+        if self.startDate.isEmpty {
+            startDate = "1111-11-11"
+            expiredDate = self.exactDate
+        } else {
+            startDate = self.startDate
+            expiredDate = self.endDate
+        }
         
-        return Functionality.jsonStringify(obj: appointmentInfoDictionary as AnyObject)
+        let dict: [String: Any] = [
+            "userId": userId,
+            "userName": userName,
+            "createAt": Functionality.getCurrentDateTime(),
+            "appointmentId": self.appointmentID,
+            "location": self.location,
+            "voucher": self.voucher,
+            "type": self.type,
+            "startDate": startDate,
+            "expiredDate": expiredDate,
+            "verificationCode": self.verificationCode,
+            "bookingTime": self.bookingTime
+        ]
+        
+        return Functionality.jsonStringify(obj: dict as AnyObject)
     }
     
     private func returnBookingTimeForEmailTemplate() -> String {

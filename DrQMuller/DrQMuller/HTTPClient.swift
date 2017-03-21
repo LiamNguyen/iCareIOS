@@ -14,7 +14,7 @@ protocol HTTPClientDelegate {
 }
 
 public class HTTPClient {
-    private var serviceURL = ServiceURL(environment: .BETA)
+    private var serviceURL = ServiceURL(environment: .LOCAL)
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
@@ -23,9 +23,10 @@ public class HTTPClient {
             print("No network connection")
             return
         }
-        
         let nsUrl: NSURL!
         if parameter.isEmpty {
+            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
+        } else if (parameter.contains("?")) {
             nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
         } else {
             nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + "/\(parameter)")
