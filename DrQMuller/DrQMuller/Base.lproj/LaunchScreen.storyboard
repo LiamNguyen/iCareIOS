@@ -34,10 +34,10 @@ All rights reserved.</string>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drQmuller" translatesAutoresizingMaskIntoConstraints="NO" id="ose-FS-sVT">
-                                <rect key="frame" x="16" y="247" width="288" height="74"/>
+                                <rect key="frame" x="8" y="247" width="305" height="74"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="74" id="NsT-R5-CF9"/>
-                                    <constraint firstAttribute="width" constant="288" id="aOT-qd-DLh"/>
+                                    <constraint firstAttribute="width" constant="305" id="aOT-qd-DLh"/>
                                 </constraints>
                             </imageView>
                         </subviews>
