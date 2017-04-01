@@ -23,10 +23,9 @@ public class HTTPClient {
             print("No network connection")
             return
         }
+        
         let nsUrl: NSURL!
         if parameter.isEmpty {
-            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
-        } else if (parameter.contains("?")) {
             nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
         } else {
             nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + "/\(parameter)")

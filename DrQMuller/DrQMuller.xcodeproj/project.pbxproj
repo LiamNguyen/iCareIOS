@@ -15,8 +15,6 @@
 		ED04C9931E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED04C9921E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift */; };
 		ED0F6E211E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */; };
 		ED0F6E231E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */; };
-		ED171ED61E8FBAA1006791C6 /* JWTDecode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED171ED51E8FBAA1006791C6 /* JWTDecode.framework */; };
-		ED171ED71E8FBAA1006791C6 /* JWTDecode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED171ED51E8FBAA1006791C6 /* JWTDecode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ED1A484A1E2786B10034857A /* CartOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */; };
 		ED240CF21E7D48C600FFA22B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED240CF11E7D48C600FFA22B /* Constants.swift */; };
 		ED2956AA1E59501500D178A5 /* ChooseLanguageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2956A91E59501500D178A5 /* ChooseLanguageView.swift */; };
@@ -52,6 +50,9 @@
 		ED6D3A3B1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6D3A3A1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
 		ED7663EB1E560C27006BE593 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7663EA1E560C27006BE593 /* UserViewController.swift */; };
+		ED7720381E58C7A3007FA7DE /* JWTDecode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; };
+		ED7720391E58C7A3007FA7DE /* JWTDecode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */; };
 		ED8B96651E53942600EDBF2B /* ModelHandleBookingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8B96641E53942600EDBF2B /* ModelHandleBookingManager.swift */; };
 		ED9035531E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9035521E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift */; };
 		ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */; };
@@ -100,13 +101,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		ED171ED81E8FBAA1006791C6 /* Embed Frameworks */ = {
+		ED77203A1E58C7A4007FA7DE /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				ED171ED71E8FBAA1006791C6 /* JWTDecode.framework in Embed Frameworks */,
+				ED7720391E58C7A3007FA7DE /* JWTDecode.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -117,6 +118,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
+				ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,7 +133,6 @@
 		ED04C9921E4F412A0076BF6E /* CartBookingInfoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartBookingInfoTableViewCell.swift; sourceTree = "<group>"; };
 		ED0F6E201E09892000EFFD7C /* SecondTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
 		ED0F6E221E09894A00EFFD7C /* ThirdTabCustomerInformationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdTabCustomerInformationViewController.swift; sourceTree = "<group>"; };
-		ED171ED51E8FBAA1006791C6 /* JWTDecode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWTDecode.framework; path = Carthage/Build/iOS/JWTDecode.framework; sourceTree = "<group>"; };
 		ED1A48491E2786B10034857A /* CartOrderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartOrderTableViewCell.swift; sourceTree = "<group>"; };
 		ED240CF11E7D48C600FFA22B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		ED2956A91E59501500D178A5 /* ChooseLanguageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseLanguageView.swift; sourceTree = "<group>"; };
@@ -170,6 +171,8 @@
 		ED6D3A3A1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingManagerDetailViewController.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED7663EA1E560C27006BE593 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
+		ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWTDecode.framework; path = Carthage/Build/iOS/JWTDecode.framework; sourceTree = "<group>"; };
+		ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = JWTDecode.framework.dSYM; path = Carthage/Build/iOS/JWTDecode.framework.dSYM; sourceTree = "<group>"; };
 		ED8B96641E53942600EDBF2B /* ModelHandleBookingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingManager.swift; sourceTree = "<group>"; };
 		ED9035521E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingManagerDetail.swift; sourceTree = "<group>"; };
 		ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
@@ -213,7 +216,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED171ED61E8FBAA1006791C6 /* JWTDecode.framework in Frameworks */,
+				ED7720381E58C7A3007FA7DE /* JWTDecode.framework in Frameworks */,
 				D9C9F96E3FA0149EBF20A8A4 /* Pods_DrQMuller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,7 +406,8 @@
 		EDB338891DE9D86300DE940B = {
 			isa = PBXGroup;
 			children = (
-				ED171ED51E8FBAA1006791C6 /* JWTDecode.framework */,
+				ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */,
+				ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */,
 				EDB338941DE9D86300DE940B /* DrQMuller */,
 				EDB338A91DE9D86300DE940B /* DrQMullerTests */,
 				EDB338B41DE9D86300DE940B /* DrQMullerUITests */,
@@ -471,8 +475,8 @@
 				FFBAC8A689BEF35EC8C826A9 /* [CP] Embed Pods Frameworks */,
 				EC8AF07438CBC33CA6DFAD08 /* [CP] Copy Pods Resources */,
 				ED808FCC1E4C4BC9005563F0 /* CopyFiles */,
+				ED77203A1E58C7A4007FA7DE /* Embed Frameworks */,
 				ED77203B1E58C9D7007FA7DE /* ShellScript */,
-				ED171ED81E8FBAA1006791C6 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
