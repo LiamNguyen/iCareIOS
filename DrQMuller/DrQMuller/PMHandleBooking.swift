@@ -166,7 +166,7 @@ class PMHandleBooking: NSObject, HTTPClientDelegate {
                         isOk["status"] = true
                         if let app_ID = appointment_ID {
                             DTOBookingInformation.sharedInstance.appointmentID = app_ID
-                            httpClient.postRequest(url: "SendMail_NotifyBooking", body: "appointmentId=\(app_ID)")
+                            httpClient.getRequest(url: "SendMail_NotifyBooking", parameter: "?appointmentId=\(app_ID)")
                         }
                     } else {
                         isOk["status"] = false
