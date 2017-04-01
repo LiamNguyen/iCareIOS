@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="cIy-zB-c2L">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="EHf-IW-A2E">
+        <scene sceneID="pgR-2q-zz2">
             <objects>
-                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                <viewController id="cIy-zB-c2L" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
-                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                        <viewControllerLayoutGuide type="top" id="Wmx-s6-a0i"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ke5-KE-hI2"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" contentMode="scaleToFill" id="jg5-4z-Heu">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drmuller_logo2" translatesAutoresizingMaskIntoConstraints="NO" id="hcr-pn-BhT">
-                                <rect key="frame" x="7.5" y="252" width="305" height="64"/>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="tNn-Kf-r77">
-                                <rect key="frame" x="8" y="497" width="305" height="67"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bNw-R0-vhw">
+                                <rect key="frame" x="8" y="493" width="305" height="67"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="67" id="7VT-nl-evH"/>
+                                    <constraint firstAttribute="height" constant="67" id="AGi-fF-aTT"/>
                                 </constraints>
                                 <string key="text">Created by Nguyen Thien Phuc. 
 Copyright © 2016 LetsDev. 
@@ -36,23 +33,33 @@ All rights reserved.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drQmuller" translatesAutoresizingMaskIntoConstraints="NO" id="ose-FS-sVT">
+                                <rect key="frame" x="16" y="247" width="288" height="74"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="74" id="NsT-R5-CF9"/>
+                                    <constraint firstAttribute="width" constant="288" id="aOT-qd-DLh"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="tNn-Kf-r77" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-8" id="MJm-fh-cmg"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="tNn-Kf-r77" secondAttribute="bottom" constant="4" id="Swb-Go-JEP"/>
-                            <constraint firstItem="hcr-pn-BhT" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="TV7-Kh-V0J"/>
-                            <constraint firstItem="tNn-Kf-r77" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailingMargin" constant="9" id="qH8-se-Key"/>
-                            <constraint firstItem="hcr-pn-BhT" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="zGH-RL-oG5"/>
+                            <constraint firstItem="ose-FS-sVT" firstAttribute="centerX" secondItem="jg5-4z-Heu" secondAttribute="centerX" id="6wG-Su-2kP"/>
+                            <constraint firstItem="ose-FS-sVT" firstAttribute="centerY" secondItem="jg5-4z-Heu" secondAttribute="centerY" id="7OW-RX-0Fa"/>
+                            <constraint firstItem="ose-FS-sVT" firstAttribute="centerX" secondItem="jg5-4z-Heu" secondAttribute="centerX" id="P2s-N7-Nb2"/>
+                            <constraint firstItem="bNw-R0-vhw" firstAttribute="leading" secondItem="jg5-4z-Heu" secondAttribute="leadingMargin" constant="-8" id="PR8-KH-VdQ"/>
+                            <constraint firstItem="bNw-R0-vhw" firstAttribute="centerX" secondItem="jg5-4z-Heu" secondAttribute="centerX" id="Pga-0j-LWR"/>
+                            <constraint firstItem="ose-FS-sVT" firstAttribute="centerY" secondItem="jg5-4z-Heu" secondAttribute="centerY" id="aXR-0U-iFH"/>
+                            <constraint firstItem="Ke5-KE-hI2" firstAttribute="top" secondItem="bNw-R0-vhw" secondAttribute="bottom" constant="8" id="i7c-V9-cnW"/>
+                            <constraint firstItem="Ke5-KE-hI2" firstAttribute="top" secondItem="bNw-R0-vhw" secondAttribute="bottom" constant="8" symbolic="YES" id="sQe-mu-7dg"/>
                         </constraints>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ABW-Tt-QJR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="50.625" y="373.75"/>
+            <point key="canvasLocation" x="1541.25" y="380.28169014084506"/>
         </scene>
     </scenes>
     <resources>
-        <image name="drmuller_logo2" width="305" height="64"/>
+        <image name="drQmuller" width="615" height="137"/>
     </resources>
 </document>

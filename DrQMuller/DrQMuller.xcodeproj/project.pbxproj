@@ -38,6 +38,8 @@
 		ED522D631E38F84C00E53403 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED522D621E38F84C00E53403 /* StringExtension.swift */; };
 		ED570F8D1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */; };
 		ED5CD0F31E180C4B005C2A17 /* HRToast+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */; };
+		ED676FDE1E8FDB6D00E823B6 /* JWTDecode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED676FDD1E8FDB6D00E823B6 /* JWTDecode.framework */; };
+		ED676FDF1E8FDB6D00E823B6 /* JWTDecode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED676FDD1E8FDB6D00E823B6 /* JWTDecode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		ED6986961E12E14000932E93 /* ModelHandleLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6986951E12E14000932E93 /* ModelHandleLogin.swift */; };
 		ED6A68581E490E5D00776B6B /* NetworkViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A68571E490E5D00776B6B /* NetworkViewManager.swift */; };
 		ED6A685A1E492CEA00776B6B /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6A68591E492CEA00776B6B /* Reachability.swift */; };
@@ -50,9 +52,6 @@
 		ED6D3A3B1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED6D3A3A1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift */; };
 		ED72C6A31DEAF2ED006E58ED /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */; };
 		ED7663EB1E560C27006BE593 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7663EA1E560C27006BE593 /* UserViewController.swift */; };
-		ED7720381E58C7A3007FA7DE /* JWTDecode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; };
-		ED7720391E58C7A3007FA7DE /* JWTDecode.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */ = {isa = PBXBuildFile; fileRef = ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */; };
 		ED8B96651E53942600EDBF2B /* ModelHandleBookingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED8B96641E53942600EDBF2B /* ModelHandleBookingManager.swift */; };
 		ED9035531E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9035521E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift */; };
 		ED92AB5B1E1E07DA00989D03 /* TimeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */; };
@@ -107,7 +106,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				ED7720391E58C7A3007FA7DE /* JWTDecode.framework in Embed Frameworks */,
+				ED676FDF1E8FDB6D00E823B6 /* JWTDecode.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,7 +117,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				ED808FCE1E4C4BF0005563F0 /* JWTDecode.framework.dSYM in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,6 +157,7 @@
 		ED522D621E38F84C00E53403 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		ED570F8C1E35661B00AB9E61 /* CartOrderConfirmTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CartOrderConfirmTableViewCell.swift; sourceTree = "<group>"; };
 		ED5CD0F21E180C4B005C2A17 /* HRToast+UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HRToast+UIView.swift"; sourceTree = "<group>"; };
+		ED676FDD1E8FDB6D00E823B6 /* JWTDecode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWTDecode.framework; path = Carthage/Build/iOS/JWTDecode.framework; sourceTree = "<group>"; };
 		ED6986951E12E14000932E93 /* ModelHandleLogin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleLogin.swift; sourceTree = "<group>"; };
 		ED6A68571E490E5D00776B6B /* NetworkViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkViewManager.swift; sourceTree = "<group>"; };
 		ED6A68591E492CEA00776B6B /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
@@ -171,8 +170,6 @@
 		ED6D3A3A1E50DA3D00DDB68B /* BookingManagerDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookingManagerDetailViewController.swift; sourceTree = "<group>"; };
 		ED72C6A21DEAF2ED006E58ED /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		ED7663EA1E560C27006BE593 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
-		ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWTDecode.framework; path = Carthage/Build/iOS/JWTDecode.framework; sourceTree = "<group>"; };
-		ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = JWTDecode.framework.dSYM; path = Carthage/Build/iOS/JWTDecode.framework.dSYM; sourceTree = "<group>"; };
 		ED8B96641E53942600EDBF2B /* ModelHandleBookingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingManager.swift; sourceTree = "<group>"; };
 		ED9035521E50FAD900B87E95 /* ModelHandleBookingManagerDetail.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelHandleBookingManagerDetail.swift; sourceTree = "<group>"; };
 		ED92AB5A1E1E07DA00989D03 /* TimeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeTableViewCell.swift; sourceTree = "<group>"; };
@@ -216,7 +213,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED7720381E58C7A3007FA7DE /* JWTDecode.framework in Frameworks */,
+				ED676FDE1E8FDB6D00E823B6 /* JWTDecode.framework in Frameworks */,
 				D9C9F96E3FA0149EBF20A8A4 /* Pods_DrQMuller.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -406,8 +403,7 @@
 		EDB338891DE9D86300DE940B = {
 			isa = PBXGroup;
 			children = (
-				ED808FCD1E4C4BF0005563F0 /* JWTDecode.framework.dSYM */,
-				ED808FC91E4C4B9F005563F0 /* JWTDecode.framework */,
+				ED676FDD1E8FDB6D00E823B6 /* JWTDecode.framework */,
 				EDB338941DE9D86300DE940B /* DrQMuller */,
 				EDB338A91DE9D86300DE940B /* DrQMullerTests */,
 				EDB338B41DE9D86300DE940B /* DrQMullerUITests */,
