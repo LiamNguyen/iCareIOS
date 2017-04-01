@@ -90,41 +90,35 @@ public class ServiceURL {
             
             URI["SendMail_VerifyAcc"] = "http://localhost/drmuller/SendMail_VerifyAcc.php"
             URI["SendMail_ResetPassword"] = "http://localhost/drmuller/SendMail_ResetPassword.php"
-            URI["SendMail_NotifyBooking"] = "/SendMail_NotifyBooking.php"
+            URI["SendMail_NotifyBooking"] = "/notifybooking/send"
         default:
             break
         }
     }
     
     func getServiceURL(serviceURL: String) -> String {
-        var prefix = "/index.php"
-        
-        if serviceURL == "SendMail_VerifyAcc" || serviceURL == "SendMail_ResetPassword" || serviceURL == "SendMail_NotifyBooking" {
-            prefix = String()
-        }
-        
         switch self.environment {
         case .PRD:
             if let url = prdURL[serviceURL] {
-                return Host.PRD + prefix + url
+                return Host.PRD + url
             } else {
                 return "Can't find URL"
             }
         case .BETA:
             if let url = URI[serviceURL] {
-                return Host.BETA + prefix + url
+                return Host.BETA + url
             } else {
                 return "Can't find URL"
             }
         case .LOCAL:
             if let url = URI[serviceURL] {
-                return Host.LOCAL + prefix + url
+                return Host.LOCAL + url
             } else {
                 return "Can't find URL"
             }
         default:
             if let url = URI[serviceURL] {
-                return Host.UAT + prefix + url
+                return Host.UAT + url
             } else {
                 return "Can't find URL"
             }
@@ -139,9 +133,9 @@ public class ServiceURL {
     }
     
     private struct Host {
-        static let PRD = "http://210.211.109.180/drmuller/api"
-        static let UAT = "http://drqmuller.com/drmuller/api"
-        static let BETA = "http://210.211.109.180/beta_drmuller/api"
-        static let LOCAL = "http://localhost/beta_drmuller/api"
+        static let PRD = "http://210.211.109.180/drmuller/api/index.php"
+        static let UAT = "http://drqmuller.com/drmuller/api/index.php"
+        static let BETA = "http://210.211.109.180/beta_drmuller/api/index.php"
+        static let LOCAL = "http://localhost/drmuller/api/index.php"
     }
 }
