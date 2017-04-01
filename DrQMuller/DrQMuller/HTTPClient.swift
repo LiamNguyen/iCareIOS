@@ -14,7 +14,7 @@ protocol HTTPClientDelegate {
 }
 
 public class HTTPClient {
-    private var serviceURL = ServiceURL(environment: .LOCAL)
+    private var serviceURL = ServiceURL(environment: .BETA)
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
