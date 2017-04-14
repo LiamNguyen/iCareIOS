@@ -1264,7 +1264,7 @@
                                         <rect key="frame" x="0.0" y="28" width="250" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="s56-ts-a1k" id="ftP-OL-DBA">
-                                            <rect key="frame" x="0.0" y="0.0" width="250" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFt-rk-LjZ">
@@ -1438,7 +1438,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="155"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5x4-ck-RQ8" id="xbt-mn-Vjp">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="155"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="154.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="vmH-7U-4hH">
@@ -1798,6 +1798,7 @@
                         <outlet property="btn_TypesDropDown" destination="8Jf-Yq-mUQ" id="BmK-St-yeK"/>
                         <outlet property="btn_VouchersDropDown" destination="uGx-F8-eki" id="Gl7-TG-MPI"/>
                         <outlet property="icon_Type" destination="jXG-uf-IX3" id="jG5-7i-k29"/>
+                        <outlet property="icon_Voucher" destination="qUQ-tW-CTN" id="x9B-ep-03d"/>
                         <outlet property="lbl_Title" destination="EfR-pY-uXM" id="ddH-em-l7e"/>
                         <outlet property="slideBtn_Next" destination="SsW-LW-5Uc" id="sGr-8H-Jcq"/>
                         <outlet property="view_TopView" destination="8d5-Pl-buM" id="afi-gF-S73"/>
@@ -2037,7 +2038,7 @@
                                         <rect key="frame" x="0.0" y="28" width="288" height="51"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="l7a-dL-TXg" id="K4Z-xe-5NH">
-                                            <rect key="frame" x="0.0" y="0.0" width="288" height="51"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="288" height="50.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AH9-fR-c4U">
@@ -2123,7 +2124,7 @@
                                         <rect key="frame" x="0.0" y="28" width="223" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dIo-Gb-0Gh" id="8j3-uf-JK9">
-                                            <rect key="frame" x="0.0" y="0.0" width="223" height="45"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="223" height="44.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eaA-Jx-FL9">
@@ -2218,7 +2219,7 @@
                                                 <rect key="frame" x="0.0" y="28" width="250" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YPq-Ty-icK" id="i1a-c2-P1O">
-                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hON-Vy-TFd">
