@@ -526,7 +526,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0800;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = LetsDev;
 				TargetAttributes = {
 					EDB338911DE9D86300DE940B = {
@@ -900,6 +900,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F4CDD90B0CF1F864033543A5 /* Pods-DrQMuller.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 86M37DGEMQ;
@@ -921,6 +922,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D24D7C745172B076A94BEB0C /* Pods-DrQMuller.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 86M37DGEMQ;

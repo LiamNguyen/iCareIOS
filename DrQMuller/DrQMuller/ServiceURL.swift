@@ -142,6 +142,6 @@ public class ServiceURL {
         static let PRD = "http://210.211.109.180/drmuller/api"
         static let UAT = "http://drqmuller.com/drmuller/api"
         static let BETA = "http://210.211.109.180/beta_drmuller/api"
-        static let LOCAL = "http://localhost/drmuller/api"
+        static let LOCAL = "http://localhost/beta_drmuller/api"
     }
 }

@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         alertUpdateDialog.addAction(UIAlertAction(title: "BTN_UPDATE".localized(), style: .default, handler: { (action: UIAlertAction?) in
             let url = "http://itunes.apple.com/vn/app/dr-q-muller/id1207560048?mt=8"
             
-            UIApplication.shared.openURL(NSURL.init(string: url) as! URL)
+            UIApplication.shared.openURL(NSURL.init(string: url)! as URL)
         }))
         
         self.window?.rootViewController?.present(alertUpdateDialog, animated: true, completion: nil)
