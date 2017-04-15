@@ -22,6 +22,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
     @IBOutlet private weak var btn_DistrictsDropDown: NiceButton!
     @IBOutlet private weak var btn_LocationsDropDown: NiceButton!
     @IBOutlet private weak var btn_VouchersDropDown: NiceButton!
+    @IBOutlet weak var icon_Voucher: UIImageView!
     @IBOutlet private weak var btn_TypesDropDown: NiceButton!
     @IBOutlet private weak var icon_Type: UIImageView!
     @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
@@ -122,8 +123,11 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         self.activityIndicator = UIFunctionality.createActivityIndicator(view: self.view)
         self.activityIndicator.startAnimating()
         
+//        Temporary solution
         self.btn_TypesDropDown.isHidden = true
+        self.btn_VouchersDropDown.isHidden = true
         self.icon_Type.isHidden = true
+        self.icon_Voucher.isHidden = true
         
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
@@ -364,6 +368,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Vouchers.anchorView = btn_VouchersDropDown
         
         dropDown_Vouchers.dataSource = dataSource
+        dropDown_Vouchers.selectRow(at: dataSource.index(of: "VIP Booking"))
         
         dropDown_Vouchers.selectionAction = { [weak self] (index, item) in
             self?.btn_VouchersDropDown.setTitle(item, for: .normal)

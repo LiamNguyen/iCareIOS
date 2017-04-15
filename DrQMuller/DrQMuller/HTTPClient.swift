@@ -14,7 +14,7 @@ protocol HTTPClientDelegate {
 }
 
 public class HTTPClient {
-    private var serviceURL = ServiceURL(environment: .BETA)
+    private var serviceURL = ServiceURL(environment: .PRD)
     private var returnArray = [AnyObject]()
     var delegate: HTTPClientDelegate?
     
@@ -26,15 +26,18 @@ public class HTTPClient {
         
         let nsUrl: NSURL!
         if parameter.isEmpty {
+            nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
+        } else if (parameter.contains("?")) {
             nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + parameter)
         } else {
             nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url) + "/\(parameter)")
         }
+        
         var request = URLRequest(url: nsUrl as URL)
         request.httpMethod = "GET"
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
-                print("error = \n\(error)")
+                print("error = \n\(String(describing: error))")
                 return
             }
             
@@ -42,14 +45,14 @@ public class HTTPClient {
                 print("Status code: \(httpStatus.statusCode)")
                 
                 if httpStatus.statusCode >= 400 {
-                    print("response = \n\(response)")
+                    print("response = \n\(String(describing: response))")
                 }
             }
             
             if data.count != 0 {
                 let JSONResponse = try! JSONSerialization.jsonObject(with: data, options: .allowFragments) as? NSDictionary
                 print("\nGET: \(nsUrl!)\n")
-                print("Response from server: \n\(JSONResponse)")
+                print("Response from server: \n\(String(describing: JSONResponse))")
                 self.delegate?.onReceiveRequestResponse(data: JSONResponse!)
             }
         }
@@ -64,7 +67,7 @@ public class HTTPClient {
         }
         
         let nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
-        var request = URLRequest(url: nsUrl as! URL)
+        var request = URLRequest(url: nsUrl! as URL)
         request.httpMethod = "POST"
         request.httpBody = body.data(using: .utf8)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -74,7 +77,7 @@ public class HTTPClient {
             var statusCode = Constants.HttpStatusCode.noContent
             
             guard let data = data, error == nil else {
-                print("error =\n\(error)")
+                print("error =\n\(String(describing: error))")
                 return
             }
             
@@ -82,7 +85,7 @@ public class HTTPClient {
                 print("Status code: \(httpStatus.statusCode)")
                 
                 if httpStatus.statusCode >= 400 {
-                    print("response = \n\(response)")
+                    print("response = \n\(String(describing: response))")
                 }
                 statusCode = httpStatus.statusCode
                 
@@ -112,7 +115,7 @@ public class HTTPClient {
         }
         
         let nsUrl = NSURL(string: serviceURL.getServiceURL(serviceURL: url))
-        var request = URLRequest(url: nsUrl as! URL)
+        var request = URLRequest(url: nsUrl! as URL)
         request.httpMethod = "PUT"
         request.httpBody = body.data(using: .utf8)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -122,7 +125,7 @@ public class HTTPClient {
             var statusCode = Constants.HttpStatusCode.noContent
             
             guard let data = data, error == nil else {
-                print("error =\n\(error)")
+                print("error =\n\(String(describing: error))")
                 return
             }
             
@@ -130,7 +133,7 @@ public class HTTPClient {
                 print("Status code: \(httpStatus.statusCode)")
                 
                 if httpStatus.statusCode >= 400 {
-                    print("response = \n\(response)")
+                    print("response = \n\(String(describing: response))")
                 }
                 statusCode = httpStatus.statusCode
             }

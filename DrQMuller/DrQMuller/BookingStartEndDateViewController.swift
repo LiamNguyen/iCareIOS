@@ -8,9 +8,9 @@
 
 import UIKit
 
-class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
+class BookingStartEndDateViewController: UIViewController {
     
-    @IBOutlet private weak var slideBtn_Next: MMSlidingButton!
+    @IBOutlet private weak var slideBtn_Next: UIButton!
     @IBOutlet private weak var lbl_StartDate: UILabel!
     @IBOutlet private weak var lbl_EndDate: UILabel!
     @IBOutlet private weak var picker_StartDate: UIDatePicker!
@@ -49,9 +49,7 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         picker_StartDate.locale = date_picker_localization
         picker_EndDate.locale = date_picker_localization
         btn_Back.setTitle("BOOKING_INFO_PAGE_TITLE".localized(), for: .normal)
-        slideBtn_Next.delegate = self
-        slideBtn_Next.buttonText = "BTN_NEXT_TITLE".localized()
-        slideBtn_Next.buttonUnlockedText = "SLIDE_BTN_UNLOCKED_TITLE".localized()
+        slideBtn_Next.setTitle("BTN_NEXT_TITLE".localized(), for: .normal)
     }
     
     private struct Storyboard {
@@ -76,10 +74,6 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
 //=========SET UP LIST OF DATEPICKER VALUES=========
 
         setUpDatePickersList()
-        
-//=========DELEGATING SLIDE BTN=========
-
-        self.slideBtn_Next.reset()
         
 //=========CONSTRAINT FOR DATEPICKER START AND END=========
 
@@ -133,10 +127,9 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
     }
     
 //=========SLIDE BUTTON ONCLICK=========
-    
-    func buttonStatus(_ status:String, sender:MMSlidingButton) {
+    @IBAction func btn_Next_OnClick(_ sender: Any) {
         
-//MAKE SURE THAT DATEPICKER HAS STOP SCROLLING
+        //MAKE SURE THAT DATEPICKER HAS STOP SCROLLING
         
         if datePickerHasChanged {
             var datePickersIsEmpty = false
@@ -146,10 +139,9 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
                     return
                 }
             }
-        
+            
             if datePickersIsEmpty {
                 ToastManager.alert(view: view_TopView, msg: "DATE_PICKER_ONSPINNING_MESSAGE".localized())
-                slideBtn_Next.reset()
                 datePickersIsEmpty = false
                 return
             }
@@ -158,7 +150,6 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         if !isTypeFree {
             if (endDay - startDay) < 0 || (endMonth - startMonth) < 0 || (endYear - startYear) < 0 {
                 ToastManager.alert(view: view_TopView, msg: "END_LESS_THAN_START".localized())
-                slideBtn_Next.reset()
                 return
             }
         }
@@ -166,10 +157,9 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         if isTypeFree {
             let translatedSelectedDay = Functionality.translateDaysOfWeek(translate: picker_StartDate.date.dayOfWeek, to: .VI)
             if (translatedSelectedDay == "Thứ bảy" || translatedSelectedDay == "Chủ nhật") && isEco {
-
+                
                 alertMessage_WeekendRestrict()
                 
-                slideBtn_Next.reset()
                 return
             }
             DTOBookingInformation.sharedInstance.exactDayOfWeek = translatedSelectedDay
@@ -180,9 +170,8 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
         }
         
         self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_DETAIL, sender: self)
-        
     }
-    
+
 //=========PREPARE UI BASE ON LOGIC OF DTOBookingInformation=========
     
     private func prepareUI() {
@@ -251,6 +240,8 @@ class BookingStartEndDateViewController: UIViewController, SlideButtonDelegate {
 //        
 //        return shortDateFormat
 //    }
+    
+    @IBAction func unwindToBookingStartEnd(segue: UIStoryboardSegue) {}
 
 }
 
