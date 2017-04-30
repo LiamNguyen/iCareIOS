@@ -125,9 +125,9 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         
 //        Temporary solution
         self.btn_TypesDropDown.isHidden = true
-        self.btn_VouchersDropDown.isHidden = true
+//        self.btn_VouchersDropDown.isHidden = true
         self.icon_Type.isHidden = true
-        self.icon_Voucher.isHidden = true
+//        self.icon_Voucher.isHidden = true
         
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
@@ -368,7 +368,7 @@ class BookingGeneralViewController: UIViewController, SlideButtonDelegate {
         dropDown_Vouchers.anchorView = btn_VouchersDropDown
         
         dropDown_Vouchers.dataSource = dataSource
-        dropDown_Vouchers.selectRow(at: dataSource.index(of: "VIP Booking"))
+//        dropDown_Vouchers.selectRow(at: dataSource.index(of: "VIP Booking"))
         
         dropDown_Vouchers.selectionAction = { [weak self] (index, item) in
             self?.btn_VouchersDropDown.setTitle(item, for: .normal)
