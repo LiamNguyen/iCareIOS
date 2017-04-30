@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wM8-Zv-2hy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="wM8-Zv-2hy">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -1798,6 +1798,7 @@
                         <outlet property="btn_TypesDropDown" destination="8Jf-Yq-mUQ" id="BmK-St-yeK"/>
                         <outlet property="btn_VouchersDropDown" destination="uGx-F8-eki" id="Gl7-TG-MPI"/>
                         <outlet property="icon_Type" destination="jXG-uf-IX3" id="jG5-7i-k29"/>
+                        <outlet property="icon_Voucher" destination="qUQ-tW-CTN" id="x9B-ep-03d"/>
                         <outlet property="lbl_Title" destination="EfR-pY-uXM" id="ddH-em-l7e"/>
                         <outlet property="slideBtn_Next" destination="SsW-LW-5Uc" id="sGr-8H-Jcq"/>
                         <outlet property="view_TopView" destination="8d5-Pl-buM" id="afi-gF-S73"/>
@@ -1892,37 +1893,40 @@
                                 <color key="textColor" red="0.61297673409999998" green="0.060420009689999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2UY-zD-BI7" customClass="MMSlidingButton" customModule="DrQMuller" customModuleProvider="target">
-                                <rect key="frame" x="16" y="416" width="288" height="55"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uca-nX-wez">
+                                <rect key="frame" x="16" y="437" width="288" height="50"/>
+                                <color key="backgroundColor" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="55" id="efS-yf-I2J"/>
+                                    <constraint firstAttribute="height" constant="50" id="PxA-OI-dHJ"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="buttonUnlockedColor">
-                                        <color key="value" red="0.56078431370000004" green="0.0" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <state key="normal" title="Tiếp tục">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="btn_ConfirmBooking_OnClick:" destination="rI9-M0-Ata" eventType="touchUpInside" id="rSC-4G-TQm"/>
+                                    <action selector="btn_Next_OnClick:" destination="dGw-41-sbb" eventType="touchUpInside" id="oyf-h0-LoI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.9882352941176471" green="0.92549019607843142" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="2UY-zD-BI7" firstAttribute="top" secondItem="So7-aJ-iri" secondAttribute="bottom" constant="303" id="1Eb-Vb-Q3a"/>
                             <constraint firstItem="Xd9-Xj-VhK" firstAttribute="centerX" secondItem="Omb-4k-fOe" secondAttribute="centerX" id="1n2-Jb-BDn"/>
                             <constraint firstItem="pBC-g2-AR8" firstAttribute="top" secondItem="Cxm-jM-xzZ" secondAttribute="bottom" constant="8" id="4Ym-n9-eDH"/>
                             <constraint firstAttribute="trailing" secondItem="pBC-g2-AR8" secondAttribute="trailing" id="BWG-Dd-uGA"/>
-                            <constraint firstItem="2UY-zD-BI7" firstAttribute="leading" secondItem="Omb-4k-fOe" secondAttribute="leading" constant="16" id="Ba6-px-qWH"/>
-                            <constraint firstAttribute="trailing" secondItem="2UY-zD-BI7" secondAttribute="trailing" constant="16" id="CVl-2Y-EGr"/>
                             <constraint firstItem="YYI-00-8Qd" firstAttribute="leading" secondItem="Omb-4k-fOe" secondAttribute="leading" id="KiT-k9-xsv"/>
                             <constraint firstAttribute="trailing" secondItem="Xd9-Xj-VhK" secondAttribute="trailing" id="RJi-VV-xKn"/>
                             <constraint firstItem="YYI-00-8Qd" firstAttribute="top" secondItem="Z3x-LE-y4T" secondAttribute="bottom" id="Tcg-iG-KBu"/>
                             <constraint firstAttribute="trailing" secondItem="YYI-00-8Qd" secondAttribute="trailing" id="bmb-2h-dqs"/>
+                            <constraint firstItem="uca-nX-wez" firstAttribute="trailing" secondItem="Omb-4k-fOe" secondAttribute="trailingMargin" id="fNB-Uy-RyV"/>
                             <constraint firstItem="So7-aJ-iri" firstAttribute="top" secondItem="YYI-00-8Qd" secondAttribute="bottom" constant="19" id="gRW-Fg-FqC"/>
                             <constraint firstItem="Cxm-jM-xzZ" firstAttribute="top" secondItem="Xd9-Xj-VhK" secondAttribute="bottom" constant="15" id="gll-bN-7jP"/>
                             <constraint firstItem="pBC-g2-AR8" firstAttribute="leading" secondItem="Omb-4k-fOe" secondAttribute="leading" id="iAy-cX-XMb"/>
+                            <constraint firstItem="uca-nX-wez" firstAttribute="top" secondItem="So7-aJ-iri" secondAttribute="bottom" constant="324" id="jU6-hG-Jpd"/>
                             <constraint firstItem="Cxm-jM-xzZ" firstAttribute="centerX" secondItem="Omb-4k-fOe" secondAttribute="centerX" id="njD-6w-0r1"/>
                             <constraint firstItem="Xd9-Xj-VhK" firstAttribute="leading" secondItem="Omb-4k-fOe" secondAttribute="leading" id="o9P-Vr-ZNY"/>
                             <constraint firstItem="Xd9-Xj-VhK" firstAttribute="top" secondItem="So7-aJ-iri" secondAttribute="bottom" constant="8" id="oQh-Ui-LOg"/>
+                            <constraint firstItem="uca-nX-wez" firstAttribute="leading" secondItem="Omb-4k-fOe" secondAttribute="leadingMargin" id="ye7-A9-C9l"/>
                             <constraint firstItem="So7-aJ-iri" firstAttribute="centerX" secondItem="Omb-4k-fOe" secondAttribute="centerX" id="z0C-eO-fgj"/>
                         </constraints>
                     </view>
@@ -1933,7 +1937,7 @@
                         <outlet property="lbl_StartDate" destination="So7-aJ-iri" id="hbp-kI-6bM"/>
                         <outlet property="picker_EndDate" destination="pBC-g2-AR8" id="hJA-Iq-XcT"/>
                         <outlet property="picker_StartDate" destination="Xd9-Xj-VhK" id="fVO-K3-BSQ"/>
-                        <outlet property="slideBtn_Next" destination="2UY-zD-BI7" id="2qz-eE-M5H"/>
+                        <outlet property="slideBtn_Next" destination="uca-nX-wez" id="ISr-C9-g4g"/>
                         <outlet property="view_TopView" destination="YYI-00-8Qd" id="rjP-xV-emj"/>
                         <segue destination="rI9-M0-Ata" kind="show" identifier="segue_BookingStartEndToDetail" id="XQS-Ya-8jE"/>
                         <segue destination="NBX-3z-Bqh" kind="unwind" identifier="segue_BookingDateToBookingGeneral" unwindAction="unwindToBookingGeneralWithSegue:" id="CUe-oU-9F7"/>
@@ -1942,7 +1946,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jFv-Y1-j96" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="NBX-3z-Bqh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="9341" y="88"/>
+            <point key="canvasLocation" x="9339.375" y="87.676056338028175"/>
         </scene>
         <!--Booking Detail View Controller-->
         <scene sceneID="FI8-qP-5f3">
@@ -2434,7 +2438,7 @@
                         <outlet property="view_ConfirmView" destination="g1r-eh-MJr" id="Qyq-SZ-f7u"/>
                         <outlet property="view_TopView" destination="iRY-w1-mXx" id="t02-77-My6"/>
                         <segue destination="1A6-qk-CfR" kind="show" identifier="segue_BookingDetailToBookingVerification" id="17y-Yy-APu"/>
-                        <segue destination="mf6-BD-GRG" kind="unwind" identifier="segue_BookingDetailToBookingGeneral" unwindAction="unwindToBookingGeneralWithSegue:" id="ae2-hM-xWr"/>
+                        <segue destination="mf6-BD-GRG" kind="unwind" identifier="segue_BookingDetailToBookingStartEnd" unwindAction="unwindToBookingStartEndWithSegue:" id="XdC-uB-jSG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tP4-ZY-qPZ" userLabel="First Responder" sceneMemberID="firstResponder"/>

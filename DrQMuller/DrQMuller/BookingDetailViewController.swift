@@ -102,7 +102,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     private struct Storyboard {
         static let SEGUE_TO_BOOKING_VERIFICATION = "segue_BookingDetailToBookingVerification"
-        static let SEGUE_TO_BOOKING_GENERAL = "segue_BookingDetailToBookingGeneral"
+        static let SEGUE_TO_BOOKING_STARTEND = "segue_BookingDetailToBookingStartEnd"
     }
     
     deinit {
@@ -758,11 +758,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBAction func lbl_Back_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_STARTEND, sender: self)
     }
     
     @IBAction func btn_Back_OnClick(_ sender: Any) {
-        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_GENERAL, sender: self)
+        self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_STARTEND, sender: self)
     }
     
     //=========WIRED UP DAYS OF WEEK DROPDOWN=========
