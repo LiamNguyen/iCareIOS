@@ -2438,6 +2438,7 @@
                         <outlet property="view_TopView" destination="iRY-w1-mXx" id="t02-77-My6"/>
                         <segue destination="1A6-qk-CfR" kind="show" identifier="segue_BookingDetailToBookingVerification" id="17y-Yy-APu"/>
                         <segue destination="mf6-BD-GRG" kind="unwind" identifier="segue_BookingDetailToBookingStartEnd" unwindAction="unwindToBookingStartEndWithSegue:" id="XdC-uB-jSG"/>
+                        <segue destination="mf6-BD-GRG" kind="unwind" identifier="segue_BookingDetailToBookingManager" unwindAction="unwindToBookingManagerWithSegue:" id="8ym-gb-Mm4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tP4-ZY-qPZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
