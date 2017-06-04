@@ -177,7 +177,7 @@ class BookingVerificationViewController: UIViewController {
             self?.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: (self?.dtoBookingInformation)!)
             self?.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
         }))
-        confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { [weak self] (action: UIAlertAction!) in
+        confirmDialog.addAction(UIAlertAction(title: "DIALOG_CANCEL_TITLE".localized(), style: .cancel, handler: { (action: UIAlertAction!) in
             
         }))
         

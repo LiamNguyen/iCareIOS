@@ -37,7 +37,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private var activityIndicator: UIActivityIndicatorView!
     
     private var modelHandelBookingDetail: ModelHandleBookingDetail!
-    private var modelHandleBookingVerification: ModelHandleBookingVerification!
+    private var modelHandleBookingVerification: ModelHandleBookingVerification = ModelHandleBookingVerification()
     
     private var freeTimeDataSource = [String]()
     
@@ -103,6 +103,7 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
     private struct Storyboard {
         static let SEGUE_TO_BOOKING_VERIFICATION = "segue_BookingDetailToBookingVerification"
         static let SEGUE_TO_BOOKING_STARTEND = "segue_BookingDetailToBookingStartEnd"
+        static let SEGUE_TO_BOOKING_MANAGER = "segue_BookingDetailToBookingManager"
     }
     
     deinit {
@@ -310,7 +311,6 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         networkCheckInRealTime = nil
         timer_bookingExpire = nil
         timer = nil
-        modelHandleBookingVerification = nil
     }
     
     
@@ -432,7 +432,11 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     if isOk {
                         self.hasSuccessfullyInsertedAppointment = true
                         DispatchQueue.main.async {
-                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_VERIFICATION, sender: DTOBookingInformation.sharedInstance)
+//                            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_VERIFICATION, sender: DTOBookingInformation.sharedInstance)
+                            DTOBookingInformation.sharedInstance.isConfirmed = "1"
+                            self.modelHandleBookingVerification.saveAppointmentToUserDefault(dtoBookingInformation: DTOBookingInformation.sharedInstance)
+                            
+                            self.informMessage(message: "VERIFY_BOOKING_SUCCESS_MESSAGE".localized())
                         }
                     } else {
                         DispatchQueue.main.async {
@@ -1095,6 +1099,16 @@ class BookingDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let tupleDetectNetworkReachabilityResult = Reachability.detectNetworkReachabilityObserver(parentView: self.view)
         networkViewManager = tupleDetectNetworkReachabilityResult.network
         networkCheckInRealTime = tupleDetectNetworkReachabilityResult.timer
+    }
+    
+    private func informMessage(message: String) {
+        let confirmDialog = UIAlertController(title: "INFORMATION_TITLE".localized(), message: message, preferredStyle: UIAlertControllerStyle.alert)
+        
+        confirmDialog.addAction(UIAlertAction(title: "Ok", style: .default, handler: { (action: UIAlertAction!) in
+            self.performSegue(withIdentifier: Storyboard.SEGUE_TO_BOOKING_MANAGER, sender: self)
+        }))
+        
+        self.present(confirmDialog, animated: true, completion: nil)
     }
 }
 

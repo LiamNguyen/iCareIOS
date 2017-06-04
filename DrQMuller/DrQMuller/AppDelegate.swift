@@ -21,21 +21,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.pmHandleCurrentVersion = PMHandleGetCurrentVersion()
         
         
-        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: Constants.NotificationName.versionResponse), object: nil, queue: nil) { (Notification) in
-            if let userInfo = Notification.userInfo {
-                if let build = userInfo[Constants.JsonPropertyName.build] as? Int {
-                    if build != Int(Bundle.main.buildVersionNumber!) {
-                        self.alertUpdateDialog()
-                    }
-                }
-            }
-        }
-        
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { (Notification) in
-            if (self.appFirstLaunch) {
-                self.pmHandleCurrentVersion?.checkVersion()
-            }
-        }
+//        NotificationCenter.default.addObserver(forName: Notification.Name(rawValue: Constants.NotificationName.versionResponse), object: nil, queue: nil) { (Notification) in
+//            if let userInfo = Notification.userInfo {
+//                if let build = userInfo[Constants.JsonPropertyName.build] as? Int {
+//                    if build != Int(Bundle.main.buildVersionNumber!) {
+//                        self.alertUpdateDialog()
+//                    }
+//                }
+//            }
+//        }
+//        
+//        NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationDidBecomeActive, object: nil, queue: nil) { (Notification) in
+//            if (self.appFirstLaunch) {
+//                self.pmHandleCurrentVersion?.checkVersion()
+//            }
+//        }
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
